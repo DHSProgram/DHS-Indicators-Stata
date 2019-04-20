@@ -1,0 +1,180 @@
+	Problem health care access: permission to go		
+	no prob	prob	Total
+	%	%	%
+type of place of residence			
+urban	96.2	3.8	100.0
+rural	94.0	6.0	100.0
+Total	94.5	5.5	100.0
+
+highest educational level			
+no education	93.1	6.9	100.0
+primary	94.0	6.0	100.0
+secondary	95.5	4.5	100.0
+higher	98.5	1.5	100.0
+Total	94.5	5.5	100.0
+
+region			
+kampala	97.6	2.4	100.0
+central 1	94.9	5.1	100.0
+central 2	94.8	5.2	100.0
+east central	95.0	5.0	100.0
+eastern	94.1	5.9	100.0
+north	95.3	4.7	100.0
+karamoja	94.7	5.3	100.0
+west-nile	93.8	6.2	100.0
+western	91.6	8.4	100.0
+southwest	94.1	5.9	100.0
+Total	94.5	5.5	100.0
+
+wealth index			
+poorest	93.6	6.4	100.0
+poorer	93.0	7.0	100.0
+middle	95.0	5.0	100.0
+richer	93.6	6.4	100.0
+richest	96.4	3.6	100.0
+Total	94.5	5.5	100.0
+
+	Problem health care access: getting money		
+	no prob	prob	Total
+	%	%	%
+type of place of residence			
+urban	67.8	32.2	100.0
+rural	47.1	52.9	100.0
+Total	51.2	48.8	100.0
+
+highest educational level			
+no education	32.5	67.5	100.0
+primary	47.3	52.7	100.0
+secondary	64.8	35.2	100.0
+higher	83.2	16.8	100.0
+Total	51.2	48.8	100.0
+
+region			
+kampala	72.1	27.9	100.0
+central 1	66.2	33.8	100.0
+central 2	56.3	43.7	100.0
+east central	59.1	40.9	100.0
+eastern	50.7	49.3	100.0
+north	22.6	77.4	100.0
+karamoja	13.7	86.3	100.0
+west-nile	40.4	59.6	100.0
+western	46.5	53.5	100.0
+southwest	51.5	48.5	100.0
+Total	51.2	48.8	100.0
+
+wealth index			
+poorest	28.9	71.1	100.0
+poorer	38.2	61.8	100.0
+middle	45.4	54.6	100.0
+richer	59.7	40.3	100.0
+richest	73.0	27.0	100.0
+Total	51.2	48.8	100.0
+
+	Problem health care access: distance to facility		
+	no prob	prob	Total
+	%	%	%
+type of place of residence			
+urban	86.7	13.3	100.0
+rural	51.7	48.3	100.0
+Total	58.6	41.4	100.0
+
+highest educational level			
+no education	43.9	56.1	100.0
+primary	54.7	45.3	100.0
+secondary	71.5	28.5	100.0
+higher	84.7	15.3	100.0
+Total	58.6	41.4	100.0
+
+region			
+kampala	90.1	9.9	100.0
+central 1	63.5	36.5	100.0
+central 2	58.6	41.4	100.0
+east central	63.7	36.3	100.0
+eastern	58.3	41.7	100.0
+north	47.6	52.4	100.0
+karamoja	58.1	41.9	100.0
+west-nile	53.8	46.2	100.0
+western	51.0	49.0	100.0
+southwest	45.0	55.0	100.0
+Total	58.6	41.4	100.0
+
+wealth index			
+poorest	44.6	55.4	100.0
+poorer	42.8	57.2	100.0
+middle	52.9	47.1	100.0
+richer	59.5	40.5	100.0
+richest	82.8	17.2	100.0
+Total	58.6	41.4	100.0
+
+	Problem health care access: not wanting to go alone		
+	no prob	prob	Total
+	%	%	%
+type of place of residence			
+urban	90.7	9.3	100.0
+rural	74.3	25.7	100.0
+Total	77.6	22.4	100.0
+
+highest educational level			
+no education	73.2	26.8	100.0
+primary	74.7	25.3	100.0
+secondary	84.8	15.2	100.0
+higher	89.5	10.5	100.0
+Total	77.6	22.4	100.0
+
+region			
+kampala	93.6	6.4	100.0
+central 1	84.8	15.2	100.0
+central 2	82.4	17.6	100.0
+east central	77.9	22.1	100.0
+eastern	80.3	19.7	100.0
+north	81.0	19.0	100.0
+karamoja	82.0	18.0	100.0
+west-nile	70.1	29.9	100.0
+western	70.5	29.5	100.0
+southwest	59.4	40.6	100.0
+Total	77.6	22.4	100.0
+
+wealth index			
+poorest	73.2	26.8	100.0
+poorer	70.4	29.6	100.0
+middle	71.0	29.0	100.0
+richer	78.4	21.6	100.0
+richest	89.6	10.4	100.0
+Total	77.6	22.4	100.0
+
+	At least one problem in accessing health care		
+	0	1	Total
+	%	%	%
+type of place of residence			
+urban	60.1	39.9	100.0
+rural	28.9	71.1	100.0
+Total	35.1	64.9	100.0
+
+highest educational level			
+no education	18.6	81.4	100.0
+primary	30.0	70.0	100.0
+secondary	49.7	50.3	100.0
+higher	70.1	29.9	100.0
+Total	35.1	64.9	100.0
+
+region			
+kampala	65.5	34.5	100.0
+central 1	46.8	53.2	100.0
+central 2	38.1	61.9	100.0
+east central	42.5	57.5	100.0
+eastern	33.9	66.1	100.0
+north	12.4	87.6	100.0
+karamoja	13.0	87.0	100.0
+west-nile	23.6	76.4	100.0
+western	28.2	71.8	100.0
+southwest	28.5	71.5	100.0
+Total	35.1	64.9	100.0
+
+wealth index			
+poorest	14.7	85.3	100.0
+poorer	21.2	78.8	100.0
+middle	27.5	72.5	100.0
+richer	38.8	61.2	100.0
+richest	61.3	38.7	100.0
+Total	35.1	64.9	100.0
+
