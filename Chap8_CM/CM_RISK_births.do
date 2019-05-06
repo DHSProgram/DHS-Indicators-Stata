@@ -3,79 +3,47 @@ Program: 			CM_RISK_birth.do
 Purpose: 			Code to compute high risk births
 Data inputs: 		BR survey list
 Data outputs:		coded variables
-Author:				Shireen Assaf
-Date last modified: April 19 2019 by Shireen Assaf 
-Note:				
+Author:				Thomas Pullum with modifications by Shireen Assaf
+Date last modified: April 29 2019 by Shireen Assaf 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
 Variables created in this file:
-cm_risk_none		"Mortality risk ratio - 2nd or 3rd birth order and mother age 18 and 34"
-cm_risk_u18			"Mortality risk ratio - mothers less than 18 years"
-cm_risk_o34			"Mortality risk ratio - mothers over 35 years"
-cm_risk_ord			"Mortality risk ratio - birth order 4 or higher"
-cm_risk_unavoid		"Mortality risk ratio - unavoidable risk - first birth order and mother age 18 to 34"
-cm_risk_int			"Mortality risk ratio - born <24mos since preceding birth"
+cm_riskb_none			"Births not in any high risk category"
+cm_riskb_unavoid		"Births with unavoidable risk- first order birth between age 18 and 34"
+cm_riskb_any_avoid		"Births in any avoidable high-risk category"
 	
-cm_riskb_none		"Births - 2nd or 3rd birth order and mother between 18 and 34"
-cm_riskb_u18		"Births - mothers less than 18 years"
-cm_riskb_o34		"Births - mothers over 34 years"
-cm_riskb_order		"Births - birth order 4 or higher"
-cm_riskb_interval	"Births - born <24mos since preceding birth"
-cm_riskb_unavoid	"Births -unavoidable risk- first birth order and mother age 18 and 34"
+cm_riskb_u18			"Births to mothers less than 18 years"
+cm_riskb_o34			"Births to mothers over 34 years"
+cm_riskb_interval		"Births born <24mos since preceding birth"
+cm_riskb_order			"Births with a birth order 4 or higher"
+cm_riskb_any_single		"Birth with any single high-risk category"
 	
-cm_riskb_mult1		"Births - mult. risks - under age 18, and high order"
-cm_riskb_mult2		"Births - mult. risks - under age 18, and short interval"
-cm_riskb_mult3		"Births - mult. risks - over age 34, and short interval"
-cm_riskb_mult4		"Births - mult. risks - over age 34, and high order"
-cm_riskb_mult5		"Births - mult. risks - over age 34, and short interval and high order"
-cm_riskb_mult6		"Births - mult. risks - short interval and high order"
-
+cm_riskb_mult1			"Births with multiple risks - under age 18 and short interval"
+cm_riskb_mult2			"Births with multiple risks - over age 34 and short interval"
+cm_riskb_mult3			"Births with multiple risks - over age 34 and high order"
+cm_riskb_mult4			"Births with multiple risks - over age 34 and short interval and high order"
+cm_riskb_mult5			"Births with multiple risks - short interval and high order"
+cm_riskb_any_mult		"Births with any multiple risk category"
+	
+cm_riskb_u18_avoid		"Births with individual avoidable risk - mothers less than 18 years"
+cm_riskb_o34_avoid		"Births with individual avoidable risk - mothers over 34 years"
+cm_riskb_interval_avoid	"Births with individual avoidable risk - born <24mos since preceding birth"
+cm_riskb_order_avoid	"Births with individual avoidable risk - birth order 4 or higher"
 ----------------------------------------------------------------------------*/
 
-gen age = v008 - b3
-	
-	* to check if survey has b19, which should be used instead to compute age. 
-	scalar b19_included=1
-		capture confirm numeric variable b19, exact 
-		if _rc>0 {
-		* b19 is not present
-		scalar b19_included=0
-		}
-		if _rc==0 {
-		* b19 is present; check for values
-		summarize b19
-		  if r(sd)==0 | r(sd)==. {
-		  scalar b19_included=0
-		  }
-		}
+*** Percentage of births among birth in the last 5 years ***
 
-	if b19_included==1 {
-	drop age
-	gen age=b19
-	}
-
-keep if age<60
-
-gen agem_birth = b3-v011
-*****************************************************************************
-
-* Tom's code
-
+* mother's age
 gen age_of_mother=int((b3-v011)/12)
 
 * Adjustment for multiple births to give the same order as that of the first in multiples;
-* b0 is sequence in the multiple birth IF part of a multiple birth; b0=0 if not a multiple birth;
+* b0 is sequence in the multiple birth if part of a multiple birth; b0=0 if not a multiple birth;
 * only shift the second (or later) birth within a multiple birth.
-
 gen bord_adj=bord
-*replace bord_adj=bord-1 if b0==2
-*replace bord_adj=bord-2 if b0==3
-
 replace bord_adj=bord-b0+1 if b0>1
 
-
-* Single risk categories, initial definition
+*** Single risk categories, initial definition ***
 
 * Four basic criteria
 gen young=0
@@ -88,125 +56,142 @@ replace old=1 if age_of_mother>34
 replace soon=1 if b11<24
 replace many=1 if bord_adj>3
 
-gen unavoidable_risk=0
-replace unavoidable_risk=1 if bord_adj==1 & young==0 & old==0
+//Births with unavoidable risk- first birth order and mother age 18 and 34
+gen cm_riskb_unavoid=0
+replace cm_riskb_unavoid=1 if bord_adj==1 & young==0 & old==0
+label var cm_riskb_unavoid "Births with unavoidable risk- first order birth between age 18 and 34"
 
-* Construct the four single-risk categories
-gen too_young=0 
-gen too_old=0
-gen too_soon=0
-gen too_many=0
+//Birth risks - under 18
+gen cm_riskb_u18=0 
+replace cm_riskb_u18=1 if young==1 & old==0 & soon==0 & many==0
+label var cm_riskb_u18 "Births to mothers less than 18 years"
 
-replace too_young=1 if young==1 & old==0 & soon==0 & many==0
-replace too_old =1 if young==0 & old==1 & soon==0 & many==0 
-replace too_soon =1 if young==0 & old==0 & soon==1 & many==0
-replace too_many =1 if young==0 & old==0 & soon==0 & many==1
+//Birth risks - over 34
+gen cm_riskb_o34=0
+replace cm_riskb_o34=1 if young==0 & old==1 & soon==0 & many==0 
+label var cm_riskb_o34 "Births to mothers over 34 years"
 
-* Pooling of single risk categories
-gen single_risk=0
-replace single_risk=1 if too_young+too_old+too_soon+too_many>0
+//Birth risk - interval <24months
+gen cm_riskb_interval=0
+replace cm_riskb_interval=1 if young==0 & old==0 & soon==1 & many==0
+label var cm_riskb_interval "Births born <24mos since preceding birth"
 
-* Construct the five multiple-risk categories
-gen too_young_too_soon=0
-gen too_old_too_soon=0
-gen too_old_too_many=0
-gen too_old_too_soon_too_many=0
-gen too_soon_too_many=0
+//Birth risk - birth order of 4 or more
+gen cm_riskb_order=0
+replace cm_riskb_order=1 if young==0 & old==0 & soon==0 & many==1
+label var cm_riskb_order "Births with a birth order 4 or higher"
 
-replace too_young_too_soon =1 if young==1 & old==0 & soon==1 & many==0
-replace too_old_too_soon =1 if young==0 & old==1 & soon==1 & many==0
-replace too_old_too_many =1 if young==0 & old==1 & soon==0 & many==1
-replace too_old_too_soon_too_many=1 if young==0 & old==1 & soon==1 & many==1
-replace too_soon_too_many =1 if young==0 & old==0 & soon==1 & many==1
-
-* Pooling of multiple risk categories
-gen multiple_risk=0
-replace multiple_risk=1 if too_young_too_soon+too_old_too_soon+too_old_too_many+too_old_too_soon_too_many+too_soon_too_many >0
-
-* Pooling of any avoidable risk
-gen any_avoidable_risk=0
-replace any_avoidable_risk=1 if single_risk+multiple_risk>0
-
-* No risk is the residual
-gen no_risk=0
-replace no_risk=1 if unavoidable_risk==0 & any_avoidable_risk==0
+//Any single high-risk category
+gen cm_riskb_any_single=0
+replace cm_riskb_any_single=1 if cm_riskb_u18+cm_riskb_o34+cm_riskb_interval+cm_riskb_order>0
+label var cm_riskb_any_single "Birth with any single high-risk category"
 
 
-* Give results
-format %6.3f too* single* multiple* any* un* no*
-mean no un too* single* multiple* any [iweight=v005/1000000]
+*** Construct the five multiple-risk categories ***
 
-* If you want confidence intervals, use prop and look at the lines for the value 1; make survey adjustments
-*prop no un too* single* multiple* any [iweight=v005/1000000]
+//Birth risk - mother too young and short interval
+gen cm_riskb_mult1=0
+replace cm_riskb_mult1=1 if young==1 & old==0 & soon==1 & many==0
+replace cm_riskb_mult1=1 if young==1 & old==0 & soon==0 & many==1
+replace cm_riskb_mult1=1 if young==1 & old==0 & soon==1 & many==1
+label var cm_riskb_mult1 "Births with multiple risks - under age 18 and short interval"
 
+//Birth risk - mother older and short interval
+gen cm_riskb_mult2=0
+replace cm_riskb_mult2=1 if young==0 & old==1 & soon==1 & many==0
+label var cm_riskb_mult2 "Births with multiple risks - over age 34 and short interval"
 
+//Birth risk - mother older and high birth order
+gen cm_riskb_mult3=0
+replace cm_riskb_mult3=1 if young==0 & old==1 & soon==0 & many==1
+label var cm_riskb_mult3 "Births with multiple risks - over age 34 and high order"
 
+//Birth risk - mother older and short interval and high birth order
+gen cm_riskb_mult4=0
+replace cm_riskb_mult4=1 if young==0 & old==1 & soon==1 & many==1
+label var cm_riskb_mult4 "Births with multiple risks - over age 34 and short interval and high order"
+
+//Birth risk - short interval and high birth order
+gen cm_riskb_mult5=0
+replace cm_riskb_mult5=1 if young==0 & old==0 & soon==1 & many==1
+label var cm_riskb_mult5 "Births with multiple risks - short interval and high order"
+
+//Any multiple risk
+gen cm_riskb_any_mult=0
+replace cm_riskb_any_mult=1 if cm_riskb_mult1+cm_riskb_mult2+cm_riskb_mult3+cm_riskb_mult4+cm_riskb_mult5 >0
+label var cm_riskb_any_mult "Births with any multiple risk category"
+
+//Any avoidable risk
+gen cm_riskb_any_avoid=0
+replace cm_riskb_any_avoid=1 if cm_riskb_any_single+cm_riskb_any_mult>0
+label var cm_riskb_any_avoid "Births in any avoidable high-risk category"
+
+//No risk
+gen cm_riskb_none=0
+replace cm_riskb_none=1 if cm_riskb_unavoid==0 & cm_riskb_any_avoid==0
+label var cm_riskb_none	"Births not in any high risk category"
+
+*** Individual avoidable high risk category ***
+
+//Avoidable birth risk - under 18
+gen  cm_riskb_u18_avoid=young
+label var cm_riskb_u18_avoid "Births with individual avoidable risk - mothers less than 18 years"
+
+//Avoidable birth risks - over 34
+gen cm_riskb_o34_avoid=old
+label var cm_riskb_o34_avoid "Births with individual avoidable risk - mothers over 34 years"
+
+//Avoidable birth risk - interval <24months
+gen cm_riskb_interval_avoid=soon
+label var cm_riskb_interval_avoid "Births with individual avoidable risk - born <24mos since preceding birth"
+
+//Avoidable birth risk - birth order of 4 or more
+gen cm_riskb_order_avoid=many
+label var cm_riskb_order_avoid "Births with individual avoidable risk - birth order 4 or higher"
+
+*mean cm* [iweight=v005/1000000]
 
 ******************************************************************************
-// Births at risk - mothers less than 18 years
-gen cm_riskb_u18= (b3 - v011 < 216) & b11>=24
-* 216 months is 18 years
-label var cm_riskb_u18 "Births - mothers less than 18 years"
 
+*** Risk ratios among births in the last 5 years ***
 
+* These will be stored as scalars. The names of the scalars will be in the format `var'_RR, where `var' are all the variables computed above. 
+ 
+scalar drop _all
+* To view these scalars use the command: scalar list _all
 
+* create a list of all the variables computed
+#delimit ; 
+global risk_categories "cm_riskb_none cm_riskb_unavoid cm_riskb_any_avoid cm_riskb_u18 cm_riskb_o34 cm_riskb_interval cm_riskb_order
+cm_riskb_any_single cm_riskb_mult1 cm_riskb_mult2 cm_riskb_mult3 cm_riskb_mult4 cm_riskb_mult5 cm_riskb_any_mult
+cm_riskb_u18_avoid cm_riskb_o34_avoid cm_riskb_interval_avoid cm_riskb_order_avoid" ;
+#delimit cr
 
-gen norisk=(bord== 2|3) & (agem_birth>=216 & agem_birth<=419)
+* obtain the proportion of no risks for the denominator
+proportion b5 if cm_riskb_none==1 [iweight=v005/1000000]
+matrix T=r(table)
+scalar denom=T[1,1]
 
-gen test=0 if b5==0 & ((b3 - v011 >= 216) & b11>=24)
-replace test=1 if b5==0 & ((b3 - v011 < 216) & b11>=24)
-*****************************************************************************
+* for each varaible divide the proportion in the risk category (the numerator) by the denomiator above. 
+quietly foreach lcat in $risk_categories {
+	proportion b5 if `lcat'==1 [iweight=v005/1000000]
+	matrix T=r(table)
+	scalar num=T[1,1]
+	scalar `lcat'_RR=round(num/denom,.01)
+	
+	qui proportion b5 if `lcat'==1
+	scalar Nobs=e(N)
+	
+	* check if there are low number of observations (less than 25) that should not be displayed.
+		if e(N)<25 {
+		scalar `lcat'_RR="*"
+		}
+	
+	* check if there 25-50 observations that should be displayed in parenthesis.
+		if e(N)>=25 & e(N)<50 {
+		scalar `lcat'_RR="(" + string(`lcat'_RR) + ")"
+		}
+}
 
-* Coding covariates
-
-* age at birth
-gen ageb=(b3-v011)/12
-gen agebirth=1 if ageb<18
-replace agebirth=2 if ageb>=18 & ageb<35
-replace agebirth=3 if ageb>=35 & ageb<40
-replace agebirth=4 if ageb>=40 
-label var agebirth "Age at Birth,cat"
-lab define agebirth2  1 "<18 years" 2 "18-34 years" 3 "35-39 years" 4 "40+ years"
-lab val agebirth agebirth2
-
-*under18
-gen under18=(agebirth==1)
-ta agebirth under18 , mis
-lab define under18_2  0 "No" 1 "Yes <18" 
-lab val under18 under18_2
-
-*over40
-gen over40=(agebirth==4)
-ta agebirth over40 , mis
-lab define over40  0 "No" 1 "Yes >40" 
-lab val over40 over40
-
-* parity
-recode bord (4/16=4 "4+"), gen(parity)
-
-***Most recent birth was the fourth or greater
-gen bord4=(bord>3)
-label var bord4 "Parity of 4 or more"
-
-****birth interval less than 24 months birth to birth (this is "high risk"
-**less than 36 months would be medium risk, as per HRB report 
-gen bint24=(b11<24)
-label var bint "Birth interval <24 months"
-
-**less than 36 months would be medium risk, as per HRB report 
-gen bint36=(b11<36)
-label var bint36 "Birth interval <36 months"
-
-**bintcat, as per HRB report 
-gen bintcat= 1 if b11<24
-replace bintcat= 2 if b11>23 & b11<36
-replace bintcat= 3 if b11>35 & b11<48
-replace bintcat= 4 if b11>47 
-lab define bintcat  1 "<24 mo" 2 "24-35 mo" 3 "36-47 mo" 4 "48+ mo"
-lab val bintcat bintcat
-lab var bintcat "Preceding birth interval"
-
-
-***avoiable high risk birth (woman young or old, short interval or multiple birth) using 36 months as cutoff (not 36 months like Shea)
-gen hrb=(agebirth==1|agebirth==1|bint36==1|bord4==1)
-label var hrb "Avoidable high risk birth"
+* risk ratios
+scalar list _all

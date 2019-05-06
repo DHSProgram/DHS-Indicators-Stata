@@ -4,14 +4,18 @@ Purpose: 			Code to compute perinatal mortality
 Data inputs: 		IR survey list
 Data outputs:		coded variables
 Author:				Trevor Croft
-Date last modified: April 19 2019 by Shireen Assaf 
-Note:				Any background variable you would like to disaggregate the perinatal mortality by needs to be added to line 19.
+Date last modified: April 29 2019 by Shireen Assaf 
+Notes:				Any background variable you would like to disaggregate the perinatal mortality by needs to be added to line 19.
+					A file "CM_PMRdata.dta" will be produced that can be used to export the results. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
 Variables created in this file:
 cm_peri		"Perinatal mortality rate"
 ----------------------------------------------------------------------------*/
+
+* open IR dataset
+use "$datapath//$irdata.dta", clear
 
 gen pregs = 0
 
@@ -28,7 +32,7 @@ forvalues i = 1/80 {
 drop if pregs == 0
 
 * Decide what variables you want to keep first before the reshape, modify this list as you need to add extra variables.
-keep caseid v001 v002 v003 v005 v008 v011 v013 v017 v018 v019 v021 v022 v023 v024 v025 v106 v190 cmc* event* type* 
+keep caseid v001 v002 v003 v005 v008 v011 v013 v017 v018 v019 v021 v022 v023 v024 v025 v106 v190 v231 v242 cmc* event* type* 
 
 * The reshape is really really really slow if you don't select variables and cases first, and will most likely fail otherwise.
 reshape long cmc event type, i(caseid) j(ix)
@@ -89,7 +93,19 @@ gen earlyneonatal = (type==1 & b6>=100 & b6<= 106)
 * Perinatal mortality
 gen cm_peri = 1000*(type==2 | (type==1 & b6>=100 & b6<= 106))
 
+* code background variables
+
+* mother's age at birth (years): <20, 20-29, 30-39, 40-49 
+gen months_age=cmc-v011
+gen mo_age_at_birth=1 if months_age<20*12
+replace mo_age_at_birth=2 if months_age>=20*12 & months_age<30*12
+replace mo_age_at_birth=3 if months_age>=30*12 & months_age<40*12
+replace mo_age_at_birth=4 if months_age>=40*12 & months_age<50*12
+drop months_age
+
+* save data to usee for tables
 save "CM_PMRdata.dta", replace
+
 erase births.dta
 
 *tab stillbirths [iw=v005/1000000]
@@ -97,4 +113,5 @@ erase births.dta
 *tab cm_peri [iw=v005/1000000]
 
 *summ cm_peri [iw=v005/1000000]
+
 

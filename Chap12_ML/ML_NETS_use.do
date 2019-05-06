@@ -25,5 +25,5 @@ mal_itn		ITN
 	lab var mal_netcat "Mosquito net categorization"
 
 //ITN net variable
-	gen mal_itn=(netcat==1)
+	gen mal_itn=(mal_netcat==1)
 	lab var mal_itn "ITN"

@@ -11,7 +11,7 @@ Notes:					Indicators for men only cover knowledge of contraceptive methods and 
 
 *local user 39585	//change employee id number to personalize path
 local user 33697
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/ShareCodeProject/Chap7_FP"
+cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap7_FP"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 

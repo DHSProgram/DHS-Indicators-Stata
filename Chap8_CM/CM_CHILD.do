@@ -3,8 +3,10 @@ Program: 			CM_CHILD.do
 Purpose: 			Produce child mortality indicators 
 Data inputs: 		IR survey list
 Data outputs:		coded variables
-Author:				Tom Pullum, modified for this project by Shireen Assaf
+Author:				Tom Pullum, modified for the code share project by Shireen Assaf
 Date last modified: April 1 2019 by Shireen Assaf 
+Note:				The program will produce a file "`CNPH'_mortality_rates_with_ci.dta" which can be used to export the results, 
+					where `CNPH' is the two letter country code followed by the 2 character survey phase, ex: UG7A . 
 *****************************************************************************************************/
 
 clear
@@ -40,7 +42,6 @@ q_u5mr=1-(1-q1)*(1-q2)*(1-q3)*(1-q4)*(1-q5)*(1-q6)*(1-q7)*(1-q8)=1-(1-q_imr)*(1-
 GO TO THE REPEATED LINES OF ASTERISKS FOR THE BEGINNING OF THE EXECUTABLE STATEMENTS
 
 */
-
 
 ******************************************************************************
 * SUB-PROGRAMS OR ROUTINES BETWEEN HERE AND THE REPEATED LINES OF ASTERISKS
@@ -533,7 +534,7 @@ replace dummy=1 if covariate==code
 summarize doi if covariate==code
 
 ***********************
-svy, subpop(dummy): glm died age_*, nocons family(binomial risk) link(logit) iter(50)
+svy, subpop(dummy): glm died age_*, nocons family(binomial risk) link(logit) iter(10)
 ***********************
 matrix T_`cat'=r(table)
 matrix list T_`cat'
@@ -790,7 +791,7 @@ scalar run_number=0
 
 ***********************
 * Specify the path to the log file and the output files as a scalar
-scalar soutpath="C:/Users//$user/ICF/Analysis - Shared Resources/Code/ShareCodeProject/Chap8_CM"
+scalar soutpath="C:/Users//$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap8_CM"
 local loutpath=soutpath
 cd "`loutpath'"
 ***********************
