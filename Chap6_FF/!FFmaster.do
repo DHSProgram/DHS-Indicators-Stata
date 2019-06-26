@@ -1,27 +1,28 @@
 /*******************************************************************************************************************************
-Program: 				MSmaster.do
-Purpose: 				Master file for the Marriage and Sexual Activity Chapter. 
-						The master file will call other do files that will produce the MS indicators and produce tables.
+Program: 				FFmaster.do
+Purpose: 				Master file for the Fertility Preferences Chapter. 
+						The master file will call other do files that will produce the FF indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
-Author: 				
-Date last modified:		
+Author: 				Shireen Assaf
+Date last modified:		June 21 2019 by Shireen Assaf
 
 *******************************************************************************************************************************/
+set more off
 
 *local user 39585	//change employee id number to personalize path
-local user 33697
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap4_FP"
+global user 33697
+cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap6_FF"
 
-global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
+global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * IR Files
-global irdata "UGIR7AFL"
-* MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
+global irdata "JOIR71FL"
+* MMIR71FL TJIR70FL GHIR72FL UGIR7BFL
 
-global mrdata "UGMR7AFL"
-* MMMR71FL TJMR70FL GHMR72FL UGMR7AFL
+global mrdata "JOMR71FL"
+* MMMR71FL TJMR70FL GHMR72FL UGMR7BFL
 ****************************
 
 * IR file variables
@@ -31,16 +32,18 @@ use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
 
-do MS_MAR.do
-*Purpose: 	Code marital status variables
+do FF_PREF.do
+*Purpose: 	Code desire for children and ideal number of children for women
 
-do MS_SEX.do
-*Purpose: 	Code sexual activity variables
+do FF_tables.do
+*Purpose: 	Produce tables for indicators computed from FF_PREF.do file. 
 
-do MS_tables.do
-*Purpose: 	Produce tables for indicators computed from above do files. 
+do FF_PLAN.do
+*Purpose: 	Code fertility planning status indicator and produce table Table_FFplan
 
-*/
+do FF_WANT_TFR.do
+*Purpose: 	Code wanted fertility and produces table Table_WANT_TFR.do to match the final report. 
+
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
@@ -51,13 +54,10 @@ use "$datapath//$mrdata.dta", clear
 
 gen file=substr("$mrdata", 3, 2)
 
-do MS_MAR.do
-*Purpose: 	Code marital status variables
+do FF_PREF.do
+*Purpose: 	Code desire for children and ideal number of children for men
 
-do MS_SEX.do
-*Purpose: 	Code sexual activity variables
-
-do MS_tables.do
+do FF_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 */
 *******************************************************************************************************************************

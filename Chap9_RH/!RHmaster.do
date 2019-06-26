@@ -1,27 +1,28 @@
 /*******************************************************************************************************************************
-Program: 				Chap9_RHmaster.do
+Program: 				RHmaster.do
 Purpose: 				Master file for the Reporductive Health Chapter. 
 						The master file will call other do files that will produce the RH indicators and produce tables.
-Data outputs:			coded variables and table output on screen. There will be no saved data files or output to excel. 
+Data outputs:			coded variables and table output on screen and in excel tables.
 Author: 				Shireen Assaf 
 Date last modified:		Jan 9th by Shireen Assaf
 Notes:					
 *******************************************************************************************************************************/
+set more off
 
 *local user 39585	//change employee id number to personalize path
 local user 33697
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/ShareCodeProject/Chap9_RH"
+cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap9_RH"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * IR Files
-global irdata "GHIR72FL"
-* MMIR71FL TJIR70FL
+global irdata "UGIR60FL"
+* MMIR71FL TJIR70FL UGIR60FL MWIR7HFL GHIR72FL
 * KR Files
-global brdata "GHBR72FL"
-* MMBR71FL TJIR70FL
+global brdata "UGBR60FL"
+* MMBR71FL TJBR70FL UGBR60FL MWBR7HFL GHBR72FL
 ****************************
 
 * IR file variables
@@ -39,8 +40,8 @@ do RH_ANC.do
 *Purpose: 	Code ANC indicators
 
 *
-*do RH_PNC_wm.do
-*Purpose: 	Code PNC indicators for women 
+do RH_PNC.do
+*Purpose: 	Code PNC indicators for mother and newborn
 
 *
 do RH_Probs.do
@@ -54,7 +55,7 @@ do RH_tables.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* BR file variables
+* BR file variables
 
 * open dataset
 use "$datapath//$brdata.dta", clear
@@ -67,10 +68,6 @@ do "RH_age_period.do"
 *
 do RH_DEL.do
 *Purpose: 	Code Delivery indicators
-
-*
-*do RH_PNC_nb.do
-*Purpose: 	Code PNC indicators for newborns 
 
 do RH_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. This will output 2 excel files for these indicators.

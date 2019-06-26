@@ -4,10 +4,11 @@ Purpose: 				Master file for the Family Planning Chapter.
 						The master file will call other do files that will produce the FP indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf 
-Date last modified:		Jan 31 by Shireen Assaf
+Date last modified:		June 20 by Courtney Allen to add discontinuation section
 
 Notes:					Indicators for men only cover knowledge of contraceptive methods and exposure to family planning messages.
 *******************************************************************************************************************************/
+set more off
 
 *local user 39585	//change employee id number to personalize path
 local user 33697
@@ -26,13 +27,12 @@ global mrdata "UGMR7AFL"
 * MMMR71FL TJMR70FL GHMR72FL UGMR7AFL
 ****************************
 
-* IR file variables
+/* IR file variables
 
 * open dataset
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
-gen srvy=substr("$irdata", 1, 6)
 
 do FP_KNOW.do
 *Purpose: 	Code contraceptive knowledge variables
@@ -40,23 +40,20 @@ do FP_KNOW.do
 do FP_USE.do
 *Purpose: 	Code contraceptive use variables (ever use and current use)
 
-do FP_DISCONT.do
-*Purpose: 	Code discontinuation variables (discontinuaution rates and reasons for discontinuation)
-
 do FP_NEED.do
-*Purpose: 	Code contraceptive unmet need, met need, demand satisfied, intention to use
+* Purpose: 	Code contraceptive unmet need, met need, demand satisfied, intention to use
 
 do FP_COMM.do
-*Purpose: 	Code communication related indicators: exposure to FP messages, decision on use/nonuse, discussions. 
+* Purpose: 	Code communication related indicators: exposure to FP messages, decision on use/nonuse, discussions. 
 
 do FP_tables.do
-*Purpose: 	Produce tables for indicators computed from above do files. 
+* Purpose: 	Produce tables for indicators computed from above do files. 
 
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-* MR file variables
+/* MR file variables
 
 * open dataset
 use "$datapath//$mrdata.dta", clear
@@ -65,7 +62,6 @@ gen file=substr("$mrdata", 3, 2)
 
 do FP_KNOW.do
 *Purpose: 	Code contraceptive knowledge variables
-
 
 do FP_COMM.do
 *Purpose: 	Code communication related indicators: exposure to FP messages indicators only for men. 
@@ -76,3 +72,19 @@ do FP_tables.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
+* Discontinuation rates - need IR file
+
+* open dataset
+use "$datapath//$irdata.dta", clear
+
+gen file=substr("$irdata", 3, 2)
+
+do FP_EVENTS.do
+* Purpose: 	Create an event file where the episode of contraceptive use is the unit of analysis.
+
+do FP_DISCONT.do
+* Purpose: 	Code discontinuation variables (discontinuaution rates and reasons for discontinuation) and create discontinuation tables
+
+*/
+*******************************************************************************************************************************
+*******************************************************************************************************************************

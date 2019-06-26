@@ -3,7 +3,7 @@ Program: 			CM_RISK_birth.do
 Purpose: 			Code to compute high risk births
 Data inputs: 		BR survey list
 Data outputs:		coded variables
-Author:				Thomas Pullum with modifications by Shireen Assaf
+Author:				Thomas Pullum and modified by Shireen Assaf for the code share project
 Date last modified: April 29 2019 by Shireen Assaf 
 *****************************************************************************************************/
 

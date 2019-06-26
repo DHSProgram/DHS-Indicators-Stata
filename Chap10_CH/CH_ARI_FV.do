@@ -16,12 +16,16 @@ ch_ari_care_day		"Advice or treatment sought for ARI symptoms on the same or nex
 
 ch_ari_govh			"ARI treatment sought from government hospital among children with ARI"
 ch_ari_govh_trt		"ARI treatment sought from government hospital among children with ARI that sought treatment"
+ch_ari_govcent 		"ARI treatment sought from government health center among children with ARI"
+ch_ari_govcent_trt 	"ARI treatment sought from government health center among children with ARI that sought treatment"
+ch_ari_pclinc 		"ARI treatment sought from private hospital/clinic among children with ARI"
+ch_ari_pclinc_trt 	"ARI treatment sought from private hospital/clinic  among children with ARI that sought treatment"
 ch_ari_pdoc			"ARI treatment sought from private doctor among children with ARI"
 ch_ari_pdoc_trt		"ARI treatment sought from private doctor among children with ARI that sought treatment"
 ch_ari_pharm		"ARI treatment sought from pharmacy among children with ARI"
 ch_ari_pharm_trt	"ARI treatment sought from pharmacy among children with ARI that sought treatment"
 
-ch_fev				"Fever symptoms in the 2 weeks before the survey"
+ch_fever			"Fever symptoms in the 2 weeks before the survey"
 ch_fev_care			"Advice or treatment sought for fever symptoms"
 ch_fev_care_day		"Advice or treatment sought for ARI symptoms on the same or next day"
 ch_fev_antib		"Antibiotics taken for fever symptoms"
@@ -70,17 +74,23 @@ label var ch_ari "ARI symptoms in the 2 weeks before the survey"
 	
 //ARI care-seeking
 *** this is country specific and the footnote for the final table needs to be checked to see what sources are included. 
-*** the code below only excludes shop (h32s) and traditional practitioner (h32t). Some surveys also exclude pharmacies (h32k) or other sources.
+*** the code below only excludes  and traditional practitioner (h32t). Some surveys also exclude pharmacies (h32k), shop (h32s) or other sources.
 gen ch_ari_care=0 if ch_ari==1
-foreach c in a b c d e f g h i j k l m n o p q r {
+foreach c in a b c d e f g h i j k l m n o p q r s u v w x {
 replace ch_ari_care=1 if ch_ari==1 & h32`c'==1
 }
-* If you want to also remove pharmacy as a source of treatment (country specific condition)
+/* If you want to also remove pharmacy for example as a source of treatment (country specific condition) you can remove 
+* the 'k in the list on line 79 or do the following.
 replace ch_ari_care=0 if ch_ari==1 & h32k==1
 replace ch_ari_care =. if b5==0
+*/
 label var ch_ari_care "Advice or treatment sought for ARI symptoms"
 
+
 //ARI care-seeking same or next day
+*for surveys that do not have the variable h46b
+cap gen h46b=.
+
 gen ch_ari_care_day=0 if ch_ari==1
 replace ch_ari_care_day=1 if ch_ari==1 & h46b<2
 replace ch_ari_care_day =. if b5==0
@@ -105,7 +115,8 @@ if h46b_included==0{
 replace ch_ari_care_day=.
 }
 
-***ARI treatment by source (among children with ARI symptoms)
+*** ARI treatment by source *** 
+* Two population bases: 1. among children with ARI symptoms, 2. among children with ARI symptoms that sought treatment
 * This is country specific and needs to be checked to produce the specific source of interest. 
 * Some sources are coded below and the same logic can be used to code other sources. h32a-z indicates the source.
 
@@ -119,6 +130,28 @@ gen ch_ari_govh_trt=0 if ch_ari_care==1
 replace ch_ari_govh_trt=1 if ch_ari_care==1 & h32a==1
 replace ch_ari_govh_trt =. if b5==0
 label var ch_ari_govh_trt "ARI treatment sought from government hospital among children with ARI that sought treatment"
+
+//ARI treamtment in government health center
+gen ch_ari_govcent=0 if ch_ari==1
+replace ch_ari_govcent=1 if ch_ari==1 & h32b==1
+replace ch_ari_govcent =. if b5==0
+label var ch_ari_govcent "ARI treatment sought from government health center among children with ARI"
+
+gen ch_ari_govcent_trt=0 if ch_ari_care==1
+replace ch_ari_govcent_trt=1 if ch_ari_care==1 & h32b==1
+replace ch_ari_govcent_trt =. if b5==0
+label var ch_ari_govcent_trt "ARI treatment sought from government health center among children with ARI that sought treatment"
+
+//ARI treatment from a private hospital/clinic
+gen ch_ari_pclinc=0 if ch_ari==1
+replace ch_ari_pclinc=1 if ch_ari==1 & h32j==1
+replace ch_ari_pclinc =. if b5==0
+label var ch_ari_pclinc "ARI treatment sought from private hospital/clinic among children with ARI"
+
+gen ch_ari_pclinc_trt=0 if ch_ari_care==1
+replace ch_ari_pclinc_trt=1 if ch_ari_care==1 & h32j==1
+replace ch_ari_pclinc_trt =. if b5==0
+label var ch_ari_pclinc_trt "ARI treatment sought from private hospital/clinic  among children with ARI that sought treatment"
 
 //ARI treatment from a private doctor
 gen ch_ari_pdoc=0 if ch_ari==1
@@ -146,34 +179,35 @@ label var ch_ari_pharm_trt "ARI treatment sought from a pharmacy among children 
 *** Fever indicators ***
 
 //Fever 
-gen ch_fev=0
-cap replace ch_fev=1 if h22==1 
-replace ch_fev =. if b5==0
-label var ch_fev "Fever symptoms in the 2 weeks before the survey"
+gen ch_fever=0
+cap replace ch_fever=1 if h22==1 
+replace ch_fever =. if b5==0
+label var ch_fever "Fever symptoms in the 2 weeks before the survey"
 	
 //Fever care-seeking
 *** this is country specific and the footnote for the final table needs to be checked to see what sources are included. 
-*** the code below only excludes shop (h32s) and traditional practitioner (h32t). Some surveys also exclude pharmacies (h32k) or other sources.
-gen ch_fev_care=0 if ch_fev==1
-foreach c in a b c d e f g h i j k l m n o p q r {
-replace ch_fev_care=1 if ch_fev==1 & h32`c'==1
+*** the code below only excludes traditional practitioner (h32t). Some surveys also exclude pharmacies (h32k), shop (h32s) or other sources.
+gen ch_fev_care=0 if ch_fever==1
+foreach c in a b c d e f g h i j k l m n o p q r s u v w x {
+replace ch_fev_care=1 if ch_fever==1 & h32`c'==1
 }
-* If you want to also remove pharmacy as a source of treatment (country specific condition)
-replace ch_fev_care=0 if ch_fev==1 & h32k==1
-
+/* If you want to also remove pharmacy for example as a source of treatment (country specific condition) you can remove 
+* the 'k in the list on line 185 or do the following.
+replace ch_fev_care=0 if ch_fever==1 & h32k==1
+*/
 replace ch_fev_care =. if b5==0
 label var ch_fev_care "Advice or treatment sought for fever symptoms"
 
 //Fever care-seeking same or next day
-gen ch_fev_care_day=0 if ch_fev==1
-replace ch_fev_care_day=1 if ch_fev==1 & ch_fev_care==1 & h46b<2
+gen ch_fev_care_day=0 if ch_fever==1
+replace ch_fev_care_day=1 if ch_fever==1 & ch_fev_care==1 & h46b<2
 replace ch_fev_care_day =. if b5==0
-label var ch_fev_care_day "Advice or treatment sought for ARI symptoms on the same or next day"
+label var ch_fev_care_day "Advice or treatment sought for fever symptoms on the same or next day"
 
 //Fiven antibiotics for fever 
-gen ch_fev_antib=0 if ch_fev==1
-replace ch_fev_antib=1 if ch_fev==1 & (h37i==1 | h37j==1)
-cap replace ch_fev_antib=1 if ch_fev==1 & (ml13i==1 | ml13j ==1)
+gen ch_fev_antib=0 if ch_fever==1
+cap replace ch_fev_antib=1 if ch_fever==1 & (h37i==1 | h37j==1)
+cap replace ch_fev_antib=1 if ch_fever==1 & (ml13i==1 | ml13j ==1)
 replace ch_fev_antib =. if b5==0
 label var ch_fev_antib "Antibiotics taken for fever symptoms"
 

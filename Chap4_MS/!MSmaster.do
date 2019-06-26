@@ -1,16 +1,18 @@
 /*******************************************************************************************************************************
-Program: 				FFmaster.do
-Purpose: 				Master file for the Fertility Preferences Chapter. 
-						The master file will call other do files that will produce the FF indicators and produce tables.
+Program: 				MSmaster.do
+Purpose: 				Master file for the Marriage and Sexual Activity Chapter. 
+						The master file will call other do files that will produce the MS indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				
 Date last modified:		
 
 *******************************************************************************************************************************/
 
+set more off
+
 *local user 39585	//change employee id number to personalize path
 local user 33697
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap6_FP"
+cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap4_FP"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 
@@ -31,10 +33,13 @@ use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
 
-do FF_PREF.do
-*Purpose: 	Code desire for children, ideal number of children, and wanted fertility
+do MS_MAR.do
+*Purpose: 	Code marital status variables
 
-do FF_tables.do
+do MS_SEX.do
+*Purpose: 	Code sexual activity variables
+
+do MS_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 
 */
@@ -48,10 +53,13 @@ use "$datapath//$mrdata.dta", clear
 
 gen file=substr("$mrdata", 3, 2)
 
-do FF_PREF.do
-*Purpose: 	Code desire for children, ideal number of children, and wanted fertility
+do MS_MAR.do
+*Purpose: 	Code marital status variables
 
-do FF_tables.do
+do MS_SEX.do
+*Purpose: 	Code sexual activity variables
+
+do MS_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 */
 *******************************************************************************************************************************

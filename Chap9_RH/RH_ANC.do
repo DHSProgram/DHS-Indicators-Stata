@@ -147,10 +147,11 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	label var rh_anc_iron "Took iron tablet/syrup during pregnancy of last birth"
 	
 //Took intestinal parasite drugs 
-	recode m60_1 (1=1 "yes") (else=0) if v208>0, gen(rh_anc_parast)
-	replace rh_anc_parast=. if age>=period  
-	label var rh_anc_parast "Took intestinal parasite drugs during pregnancy of last birth"
-	
+	cap recode m60_1 (1=1 "yes") (else=0) if v208>0, gen(rh_anc_parast)
+	cap replace rh_anc_parast=. if age>=period  
+	cap label var rh_anc_parast "Took intestinal parasite drugs during pregnancy of last birth"
+	* for surveys that do not have this variable
+	cap gen rh_anc_parast=.
 	
 * Among women who had ANC for their most recent birth	
 
@@ -181,6 +182,24 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	
 //neonatal tetanus
 	* this was copied from the DHS user forum. Code was prepared by Lindsay Mallick.
+	
+	*older surverys do not have this indicator. m1a_1 (number of tetanus injections before pregnancy) is needed to compute this indicator
+	scalar m1a_1_included=1
+		capture confirm numeric variable m1a_1, exact 
+		if _rc>0 {
+		* b19 is not present
+		scalar m1a_1_included=0
+		}
+		if _rc==0 {
+		* b19 is present; check for values
+		summarize m1a_1
+		  if r(sd)==0 | r(sd)==. {
+		  scalar m1a_1_included=0
+		  }
+		}
+		
+* for surveys that have this indicator
+if m1a_1_included==1 {	
 	gen tet2lastp = 0 
     replace tet2lastp = 1 if m1_1 >1 & m1_1<8
 	
@@ -207,6 +226,13 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	gen rh_anc_neotet = ttprotect
 	replace rh_anc_neotet = . if  bidx_01!=1 | age>=period 
 	label var rh_anc_neotet "Protected against neonatal tetanus"
+	
+	}
+
+*for surveys that do not have this indicator, generate indicator as missing value. 
+if m1a_1_included==0 {	
+gen rh_anc_neotet=.
+}
 
 	************************************************************************
 	

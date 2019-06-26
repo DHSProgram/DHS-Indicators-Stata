@@ -6,6 +6,7 @@ Data outputs:			coded variables and table output on screen and in excel tables.
 Author: 				Shireen Assaf			
 Date last modified:		April 30, 2019
 *******************************************************************************************************************************/
+set more off
 
 *local user 39585	//change employee id number to personalize path
 global user 33697

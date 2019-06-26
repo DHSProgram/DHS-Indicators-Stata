@@ -7,6 +7,7 @@ Author:
 Date last modified:		
 
 *******************************************************************************************************************************/
+set more off
 
 *local user 39585	//change employee id number to personalize path
 local user 33697

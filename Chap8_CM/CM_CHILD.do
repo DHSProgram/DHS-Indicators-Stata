@@ -3,7 +3,7 @@ Program: 			CM_CHILD.do
 Purpose: 			Produce child mortality indicators 
 Data inputs: 		IR survey list
 Data outputs:		coded variables
-Author:				Tom Pullum, modified for the code share project by Shireen Assaf
+Author:				Tom Pullum and modified by Shireen Assaf for the code share project
 Date last modified: April 1 2019 by Shireen Assaf 
 Note:				The program will produce a file "`CNPH'_mortality_rates_with_ci.dta" which can be used to export the results, 
 					where `CNPH' is the two letter country code followed by the 2 character survey phase, ex: UG7A . 

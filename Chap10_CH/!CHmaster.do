@@ -3,10 +3,11 @@ Program: 				CHmaster.do
 Purpose: 				Master file for the Child Health Chapter. 
 						The master file will call other do files that will produce the CH indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
-Author: 				
-Date last modified:		
+Author: 				Shireen Assaf	
+Date last modified:		May 14 2019 by Shireen Assaf
 
 *******************************************************************************************************************************/
+set more off
 
 *local user 39585	//change employee id number to personalize path
 local user 33697
@@ -30,13 +31,31 @@ global irdata "UGIR7AFL"
 use "$datapath//$krdata.dta", clear
 
 gen file=substr("$krdata", 3, 2)
-gen srvy=substr("$krdata", 1, 6)
 
+*** Child's age ***
+gen age = v008 - b3
+	* to check if survey has b19, which should be used instead to compute age. 
+	scalar b19_included=1
+		capture confirm numeric variable b19, exact 
+		if _rc>0 {
+		* b19 is not present
+		scalar b19_included=0
+		}
+		if _rc==0 {
+		* b19 is present; check for values
+		summarize b19
+		  if r(sd)==0 | r(sd)==. {
+		  scalar b19_included=0
+		  }
+		}
+	if b19_included==1 {
+	drop age
+	gen age=b19
+	}
+**************************
+	
 do CH_SIZE.do
 *Purpose: 	Code child size indicators
-
-do CH_VAC.do
-*Purpose: 	Code vaccination indicators
 
 do CH_ARI_FV.do
 *Purpose: 	Code ARI indicators
@@ -44,8 +63,15 @@ do CH_ARI_FV.do
 do CH_DIAR.do
 *Purpose: 	Code diarrhea indicators
 
-*do CH_tables.do
+do CH_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
+
+do CH_VAC.do
+*Purpose: 	Code vaccination indicators
+*Note: This do file drops children that are not in a specific age group. 
+
+do CH_tables_vac.do
+*Purpose: 	Produce tables for vaccination indicators.
 
 */
 *******************************************************************************************************************************
@@ -53,7 +79,7 @@ do CH_DIAR.do
 
 * IR file variables
 
-/* open dataset
+* open dataset
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
@@ -61,7 +87,7 @@ gen file=substr("$irdata", 3, 2)
 do CH_KNOW_ORS.do
 *Purpose: 	Code knowledge of ORS
 
-*do CH_tables.do
+do CH_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 
 */

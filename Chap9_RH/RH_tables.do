@@ -8,7 +8,7 @@ Date last modified: Jan 9 2019 by Shireen Assaf
 	1. 	Tables_ANCvisits:	Contains the tables for ANC provider, ANC skilled provider, 
 							ANC number of visits, and timing of ANC visit by background variables
 	2.	Tables_ANCcomps: 	Contains tables for all ANC components.
-	3.	Tables_probs: 		Contains the tables for problems accessing health care
+	3.	Tables_Probs: 		Contains the tables for problems accessing health care
 	4.	Tables_PNC:			Contains the tables for the PNC indicators for women and newborns
 	5.	Tables_Deliv:		Contains the tables for the delivery indicators
 *****************************************************************************************************/
@@ -364,7 +364,7 @@ tabout v025 v106 v024 v190 rh_pnc_nb_pv using Tables_PNC.xls [iw=wt] , c(row) f(
 */
 
 
-* Indicators for problems accessing health care: excel file Tables_probs will be produced
+* Indicators for problems accessing health care: excel file Tables_Probs will be produced
 ********************************************************************************************
 //problem permission to go
 
@@ -381,7 +381,7 @@ tab v106 rh_prob_permit [iw=wt], row nofreq
 tab v190 rh_prob_permit [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v106 v024 v190 rh_prob_permit using Tables_probs.xls [iw=wt] , c(row) f(1) replace 
+tabout v025 v106 v024 v190 rh_prob_permit using Tables_Probs.xls [iw=wt] , c(row) f(1) replace 
 */
 ****************************************************
 //problem getting money
@@ -399,7 +399,7 @@ tab v106 rh_prob_money [iw=wt], row nofreq
 tab v190 rh_prob_money [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v106 v024 v190 rh_prob_money using Tables_probs.xls [iw=wt] , c(row) f(1) append 
+tabout v025 v106 v024 v190 rh_prob_money using Tables_Probs.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //problem distance
@@ -417,7 +417,7 @@ tab v106 rh_prob_dist [iw=wt], row nofreq
 tab v190 rh_prob_dist [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v106 v024 v190 rh_prob_dist using Tables_probs.xls [iw=wt] , c(row) f(1) append 
+tabout v025 v106 v024 v190 rh_prob_dist using Tables_Probs.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //problem don't want to go alone
@@ -435,7 +435,7 @@ tab v106 rh_prob_alone [iw=wt], row nofreq
 tab v190 rh_prob_alone [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v106 v024 v190 rh_prob_alone using Tables_probs.xls [iw=wt] , c(row) f(1) append 
+tabout v025 v106 v024 v190 rh_prob_alone using Tables_Probs.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //at least one problem
@@ -453,7 +453,7 @@ tab v106 rh_prob_minone [iw=wt], row nofreq
 tab v190 rh_prob_minone [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v106 v024 v190 rh_prob_minone using Tables_probs.xls [iw=wt] , c(row) f(1) append 
+tabout v025 v106 v024 v190 rh_prob_minone using Tables_Probs.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 

@@ -3,10 +3,11 @@ Program: 				NTmaster.do
 Purpose: 				Master file for the Nutrition Chapter. 
 						The master file will call other do files that will produce the NT indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
-Author: 				
+Author: 				Shireen Assaf
 Date last modified:		
 
 *******************************************************************************************************************************/
+set more off
 
 *local user 39585	//change employee id number to personalize path
 local user 33697

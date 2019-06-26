@@ -23,6 +23,8 @@ fp_demsat_any			"Demand satisfied by any method"
 fp_future_use			"Intention of use of contraception in the future among non-users"
 ----------------------------------------------------------------------------*/
 
+gen srvy=substr("$irdata", 1, 6)
+
 * check if unmet need variable v626a is present
 scalar v626a_included=1
 		capture confirm numeric variable v626a, exact 

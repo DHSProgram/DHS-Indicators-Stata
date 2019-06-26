@@ -25,12 +25,11 @@ ev906  		"Married at end of episode"
 /----------------------------------------------------------------------------*/
 
 
-cd "C:\Users\39585\ICF\Analysis - Shared Resources\Data\DHSdata"
-global datalist "NPIR7HFL"
+//SETUP
+	//keep minimal variables due
+	keep caseid v001 v002 v003 v005 v007 v008 v011 v017 v018 v019 v021 v023 v101 v102 v106 v190 vcal_*
 
-
-use npir7hfl.dta, clear
-//SETUP - set up which calendar columns to look at - column numbers can vary across phases of DHS
+	//set up which calendar columns to look at - column numbers can vary across phases of DHS
 	local col1 1 // method use and pregnancies - always column 1
 	local col2 2 // reasons for discontinuation - usually column 2
 	local col3 3 // marriage - when it exists it is usually column 3
@@ -58,12 +57,12 @@ use npir7hfl.dta, clear
 
 //PART 1 
 
-		/****************************************************
+		/*---------------------------------------------------
 		Convert calendar into separate variables per month.
 		Starting at the chronological beginning of the 
 		calendar, episodes are counted when there is a change
 		from one month to another.
-		****************************************************/
+		---------------------------------------------------*/
 
 	//set length of calendar
 	local vcal_len = strlen(vcal_`col1'[1])	
@@ -106,13 +105,13 @@ use npir7hfl.dta, clear
 
 //PART 2 
 		
-		/****************************************************
+		/*---------------------------------------------------
 		Reshape data into a file with one record per month
 		of the calendar.
-		****************************************************/
+		---------------------------------------------------*/
 
 	//drop the calendar variables now we have the separate month by month variables
-	drop vcal_ //eps prev_vcal1
+	drop vcal_* eps prev_vcal1
 
 	//reshape the new month by month variables into a long format
 	reshape long ev004 vcal1_ vcal2_ `vcal3_', i(caseid) j(i)
@@ -126,10 +125,10 @@ use npir7hfl.dta, clear
 
 //PART 3
 		
-		/****************************************************
+		/*---------------------------------------------------
 		Calculate CMC for each month and drop months beyond 
 		the month of interview.
-		****************************************************/
+		---------------------------------------------------*/
 	
 	//create the century month code (CMC) for each month
 	gen cmc=v017+i-1
@@ -149,26 +148,26 @@ use npir7hfl.dta, clear
 
 //PART 4
 
-		/****************************************************
+		/*---------------------------------------------------
 		Convert from a single month per record to an event 
 		per record. Each event will have newly created 
 		variables containing the start (ev900) and end (ev901)
 		dates of the event as well as the duration (ev901a)
 		of that event.
-		****************************************************/
+		---------------------------------------------------*/
 
 	//collapse the episodes within each case, keeping start and end, the event code,
-	//and other useful information
-	collapse (first) v001 v002 v003 v005 v007 v008 v011 v017 v018 v019 v021 v022 v023 v024 v025 v101 v102 v106 v190 ///
+	//and other useful information (this list will be similar to the variables kept in beginning on line 30)
+	collapse (first) v001 v002 v003 v005 v007 v008 v011 v017 v018 v019 v021 v023 v101 v102 v106 v190 ///
 	  (first) ev900=cmc (last) ev901=cmc (count) ev901a=cmc ///
 	  (last) ev902a=vcal1_ ev903a=vcal2_ `ev906', by(caseid ev004)
 
 	//replace the variable label for all of the v//variables
-	foreach v of varlist v{
+	foreach v of varlist v*{
 		label variable `v' `"`l`v''"'
 		}
 	//and the value labels for v101 v102 v106 v190
-	foreach v of varlist v1{ 
+	foreach v of varlist v1*{ 
 		label val `v' ``v'lbl'
 		}
 
@@ -184,7 +183,7 @@ use npir7hfl.dta, clear
 
 //PART 5
 
-		/*********************************************************
+		/*---------------------------------------------------
 		Convert the event string variable for the episode (ev902a) 
 		to numeric (ev902)
 		
@@ -198,7 +197,7 @@ use npir7hfl.dta, clear
 		codes and may mean something different in earlier surveys. 
 		Some of the codes are survey specific so this will need 
 		adjusting.
-		**********************************************************/
+		---------------------------------------------------*/
 
 	//tab vcal1_ to see the full list of codes to handle for the survey you are using
 	local methodlist = "123456789WNALCFEMS~"
@@ -223,10 +222,10 @@ use npir7hfl.dta, clear
 
 //PART 6
 
-		/****************************************************
+		/*---------------------------------------------------
 		Convert the discontinuation string variable for the 
 		episode (ev903a) to numeric (ev903).
-		****************************************************/
+		---------------------------------------------------*/
 	
 	//set up a list of codes used in the calendar
 	//use a tilde (~) to mark gaps in the coding that are not used for this survey 
@@ -249,9 +248,9 @@ use npir7hfl.dta, clear
 
 //PART 7
 
-		/****************************************************
+		/*---------------------------------------------------
 		Capture the prior and next events and their durations.
-		****************************************************/
+		---------------------------------------------------*/
 
 	//capture the previous event and its duration for this respondent
 	by caseid: gen ev904  = ev902[_n-1]  if _n > 1
@@ -264,9 +263,9 @@ use npir7hfl.dta, clear
 
 //PART 8
 
-		/****************************************************
+		/*---------------------------------------------------
 		Label the events file variables
-		****************************************************/
+		---------------------------------------------------*/
 
 	//label the event file variables and values
 	label variable ev902  "Event code"
@@ -328,10 +327,10 @@ use npir7hfl.dta, clear
 
 //PART 9
 
-		/****************************************************
+		/*---------------------------------------------------
 		Convert marriage codes (ev906a) to numeric (ev906),
 		if marriage code exists
-		****************************************************/
+		---------------------------------------------------*/
 	
 	//confirm existence of marriage variable
 	capture confirm variable ev906a
@@ -350,11 +349,11 @@ use npir7hfl.dta, clear
 
 //PART 10
 	
-	/****************************************************
+	/*---------------------------------------------------
 	Save events file. See begining of do file for list of
 	created variables.
-	****************************************************/
+	---------------------------------------------------*/
 
 	//save the events file
-	save "C:\Users\39585\OneDrive - ICF\TEMP\testevents.dta", replace
+	save eventsfile.dta, replace
 
