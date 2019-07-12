@@ -23,7 +23,7 @@ rh_pnc_nb_pv 		"Provider for newborn's PNC check"
 ** This is checked using variable m51_1 which was used in older surveys
 ** For some surveys it was m51a_1 not m51_1
 	scalar drop _all
-	cap gen m51_1=m51a_1
+	*cap gen m51_1=m51a_1
 
 ** To check if survey has m51_1, which was in the surveys before 2005. 
 
@@ -44,7 +44,7 @@ rh_pnc_nb_pv 		"Provider for newborn's PNC check"
 *** Mother's PNC ***		
 		
 if m51_included==1 {
-cap drop rh_pnc_wm_timing
+cap drop ta
 
 //PNC timing for mother	
 	recode m51_1 (100/103 = 1 "<4hr") (104/123 200 = 2 "4-23hrs") (124/171 201/202 = 3 "1-2 days") ///

@@ -575,20 +575,20 @@ tabout v025 v106 v024 v190 rh_del_cestime using Tables_Deliv.xls [iw=wt] , c(row
 ****************************************************
 //during of stay after delivery
 
-*residence
-tab v025 rh_del_stay [iw=wt], row nofreq 
+*Vaginal births
+tab rh_del_stay if rh_del_cestime ==0 [iw=wt]
 
-*region
-tab v024 rh_del_stay [iw=wt], row nofreq 
+*C-section births
+tab rh_del_stay if rh_del_cestime !=0 [iw=wt]
 
-*education
-tab v106 rh_del_stay [iw=wt], row nofreq 
-
-*wealth
-tab v190 rh_del_stay [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v106 v024 v190 rh_del_stay using Tables_Deliv.xls [iw=wt] , c(row) f(1) append 
+* Vaginal births
+tabout rh_del_stay if rh_del_cestime ==0 using Tables_Deliv.xls [iw=wt] , c(cell) f(1) append 
+
+* C-section births
+* For older surveys the indicator rh_del_cestime is not available so this tabout would not produce results.
+cap tabout rh_del_stay if rh_del_cestime !=0 using Tables_Deliv.xls [iw=wt] , c(cell) f(1) append 
 */
 ****************************************************
 }

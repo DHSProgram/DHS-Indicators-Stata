@@ -11,7 +11,7 @@ set more off
 
 *local user 39585	//change employee id number to personalize path
 global user 33697
-cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap6_FF"
+cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap06_FF"
 
 global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 

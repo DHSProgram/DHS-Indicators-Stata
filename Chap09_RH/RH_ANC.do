@@ -28,11 +28,12 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 *** ANC visit indicators ***
 
 //ANC by type of provider
-	gen rh_anc_pv = 5 if m2a_1! = .
+	gen rh_anc_pv = 6 if m2a_1! = .
 	replace rh_anc_pv 	= 4 	if m2f_1 == 1 | m2g_1 == 1 | m2h_1 == 1 | m2i_1 == 1 | m2j_1 == 1 | m2k_1 == 1 | m2l_1 == 1 | m2m_1 == 1
 	replace rh_anc_pv 	= 3 	if m2c_1 == 1 | m2d_1 == 1 | m2e_1 == 1
 	replace rh_anc_pv 	= 2 	if m2b_1 == 1
 	replace rh_anc_pv 	= 1 	if m2a_1 == 1
+	replace rh_anc_pv 	= 5 	if m2a_1 == 9
 	replace rh_anc_pv	= .		if age>=period
 	
 	label define rh_anc_pv ///
@@ -40,17 +41,18 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	2 "Nurse/midwife"	///
 	3 "Other health worker" ///
 	4 "TBA/other/relative"		///
-	5 "No ANC"	
+	5 "Missing" ///
+	6 "No ANC" 
 	label val rh_anc_pv rh_anc_pv
 	label var rh_anc_pv "Person providing assistance during ANC"
 	
 //ANC by skilled provider
-	recode rh_anc_pv (1/3 = 1 "Skilled provider") (4/5 = 0 "Unskilled provider") , gen(rh_anc_pvskill)
+	recode rh_anc_pv (1/3 = 1 "Skilled provider") (4/6 = 0 "Unskilled provider") , gen(rh_anc_pvskill)
 	replace rh_anc_pvskill = . if age>=period
 	label var rh_anc_pvskill "Skilled assistance during ANC"	
 	
 //Number of ANC visits in 4 categories that match the table in the final report
-	recode m14_1 (0=0 "none") (1=1)  (2 3=2 "2-3") (4/90=3 "4+") (else=9 "don't know/missing"), gen(rh_anc_numvs)
+	recode m14_1 (0=0 "none") (1=1) (2 3=2 "2-3") (4/90=3 "4+") (else=9 "don't know/missing"), gen(rh_anc_numvs)
 	replace rh_anc_numvs=. if age>=period  
 	label var rh_anc_numvs "Number of ANC visits"
 		
@@ -63,32 +65,32 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	replace rh_anc_moprg=. if age>=period  
 	label var rh_anc_moprg "Number of months pregnant at  time of first ANC visit"
 
-//ANC before 4 months **
+//ANC before 4 months
 	recode rh_anc_moprg (0 2/5=0 "no") (1=1 "yes"), gen(rh_anc_4mo)
 	lab var rh_anc_4mo "Attended ANC <4 months of pregnancy"
 
-//Median number of months pregnant at tie of 1st ANC
+//Median number of months pregnant at time of 1st ANC
 	
 	* Any ANC visits (for denominator)
 	recode m14_1 (0 99 = 0 "None") (1/60 98 = 1 "1+ ANC visit"), g(ancany)
 	
-	*recode m13_1 (98=9), gen(anctiming)
+	recode m13_1 (98 99=.), gen(anctiming)
 		
 	* Total
-	summarize m13_1 [fweight=v005], detail
+	summarize anctiming [fweight=v005], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1
-	replace dummy=1 if m13_1<sp50 & ancany==1
+	replace dummy=1 if anctiming<sp50 & ancany==1
 	summarize dummy [fweight=v005]
 	scalar sL=r(mean)
 	drop dummy
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1
-	replace dummy=1 if m13_1 <=sp50 & ancany==1
+	replace dummy=1 if anctiming <=sp50 & ancany==1
 	summarize dummy [fweight=v005]
 	scalar sU=r(mean)
 	drop dummy
@@ -97,19 +99,19 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	label var rh_anc_median "Total- Median months pregnant at first visit"
 	
 	* Urban
-	summarize m13_1 if v025==1 [fweight=v005], detail
+	summarize anctiming if v025==1 [fweight=v005], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1 & v025==1 
-	replace dummy=1 if m13_1<sp50 & ancany==1 & v025==1 
+	replace dummy=1 if anctiming<sp50 & ancany==1 & v025==1 
 	summarize dummy [fweight=v005]
 	scalar sL=r(mean)
 
 	replace dummy=. 
 	replace dummy=0 if ancany==1 & v025==1 
-	replace dummy=1 if m13_1 <=sp50 & ancany==1 & v025==1 
+	replace dummy=1 if anctiming <=sp50 & ancany==1 & v025==1 
 	summarize dummy [fweight=v005]
 	scalar sU=r(mean)
 	drop dummy
@@ -118,19 +120,19 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	label var rh_anc_median_urban "Urban- Median months pregnant at first visit"
 	
 	* Rural
-	summarize m13_1 if v025==2 [fweight=v005], detail
+	summarize anctiming if v025==2 [fweight=v005], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1  & v025==2 
-	replace dummy=1 if m13_1<sp50 & ancany==1  & v025==2 
+	replace dummy=1 if anctiming<sp50 & ancany==1  & v025==2 
 	summarize dummy [fweight=v005]
 	scalar sL=r(mean)
 
 	replace dummy=. 
 	replace dummy=0 if ancany==1  & v025==2 
-	replace dummy=1 if m13_1 <=sp50 & ancany==1  & v025==2 
+	replace dummy=1 if anctiming <=sp50 & ancany==1  & v025==2 
 	summarize dummy [fweight=v005]
 	scalar sU=r(mean)
 	drop dummy
@@ -140,14 +142,13 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	
 	
 *** ANC components ***	
-	*(0 8 9=0 "no") 
 //Took iron tablets or syrup
-	recode m45_1 (1=1 "yes") (else=0) if v208>0, gen(rh_anc_iron)
+	recode m45_1 (1=1 "yes") (else=0 "No") if v208>0, gen(rh_anc_iron)
 	replace rh_anc_iron=. if age>=period  
 	label var rh_anc_iron "Took iron tablet/syrup during pregnancy of last birth"
 	
 //Took intestinal parasite drugs 
-	cap recode m60_1 (1=1 "yes") (else=0) if v208>0, gen(rh_anc_parast)
+	cap recode m60_1 (1=1 "yes") (else=0 "No") if v208>0, gen(rh_anc_parast)
 	cap replace rh_anc_parast=. if age>=period  
 	cap label var rh_anc_parast "Took intestinal parasite drugs during pregnancy of last birth"
 	* for surveys that do not have this variable
@@ -158,25 +159,29 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 //Informed of pregnancy complications
 	gen rh_anc_prgcomp = 0 if ancany==1
 	replace rh_anc_prgcomp = 1 if m43_1==1 & ancany==1
+	label values rh_anc_prgcomp yesno
 	label var rh_anc_prgcomp "Informed of pregnancy complications during ANC visit"
 	
 //Blood pressure measured
 	gen rh_anc_bldpres = 0 if ancany==1
 	replace rh_anc_bldpres=1 if m42c_1==1 & ancany==1
+	label values rh_anc_bldpres yesno
 	label var rh_anc_bldpres "Blood pressure was taken during ANC visit"
 	
 //Urine sample taken
 	gen rh_anc_urine = 0 if ancany==1
 	replace rh_anc_urine=1 if m42d_1==1 & ancany==1
+	label values rh_anc_urine yesno
 	label var rh_anc_urine "Urine sample was taken during ANC visit"
 	
 //Blood sample taken
 	gen rh_anc_bldsamp = 0 if ancany==1
 	replace rh_anc_bldsamp = 1 if m42e_1==1 & ancany==1
+	label values rh_anc_bldsamp yesno
 	label var rh_anc_bldsamp "Blood sample was taken during ANC visit"
 	
 //tetnaus toxoid injections
-	recode m1_1 (0 1 8 9 . = 0 "no") (1/7 = 1 "yes"), gen(rh_anc_toxinj)
+	recode m1_1 (0 1 8 9 . = 0 "No") (1/7 = 1 "Yes"), gen(rh_anc_toxinj)
 	replace rh_anc_toxinj = . if age>=period
 	label var rh_anc_toxinj "Received 2+ tetanus injections during last pregnancy"
 	
@@ -234,5 +239,5 @@ if m1a_1_included==0 {
 gen rh_anc_neotet=.
 }
 
-	************************************************************************
+************************************************************************
 	

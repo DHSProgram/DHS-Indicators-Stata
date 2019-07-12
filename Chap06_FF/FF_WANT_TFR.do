@@ -756,7 +756,7 @@ scalar run_number=0
 
 ***********************
 * Specify the path to the log file and the output files as a scalar; 
-scalar soutpath="C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap6_FF"
+scalar soutpath="C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap06_FF"
 local loutpath=soutpath
 cd "`loutpath'"
 ***********************

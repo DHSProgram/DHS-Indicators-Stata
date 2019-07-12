@@ -36,6 +36,8 @@ rh_prob_minone		"At least one problem in accessing health care"
 //at least one problem
 	gen rh_prob_minone = rh_prob_permit+rh_prob_money+rh_prob_dist+rh_prob_alone
 	replace rh_prob_minone = 1 if rh_prob_minone>1 
+	cap label define yesno 0 "No" 1 "Yes"
+	label values rh_prob_minone yesno
 	label var rh_prob_minone "At least one problem in accessing health care"
 	
  
