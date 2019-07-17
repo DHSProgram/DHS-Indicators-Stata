@@ -28,6 +28,7 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 *** ANC visit indicators ***
 
 //ANC by type of provider
+** Note: Please check the final report for this indicator to determine the categories and adjust the code and label accordingly. 
 	gen rh_anc_pv = 6 if m2a_1! = .
 	replace rh_anc_pv 	= 4 	if m2f_1 == 1 | m2g_1 == 1 | m2h_1 == 1 | m2i_1 == 1 | m2j_1 == 1 | m2k_1 == 1 | m2l_1 == 1 | m2m_1 == 1
 	replace rh_anc_pv 	= 3 	if m2c_1 == 1 | m2d_1 == 1 | m2e_1 == 1
@@ -47,7 +48,8 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	label var rh_anc_pv "Person providing assistance during ANC"
 	
 //ANC by skilled provider
-	recode rh_anc_pv (1/3 = 1 "Skilled provider") (4/6 = 0 "Unskilled provider") , gen(rh_anc_pvskill)
+** Note: Please check the final report for this indicator to determine what provider is considered skilled.
+	recode rh_anc_pv (1/3 = 1 "Skilled provider") (4/6 = 0 "Unskilled/no one") , gen(rh_anc_pvskill)
 	replace rh_anc_pvskill = . if age>=period
 	label var rh_anc_pvskill "Skilled assistance during ANC"	
 	

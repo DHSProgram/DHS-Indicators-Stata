@@ -21,9 +21,10 @@ rh_pnc_nb_pv 		"Provider for newborn's PNC check"
 ** For surveys 2005 or after, postnatal care was asked for both institutional and non-institutional births. 
 ** surveys before 2005 only ask PNC for non-institutional births but assumed women received PNC if they delivered at health facilities	 
 ** This is checked using variable m51_1 which was used in older surveys
-** For some surveys it was m51a_1 not m51_1
-	scalar drop _all
+** If the code doesn not run, perhaps it is because you need to use m51a_1. Uncomment this the next line in that case.
 	*cap gen m51_1=m51a_1
+	
+scalar drop _all
 
 ** To check if survey has m51_1, which was in the surveys before 2005. 
 
