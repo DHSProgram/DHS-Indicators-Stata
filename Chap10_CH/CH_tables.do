@@ -54,7 +54,7 @@ label define smoke 1 "Smokes cigarrettes/tobacco" 2"Does not smoke"
 label values smoke smoke
 
 *cooking fuel
-recode v161 (1/4=1 "electricity/gas") (5=2 "kerosene") (7=3 "charcoal") (8/10=4 "wood/staw/grass/crop") (96=5 "other") (95=6 "no food cooked in house") (97/99=.), gen(fuel)
+recode v161 (1/4=1 "electricity/gas") (5=2 "kerosene") (6=3 "coal") (7=4 "charcoal") (8/10=5 "wood/staw/grass/crop") (11=6 "animal dung") (96=7 "other") (95=8 "no food cooked in house") (97/99=.), gen(fuel)
 
 **************************************************************************************************
 * Indicators for child's size variables
@@ -306,12 +306,6 @@ tab agecats ch_fev_care_day [iw=wt], row nofreq
 
 *Child's sex
 tab b4 ch_fev_care_day [iw=wt], row nofreq 
-
-*mother's smoke status
-tab smoke ch_fev_care_day [iw=wt], row nofreq 
-
-*type of cooking fuel
-tab fuel ch_fev_care_day [iw=wt], row nofreq 
 
 *residence
 tab v025 ch_fev_care_day [iw=wt], row nofreq 
@@ -758,15 +752,15 @@ tab v190 ch_diar_notrt [iw=wt], row nofreq
 tabout agecats b4 v025 v106 v024 v190 ch_diar_notrt using Tables_DIAR.xls [iw=wt], c(row) f(1) append 
 **************************************************************************************************
 *** Source of advice or treatment of Diarrhea ***
-* only the following sources are computed, to get other sources that are country specific, please see the note on these indicators in the CH_ARI_FV.do file
+* only the following sources are computed, to get other sources that are country specific, please see the note on these indicators in the CH_DIAR.do file
 
-* among children with ARI symtoms
+* among children with diarrhea
 tab1 ch_diar_govh ch_diar_govcent ch_diar_pclinc ch_diar_pdoc ch_diar_pharm [iw=wt]
 
 * output to excel
 tabout ch_diar_govh ch_diar_govcent ch_diar_pclinc ch_diar_pdoc ch_diar_pharm using Tables_DIAR.xls [iw=wt], oneway cells(cell) f(1) append 
 
-* among children with ARI symtoms whom advice or treatment was sought
+* among children with diarrhea whom advice or treatment was sought
 tab1 ch_diar_govh_trt ch_diar_govcent_trt ch_diar_pclinc_trt ch_diar_pdoc_trt ch_diar_pharm_trt [iw=wt]	
 
 * output to excel
@@ -777,47 +771,6 @@ tab1 ch_diar_govh_ors ch_diar_govcent_ors ch_diar_pclinc_ors ch_diar_pdoc_ors ch
 
 * output to excel
 tabout ch_diar_govh_ors ch_diar_govcent_ors ch_diar_pclinc_ors ch_diar_pdoc_ors ch_diar_pharm_ors using Tables_DIAR.xls [iw=wt] , oneway cells(cell) f(1) append 
-**************************************************************************************************
-****************************************************************************
-//Disposal of children's stool
-
-*Age in months (this may need to be recoded for this table)
-tab agecats ch_stool_dispose [iw=wt], row nofreq 
-
-*residence
-tab v025 ch_stool_dispose [iw=wt], row nofreq 
-
-*region
-tab v024 ch_stool_dispose [iw=wt], row nofreq 
-
-*education
-tab v106 ch_stool_dispose [iw=wt], row nofreq 
-
-*wealth
-tab v190 ch_stool_dispose [iw=wt], row nofreq 
-
-* output to excel
-tabout agecats v025 v106 v024 v190 ch_stool_dispose using Tables_DIAR.xls [iw=wt], c(row) f(1) append 
-**************************************************************************************************
-//Safe disposal of stool
-
-*Age in months (this may need to be recoded for this table)
-tab agecats ch_stool_safe [iw=wt], row nofreq 
-
-*residence
-tab v025 ch_stool_safe [iw=wt], row nofreq 
-
-*region
-tab v024 ch_stool_safe [iw=wt], row nofreq 
-
-*education
-tab v106 ch_stool_safe [iw=wt], row nofreq 
-
-*wealth
-tab v190 ch_stool_safe [iw=wt], row nofreq 
-
-* output to excel
-tabout agecats v025 v106 v024 v190 ch_stool_safe using Tables_DIAR.xls [iw=wt], c(row) f(1) append 
 **************************************************************************************************
 }
 

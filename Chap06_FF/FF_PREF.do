@@ -35,7 +35,7 @@ replace ff_want_nomore=. if v502!=1
 label var ff_want_nomore "Want no more children"
 
 //Ideal number of children
-recode v613 (6/94=6 "6+") (95/99=9 "non-numeric response"), gen(ff_ideal_num) 
+recode v613 (0=0 "0") (1=1 "1") (2=2 "2") (3=3 "3") (4=4 "4") (5=5 "5") (6/94=6 "6+") (95/99=9 "non-numeric response"), gen(ff_ideal_num) 
 label var ff_ideal_num "Ideal number of children"
 
 //Mean ideal number of children - all women
@@ -70,7 +70,7 @@ replace ff_want_nomore=. if mv502!=1
 label var ff_want_nomore "Want no more children"
 
 //Ideal number of children
-recode mv613 (6/94=6 "6+") (95/99=9 "non-numeric response"), gen(ff_ideal_num) 
+recode mv613 (0=0 "0") (1=1 "1") (2=2 "2") (3=3 "3") (4=4 "4") (5=5 "5") (6/94=6 "6+") (95/99=9 "non-numeric response"), gen(ff_ideal_num) 
 label var ff_ideal_num "Ideal number of children"
 
 //Mean ideal number of children - all men

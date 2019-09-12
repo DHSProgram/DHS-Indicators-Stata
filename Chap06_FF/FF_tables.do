@@ -40,7 +40,7 @@ tabout ff_want_type numch using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) replace
 //Want no more children
 * Residence
 *urban
-tab	ff_want_nomore numch if v025==1 [iw=wt] , col
+tab	ff_want_nomore numch if v025==1 [iw=wt] , col 
 *rural
 tab	ff_want_nomore numch if v025==2 [iw=wt] , col
 
@@ -69,30 +69,30 @@ tab	ff_want_nomore numch if v190==5 [iw=wt] , col
 
 * output to excel
 *urban
-tabout ff_want_nomore numch if v025==1 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v025==1 using Tables_Pref_wm.xls [iw=wt] , c(col) h1("urban") f(1) append 
 *rural
-tabout ff_want_nomore numch if v025==2 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v025==2 using Tables_Pref_wm.xls [iw=wt] , c(col) h1("rural") f(1) append 
 *no education
-tabout ff_want_nomore numch if v106==0 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v106==0 using Tables_Pref_wm.xls [iw=wt] , c(col) h1("no education") f(1) append 
 *primary education 
-tabout ff_want_nomore numch if v106==1 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v106==1 using Tables_Pref_wm.xls [iw=wt] , c(col)  h1("primary education") f(1) append 
 *secondary
-tabout ff_want_nomore numch if v106==2 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v106==2 using Tables_Pref_wm.xls [iw=wt] , c(col)  h1("secondary education") f(1) append 
 *higher
-tabout ff_want_nomore numch if v106==3 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v106==3 using Tables_Pref_wm.xls [iw=wt] , c(col)  h1("higher education") f(1) append 
 *lowest wealth quintle
-tabout ff_want_nomore numch if v190==1 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v190==1 using Tables_Pref_wm.xls [iw=wt] , c(col)  h1("lowest wealth quintile") f(1) append 
 * second
-tabout ff_want_nomore numch if v190==2 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v190==2 using Tables_Pref_wm.xls [iw=wt] , c(col) h1("second wealth quintile") f(1) append 
 * middle
-tabout ff_want_nomore numch if v190==3 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v190==3 using Tables_Pref_wm.xls [iw=wt] , c(col) h1("middle wealth quintile") f(1) append 
 *fourth
-tabout ff_want_nomore numch if v190==4 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v190==4 using Tables_Pref_wm.xls [iw=wt] , c(col) h1("fourth wealth quintile") f(1) append 
 *highest
-tabout ff_want_nomore numch if v190==5 using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if v190==5 using Tables_Pref_wm.xls [iw=wt] , c(col) h1("hightest wealth quintile") f(1) append 
 
 *Total
-tabout ff_want_nomore numch using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch using Tables_Pref_wm.xls [iw=wt] , c(col) h1("Total") f(1) append 
 */
 ****************************************************
 //Ideal number of children
@@ -205,27 +205,27 @@ tab	ff_want_nomore numch if mv190==5 [iw=wt] , col
 
 * output to excel
 *urban
-tabout ff_want_nomore numch if mv025==1 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv025==1 using Tables_Pref_mn.xls [iw=wt] , c(col) h1("urban") f(1) append 
 *rural
-tabout ff_want_nomore numch if mv025==2 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv025==2 using Tables_Pref_mn.xls [iw=wt] , c(col) h1("rural") f(1) append 
 *no education
-tabout ff_want_nomore numch if mv106==0 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv106==0 using Tables_Pref_mn.xls [iw=wt] , c(col) h1("no education") f(1) append 
 *primary education 
-tabout ff_want_nomore numch if mv106==1 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv106==1 using Tables_Pref_mn.xls [iw=wt] , c(col)  h1("primary education") f(1) append 
 *secondary
-tabout ff_want_nomore numch if mv106==2 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv106==2 using Tables_Pref_mn.xls [iw=wt] , c(col)  h1("secondary education") f(1) append 
 *higher
-tabout ff_want_nomore numch if mv106==3 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv106==3 using Tables_Pref_mn.xls [iw=wt] , c(col)  h1("higher education") f(1) append 
 *lowest wealth quintle
-tabout ff_want_nomore numch if mv190==1 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv190==1 using Tables_Pref_mn.xls [iw=wt] , c(col)  h1("lowest wealth quintile") f(1) append 
 * second
-tabout ff_want_nomore numch if mv190==2 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv190==2 using Tables_Pref_mn.xls [iw=wt] , c(col) h1("second wealth quintile") f(1) append 
 * middle
-tabout ff_want_nomore numch if mv190==3 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv190==3 using Tables_Pref_mn.xls [iw=wt] , c(col) h1("middle wealth quintile") f(1) append 
 *fourth
-tabout ff_want_nomore numch if mv190==4 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv190==4 using Tables_Pref_mn.xls [iw=wt] , c(col) h1("fourth wealth quintile") f(1) append 
 *highest
-tabout ff_want_nomore numch if mv190==5 using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 
+tabout ff_want_nomore numch if mv190==5 using Tables_Pref_mn.xls [iw=wt] , c(col) h1("hightest wealth quintile") f(1) append 
 
 *Total
 tabout ff_want_nomore numch using Tables_Pref_mn.xls [iw=wt] , c(col) f(1) append 

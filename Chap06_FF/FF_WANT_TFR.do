@@ -704,6 +704,9 @@ program define wanted_fertility
 * nlc_`li' is the number of living children at the point of conception of birth li
 * wanted_status_`li' is 0 if nlc_`li'>=v613
 
+* drop missing cases for the variable ideal number of children
+drop if v613==.
+
 * Initialize and construct cmc of death for children who died
 local li=1
 while `li'<=20 {
@@ -724,6 +727,8 @@ while `li'<=19 {
 
 ***UPPER LIMIT of 90 USED IN JORDAN 2012 and some other surveys
 *gen wanted_`li'=1 if nlc_`li'<v613 & v613<=90
+
+
 
 ***UPPER LIMIT of 98 USED IN MOST SURVEYS
 gen wanted_`li'=1 if nlc_`li'<v613 & v613<=98

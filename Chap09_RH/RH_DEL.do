@@ -79,7 +79,7 @@ rh_del_stay			"Duration of stay following recent birth"
 		label val rh_del_cestime cestimelab
 		label var rh_del_cestime "Timing of decision to have Caesarean"
 		}
-//Timing of decision for caesarean
+//Duration of stay following recent birth
 	recode m61 (0/105 = 1 "<6 hours") (106/111 = 2 "6-11 hours") (112/123 = 3 "12-23 hours") ///
 	(124/171 201/202 = 4 "1-2 days") (172/199 203/399= 5 "3+ days") (998 = 9 "Don't know/Missing") (else= 9), gen(rh_del_stay)
 	replace rh_del_stay = . if rh_del_place!=1 | bidx!=1 | age>=period

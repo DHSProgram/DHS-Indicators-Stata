@@ -45,9 +45,6 @@ ch_diar_pdoc_ors 	"Diarrhea treatment sought from private doctor among children 
 ch_diar_pharm 		"Diarrhea treatment sought from a pharmacy among children with diarrhea"
 ch_diar_pharm_trt 	"Diarrhea treatment sought from a pharmacy among children with diarrhea that sought treatment"
 ch_diar_pharm_ors 	"Diarrhea treatment sought from a pharmacy among children with diarrhea that received ORS"
-
-ch_stool_dispose	"How child's stool was disposed"
-ch_stool_safe		"Child's stool was disposed of appropriately"
 ----------------------------------------------------------------------------*/
 	
 //Diarrhea symptoms
@@ -234,12 +231,3 @@ gen ch_diar_pharm_ors=0 if ch_diar_ors==1
 replace ch_diar_pharm_ors=1 if ch_diar_ors==1 & h12k==1
 replace ch_diar_pharm_ors =. if b5==0
 label var ch_diar_pharm_ors "Diarrhea treatment sought from a pharmacy among children with diarrhea that received ORS"
-
-//Stool disposal method
-recode v465	(1=1 "Child used toilet or latrine") (2=2 "Put/rinsed into toilet or latrine") (5=3 "Buried") (3=4 "Put/rinsed into drain or ditch") ///
-			(4=5 "Thrown into garbage") (9=6 "Left in the open") (96=96 "Other") if age < 24 & b9 == 0 & _n == 1 | caseid != caseid[_n-1] , gen(ch_stool_dispose)
-label var ch_stool_dispose "How child's stool was disposed among youngest children under age 2 living with mother"
-
-//Safe stool disposal
-recode v465	(1 2 5 =1 "Safe disposal") (3 4 9 96=0 "not safe") if age < 24 & b9 == 0 & _n == 1 | caseid != caseid[_n-1], gen(ch_stool_safe)
-label var ch_stool_safe	"Child's stool was disposed of appropriately among youngest children under age 2 living with mother"

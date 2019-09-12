@@ -29,6 +29,8 @@ In addition, older surveys (mainly before 2000) do not have a wealth index and t
 ## Checking for small observations:
 Tabulations do not check for number of observations. The DHS convention is to suppress estimates that are based on 25 or less unweighted observations and to place in parenthesis around any estimate based on 25-49 observations. It is the user’s responsibility to check for the number of unweighted observations before relying on the estimate. The tabulations also do not provide any statistical testing or confidence intervals.  
 
+## Creating tables in SPSS
+There are two commands that can be used for producing tables for the indicators in SPSS: ctables and crosstab. The ctables command (Custom Tables) is easier to use and more powerful, however the Custom Tables module is a separate module that must be purchased in addition to the SPSS Base module. If the user does not have this module installed then they can use the crosstab command. The current SPSS code for producing tables has both commands available with the crosstab commands commented out. Please use the appropriate command for your needs.
 **********************************************************************************************************************************************************
 
 ## Completion list (this list will be updated periodically)
@@ -56,7 +58,7 @@ Completion list (this list will be updated periodically)
 |       |                                              |             |                  |                     |                 |                    |
 +-------+----------------------------------------------+-------------+------------------+---------------------+-----------------+--------------------+
 |       |                                              |             |                  |                     |                 |                    |
-|   6   |   Fertility Preferences                      |   FF        |                  |   X                 |                 |                    |
+|   6   |   Fertility Preferences                      |   FF        |                  |   X                 |  X              |                    |
 |       |                                              |             |                  |                     |                 |                    |
 +-------+----------------------------------------------+-------------+------------------+---------------------+-----------------+--------------------+
 |       |                                              |             |                  |                     |                 |                    |
@@ -72,7 +74,7 @@ Completion list (this list will be updated periodically)
 |       |                                              |             |                  |                     |                 |                    |
 +-------+----------------------------------------------+-------------+------------------+---------------------+-----------------+--------------------+
 |       |                                              |             |                  |                     |                 |                    |
-|   10  |   Child Health                               |   CH        |                  |   X                 |                 |                    |
+|   10  |   Child Health                               |   CH        |                  |   X                 |                 |  X                 |
 |       |                                              |             |                  |                     |                 |                    |
 +-------+----------------------------------------------+-------------+------------------+---------------------+-----------------+--------------------+
 |       |                                              |             |                  |                     |                 |                    |
@@ -80,7 +82,7 @@ Completion list (this list will be updated periodically)
 |       |                                              |             |                  |                     |                 |                    |
 +-------+----------------------------------------------+-------------+------------------+---------------------+-----------------+--------------------+
 |       |                                              |             |                  |                     |                 |                    |
-|   12  |   Malaria                                    |   ML        |                  |   X                 |                 |                    |
+|   12  |   Malaria                                    |   ML        |                  |   X                 |                 | X                  |
 |       |                                              |             |                  |                     |                 |                    |
 +-------+----------------------------------------------+-------------+------------------+---------------------+-----------------+--------------------+
 |       |                                              |             |                  |                     |                 |                    |

@@ -73,6 +73,13 @@ do CH_VAC.do
 do CH_tables_vac.do
 *Purpose: 	Produce tables for vaccination indicators.
 
+do CH_STOOL.do
+*Purpose:	Safe disposal of stool
+*Notes:				This do file will drop cases. 
+*					This is because the denominator is the youngest child under age 2 living with the mother. 			
+*					The do file will also produce the tables for these indicators. 
+
+
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************

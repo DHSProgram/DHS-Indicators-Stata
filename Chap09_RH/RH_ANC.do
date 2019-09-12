@@ -65,10 +65,10 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 //Number of months pregnant at time of first ANC visit 
 	recode m13_1 (.=0 "no anc") (0/3=1 "<4") (4 5=2 "4-5") (6 7=3 "6-7") (8/90=4 "8+") (else=9 "don't know/missing"), gen(rh_anc_moprg)
 	replace rh_anc_moprg=. if age>=period  
-	label var rh_anc_moprg "Number of months pregnant at  time of first ANC visit"
+	label var rh_anc_moprg "Number of months pregnant at time of first ANC visit"
 
 //ANC before 4 months
-	recode rh_anc_moprg (0 2/5=0 "no") (1=1 "yes"), gen(rh_anc_4mo)
+	recode rh_anc_moprg (0 2/5 9=0 "no") (1=1 "yes"), gen(rh_anc_4mo)
 	lab var rh_anc_4mo "Attended ANC <4 months of pregnancy"
 
 //Median number of months pregnant at time of 1st ANC

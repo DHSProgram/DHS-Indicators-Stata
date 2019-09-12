@@ -123,7 +123,7 @@ gen wt=hv005/1000000
 **************************************************************************************************
 //De facto household population who slept the night before the survey under a mosquito net (treated or untreated)
 
-recode hv105 (0/4=1 "<5") (5/14=2 "5-14") (15/34=3 "15-34") (35/49=4 "35-49") (else=5 "50+"), gen(age)
+recode hv105 (0/4=1 "<5") (5/14=2 "5-14") (15/34=3 "15-34") (35/49=4 "35-49") (50/95=5 "50+") (96/99=.), gen(age)
 
 *age of household memeber
 tab age ml_slept_net if hv103==1 [iw=wt], row nofreq
@@ -166,7 +166,7 @@ tabout age hv104 hv025 hv024 hv270 ml_slept_itn if hv103==1 using Tables_HH_ITN_
 ****************************************************
 //Children under age 5 who slept the night before the survey under a mosquito net (treated or untreated)
 *sex of child
-tab hv104 ml_slept_itn if hv103==1 & hml16<5 [iw=wt], row nofreq
+tab hv104 ml_slept_net if hv103==1 & hml16<5 [iw=wt], row nofreq
 
 *residence
 tab hv025 ml_slept_net if hv103==1 & hml16<5 [iw=wt], row nofreq 

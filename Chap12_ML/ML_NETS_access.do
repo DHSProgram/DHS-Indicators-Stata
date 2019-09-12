@@ -113,7 +113,7 @@ label var ml_slept_itn_hhitn "Slept under an ITN last night amound household pop
 
 *** Overall Population ***
 *age of household memeber
-recode hv105 (0/4=1 "<5") (5/14=2 "5-14") (15/34=3 "15-34") (35/49=4 "35-49") (else=5 "50+"), gen(age)
+recode hv105 (0/4=1 "<5") (5/14=2 "5-14") (15/34=3 "15-34") (35/49=4 "35-49") (50/95=5 "50+") (96/99=.), gen(age)
 tab age ml_slept_itn_hhitn if hv103==1 [iw=wt], row nofreq
 
 *sex of household member

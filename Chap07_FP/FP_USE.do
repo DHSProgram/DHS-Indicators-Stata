@@ -150,7 +150,7 @@ label var fp_evuse_other "Ever used other method"
 
 //Ever use any traditional 
 gen fp_evuse_trad=0
-replace fp_evuse_trad = 1 if fp_evuse_rhy | fp_evuse_wthd==1 | fp_evuse_other==1
+replace fp_evuse_trad = 1 if fp_evuse_rhy==1 | fp_evuse_wthd==1 | fp_evuse_other==1
 label var fp_evuse_trad "Ever used any traditional method"
 
 ********************************************************************************/
@@ -318,14 +318,14 @@ label var fp_source_mcond "Source for male condom"
 //Brand used for pill
 gen fp_brand_pill = v323
 replace fp_brand_pill = . if v312!=1
-replace fp_brand_pill = . if v323==98
+replace fp_brand_pill = . if v323>96
 label values fp_brand_pill V323
 label var fp_brand_pill "Pill users using a social marketing brand"
 
 //Brand used for male condom
 gen fp_brand_cond = v323a
 replace fp_brand_cond = . if v312!=5
-replace fp_brand_cond = . if v323a==98
+replace fp_brand_cond = . if v323a>96
 label values fp_brand_cond V323A
 label var fp_brand_cond "Male condom users using a social marketing brand"
 

@@ -122,7 +122,7 @@ recode h7 (0 8=0) (else=1), gen(dpt3)
 gen dptsum= dpt1+dpt2+dpt3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
-* for further explanation. 
+* for further explanation
 gen ch_pent1_either=dptsum>=1
 gen ch_pent2_either=dptsum>=2
 gen ch_pent3_either=dptsum>=3
@@ -170,7 +170,7 @@ recode h8 (0 8=0) (else=1), gen(polio3)
 gen poliosum=polio1 + polio2 + polio3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
-* for further explanatio
+* for further explanation
 gen ch_polio1_either=poliosum>=1
 gen ch_polio2_either=poliosum>=2
 gen ch_polio3_either=poliosum>=3
@@ -229,7 +229,7 @@ recode h56 (0 8=0) (else=1), gen(peumo3)
 gen peumosum= peumo1+peumo2+peumo3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
-* for further explanatio
+* for further explanation
 gen ch_peumo1_either=peumosum>=1
 gen ch_peumo2_either=peumosum>=2
 gen ch_peumo3_either=peumosum>=3
@@ -279,7 +279,7 @@ recode h59 (0 8=0) (else=1), gen(rotav3)
 gen rotavsum= rotav1+rotav2+rotav3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
-* for further explanatio
+* for further explanation
 gen ch_rotav1_either=rotavsum>=1
 gen ch_rotav2_either=rotavsum>=2
 gen ch_rotav3_either=rotavsum>=3

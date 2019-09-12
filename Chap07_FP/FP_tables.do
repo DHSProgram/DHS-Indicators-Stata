@@ -22,7 +22,7 @@ Notes: 					For knowledge of contraceptive methods, ever use, current use, and u
 						
 						For men, the population of interest can also be selected for the knowledge of methods variables. 
 						
-						Make the secltion of the population of interest below for IR and MR files. 
+						Make the selection of the population of interest below for IR and MR files. 
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
@@ -1394,7 +1394,7 @@ tab v190 fp_message_paper [iw=wt], row nofreq
 tabout v013 v025 v106 v024 v190 fp_message_paper using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//FP messages by paper
+//FP messages by mobile
 
 *age
 tab v013 fp_message_mobile [iw=wt], row nofreq 
@@ -1415,7 +1415,7 @@ tab v190 fp_message_mobile [iw=wt], row nofreq
 tabout v013 v025 v106 v024 v190 fp_message_mobile using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//FP messages by paper
+//FP messages none of four
 
 *age
 tab v013 fp_message_noneof4 [iw=wt], row nofreq 
@@ -1437,7 +1437,7 @@ tabout v013 v025 v106 v024 v190 fp_message_noneof4 using Tables_Communicat.xls [
 */
 
 ****************************************************
-//FP messages by paper
+//FP messages by none of three
 
 *age
 tab v013 fp_message_noneof3 [iw=wt], row nofreq 
@@ -1753,7 +1753,7 @@ tab mv190 fp_message_paper if mv013<8 [iw=wt], row nofreq
 tabout mv013 mv025 mv106 mv024 mv190 fp_message_paper if mv013<8 using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//FP messages by paper
+//FP messages by mobile
 
 *age
 tab mv013 fp_message_mobile if mv013<8 [iw=wt], row nofreq 
@@ -1774,7 +1774,7 @@ tab mv190 fp_message_mobile if mv013<8 [iw=wt], row nofreq
 tabout mv013 mv025 mv106 mv024 mv190 fp_message_mobile if mv013<8 using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//FP messages by paper
+//FP messages none of four
 
 *age
 tab mv013 fp_message_noneof4 if mv013<8 [iw=wt], row nofreq 
@@ -1796,7 +1796,7 @@ tabout mv013 mv025 mv106 mv024 mv190 fp_message_noneof4 if mv013<8 using Tables_
 */
 
 ****************************************************
-//FP messages by paper
+//FP messages noen of three
 
 *age
 tab mv013 fp_message_noneof3 if mv013<8 [iw=wt], row nofreq 

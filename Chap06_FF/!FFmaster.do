@@ -9,7 +9,7 @@ Date last modified:		June 21 2019 by Shireen Assaf
 *******************************************************************************************************************************/
 set more off
 
-*local user 39585	//change employee id number to personalize path
+*global user 39585	//change employee id number to personalize path
 global user 33697
 cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap06_FF"
 
@@ -18,10 +18,10 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "JOIR71FL"
-* MMIR71FL TJIR70FL GHIR72FL UGIR7BFL
+global irdata "JOIR72FL"
+* MMIR71FL TJIR70FL GHIR72FL UGIR7BFL KEIR71FL
 
-global mrdata "JOMR71FL"
+global mrdata "JOMR72FL"
 * MMMR71FL TJMR70FL GHMR72FL UGMR7BFL
 ****************************
 

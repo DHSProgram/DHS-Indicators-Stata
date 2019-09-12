@@ -42,6 +42,9 @@ do ML_NETS_HH.do
 do ML_tables.do
 * Purpose: will produce the tables for ML_NETS_HH.do file indicators
 
+do ML_EXISTING_ITN.do
+* Purpose: Code indicators for source of nets and produce tables for these indicators. 
+
 do ML_NETS_source.do
 *Purpose: code source of mosquito net.
 *Note: This code reshaps the date file and produces the table for this indicator that is appended to Tables_HH_ITN.xls file produced by the ML_tables.do file. 
