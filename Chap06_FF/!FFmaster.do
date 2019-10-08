@@ -9,6 +9,8 @@ Date last modified:		June 21 2019 by Shireen Assaf
 *******************************************************************************************************************************/
 set more off
 
+*** User information for internal DHS use. Please disregard and adjust change paths to your own. *** 
+
 *global user 39585	//change employee id number to personalize path
 global user 33697
 cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap06_FF"
@@ -43,6 +45,7 @@ do FF_PLAN.do
 
 do FF_WANT_TFR.do
 *Purpose: 	Code wanted fertility and produces table Table_WANT_TFR.do to match the final report. 
+			* Important note: you will also need to change the paths in this program. See the notes in the do file. 
 
 *******************************************************************************************************************************
 *******************************************************************************************************************************

@@ -74,7 +74,8 @@ label var ch_ari "ARI symptoms in the 2 weeks before the survey"
 	
 //ARI care-seeking
 *** this is country specific and the footnote for the final table needs to be checked to see what sources are included. 
-*** the code below only excludes  and traditional practitioner (h32t). Some surveys also exclude pharmacies (h32k), shop (h32s) or other sources.
+*** The code below only excludes traditional practitioner (usually h32t). The variable for traditional healer may be different for different surveys (you can check this by: des h32*). 
+*** Some surveys also exclude pharmacies, shop, or other sources.
 gen ch_ari_care=0 if ch_ari==1
 foreach c in a b c d e f g h i j k l m n o p q r s u v w x {
 replace ch_ari_care=1 if ch_ari==1 & h32`c'==1
@@ -85,7 +86,6 @@ replace ch_ari_care=0 if ch_ari==1 & h32k==1
 replace ch_ari_care =. if b5==0
 */
 label var ch_ari_care "Advice or treatment sought for ARI symptoms"
-
 
 //ARI care-seeking same or next day
 *for surveys that do not have the variable h46b
@@ -186,7 +186,8 @@ label var ch_fever "Fever symptoms in the 2 weeks before the survey"
 	
 //Fever care-seeking
 *** this is country specific and the footnote for the final table needs to be checked to see what sources are included. 
-*** the code below only excludes traditional practitioner (h32t). Some surveys also exclude pharmacies (h32k), shop (h32s) or other sources.
+*** The code below only excludes traditional practitioner (usually h32t). The variable for traditional healer may be different for different surveys (you can check this by: des h32*). 
+*** Some surveys also exclude pharmacies, shop, or other sources.
 gen ch_fev_care=0 if ch_fever==1
 foreach c in a b c d e f g h i j k l m n o p q r s u v w x {
 replace ch_fev_care=1 if ch_fever==1 & h32`c'==1

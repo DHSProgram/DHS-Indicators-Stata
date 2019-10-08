@@ -5,7 +5,7 @@ Author:				Shireen Assaf
 Date last modified: April 30, 2019 by Shireen Assaf 
 
 *Note this do file will produce the following tables in excel:
-	1. 	Table_Risk_wm:		Contains the tables of high risk fertilty behavior indicators among women
+	1. 	Table_Risk_wm:		Contains the tables of high risk fertility behavior indicators among women
 	2. 	Table_Risk_birth:	Contains the tables of high risk births indicators
 *****************************************************************************************************/
 

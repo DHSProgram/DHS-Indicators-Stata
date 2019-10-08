@@ -8,6 +8,8 @@ Date last modified:		April 30, 2019
 *******************************************************************************************************************************/
 set more off
 
+*** User information for internal DHS use. Please disregard and adjust change paths to your own. *** 
+
 *local user 39585	//change employee id number to personalize path
 global user 33697
 cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap08_CM"
@@ -17,13 +19,13 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "KHIR73FL"
+global irdata "UGIR60FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
 
-global brdata "KHBR73FL"
+global brdata "UGBR60FL"
 * MMBR71FL TJBR70FL GHBR72FL UGBR7AFL
 
-global krdata "KHKR73FL"
+global krdata "UGKR60FL"
 ****************************
 
 * do files that use the IR files

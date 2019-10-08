@@ -8,6 +8,8 @@ Date last modified:		May 21, 2019
 *******************************************************************************************************************************/
 set more off
 
+*** User information for internal DHS use. Please disregard and adjust change paths to your own. *** 
+
 *local user 39585	//change employee id number to personalize path
 global user 33697
 cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap12_ML"

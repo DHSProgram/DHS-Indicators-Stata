@@ -10,10 +10,9 @@ Date last modified: Feb 5 2019 by Shireen Assaf
 	3. 	Tables_Use_ev:		Contains the tables for ever use of family planning for women
 	4. 	Tables_Use_cr:		Contains the tables for current use of family planning for women + timing of sterlization
 	5.	Tables_source_info:	Contains the tables for source of family planning method, brands used, and information given about the method for women
-	not done 6.	Tables_Discont:		Contains the tables for discontinuation rates and reason for discontinuation for women
-	7.	Tables_Need:		Contains the tables for unmet need, met need, demand satisfied, and future intention to use for women
-	8.	Tables_Communicat:	Contains the tables for exposure to FP messages, decision on use/nonuse, discussions for women
-	9.  Tables_message_mn:	Contains the tables for exposure for FP messages for men
+	6.	Tables_Need:		Contains the tables for unmet need, met need, demand satisfied, and future intention to use for women
+	7.	Tables_Communicat:	Contains the tables for exposure to FP messages, decision on use/nonuse, discussions for women
+	8.  Tables_message_mn:	Contains the tables for exposure for FP messages for men
 
 
 Notes: 					For knowledge of contraceptive methods, ever use, current use, and unmet need variables, the population of
@@ -1694,16 +1693,16 @@ tabout mv013 mv025 mv106 mv024 mv190 fp_know_mod if select==1 & mv013<8 using Ta
 tab mv013 fp_message_radio if mv013<8 [iw=wt], row nofreq 
 
 *residence
-tab mv025 fp_message_radio if mv013<8[iw=wt], row nofreq 
+tab mv025 fp_message_radio if mv013<8 [iw=wt], row nofreq 
 
 *region
-tab mv024 fp_message_radio if mv013<8[iw=wt], row nofreq 
+tab mv024 fp_message_radio if mv013<8 [iw=wt], row nofreq 
 
 *education
-tab mv106 fp_message_radio if mv013<8[iw=wt], row nofreq 
+tab mv106 fp_message_radio if mv013<8 [iw=wt], row nofreq 
 
 *wealth
-tab mv190 fp_message_radio if mv013<8[iw=wt], row nofreq 
+tab mv190 fp_message_radio if mv013<8 [iw=wt], row nofreq 
 
 * output to excel
 tabout mv013 mv025 mv106 mv024 mv190 fp_message_radio if mv013<8 using Tables_message_mn.xls [iw=wt] , c(row) f(1) replace 

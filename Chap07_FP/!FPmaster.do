@@ -7,8 +7,12 @@ Author: 				Shireen Assaf
 Date last modified:		June 20 by Courtney Allen to add discontinuation section
 
 Notes:					Indicators for men only cover knowledge of contraceptive methods and exposure to family planning messages.
+						Indicators are coded for all women/all men unless indicated otherwise. 
+						In the tables do file you can select other populations of interest (ex: among those currently in a union)
 *******************************************************************************************************************************/
 set more off
+
+*** User information for internal DHS use. Please disregard and adjust change paths to your own. *** 
 
 *local user 39585	//change employee id number to personalize path
 local user 33697
@@ -19,15 +23,15 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "UGIR7AFL"
+global irdata "UGIR60FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
 
 * MR Files
-global mrdata "UGMR7AFL"
+global mrdata "UGMR60FL"
 * MMMR71FL TJMR70FL GHMR72FL UGMR7AFL
 ****************************
 
-/* IR file variables
+* IR file variables
 
 * open dataset
 use "$datapath//$irdata.dta", clear
@@ -53,7 +57,7 @@ do FP_tables.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* MR file variables
+* MR file variables
 
 * open dataset
 use "$datapath//$mrdata.dta", clear

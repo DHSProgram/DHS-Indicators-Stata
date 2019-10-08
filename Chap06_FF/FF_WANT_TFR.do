@@ -5,8 +5,11 @@ Data inputs: 		IR survey list
 Data outputs:		coded variables
 Author:				Thomas Pullum and modified by Shireen Assaf for the code share project
 Date last modified: June 21, 2019 by Shireen Assaf 
-Note:				Please see notes in lines 563, 573, and 800. 
+Note:				Please see notes in lines 567, 576, and 807. 
 					This do file will produce a table of Wanted TFRs by background variables as shown in final report (Table_WANT_TFR.xls). 
+					
+					*** Please change to your paths at the end of the program after line 756.
+					
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------

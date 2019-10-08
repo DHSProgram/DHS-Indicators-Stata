@@ -55,7 +55,8 @@ label var ch_diar "Diarrhea in the 2 weeks before the survey"
 
 //Diarrhea treatment	
 *** this is country specific and the footnote for the final table needs to be checked to see what sources are included. 
-*** the code below only excludes traditional practitioner (h12t). Some surveys also exclude pharmacies (h12k), shop (h12s) or other sources.
+*** The code below only excludes traditional practitioner (usually h12t). The variable for traditional healer may be different for different surveys (you can check this by: des h12*). 
+*** Some surveys also exclude pharmacies, shop, or other sources.
 gen ch_diar_care=0 if ch_diar==1
 foreach c in a b c d e f g h i j k l m n o p q r s u v w x {
 replace ch_diar_care=1 if ch_diar==1 & h12`c'==1
@@ -107,11 +108,11 @@ gen ch_diar_ors_fluid=0 if ch_diar==1
 replace ch_diar_ors_fluid=1 if (h13==1 | h13==2 | h13b==1 | h38==5)
 label var ch_diar_ors_fluid "Given ORS or increased fluids for diarrhea"
 
-//ORT
+//ORT or increased liquids
 gen ch_diar_ort=0 if ch_diar==1
 replace ch_diar_ort=1 if (h13==1 | h13==2 | h14==1 | h14==2 | h38==5)
 cap replace ch_diar_ort=1 if h13b==1 // older surveys do not have h13b
-label var ch_diar_ort "Given oral rehydration treatment and increased liquids for diarrhea"
+label var ch_diar_ort "Given oral rehydration treatment or increased liquids for diarrhea"
 
 //ORT and continued feeding
 gen ch_diar_ort_feed=0 if ch_diar==1

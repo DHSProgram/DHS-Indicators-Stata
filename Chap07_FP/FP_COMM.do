@@ -44,8 +44,8 @@ gen fp_message_paper = v384c==1
 label var fp_message_paper "Exposure to family planning message by newspaper/magazine"
 
 //Family planning messages by mobile
-gen fp_message_mobile = v384d==1
-label var fp_message_mobile "Exposure to family planning message by mobile phone"
+cap gen fp_message_mobile = v384d==1
+cap label var fp_message_mobile "Exposure to family planning message by mobile phone"
 
 //Did not hear a family planning message from any of the 4 media sources
 cap gen fp_message_noneof4 = 0
