@@ -9,7 +9,7 @@ Date last modified:		September 24, 2019
 *******************************************************************************************************************************/
 set more off
 
-*** User information for internal DHS use. Please disregard and adjust change paths to your own. *** 
+*** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
 *global user 39585	//change employee id number to personalize path
 global user 33697
