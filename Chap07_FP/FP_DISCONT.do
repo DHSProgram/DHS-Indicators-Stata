@@ -13,15 +13,12 @@ LINK HERE ---->>>>  https://www.dhsprogram.com/data/calendar-tutorial/
 
 /*----------------------------------------------------------------------------//
 
-Dataset created:
-drates_12m.dta		This dataset has a table listing 12-month discontinuation
-					rates by reason, method, and switching. The table also includes
-					the	unweighted and weighted Ns.
-
-Other outputs:
-12m_rates.xls		Excel sheet with discontinuation rates for Reasons(rows) and Methods(columns)
-12m_drates.xlsx		Excel sheet that will match final report table with Methods(rows) and Reasons(columns)
-
+Outputs:
+Tables_Discont_ 12m.xlsx	This excel file has a table listing 12-month discontinuation
+							rates by reason, method, and switching. The table also includes
+							the	unweighted and weighted Ns.
+							
+eventsfile.dta				Events dataset file for the survey
 /----------------------------------------------------------------------------*/
 
 
@@ -378,7 +375,7 @@ Other outputs:
 	*outsheet reason $drate_list drate_allmeth using rates_`x'm.csv, comma replace	
 
 	//outputting as excel file with putexcel	
-	putexcel set "drates_`x'm.xlsx", replace
+	putexcel set "Tables_Discont_`x'm.xlsx", replace
 	putexcel B1 = "Reasons for discontinuation"
 	putexcel A2 = "Contraceptive method"
 	

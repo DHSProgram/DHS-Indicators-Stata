@@ -38,19 +38,19 @@ There are two commands that can be used for producing tables for the indicators 
 |Ch. | Title | Ch. Acronym |Began Stata code | Stata code Complete | Began SPSS code | SPSS code Complete |
 |---|---|---|---|---|---|---|
 |   2|Population & Housing|PH| Year 2|| Year 2||
-|   3|Respondents’ Characteristics|RC| Year 2|| Year 2||
-|   4|Marriage & Sexual Activity|MS|X||||
-|   5|   Fertility|FE|X||||
-|   6|   Fertility Preferences|FF||X|X||
-|   7|   Family Planning |FP||X|X||
-|   8|   Infant & Child Mortality|CM||X|||
-|   9|   Reproductive Health|RH|| X||X|
+|   3|Respondents’ Characteristics|RC||X|X||
+|   4|Marriage & Sexual Activity|MS||X||X|
+|   5|   Fertility|FE||X|X||
+|   6|   Fertility Preferences|FF||X||X|
+|   7|   Family Planning |FP||X||X|
+|   8|   Infant & Child Mortality|CM||X||X|
+|   9|   Reproductive Health|RH||X||X|
 |  10|   Child Health|CH||X||X|
 |  11|   Nutrition of Children & Adults|NT|Year 2|| Year 2||
-|  12|   Malaria| ML|| X||X|
+|  12|   Malaria| ML||X||X|
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|Year 2|| Year 2||
 |  14|   HIV Prevalence|HV|Year 2|Year 2||
-|  15|   Women’s Empowerment|WE|Year 2|| Year 2||
+|  15|   Women’s Empowerment|WE|X|| Year 2||
 |  16|   Adult & Maternal Mortality|AM|Year 2|| Year 2||
 |  17|   Domestic Violence|DV |Year 2 || Year 2 ||
 

@@ -22,9 +22,11 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 global irdata "UGIR60FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
 
+*BR files
 global brdata "UGBR60FL"
 * MMBR71FL TJBR70FL GHBR72FL UGBR7AFL
 
+*KR files
 global krdata "UGKR60FL"
 ****************************
 
