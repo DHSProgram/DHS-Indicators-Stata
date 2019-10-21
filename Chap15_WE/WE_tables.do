@@ -653,29 +653,7 @@ tab v190 we_justify_cond [iw=wt], row nofreq
 * output to excel
 tabout v013 v502 v025 v106 v024 v190 we_justify_cond using Tables_empw_wm.xls [iw=wt] , c(row) f(1) append 
 */
-****************************************************
-//Justify asking husband to use condom if he has STI
-*age
-tab v013 we_justify_cond [iw=wt], row nofreq 
 
-*marital status
-tab v502 we_justify_cond [iw=wt], row nofreq 
-
-*residence
-tab v025 we_justify_cond [iw=wt], row nofreq 
-
-*region
-tab v024 we_justify_cond [iw=wt], row nofreq 
-
-*education
-tab v106 we_justify_cond [iw=wt], row nofreq 
-
-*wealth
-tab v190 we_justify_cond [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v502 v025 v106 v024 v190 we_justify_cond using Tables_empw_wm.xls [iw=wt] , c(row) f(1) append 
-*/
 ****************************************************
 //Can say no to husband if they dont want to have sex
 *age

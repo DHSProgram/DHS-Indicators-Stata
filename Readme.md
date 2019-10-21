@@ -50,7 +50,7 @@ There are two commands that can be used for producing tables for the indicators 
 |  12|   Malaria| ML||X||X|
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|Year 2|| Year 2||
 |  14|   HIV Prevalence|HV|Year 2|Year 2||
-|  15|   Women’s Empowerment|WE|X||X||
+|  15|   Women’s Empowerment|WE|X|||X|
 |  16|   Adult & Maternal Mortality|AM|Year 2|| Year 2||
 |  17|   Domestic Violence|DV |Year 2 || Year 2 ||
 
