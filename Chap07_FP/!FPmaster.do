@@ -23,12 +23,12 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "UGIR60FL"
-* MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
+global irdata "UGIR7BFL"
+* MMIR71FL TJIR70FL GHIR72FL UGIR7BFL
 
 * MR Files
-global mrdata "UGMR60FL"
-* MMMR71FL TJMR70FL GHMR72FL UGMR7AFL
+global mrdata "UGMR7BFL"
+* MMMR71FL TJMR70FL GHMR72FL UGMR7BFL
 ****************************
 
 * IR file variables
@@ -88,6 +88,7 @@ do FP_EVENTS.do
 
 do FP_DISCONT.do
 * Purpose: 	Code discontinuation variables (discontinuaution rates and reasons for discontinuation) and create discontinuation tables
+* Note: This do file will create the discontinuation results table Tables_Discont_12m.xlsx and a Stata dataset eventsfile.dta for the survey. 
 
 */
 *******************************************************************************************************************************

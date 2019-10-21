@@ -38,7 +38,7 @@ There are two commands that can be used for producing tables for the indicators 
 |Ch. | Title | Ch. Acronym |Began Stata code | Stata code Complete | Began SPSS code | SPSS code Complete |
 |---|---|---|---|---|---|---|
 |   2|Population & Housing|PH| Year 2|| Year 2||
-|   3|Respondents’ Characteristics|RC||X|X||
+|   3|Respondents’ Characteristics|RC||X||X|
 |   4|Marriage & Sexual Activity|MS||X||X|
 |   5|   Fertility|FE||X|X||
 |   6|   Fertility Preferences|FF||X||X|
@@ -50,7 +50,7 @@ There are two commands that can be used for producing tables for the indicators 
 |  12|   Malaria| ML||X||X|
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|Year 2|| Year 2||
 |  14|   HIV Prevalence|HV|Year 2|Year 2||
-|  15|   Women’s Empowerment|WE|X|| Year 2||
+|  15|   Women’s Empowerment|WE|X||X||
 |  16|   Adult & Maternal Mortality|AM|Year 2|| Year 2||
 |  17|   Domestic Violence|DV |Year 2 || Year 2 ||
 
