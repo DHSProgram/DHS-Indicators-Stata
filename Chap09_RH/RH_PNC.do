@@ -21,7 +21,7 @@ rh_pnc_nb_pv 		"Provider for newborn's PNC check"
 ** For surveys 2005 or after, postnatal care was asked for both institutional and non-institutional births. 
 ** surveys before 2005 only ask PNC for non-institutional births but assumed women received PNC if they delivered at health facilities	 
 ** This is checked using variable m51_1 which was used in older surveys
-** If the code doesn not run, perhaps it is because you need to use m51a_1. Uncomment this the next line in that case.
+** If the code does not run, perhaps it is because you need to use m51a_1. Uncomment this the next line in that case.
 	*cap gen m51_1=m51a_1
 	
 scalar drop _all
@@ -45,7 +45,6 @@ scalar drop _all
 *** Mother's PNC ***		
 		
 if m51_included==1 {
-cap drop ta
 
 //PNC timing for mother	
 	recode m51_1 (100/103 = 1 "<4hr") (104/123 200 = 2 "4-23hrs") (124/171 201/202 = 3 "1-2 days") ///

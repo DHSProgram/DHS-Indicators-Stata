@@ -37,7 +37,7 @@ There are two commands that can be used for producing tables for the indicators 
 
 |Ch. | Title | Ch. Acronym |Began Stata code | Stata code Complete | Began SPSS code | SPSS code Complete |
 |---|---|---|---|---|---|---|
-|   2|Population & Housing|PH| Year 2|| Year 2||
+|   2|Population & Housing|PH| 2020 || 2020 ||
 |   3|Respondents’ Characteristics|RC||X||X|
 |   4|Marriage & Sexual Activity|MS||X||X|
 |   5|   Fertility|FE||X|X||
@@ -46,13 +46,13 @@ There are two commands that can be used for producing tables for the indicators 
 |   8|   Infant & Child Mortality|CM||X||X|
 |   9|   Reproductive Health|RH||X||X|
 |  10|   Child Health|CH||X||X|
-|  11|   Nutrition of Children & Adults|NT|Year 2|| Year 2||
+|  11|   Nutrition of Children & Adults|NT|2020 || 2020 ||
 |  12|   Malaria| ML||X||X|
-|  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|Year 2|| Year 2||
-|  14|   HIV Prevalence|HV|Year 2|Year 2||
-|  15|   Women’s Empowerment|WE|X|||X|
-|  16|   Adult & Maternal Mortality|AM|Year 2|| Year 2||
-|  17|   Domestic Violence|DV |Year 2 || Year 2 ||
+|  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK||X|X ||
+|  14|   HIV Prevalence|HV||X|X||
+|  15|   Women’s Empowerment|WE||X||X|
+|  16|   Adult & Maternal Mortality|AM|2020 || 2020 ||
+|  17|   Domestic Violence|DV |2020 || 2020  ||
 
 
 **********************************************************************************************************************************************************
