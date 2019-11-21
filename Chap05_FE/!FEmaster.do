@@ -3,29 +3,29 @@ Program: 				FEmaster.do
 Purpose: 				Master file for the Fertility Chapter. 
 						The master file will call other do files that will produce the FE indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
-Author: 				
-Date last modified:		
+Author: 				Courtney Allen
+Date last modified:		November 20, 2019
 
 *******************************************************************************************************************************/
 set more off
 
-*local user 39585	//change employee id number to personalize path
-local user 33697
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap05_FP"
+*** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
+global user 39585	//change employee id number to personalize path
+
+* change working path
+cd "C:/Users//$user//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap05_FE"
+
+* change data path
+global datapath "C:/Users//$user//ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * IR Files
-global irdata "UGIR7AFL"
-* MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
-
-global brdata "UGBR7AFL"
-* MMBR71FL TJBR70FL GHBR72FL UGBR7AFL
+global irdata "MWIR7HFL"
+*TJIR72FL GHIR72FL TJBR72FL
+global prdata  "MWPR7HFL"
 ****************************
-
-** Courtney I think some of these do files can be combined. Tom's code i believe produces the ASFR and GFR in the same code for example
 
 * IR file variables
 
@@ -34,20 +34,35 @@ use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
 
-do FE_ASFR.do
-*Purpose: 	Code age-specific fertility rates
-
-do FE_GFR.do
-*Purpose: 	Code general fertilty rate
-
-do FE_ASFRT.do
-*Purpose: 	Code age-specific fertility rates
-
-do FE_BIRTHS.do
-*Purpose: 	Code risky birth related indicators.
+do FE_FERT.do
+*Purpose: 	Code fertility indicators about first birth, pregnancy, menopause and children born
 
 do FE_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
+
+
+
+* Fertility do files
+do FE_TFR.do
+*Purpose: 	Code fertility rates. This do file will create tables.
+
+* REopen dataset
+use "$datapath//$irdata.dta", clear
+
+do FE_ASFR_10_14.do
+*Purpose: 	Code ASFR for 10-14 year olds. This file will create tables.
+
+
+
+* PR file variables
+
+* open dataset
+use "$datapath//$prdata.dta", clear
+
+do FE_CBR.do
+*Purpose: 	Code crude birth rates. This file will create tables.
+
+
 
 */
 *******************************************************************************************************************************
