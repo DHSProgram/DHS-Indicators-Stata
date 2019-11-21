@@ -671,6 +671,11 @@ program define final_file_save
 
 	use partial_results.dta, clear
 
+	scalar scid=substr(sfn,1,2)
+	scalar spv =substr(sfn,5,2)
+	local lcid=scid
+	local lpv=spv
+
 	rename v_* *
 	drop if lw==.
 
@@ -691,15 +696,23 @@ program define final_file_save
 	rename (r13 r13_L r13_U) (fe_ASFR_13 fe_ASFR_13_L fe_ASFR_13_U)
 	rename (r14 r14_L r14_U) (fe_ASFR_14 fe_ASFR_14_L fe_ASFR_14_U)
 	rename (R_Lexis L_Lexis U_Lexis) (fe_ASFR_10to14 fe_ASFR_10to14_L fe_ASFR_10to14_U)
-	order interval fe_ASFR_10to14 fe_ASFR_10to14_L fe_ASFR_10to14_U		   ///
-		  fe_ASFR_10 fe_ASFR_10_U fe_ASFR_10_L	yrsexp_10 births_10		   ///
-		  fe_ASFR_11 fe_ASFR_11_U fe_ASFR_11_L  yrsexp_11 births_11		   ///
-		  fe_ASFR_12 fe_ASFR_12_U fe_ASFR_12_L  yrsexp_12 births_12		   ///
-		  fe_ASFR_13 fe_ASFR_13_U fe_ASFR_13_L  yrsexp_13 births_13		   ///
-		  fe_ASFR_14 fe_ASFR_14_U fe_ASFR_14_L  yrsexp_14 births_14		   
 
-	save               "ASFR_10-14.dta", replace
-	export excel using Table_ASFR_10-14.xlsx, firstrow(variables) replace
+	keep  interval fe_ASFR_10to14 fe_ASFR_10to14_L fe_ASFR_10to14_U		   ///
+		  fe_ASFR_10 fe_ASFR_10_U fe_ASFR_10_L	///
+		  fe_ASFR_11 fe_ASFR_11_U fe_ASFR_11_L  ///
+		  fe_ASFR_12 fe_ASFR_12_U fe_ASFR_12_L  ///
+		  fe_ASFR_13 fe_ASFR_13_U fe_ASFR_13_L  ///
+		  fe_ASFR_14 fe_ASFR_14_U fe_ASFR_14_L     
+	
+	order interval fe_ASFR_10to14 fe_ASFR_10to14_L fe_ASFR_10to14_U		   ///
+		  fe_ASFR_10 fe_ASFR_10_U fe_ASFR_10_L ///
+		  fe_ASFR_11 fe_ASFR_11_U fe_ASFR_11_L /// 
+		  fe_ASFR_12 fe_ASFR_12_U fe_ASFR_12_L ///
+		  fe_ASFR_13 fe_ASFR_13_U fe_ASFR_13_L ///
+		  fe_ASFR_14 fe_ASFR_14_U fe_ASFR_14_L  	   
+
+	save               "`lcid'`lpv'_ASFR_10-14.dta", replace
+	export excel using "Tables_`lcid'`lpv'_ASFR_10-14.xlsx", firstrow(variables) replace
 
 	* clean up the folder
 	shell del *FL.DTA
@@ -815,6 +828,9 @@ end
  
 * NOTE: scalars first and last can be adjusted within "copy_files" and
 *   "reshape_wide_and_merge"
+
+* Specify the file name as a scalar. This must be an IR standard recode file in Stata format.
+scalar sfn="$irdata"
 
 scalar run_number=0
 

@@ -71,8 +71,22 @@ tab fe_ceb_num [iw=wt]
 tab v013 fe_ceb_num [iw=wt], row
 
 * output to excel
-tabout v013 fe_ceb_num using Tables_FE_Fert.xls [iw=wt] , oneway  c(cell) f(1) ptotal(none)  append 
+tabout v013 fe_ceb_num using Tables_FE_Fert.xls [iw=wt] , c(row) f(1) ptotal(none)    append 
+tabout fe_ceb_num using Tables_FE_Fert.xls [iw=wt] , c(cell) f(1) ptotal(none)    append 
 
+
+**************************************************************************************************
+//Number of children ever born among currently married women
+
+* number of children ever born
+tab fe_ceb_num if v502==1 [iw=wt]
+
+* by age
+tab v013 fe_ceb_num if v502==1 [iw=wt], row
+
+* output to excel
+tabout v013 fe_ceb_num if v502==1 using Tables_FE_Fert.xls [iw=wt] , c(row) f(1) ptotal(none)    append 
+tabout fe_ceb_num if v502==1 using Tables_FE_Fert.xls [iw=wt] , c(cell) f(1) ptotal(none)    append 
 
 **************************************************************************************************
 //Mean number of children ever born
@@ -111,7 +125,7 @@ tab fe_meno [iw=wt]
 tab fe_meno_age fe_meno [iw=wt], row
 
 * output to excel
-tabout v013 fe_ceb_mean using Tables_FE_Fert.xls [iw=wt] , oneway  c(cell) f(1) ptotal(none)  append 
+tabout fe_meno_age fe_meno using Tables_FE_Fert.xls [iw=wt] ,  c(row) f(1) ptotal(none)  append 
 	
 	
 **************************************************************************************************	

@@ -526,8 +526,8 @@ program define final_file_save
 	gen str45 covariatelabel= label
 
 	
-	replace covariatelabel="Region" if regexm(covariate,"v024")==1
 	replace covariatelabel="Type of Place" if regexm(covariate,"v025")==1
+	replace covariatelabel="Region" if regexm(covariate,"v024")==1
 	replace covariatelabel="Education" if regexm(covariate,"v106")==1
 	replace covariatelabel="Wealth Quintile" if regexm(covariate,"v190")==1
 
@@ -569,19 +569,18 @@ program define final_file_save
 	********** Produces Stata file and excel file with all the rates with confidence intervals ******
 	* The default names of the saved files begin with the characters 1,2,5,6 of the name of the last
 	* IR file.  You can change if you wish.
-	save "`lcid'`lpv'_fertility_rates_with_ci.dta", replace
-	export excel "`lcid'`lpv'_fertility_rates_with_ci.xlsx", firstrow(var) replace
+	save "`lcid'`lpv'_fert_rates_ci.dta", replace
+	export excel "Tables_`lcid'`lpv'_fert_rates_ci.xlsx", firstrow(var) replace
 	*/
 
 	********* Produce Table as in Final report *****************************
 	* Table_TFR would be produced. This will contain the fertility rates by background variables.
 	gen N = _n
-	*drop if N==5 //these lines are repeated purposefully to save correct scalars for CBR
 	keep N covariate covariatelabel valuelabel value TFR DHSGFR r1 r2 r3 r4 r5 r6 r7
 	
 	rename (r1 r2 r3 r4 r5 r6 r7 TFR DHSGFR) (fe_ASFR15_19 fe_ASFR20_24 fe_ASFR25_29 fe_ASFR30_34 fe_ASFR35_39 fe_ASFR40_44 fe_ASFR45_49 fe_TFR fe_DHS_GFR)
 	order N covariate covariatelabel valuelabel value fe_TFR fe_DHS_GFR fe_ASFR15_19 fe_ASFR20_24 fe_ASFR25_29 fe_ASFR30_34 fe_ASFR35_39 fe_ASFR40_44 fe_ASFR45_49
-	export excel "Table_TFR.xlsx", firstrow(var) replace
+	export excel "Tables_`lcid'`lpv'_TFR.xlsx", firstrow(var) replace
 
 	**********************************************************************
 	* optional--erase the working files
@@ -779,14 +778,23 @@ scalar lw=-4
 scalar uw=0
 main
 
-use IRtemp.dta, clear //Run this again so that most recent rates are saved as scalars for CBR calculation later
+use IRtemp.dta, clear //Run last so that most recent rates are saved as scalars for CBR calculation later
 scalar lw=-2
 scalar uw=0
+main
+
+*save scalars for CBR
+forvalues i = 1/7 {
+scalar cbr_r`i' = r`i'
+}
+
+use IRtemp.dta, clear //Run last so that most recent rates are saved as scalars for CBR calculation later
 scalar include_v024=1
 scalar include_v106=1
 scalar include_v190=1
 scalar include_v025=1
 main
+
 
 */
 

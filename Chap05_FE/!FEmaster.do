@@ -1,12 +1,13 @@
-/*******************************************************************************************************************************
+/********************************************************************************
 Program: 				FEmaster.do
 Purpose: 				Master file for the Fertility Chapter. 
-						The master file will call other do files that will produce the FE indicators and produce tables.
-Data outputs:			coded variables and table output on screen and in excel tables.  
+						The master file will call other do files that will produce
+						the FE indicators and produce tables.
+Data outputs:			coded variables, table output on screen, and in excel tables.  
 Author: 				Courtney Allen
-Date last modified:		November 20, 2019
+Date last modified:		November 21, 2019
 
-*******************************************************************************************************************************/
+********************************************************************************/
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
@@ -22,9 +23,9 @@ global datapath "C:/Users//$user//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "MWIR7HFL"
+global irdata "BUIR70FL"
 *TJIR72FL GHIR72FL TJBR72FL
-global prdata  "MWPR7HFL"
+global prdata  "BUPR70FL"
 ****************************
 
 * IR file variables
@@ -42,15 +43,19 @@ do FE_tables.do
 
 
 
+
 * Fertility do files
+do FE_ASFR_10_14.do
+*Purpose: 	Code ASFR for 10-14 year olds. This file will create tables.
+
+* Reopen dataset for ASFR 10 to 14
+use "$datapath//$irdata.dta", clear
+
+
 do FE_TFR.do
 *Purpose: 	Code fertility rates. This do file will create tables.
 
-* REopen dataset
-use "$datapath//$irdata.dta", clear
 
-do FE_ASFR_10_14.do
-*Purpose: 	Code ASFR for 10-14 year olds. This file will create tables.
 
 
 
@@ -60,7 +65,8 @@ do FE_ASFR_10_14.do
 use "$datapath//$prdata.dta", clear
 
 do FE_CBR.do
-*Purpose: 	Code crude birth rates. This file will create tables.
+* Purpose: 	Code crude birth rates. This file will create tables. This do file 
+* must be run after the FE_TFR.do file is run as it uses the scalars created.
 
 
 

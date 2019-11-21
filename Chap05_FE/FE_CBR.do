@@ -51,7 +51,7 @@ forvalues i = 15(5)45 {
 	scalar CBR_pop_`i' = women_pop_`i'/hh_pop
 
 	//multiply by ASFRs for each age band
-	scalar CBR_pop_`i'_temp = CBR_pop_`i'*r`1'*1000
+	scalar CBR_pop_`i'_temp = CBR_pop_`i'*cbr_r`1'*1000
 	
 	
 //counts for each age group by residence type
@@ -84,7 +84,13 @@ gen CBR = CBR
 //make output file
 keep CBR*
 collapse CBR CBR_urban CBR_rural
-export excel "Table_CBR.xlsx", firstrow(var) replace
+scalar sfn="$irdata"
+scalar scid=substr(sfn,1,2)
+scalar spv =substr(sfn,5,2)
+local lcid=scid
+local lpv=spv
+
+export excel "Tables_`lcid'`lpv'_CBR.xlsx", firstrow(var) replace
 
 
 
