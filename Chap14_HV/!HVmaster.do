@@ -19,24 +19,24 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "MWIR7AFL"
-*GHIR72FL 
+global irdata "GNIR71FL"
+*GHIR72FL MWIR7AFL
 
 *MR files
-global mrdata "MWMR7AFL"
-*GHMR72FL
+global mrdata "GNMR71FL"
+*GHMR72FL MWMR7AFL
 
 *CR files
-global crdata "MWCR7AFL"
-*GHMR72FL
+global crdata "GNCR71FL"
+*GHMR72FL MWCR7AFL
 
 *PR files
-global prdata "MWPR7AFL"
-*GHPR72FL
+global prdata "GNPR71FL"
+*GHPR72FL MWPR7AFL
 
 *AR files - files with HIV test results
-global ardata "MWAR7AFL"
-*GHAR72FL
+global ardata "GNAR71FL"
+*GHAR72FL MWAR7AFL
 ****************************
 
 /* PR file variables
@@ -60,7 +60,7 @@ do HV_tables.do
 */
 *******************************************************************************************************************************
 
-* IR, MR, AR file
+/* IR, MR, AR file
 
 * A merge of the IR and MR files with the AR file is needed to produce the Total HIV prevalence and present them by background variables present in the IR and MR files
 * The following merge sequence will produce an IRMRARmerge.dta file for the survey of interest
@@ -118,7 +118,7 @@ do HV_backgroundvars.do
 
 save IRMRARmerge.dta, replace
 
-*do HV_tables.do
+do HV_tables.do
 *Purpose: 	Produce tables for indicators computed from the above do files.
 
 * erase merged file. Comment out if you would like to keep this file
@@ -128,7 +128,7 @@ save IRMRARmerge.dta, replace
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* CR file variables
+* CR file variables
 
 * merge CR and AR files
 use "$datapath//$ardata.dta", clear

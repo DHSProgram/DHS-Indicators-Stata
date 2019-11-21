@@ -17,6 +17,8 @@ CBR_rural	"Crude Birth Rate - Rural"
 
 ----------------------------------------------------------------------------*/
 
+//create weight
+gen wt = hv005/1000000
 
 //cut age group into 5 yr groups
 egen agegroup = cut(hv105), at(0,15,20,25,30,35,40,45,50,999)
@@ -39,6 +41,7 @@ scalar CBR_urban = 0
 scalar CBR_rural = 0
 
 //counts for each age group
+tokenize 1 2 3 4 5 6 7
 forvalues i = 15(5)45 { 
 	//count of de facto women by age group
 	summ hv104 [iw=wt] if hv103==1 & hv104==2  & agegroup==`i'
@@ -48,9 +51,7 @@ forvalues i = 15(5)45 {
 	scalar CBR_pop_`i' = women_pop_`i'/hh_pop
 
 	//multiply by ASFRs for each age band
-	forvalues y = 1/7 {
-	scalar CBR_pop_`i'_temp = CBR_pop_`i' * r`y'	
-	}
+	scalar CBR_pop_`i'_temp = CBR_pop_`i'*r`1'*1000
 	
 	
 //counts for each age group by residence type
@@ -62,12 +63,9 @@ forvalues j = 1/2 {
 	//divide women by population
 	scalar CBR_pop_`i'_res`j' = women_pop_`i'_res`j' /hh_pop_res`j'
 	
-	
 	//multiply by ASFRs for each age band (r1-r7 are scalars for ASFRs created in the TFR.do file)
-	forvalues y = 1/7 {
-	scalar CBR_pop_`i'_temp_res`i' = CBR_pop_`i'_res`j' * r`y'	
+	scalar CBR_pop_`i'_temp_res`j' = (CBR_pop_`i'_res`j'*r`1'_`j'*1000)	
 	}
-}
 
 	//sum to create CBR for urban and rural
 	scalar CBR_urban = CBR_urban + CBR_pop_`i'_temp_res1
@@ -75,13 +73,18 @@ forvalues j = 1/2 {
 
 	//sum to CBR 
 	scalar CBR = CBR + CBR_pop_`i'_temp
-
+mac shift
 }
+
+//create variables
 gen CBR_urban = CBR_urban
 gen CBR_rural = CBR_rural
 gen CBR = CBR
 	
-
+//make output file
+keep CBR*
+collapse CBR CBR_urban CBR_rural
+export excel "Table_CBR.xlsx", firstrow(var) replace
 
 
 
