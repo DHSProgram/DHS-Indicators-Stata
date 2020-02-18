@@ -8,7 +8,7 @@ Date last modified: November 5 2019 by Shireen Assaf
 	1. 	Tables_know_wm:		Contains the tables for HIV/AIDS knowledge indicators for women
 	2.	Tables_know_mn:		Contains the tables for HIV/AIDS knowledge indicators for men
 	3. 	Tables_atd_wm:		Contains the tables for HIV/AIDS attitude indicators for women
-	4.	Tables_atd_mn:		Contains the tables for HIV/AIDS attitude indicators for women
+	4.	Tables_atd_mn:		Contains the tables for HIV/AIDS attitude indicators for men
 	5.	Tables_rsky_wm: 	Contains the tables for risky sexual behaviors for women
 	6.	Tables_rsky_mn: 	Contains the tables for risky sexual behaviors for men
 	7.	Tables_test_wm: 	Contains the tables for HIV prior testing and counseling for women
@@ -74,7 +74,7 @@ tab v106 hk_knw_risk_cond [iw=wt], row nofreq
 tab v190 hk_knw_risk_cond [iw=wt], row nofreq 
 
 * output to excel
-tabout v014 v025 v024 v106 v190 hk_knw_risk_cond using Tables_know_wm.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v024 v106 v190 hk_knw_risk_cond using Tables_know_wm.xls [iw=wt] , c(row) f(1) append 
 */
 **************************************************************************************************
 //Know reduce risk - limit to one partner
@@ -94,7 +94,7 @@ tab v106 hk_knw_risk_sex [iw=wt], row nofreq
 tab v190 hk_knw_risk_sex [iw=wt], row nofreq 
 
 * output to excel
-tabout v014 v025 v024 v106 v190 hk_knw_risk_sex using Tables_know_wm.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v024 v106 v190 hk_knw_risk_sex using Tables_know_wm.xls [iw=wt] , c(row) f(1) append 
 */
 **************************************************************************************************
 //Know reduce risk - use condoms and limit to one partner
@@ -114,7 +114,7 @@ tab v106 hk_knw_risk_condsex [iw=wt], row nofreq
 tab v190 hk_knw_risk_condsex [iw=wt], row nofreq 
 
 * output to excel
-tabout v014 v025 v024 v106 v190 hk_knw_risk_condsex using Tables_know_wm.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v024 v106 v190 hk_knw_risk_condsex using Tables_know_wm.xls [iw=wt] , c(row) f(1) append 
 */
 **************************************************************************************************
 //Know healthy person can have HIV

@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			HK_KNW_ATD.do
+Program: 			HK_RSKY_BHV.do
 Purpose: 			Code to compute Multiple Sexual Partners, Higher-Risk Sexual Partners, and Condom Use
 Data inputs: 		IR or MR survey list
 Data outputs:		coded variables

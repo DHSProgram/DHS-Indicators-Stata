@@ -21,7 +21,7 @@ Notes: 	Line 28 selects for the age group of interest for the coverage indicator
 * comment out the tables or indicator section you do not want.
 ****************************************************
 
-* indicators from IR file
+* indicators from PR file
 if file=="PR" {
 
 * THE TABLES PRODUCED HERE ARE UNWEIGHTED
@@ -505,6 +505,8 @@ using Tables_prior_tests.xls [iw=wt], oneway clab("Total_15_49")cells(cell) f(1)
 * HIV prevalence by male circumcision
 **************************************************************************************************
 * Circumcised by health professional
+cap summ hv_hiv_circum_skilled 
+if r(N)!=0 {
 
 * age
 tab v013 hv_hiv_circum_skilled if sex==1 [iw=wt], row nofreq 
@@ -529,9 +531,12 @@ tab v190 hv_hiv_circum_skilled if sex==1  [iw=wt], row nofreq
 
 *output to excel
 tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_skilled if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("Circumcised_skilled") f(1) replace 
+}
 
 ***********
 * Circumcised by traditional/other
+cap summ hv_hiv_circum_trad 
+if r(N)!=0 {
 
 * age
 tab v013 hv_hiv_circum_trad if sex==1 [iw=wt], row nofreq 
@@ -556,9 +561,12 @@ tab v190 hv_hiv_circum_trad if sex==1  [iw=wt], row nofreq
 
 *output to excel
 tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_trad if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("Circumcised_traditional") f(1) append 
+}
 
 ***********
 * All circumcised
+cap summ hv_hiv_circum_pos 
+if r(N)!=0 {
 
 * age
 tab v013 hv_hiv_circum_pos if sex==1 [iw=wt], row nofreq 
@@ -583,9 +591,12 @@ tab v190 hv_hiv_circum_pos if sex==1  [iw=wt], row nofreq
 
 *output to excel
 tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_pos if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("All_circumcised") f(1) append 
+}
 
 ***********		
 * Uncircumcised
+cap summ hv_hiv_uncircum_pos
+if r(N)!=0 {
 
 * age
 tab v013 hv_hiv_uncircum_pos if sex==1 [iw=wt], row nofreq 
@@ -610,6 +621,7 @@ tab v190 hv_hiv_uncircum_pos if sex==1  [iw=wt], row nofreq
 
 *output to excel
 tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_uncircum_pos if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("Uncircumcised") f(1) append 
+}
 ***********		
 }
 
@@ -650,6 +662,4 @@ tab v190 hv_couple_hiv_status [iw=wt], row nofreq
 tabout v013 mv013 v025 v024 v106 mv106 v190 hv_couple_hiv_status using Tables_prev_cpl.xls [iw=wt] , c(row)  f(1) replace 
 ***********	
  
-
-
 }

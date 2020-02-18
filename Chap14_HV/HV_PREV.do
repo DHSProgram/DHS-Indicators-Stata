@@ -115,12 +115,13 @@ label var hv_neg_nottested "Not previously tested among HIV negative"
 if file=="CR" {
 
 gen hv_couple_hiv_status=.
-replace hv_couple_hiv_status=1 if (w_hiv03!=1 | w_hiv03!=3) & (m_hiv03!=1 | m_hiv03!=3)
-replace hv_couple_hiv_status=2 if (w_hiv03!=1 | w_hiv03!=3) & (m_hiv03==1 | m_hiv03==3)
-replace hv_couple_hiv_status=3 if  (w_hiv03==1 | w_hiv03==3) & (m_hiv03!=1 | m_hiv03!=3)
-replace hv_couple_hiv_status=4 if  (w_hiv03==1 | w_hiv03==3) & (m_hiv03==1 | m_hiv03==3)
+replace hv_couple_hiv_status=1 if (w_hiv03!=1 & w_hiv03!=3) & (m_hiv03!=1 & m_hiv03!=3)
+replace hv_couple_hiv_status=2 if (w_hiv03!=1 & w_hiv03!=3) & (m_hiv03==1 | m_hiv03==3)
+replace hv_couple_hiv_status=3 if (w_hiv03==1 | w_hiv03==3) & (m_hiv03!=1 & m_hiv03!=3)
+replace hv_couple_hiv_status=4 if (w_hiv03==1 | w_hiv03==3) & (m_hiv03==1 | m_hiv03==3)
+replace hv_couple_hiv_status=. if !(inlist(w_hiv03,0,1,3) & inlist(m_hiv03,0,1,3))
 label define status 1"Both HIV negative" 2"Man HIV positive, woman HIV negative" 3"Woman HIV positive, man HIV negative" 4"Both HIV positive"
 label values hv_couple_hiv_status status
-label var hv_couple_hiv_status "HIV status for couples living in the same household both of whom had HIV test in survey
+label var hv_couple_hiv_status "HIV status for couples living in the same household both of whom had HIV test in survey"
 
 }

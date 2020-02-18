@@ -2431,37 +2431,6 @@ cap label define watersource 	11 "piped into dwelling"	///
 cap label values watersource watersource
 */
 
-
-recode watersource (11/15 21 31 41 51 61/73 = 1 "improved water") (30 32 40 42 43 96 = 0 "unimproved/surface water") (99=.), gen(waterimprove)
-label var waterimprove "Improved Water Source"
-
-
-
-							13	 "public tap/standpipe" ///
-							14	 "piped to neighbor"	///
-							15	 "piped outside of yard/lot" ///
-							21	 "tube well or borehole" ///
-							30	 "well - protection unspecified" ///
-							31	 "protected well" 		///
-							32	 "unprotected well"		///
-							40	 "spring - protection unspecified" ///
-							41	 "protected spring" 	///
-							42	 "unprotected spring"	///
-							43	 "surface water (river/dam/lake/pond/stream/canal/irrigation channel)" ///
-							51	 "rainwater"			///
-							61	 "tanker truck"			///
-							62	 "cart with small tank" ///
-							63	 "cistern"				///
-							64	 "water in drums/cans"  ///
-							65	 "purchased water"		///
-							71	 "bottled water"		///
-							72	 "purified water, filtration plant" ///
-							73	 "satchet water"		///
-							96	 "other"			
-cap label values watersource watersource
-*/
-
-
 recode watersource (11/15 21 31 41 51 61/73 = 1 "improved water") (30 32 40 42 43 96 = 0 "unimproved/surface water") (99=.), gen(waterimprove)
 label var waterimprove "Improved Water Source"
 replace waterimprove = . if hv102!=1 //only for dejure

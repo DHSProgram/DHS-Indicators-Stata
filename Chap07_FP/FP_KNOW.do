@@ -134,7 +134,7 @@ gen fp_know_mean_mar=r(mean)
 label var fp_know_mean_mar "Mean number of methods known - among currently married"
 
 
-*** Knowldge of fertile period ***
+*** Knowledge of fertile period ***
 recode v217 (4=1 "Just before her menstrual period begins") (1=2 "During her menstrual period") (2=3 "Right after her menstrual period has ended") ///
 			(3=4 "Halfway between two menstrual periods"  ) (6=5 "Other") (5=6 "No specific time") (8=8 "Don't know") (9=9 "Missing"), gen(fp_know_fert_all)
 label var fp_know_fert_all "Knowledge of fertile period among all users"

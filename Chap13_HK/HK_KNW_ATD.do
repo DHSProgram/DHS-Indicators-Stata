@@ -9,7 +9,7 @@ Note:				The indicators below can be computed for men and women.
 					For women and men the indicators are computed for age 15-49 in line 43 and 149. 
 					This can be commented out if the indicators are required for all women/men.
 					
-					Indicator hk_know_hiv_hlth_2miscp (line 89) is country specific, please check the final report for the two most common misconceptions. 
+					Indicator hk_knw_hiv_hlth_2miscp (line 89) is country specific, please check the final report for the two most common misconceptions. 
 					Currently coded as rejecting that HIV can be transmitted by mosquito bites and supernatural means.
 *****************************************************************************************************/
 

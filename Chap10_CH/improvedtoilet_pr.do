@@ -59,7 +59,8 @@ with `c'.
 */
 
 *create var to generate filename
-*gen filename = substr(filename,1,6)
+*gen filename = substr("`c'",1,6)
+
 
 ********************************************************************************
 *FIRST CREATE STANDARD CODES FOR ALL SURVEYS
@@ -1822,6 +1823,9 @@ label values toilet toilet
 
 recode toilet (11/13 16 21 22 41 51 = 1 "improved toilet") (10 14 15 20 23 31 42/44 96 = 0 "unimproved") (99=.), gen(toiletimprove)
 cap recode hv225 .=0 9=0
-cap replace toiletimprove = 0 if hv225==1 //shared toilet is not improved
+*cap replace toiletimprove = 0 if hv225==1 //shared toilet is not improved. Note: this is used in the old definition and no longer required. 
+replace toiletimprove = . if hv102!=1 //only for dejure
+
+
 
 *drop filename

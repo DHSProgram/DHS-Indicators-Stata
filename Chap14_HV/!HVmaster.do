@@ -39,7 +39,7 @@ global ardata "GNAR71FL"
 *GHAR72FL MWAR7AFL
 ****************************
 
-/* PR file variables
+* PR file variables
 
 * merge AR file to PR file
 use "$datapath//$ardata.dta", clear
@@ -60,7 +60,7 @@ do HV_tables.do
 */
 *******************************************************************************************************************************
 
-/* IR, MR, AR file
+* IR, MR, AR file
 
 * A merge of the IR and MR files with the AR file is needed to produce the Total HIV prevalence and present them by background variables present in the IR and MR files
 * The following merge sequence will produce an IRMRARmerge.dta file for the survey of interest
@@ -133,13 +133,13 @@ do HV_tables.do
 * merge CR and AR files
 use "$datapath//$ardata.dta", clear
 rename (hivclust hivnumb hivline hiv03) (v001 v002 v003 w_hiv03)
-keep v001 v002 v003 w_hiv03 hiv05
+keep v001 v002 v003 w_hiv03
 sort v001 v002 v003
 save w_temp.dta, replace
 
 use "$datapath//$ardata.dta", clear
 rename (hivclust hivnumb hivline hiv03) (mv001 mv002 mv003 m_hiv03)
-keep mv001 mv002 mv003 m_hiv03
+keep mv001 mv002 mv003 m_hiv03 hiv05
 sort mv001 mv002 mv003
 save m_temp.dta, replace
 
