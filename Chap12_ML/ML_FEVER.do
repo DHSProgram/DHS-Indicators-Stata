@@ -68,7 +68,7 @@ label var ml_fev_care_day "Advice or treatment sought for fever symptoms on the 
 
 //Child with fever received heel or finger stick 
 gen ml_stick=0 if ml_fever==1
-replace ml_stick=1 if h47==1
+replace ml_stick=1 if h47==1 & ml_fever==1
 replace ml_stick =. if b5==0
 lab var ml_stick "Child received heel or finger stick"
 
