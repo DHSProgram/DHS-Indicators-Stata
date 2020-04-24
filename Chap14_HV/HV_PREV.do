@@ -89,22 +89,22 @@ gen hv_neg_ever_test= v781==1 & v828==1 if inlist(hiv03,0,2,7,9)
 label values hv_neg_ever_test yesno
 label var hv_neg_ever_test "Ever tested for HIV and received result of most recent test among HIV negative"
 
-//Tested in the last 12 months among HIV positive
+//Tested in the last 12 months among HIV negative
 gen hv_neg_12m_test= v781==1 & v826a<12 & v828==1 if inlist(hiv03,0,2,7,9)
 label values hv_neg_12m_test yesno
 label var hv_neg_12m_test "Tested in the past 12 months and received result among HIV negative"
 
-//Tested 12 ore more months ago among HIV positive
+//Tested 12 ore more months ago among HIV negative
 gen hv_neg_more12m_test = v781==1 & v826a>=12 & v828==1 if inlist(hiv03,0,2,7,9)
 label values hv_neg_more12m_test yesno
 label var hv_neg_more12m_test "Tested 12 or more months ago and received result among HIV negative"
 
-//Ever tested but did not receive most recent result among HIV positive
+//Ever tested but did not receive most recent result among HIV negative
 gen hv_neg_ever_noresult= v781==1 & v828!=1 if inlist(hiv03,0,2,7,9)
 label values hv_neg_ever_noresult yesno
 label var hv_neg_ever_noresult "Ever tested for HIV and did not receive the result of most recent test among HIV negative"
 
-//Not previously tested among HIV positive
+//Not previously tested among HIV negative
 gen hv_neg_nottested= v781!=1 if inlist(hiv03,0,2,7,9)
 label values hv_neg_nottested yesno
 label var hv_neg_nottested "Not previously tested among HIV negative"
