@@ -7,7 +7,7 @@ Author:				Shireen Assaf
 Date last modified: April 22, 2020 by Shireen Assaf 
 Note:				These indicators can also be computed using the PR file but you would need to select for dejure household memebers
 					using hv102==1. Please see the Guide to DHS Statistics.  
-
+					There may be some other country specific household possessions available in the dataset. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -21,6 +21,8 @@ ph_cook_fuel	"Type fo cooking fuel"
 ph_cook_solid	"Using solid fuel for cooking"
 ph_cook_clean	"Using clean fuel for cooking"
 	
+ph_smoke		"Frequency of smoking at home"	
+
 ph_radio		"Owns a radio"
 ph_tv			"Owns a tv"
 ph_mobile		"Owns a mobile phone"
@@ -34,8 +36,7 @@ ph_car			"Owns a car or truck"
 ph_boat			"Owns a boat with a motor"
 ph_agriland		"Owns agricultural land"
 ph_animals		"Owns livestock or farm animals"
-	
-ph_smoke		"Frequency of smoking at home"
+
 ----------------------------------------------------------------------------*/
 
 *** Household characteristics ***
@@ -75,6 +76,11 @@ label var ph_cook_solid "Using solid fuel for cooking"
 gen ph_cook_clean= inrange(hv226,1,4) 
 label values ph_cook_clean yesno
 label var ph_cook_clean "Using clean fuel for cooking"
+
+//Frequency of smoking in the home
+gen ph_smoke= hv252
+label values ph_smoke HV252	
+label var ph_smoke "Frequency of smoking at home"
 
 *** Household possessions ***
 
@@ -143,9 +149,3 @@ gen ph_animals= hv246==1
 label values ph_animals yesno
 label var ph_animals "Owns livestock or farm animals"
 
-
-*** Smoking ***
-
-gen ph_smoke= hv252
-label values ph_smoke HV252	
-label var ph_smoke "Frequency of smoking at home"
