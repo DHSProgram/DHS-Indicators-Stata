@@ -19,14 +19,16 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global hrdata "ZMHR71FL"
-* GHHR72FL  MMHR71FL UGHR7BFL NGHR7AFL
+global hrdata "NGHR7AFL"
+* GHHR72FL  MMHR71FL UGHR7BFL ZMHR71FL ZWHR71FL
 
-global prdata "ZMPR71FL"
-* GHPR72FL  MMPR71FL UGPR7BFL NGPR7AFL
+global prdata "NGPR7AFL"
+* GHPR72FL  MMPR71FL UGPR7BFL ZMPR71FL ZWPR71FL
+
+global brdata "NGBR7AFL"
+* GHBR72FL  MMBR71FL UGBR7BFL ZMBR71FL ZWBR71FL
+
 ****************************
-
-cap label define yesno 0"No" 1"Yes"
 
 * HR file variables
 
@@ -64,17 +66,24 @@ do PH_HNDWSH.do
 do PH_tables.do
 * Purpose: 	Produce tables for indicators computed from the above do files.
 
+do PH_SCHOL.do
+* Purpose:	Code eduation and schooling indicators. 
+* Note: This code will merge BR and PR files and drop some cases. It will also produce the excel file Tables_schol 
+
+* open dataset again since cases were droped in PH_EDU.do
+use "$datapath//$prdata.dta", clear
+
 do PH_POP.do
-* Purpose: 	Code to compute population characteristics, birth registration, household composition, orphanhood, and living arrangments
+* Purpose: 	Code to compute population characteristics, birth registration, education levels, household composition, orphanhood, and living arrangments
 * Warning: This do file will collapse the data and therefore some indicators produced will be lost. However, they are saved in the file PR_temp_children.dta and this data file will be used to produce the tables for these indicators in the PH_table code. This do file will produce the Tables_hh_comps for household composition (usually Table 2.8 or 2.9 in the Final Report). 
 
 do PH_tables2.do
 * Purpose: 	Produce tables for indicators computed from the PH_POP.do file
 
-*do PH_EDU.do
-* Purpose:	Code eduation and schooling indicators
+do PH_GINI.do
+* Purpose:	Code to produce Gini index table. 
+* Note: 	This code will collapse the data and produce the table Table_gini.xls
 
- 
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************

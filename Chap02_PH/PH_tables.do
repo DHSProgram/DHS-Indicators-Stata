@@ -115,7 +115,7 @@ tabout ph_radio ph_tv ph_mobile ph_tel ph_comp ph_frig ph_bike ph_cart ph_moto p
 * indicators from PR file
 if file=="PR" {
 
-gen wt=hv005/1000000
+cap gen wt=hv005/1000000
 
 **************************************************************************************************
 * Indicators for handwashing: excel file Tables_handwsh will be produced

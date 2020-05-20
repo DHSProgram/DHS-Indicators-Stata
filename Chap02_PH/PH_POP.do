@@ -1,6 +1,6 @@
 /*****************************************************************************************************
 Program: 			PH_POP.do
-Purpose: 			Code to compute population characteristics, birth registration, household composition, orphanhood, and living arrangments
+Purpose: 			Code to compute population characteristics, birth registration, education levels, household composition, orphanhood, and living arrangments
 Data inputs: 		PR survey list
 Data outputs:		coded variables
 Author:				Shireen Assaf
@@ -20,6 +20,16 @@ ph_birthreg_cert	"Child under 5 with registered birth and birth certificate"
 ph_birthreg_nocert	"Child under 5 with registered birth and no birth certificate"
 ph_birthreg			"Child under 5 with registered birth"
 
+ph_highest_edu		"Highest level of schooling attended or completed among those age 6 or over"
+ph_median_eduyrs_wm "Median years of education among those age 6 or over - Females"
+ph_median_eduyrs_mn "Median years of education among those age 6 or over - Males"
+
+ph_wealth_quint		"Wealth quintile - dejure population"
+
+ph_chld_liv_arrang	"Living arrangement and parents survival status for child under 18"
+ph_chld_liv_noprnt	"Child under 18 not living with a biological parent"
+ph_chld_orph		"Child under 18 with one or both parents dead"
+
 ph_hhhead_sex		"Sex of household head"
 ph_num_members		"Number of usual household members"
 	
@@ -27,15 +37,13 @@ ph_orph_double		"Double orphans under age 18"
 ph_orph_single		"Single orphans under age 18"
 ph_foster			"Foster children under age 18"
 ph_orph_foster		"Orphans and/or foster children under age 18"
-	
-ph_chld_liv_arrang	"Living arrangement and parents survival status for child under 18"
-ph_chld_liv_noprnt	"Child under 18 not living with a biological parent"
-ph_chld_orph		"Child under 18 with one or both parents dead"
 ----------------------------------------------------------------------------*/
+
+cap label define yesno 0"No" 1"Yes"
 
 *** Population characteristics ***
 
- gen ager=int(hv105/5) if hv103==1
+gen ager=int(hv105/5) if hv103==1
 
 //Five year age groups
 recode ager	(0=0 " <5") (1=1 " 5-9") (2=2 " 10-14") (3=3  " 15-19") (4=4 " 20-24") (5=5 " 25-29") (6=6 "30-34") ///
@@ -58,6 +66,7 @@ recode hv105 (10/19=1 " Adolescents") (else=0 " not adolesents") if hv103==1, ge
 label var ph_pop_adols "De factor population that are adolesents"
 
 *** Birth registration ***
+
 //Child registered and with birth certificate
 gen ph_birthreg_cert= hv140==1 if hv102==1 & hv105<5
 label values ph_birthreg_cert yesno	
@@ -72,7 +81,71 @@ label var ph_birthreg_nocert "Child under 5 with registered birth and no birth c
 gen ph_birthreg= inrange(hv140,1,2) if hv102==1 & hv105<5
 label values ph_birthreg yesno
 label var ph_birthreg "Child under 5 with registered birth"
- 
+
+*** Wealth quintile ***
+
+gen ph_wealth_quint = hv270 if hv102==1
+label values ph_wealth_quint HV270
+label var ph_wealth_quint "Wealth quintile - dejure population"
+
+*** Education levels ***
+
+//Highest level of schooling attended or completed
+gen ph_highest_edu= hv109 if hv103==1 & inrange(hv105,6,99)
+label values ph_highest_edu HV109
+label var ph_highest_edu "Highest level of schooling attended or completed among those age 6 or over"
+
+//Median years of education - Females
+gen eduyr=hv108 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==2
+
+summarize eduyr [fweight=hv005], detail
+* 50% percentile
+	scalar sp50=r(p50)
+	
+	gen dummy=. 
+	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==2
+	replace dummy=1 if eduyr<sp50 
+	summarize dummy [fweight=hv005]
+	scalar sL=r(mean)
+	drop dummy
+	
+	gen dummy=. 
+	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==2
+	replace dummy=1 if eduyr <=sp50 
+	summarize dummy [fweight=hv005]
+	scalar sU=r(mean)
+	drop dummy
+
+	gen ph_median_eduyrs_wm=round(sp50-1+(.5-sL)/(sU-sL),.01)
+	label var ph_median_eduyrs_wm "Median years of education among those age 6 or over - Females"
+	
+	drop eduyr
+	
+//Median years of education - Males
+gen eduyr=hv108 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==1
+
+qui summarize eduyr [fweight=hv005], detail
+* 50% percentile
+	scalar sp50=r(p50)
+	
+	gen dummy=. 
+	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==1
+	replace dummy=1 if eduyr<sp50 
+	qui summarize dummy [fweight=hv005]
+	scalar sL=r(mean)
+	drop dummy
+	
+	gen dummy=. 
+	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==1
+	replace dummy=1 if eduyr <=sp50 
+	qui summarize dummy [fweight=hv005]
+	scalar sU=r(mean)
+	drop dummy
+
+	gen ph_median_eduyrs_mn=round(sp50-1+(.5-sL)/(sU-sL),.01)
+	label var ph_median_eduyrs_mn "Median years of education among those age 6 or over - Males"
+
+	drop eduyr
 
 *** Living arrangments ***
 

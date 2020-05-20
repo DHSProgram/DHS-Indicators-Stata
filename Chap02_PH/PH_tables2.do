@@ -142,6 +142,58 @@ tab hv270 ph_birthreg  [iw=wt] , row
 tabout agec hv104 hv025 hv024 hv270 ph_birthreg using Tables_pop.xls [iw=wt] , c(row) f(1) append 
 
 **************************************************************************************************
+* Indicators for wealth quintile and education: excel file Tables_pop will be produced
+**************************************************************************************************
+
+//Wealth quintile
+* residence
+ta hv025 ph_wealth_quint [iw=wt], row
+
+* region
+ta hv024 ph_wealth_quint [iw=wt], row
+
+*output to excel 
+tabout hv025 hv024 ph_wealth_quint using Tables_pop.xls [iw=wt] , c(row) f(1) append 
+
+//Education - Females
+* age
+ta ph_pop_age ph_highest_edu if hv104==2 [iw=wt], row
+
+* residence
+ta hv025 ph_highest_edu if hv104==2 [iw=wt], row
+
+* region
+ta hv024 ph_highest_edu if hv104==2 [iw=wt], row
+
+*output to excel 
+tabout ph_pop_age hv025 hv024 ph_highest_edu  if hv104==2 using Tables_pop.xls [iw=wt] , c(row) clab(Females) f(1) append 
+
+//Median years of education - Females
+tab ph_median_eduyrs_wm
+
+*output to excel 
+tabout ph_median_eduyrs_wm using Tables_pop.xls [iw=wt] , oneway cells(cell) append 
+
+//Education - Males
+* age
+ta ph_pop_age ph_highest_edu if hv104==1 [iw=wt], row
+
+* residence
+ta hv025 ph_highest_edu if hv104==1 [iw=wt], row
+
+* region
+ta hv024 ph_highest_edu if hv104==1 [iw=wt], row
+
+*output to excel 
+tabout ph_pop_age hv025 hv024 ph_highest_edu if hv104==1 using Tables_pop.xls [iw=wt] , c(row) clab(Males) f(1) append 
+
+//Median years of education - Females
+tab ph_median_eduyrs_mn
+
+*output to excel 
+tabout ph_median_eduyrs_mn using Tables_pop.xls [iw=wt] , oneway cells(cell) append 
+
+**************************************************************************************************
 **************************************************************************************************
 
 *open temp file produced by PH_POP.do for children

@@ -39,6 +39,8 @@ ph_animals		"Owns livestock or farm animals"
 
 ----------------------------------------------------------------------------*/
 
+cap label define yesno 0"No" 1"Yes"
+
 *** Household characteristics ***
 
 //Have electricity
