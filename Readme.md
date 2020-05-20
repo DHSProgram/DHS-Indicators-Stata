@@ -37,7 +37,7 @@ There are two commands that can be used for producing tables for the indicators 
 
 |Ch. | Title | Ch. Acronym |Began Stata code | Stata code Complete | Began SPSS code | SPSS code Complete |
 |---|---|---|---|---|---|---|
-|   2|Population & Housing|PH| X|| 2020 ||
+|   2|Population & Housing|PH| X|| X||
 |   3|Respondents’ Characteristics|RC||X||X|
 |   4|Marriage & Sexual Activity|MS||X||X|
 |   5|   Fertility|FE||X|X||
@@ -46,7 +46,7 @@ There are two commands that can be used for producing tables for the indicators 
 |   8|   Infant & Child Mortality|CM||X||X|
 |   9|   Reproductive Health|RH||X||X|
 |  10|   Child Health|CH||X||X|
-|  11|   Nutrition of Children & Adults|NT||X| 2020 ||
+|  11|   Nutrition of Children & Adults|NT||X| |X|
 |  12|   Malaria| ML||X||X|
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK||X||X|
 |  14|   HIV Prevalence|HV||X||X|
