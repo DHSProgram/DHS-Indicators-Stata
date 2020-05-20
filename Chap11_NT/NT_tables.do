@@ -11,10 +11,11 @@ Date last modified: January 7 2020 by Shireen Assaf
 	4.	Tables_IYCF:		Contains the tables for IYCF indicators in children
 	5. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
 	6. 	Tables_salt_hh:		Contains the tables for salt testing and iodized salt in households
-	7. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women
-	8.	Tables_anemia_wm:	Contains the tables for anemia indicators for women
-	7. 	Tables_nut_mn:		Contains the tables for nutritional status indicators for men
-	8.	Tables_anemia_mn:	Contains the tables for anemia indicators for men
+	7.	Tables_micronut_wm	Contains the tables for micronutrient intake in women
+	8. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women
+	9.	Tables_anemia_wm:	Contains the tables for anemia indicators for women
+	10. Tables_nut_mn:		Contains the tables for nutritional status indicators for men
+	11.	Tables_anemia_mn:	Contains the tables for anemia indicators for men
 Note: The tables produced for men (MR file) select for men 15-49. If all men are needed please comment out line 1148
 *****************************************************************************************************/
 * the total will show on the last row of each table.
@@ -1328,7 +1329,7 @@ tabout agecat mv025 mv024 mv106 mv190 nt_mn_obese using Tables_nut_mn.xls [iw=wt
 */
 
 **************************************************************************************************
-* Anemia in women
+* Anemia in men
 **************************************************************************************************
 //Any anemia
 *age
