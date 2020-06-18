@@ -1,7 +1,7 @@
 /*******************************************************************************************************************************
-Program: 				RHmaster.do
-Purpose: 				Master file for the Reporductive Health Chapter. 
-						The master file will call other do files that will produce the RH indicators and produce tables.
+Program: 				RHmain.do
+Purpose: 				Main file for the Reporductive Health Chapter. 
+						The main file will call other do files that will produce the RH indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.
 Author: 				Shireen Assaf 
 Date last modified:		Jan 9th by Shireen Assaf
@@ -20,11 +20,11 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "UGIR60FL"
-* MMIR71FL TJIR70FL UGIR60FL MWIR7HFL GHIR72FL
+global irdata "AFIR70FL"
+* MMIR71FL TJIR70FL UGIR60FL MWIR7HFL GHIR72FL 
 * KR Files
-global brdata "UGBR60FL"
-* MMBR71FL TJBR70FL UGBR60FL MWBR7HFL GHBR72FL
+global brdata "AFBR70FL"
+* MMBR71FL TJBR70FL UGBR60FL MWBR7HFL GHBR72FL 
 ****************************
 
 * IR file variables

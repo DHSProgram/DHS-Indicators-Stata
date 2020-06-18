@@ -1,10 +1,10 @@
 /*******************************************************************************************************************************
-Program: 				HVmaster.do
-Purpose: 				Master file for HIV Prevalence
-						The master file will call other do files that will produce the HV indicators and produce tables.
+Program: 				HVmain.do
+Purpose: 				Main file for HIV Prevalence
+						The main file will call other do files that will produce the HV indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
-Date last modified:		November 5 28, 2019 by Shireen Assaf
+Date last modified:		February 14, 2020 by Trevor Croft
 *******************************************************************************************************************************/
 set more off
 

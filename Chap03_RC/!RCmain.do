@@ -1,11 +1,10 @@
 /*******************************************************************************************************************************
-Program: 				MSmaster.do
-Purpose: 				Master file for the Marriage and Sexual Activity Chapter. 
-						The master file will call other do files that will produce the MS indicators and produce tables.
-Data outputs:			coded variables and table output on screen and in excel tables.  
-Author: 				Courtney Allen
-Date last modified:		September 24, 2019
-
+Program: 				RCmain.do
+Purpose: 				Main file for the Respondents' Characteristics Chapter. 
+						The main file will call other do files that will produce the RC indicators and produce tables.
+Data outputs:			Coded variables and table output on screen and in excel tables.  
+Author: 				Shireen Assaf
+Date last modified:		October 1 2019 by Shireen Assaf
 *******************************************************************************************************************************/
 set more off
 
@@ -13,19 +12,18 @@ set more off
 
 *global user 39585	//change employee id number to personalize path
 global user 33697
+cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap03_RC"
 
-* change working path
-cd "C:/Users/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap04_MS"
-
-* change data path
-global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
+global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * IR Files
-global irdata "GHIR72FL"
+global irdata "ETIR71FL"
+* MMIR71FL TJIR70FL GHIR72FL UGIR7BFL KEIR71FL
 
-global mrdata "GHMR71FL"
+global mrdata "ETMR71FL"
+* MMMR71FL GHMR72FL UGMR7BFL
 ****************************
 
 * IR file variables
@@ -35,18 +33,13 @@ use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
 
-*Purpose: 	Code marital status variables
-cap program drop calc_median_age
-do MS_MAR.do
+do RC_CHAR.do
+*Purpose: 	Code respondent characteristic indicators for women
+* Note:		This will drop any women over age 49. You can change this selection. Please check the notes in the do file.
 
-*Purpose: 	Code sexual activity variables
-cap program drop calc_median_age
-do MS_SEX.do
-
-*Purpose: 	Produce tables for indicators computed from above do files. 
-do MS_tables.do
-
-*
+do RC_tables.do
+*Purpose: 	Produce tables for indicators computed from RC_CHAR.do file. 
+*/
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
@@ -57,16 +50,12 @@ use "$datapath//$mrdata.dta", clear
 
 gen file=substr("$mrdata", 3, 2)
 
-*Purpose: 	Code marital status variables
-cap program drop calc_median_age
-do MS_MAR.do
+do RC_CHAR.do
+*Purpose: 	Code respondent characteristic indicators for men
+* Note:		This will drop any men over age 49. You can change this selection. Please check the notes in the do file.
 
-*Purpose: 	Code sexual activity variables
-cap program drop calc_median_age
-do MS_SEX.do
-
-*Purpose: 	Produce tables for indicators computed from above do files. 
-do MS_tables.do
+do RC_tables.do
+*Purpose: 	Produce tables for indicators computed from RC_CHAR.do file. 
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************

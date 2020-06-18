@@ -1,7 +1,7 @@
 /*******************************************************************************************************************************
-Program: 				FFmaster.do
-Purpose: 				Master file for the Fertility Preferences Chapter. 
-						The master file will call other do files that will produce the FF indicators and produce tables.
+Program: 				FFmain.do
+Purpose: 				Main file for the Fertility Preferences Chapter. 
+						The main file will call other do files that will produce the FF indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
 Date last modified:		June 21 2019 by Shireen Assaf

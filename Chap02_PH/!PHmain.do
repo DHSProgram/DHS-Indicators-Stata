@@ -1,7 +1,7 @@
 /*******************************************************************************************************************************
-Program: 				PHmaster.do
-Purpose: 				Master file for the Population and Housing Chapter. 
-						The master file will call other do files that will produce the PH indicators and produce tables.
+Program: 				PHmain.do
+Purpose: 				Main file for the Population and Housing Chapter. 
+						The main file will call other do files that will produce the PH indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
 Date last modified:		May 1 2020 by Shireen Assaf

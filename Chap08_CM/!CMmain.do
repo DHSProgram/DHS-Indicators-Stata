@@ -1,7 +1,7 @@
 /*******************************************************************************************************************************
-Program: 				CMmaster.do
-Purpose: 				Master file for the Child Mortality Chapter. 
-						The master file will call other do files that will produce the CM indicators and produce tables.
+Program: 				CMmain.do
+Purpose: 				Main file for the Child Mortality Chapter. 
+						The main file will call other do files that will produce the CM indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf			
 Date last modified:		April 30, 2019
@@ -19,15 +19,15 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "UGIR60FL"
-* MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
+global irdata "ZMIR61FL"
+* MMIR71FL TJIR70FL GHIR72FL UGIR7AFL UGIR60FL
 
 *BR files
-global brdata "UGBR60FL"
-* MMBR71FL TJBR70FL GHBR72FL UGBR7AFL
+global brdata "ZMBR61FL"
+* MMBR71FL TJBR70FL GHBR72FL UGBR7AFL UGBR60FL
 
 *KR files
-global krdata "UGKR60FL"
+global krdata "ZMKR61FL"
 ****************************
 
 * do files that use the IR files
@@ -45,7 +45,7 @@ do CM_PMR.do
 do CM_tables1.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 
-* open dataset
+/* open dataset
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
@@ -61,7 +61,7 @@ do CM_tables2.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-* KR file variables
+/* KR file variables
 
 * open dataset
 use "$datapath//$krdata.dta", clear

@@ -1,7 +1,7 @@
 /*******************************************************************************************************************************
-Program: 				FPmaster.do
-Purpose: 				Master file for the Family Planning Chapter. 
-						The master file will call other do files that will produce the FP indicators and produce tables.
+Program: 				FPmain.do
+Purpose: 				Main file for the Family Planning Chapter. 
+						The main file will call other do files that will produce the FP indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf 
 Date last modified:		June 20 by Courtney Allen to add discontinuation section
@@ -14,8 +14,8 @@ set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-*local user 39585	//change employee id number to personalize path
-local user 33697
+local user 39585	//change employee id number to personalize path
+*local user 33697
 cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap07_FP"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
