@@ -2,11 +2,10 @@
 Program: 			FE_tables.do
 Purpose: 			produce tables for fertility indicators
 Author:				Courtney Allen
-Date last modified: Oct 21 2019 by Courtney Allen
+Date last modified: July 10 2020 by Courtney Allen
 
 *Note this do file will produce the following tables in excel:
-	1. 	Tables_FERT:		Contains the tables for fertility indicators
-	2. 	Tables_POST:		Contains the tables for postpartum and birth interval indicators
+	1. 	Tables_FERT:		Contains the tables for most fertility indicators created in the FE_FERT and FE_POST do files
 
 
 Notes: 
