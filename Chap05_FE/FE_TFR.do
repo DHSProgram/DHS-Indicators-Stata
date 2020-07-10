@@ -4,16 +4,17 @@ Purpose: 			Code to compute fertility rates
 Data inputs: 		IR survey list
 Data outputs:		coded variables
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
-Date last modified: September 25, 2019 by Courtney Allen
-Note:				Please see notes in lines 563, 573, and 800. 
+Date last modified: July 7, 2020 by Courtney Allen
+Note:				Please see notes in lines 568, and 704. 
 					This do file will produce a table of  TFRs by background variables as shown in final report (Table_TFR.xls). 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
 Variables created in this file:
-fe_asfr		"age specific fertility rates"
-fe_tfr		"fertility rates"
-fe_gfr		"general fertility rate"
+ASFR		"age specific fertility rates"
+TFR			"fertility rates"
+GFR			"general fertility rate"
+DHSGFR		"DHS general fertility rates"
 ----------------------------------------------------------------------------*/
 
 *set logtype text
@@ -23,21 +24,18 @@ set more off
 
 program define start_month_end_month
 
-	/* 
-	This routine calculates the end date and start date for the desired window of time
-
-	Specify the interval as years before the date of interview, e.g. with
-
-	scalar lw=-2
-	scalar uw=0  
-
-	for a window from 0 to 2 years before the interview, inclusive
-	  (that is, three years)
-
+	/*--------------------------------------------------------------------------
+	NOTE:
+	This routine calculates the end date and start date for the desired window 
+	of time. Specify the interval as years before the date of interview, 
+	e.g. with
+		- scalar lw=-2
+		- scalar uw=0  
+	for a window from 0 to 2 years before the interview, inclusive(that is, three
+	years).
 	lw is the lower end of the window and uw is the upper end.
 	(Remember that both are negative or 0.)
-
-	*/
+	--------------------------------------------------------------------------*/
 
 	gen start_month=doi+12*lw-12
 	gen end_month=doi+12*uw-1
@@ -369,13 +367,10 @@ program define calc_rates
 
 
 	* Get the GFR and ci
-
-	***********************
 	svyset clusterid [pweight=v005], strata(stratum) singleunit(centered)
 	***********************
 
-	* First the usual GFR
-	***********************
+	* The usual GFR
 	svy, subpop(dummy): poisson births_GFR, offset(lnexp_GFR)
 	***********************
 
@@ -385,16 +380,19 @@ program define calc_rates
 	scalar GFR_U_`cat'=exp(T[6,1])
 	scalar list GFR_`cat' GFR_L_`cat' GFR_U_`cat'
 
-	* Second the DHS version of the GFR
-	* births0 is births before age 15, must calculate for the DHS version of the GFR.
+	/*--------------------------------------------------------------------------
+	NOTE:
+	DHS version of the GFR
+	births0 is births before age 15, must calculate for the DHS version of the GFR.
 
-	* The offset is a little different because it omits exposure to age 45-49.
-
-	* The poisson rate model has a potential problem if a woman in her late 40s has a birth in the 
-	*   window but was in age interval 45-49 in the entire window.  She then has no exposure because
-	*   exposure while age 45-49 is ignored by the DHS version of the GFR. 
-	*   The model will not allow a birth with no exposure.
-	*   The easiest fix is to give such a woman a nominal small amount of exposure, one month. 
+	The offset is a little different because it omits exposure to age 45-49.The 
+	poisson rate model has a potential problem if a woman in her late 40s has a 
+	birth in the window but was in age interval 45-49 in the entire window. She 
+	then has no exposure because exposure while age 45-49 is ignored by the DHS
+	version of the GFR.	The model will not allow a birth with no exposure.
+	The easiest fix is to give such a woman a nominal small amount of exposure, 
+	one month. 
+	--------------------------------------------------------------------------*/
 
 	replace lnexp_DHSGFR=log(1/12) if mexp_DHSGFR==0 & births_DHSGFR>0
 	***********************
@@ -560,27 +558,39 @@ program define final_file_save
 	list lw uw refdate mean_doi covariate value valuelabel r1 r2 r3 r4 r5 r6 r7 TFR DHSGFR, table clean compress
 	list lw uw refdate mean_doi covariate value valuelabel TFR* DHSGFR*, table clean compress
 
+	//could add survey and phase into excel names if wanted
 	scalar scid=substr(sfn,1,2)
 	scalar spv =substr(sfn,5,2)
 	local lcid=scid
 	local lpv=spv
 
-	* If you want these files, the next section. The estimates as shown in the final report are produced in line 574. 
-	********** Produces Stata file and excel file with all the rates with confidence intervals ******
-	* The default names of the saved files begin with the characters 1,2,5,6 of the name of the last
-	* IR file.  You can change if you wish.
-	save "`lcid'`lpv'_fert_rates_ci.dta", replace
-	export excel "Tables_`lcid'`lpv'_fert_rates_ci.xlsx", firstrow(var) replace
+	/*--------------------------------------------------------------------------
+	NOTE:
+	If you want these files, the next section. The estimates as shown in the final
+	report are produced in line 584. 
+	Produces Stata file and excel file with all the rates with confidence intervals ******
+	--------------------------------------------------------------------------*/
+
+	save "FE_TFR_ci.dta", replace
+	rename (r1 r2 r3 r4 r5 r6 r7) (ASFR_15_19 ASFR_20_24 ASFR_25_29 ASFR_30_34 ASFR_35_39 ASFR_40_44 ASFR_45_49)
+	rename (r1_U r1_L) (ASFR_15_19_ci_U ASFR_15_19_ci_L)
+	rename (r2_U r2_L) (ASFR_20_24_ci_U ASFR_20_24_ci_L)
+	rename (r3_U r3_L) (ASFR_25_29_ci_U ASFR_25_29_ci_L)
+	rename (r4_U r4_L) (ASFR_30_34_ci_U ASFR_30_34_ci_L)
+	rename (r5_U r5_L) (ASFR_35_39_ci_U ASFR_35_39_ci_L)
+	rename (r6_U r6_L) (ASFR_40_44_ci_U ASFR_40_44_ci_L)
+	rename (r7_U r7_L) (ASFR_45_49_ci_U ASFR_45_49_ci_L)
+	
+	order covariate value label valuelabel TFR DHSGFR ASFR_15_19 ASFR_20_24 ASFR_25_29 ASFR_30_34 ASFR_35_39 ASFR_40_44 ASFR_45_49
+	export excel "Tables_FE_ASFR_ci.xlsx", firstrow(var) replace
 	*/
 
 	********* Produce Table as in Final report *****************************
 	* Table_TFR would be produced. This will contain the fertility rates by background variables.
 	gen N = _n
-	keep N covariate covariatelabel valuelabel value TFR DHSGFR r1 r2 r3 r4 r5 r6 r7
+	keep N covariate value label valuelabel TFR DHSGFR ASFR_15_19 ASFR_20_24 ASFR_25_29 ASFR_30_34 ASFR_35_39 ASFR_40_44 ASFR_45_49
 	
-	rename (r1 r2 r3 r4 r5 r6 r7 TFR DHSGFR) (fe_ASFR15_19 fe_ASFR20_24 fe_ASFR25_29 fe_ASFR30_34 fe_ASFR35_39 fe_ASFR40_44 fe_ASFR45_49 fe_TFR fe_DHS_GFR)
-	order N covariate covariatelabel valuelabel value fe_TFR fe_DHS_GFR fe_ASFR15_19 fe_ASFR20_24 fe_ASFR25_29 fe_ASFR30_34 fe_ASFR35_39 fe_ASFR40_44 fe_ASFR45_49
-	export excel "Tables_`lcid'`lpv'_TFR.xlsx", firstrow(var) replace
+	export excel "Tables_FE_ASFR.xlsx", firstrow(var) replace
 
 	**********************************************************************
 	* optional--erase the working files
@@ -596,17 +606,17 @@ end
 
 program define recodes
 
-	* Routine to recode or construct covariates
-
-	* Be sure that the components are included in the the original save and reshape commands
-
-	* Example: combine codes 2 and 3 of v106, Education
-
+	/*--------------------------------------------------------------------------
+	Routine to recode or construct covariates
+	Be sure that the components are included in the the original save and reshape 
+	commands
+	Example: combine codes 2 and 3 of v106, Education
+	--------------------------------------------------------------------------*/
 	*gen v106r=v106
 	*replace v106r=2 if v106==3
 	*save, replace
 
-	*/
+	
 
 	* If there are any recodes, you must include "save, replace"
 	save, replace
@@ -617,8 +627,10 @@ end
 
 program define covariate_segment
 
-	* This routine checks whether an "include" scalar is specified, is coded 1, and 
-	*   calculates the rates for each category
+	/*--------------------------------------------------------------------------
+	NOTE: This routine checks whether an "include" scalar is specified, is coded
+	1, and calculates the rates for each category
+	----------------------------------------------------------------------------*/
 
 	* FOR EACH COVARIATE, USE A GROUP OF LINES LIKE THE FOLLOWING
 	/*

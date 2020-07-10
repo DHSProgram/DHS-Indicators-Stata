@@ -1,10 +1,10 @@
 /*****************************************************************************************************
-Program: 			FE_births.do
-Purpose: 			Code fertility indicators from birth history
-Data inputs: 		BR data files
+Program: 			FE_FERT.do
+Purpose: 			Code currenty fertility indicators
+Data inputs: 		IR data files
 Data outputs:		coded variables
 Author:				Courtney Allen 
-Date last modified: October 21 2019
+Date last modified: April 14 2020
 *****************************************************************************************************/
 
 /*______________________________________________________________________________
@@ -40,6 +40,7 @@ ______________________________________________________________________________*/
 
 *-->EDIT subgroups here if other subgroups are needed. 
 ****Subgroups currently include: Residence, region, education, and wealth.
+	*
 	gen all = 1
 	clonevar residence = v025
 	clonevar region = v024
@@ -47,7 +48,7 @@ ______________________________________________________________________________*/
 	clonevar education = v149
 	label define NA 0 "NA" //for sub groups where no median can be defined
 	label define yesnolabel 0 "no" 1 "yes" //for all yes/no binary variables
-
+*/
 	local subgroup residence region education wealth 
 
 	
@@ -63,7 +64,7 @@ gen wt = v005/1000000
 	label var fe_preg "Currently pregnant"
 		
 	//Number of children ever born (CEB)
-	recode v201 (10/max = 10 "10+"), gen(fe_ceb_num) 
+	recode v201 (0=0 "0") (1=1 "1") (2=2 "2") (3=3 "3") (4=4 "4") (5=5 "5") (6=6 "6") (7=7 "7") (8=8 "8") (9=9 "9") (10/max = 10 "10+"), gen(fe_ceb_num) 
 	label var fe_ceb_num "Number of children ever born"
 
 	//Mean number of children ever born (CEB)
@@ -131,7 +132,7 @@ gen wt = v005/1000000
 		//label variable and subgroups
 		local lab_val: value label v013
 		local lab_cat : label `lab_val' `y'
-		label var fe_live_mean_age`y' "Mean number of CEB, agegroup: `lab_cat'"
+		label var fe_live_mean_age`y' "Mean number of living children, agegroup: `lab_cat'"
 		}
 		
 **TEENAGE PREGNANCY AND MOTHERHOOD
@@ -162,8 +163,8 @@ gen wt = v005/1000000
 	label var fe_meno "Experienced menopause"
 
 	//Menopausal age group, 30-49, two-year intervals after 40
-	egen fe_meno_age = cut(v012), at(0 30 35 40 42 44 46 48)
-	label define menolabel 30 "30-34" 35 "35-39" 40 "40-41" ///
+	egen fe_meno_age = cut(v012), at(0 30 35 40 42 44 46 48 50)
+	label define meno_label 30 "30-34" 35 "35-39" 40 "40-41" ///
 						   42 "42-43" 44 "44-45" 46 "46-47" 48 "48-49"
 	label val fe_meno_age meno_label
 	label var fe_meno_age "Age groups for Menopause table"
@@ -171,28 +172,29 @@ gen wt = v005/1000000
 **FIRST BIRTH
 
 	//First birth by specific ages
-	recode v212 (.=0) (0/14 = 1 "yes") (15/49 = 0 "no"), gen (ms_afb_15)
-	label var ms_afb_15 "First birth by age 15"
+	recode v212 (.=0) (0/14 = 1 "yes") (15/49 = 0 "no"), gen (fe_afb_15)
+	label var fe_afb_15 "First birth by age 15"
 
-	recode v212 (.=0) (0/17 = 1 "yes") (18/49 = 0 "no"), gen (ms_afb_18)
-	replace ms_afb_18 = . if v012<18
-	label var ms_afb_18 "First birth by age 18"
+	recode v212 (.=0) (0/17 = 1 "yes") (18/49 = 0 "no"), gen (fe_afb_18)
+	replace fe_afb_18 = . if v012<18
+	label var fe_afb_18 "First birth by age 18"
 
-	recode v212 (.=0) (0/19 = 1 "yes") (20/49 = 0 "no"), gen (ms_afb_20)
-	replace ms_afb_20 = . if v012<20
-	label var ms_afb_20 "First birth by age 20"
+	recode v212 (.=0) (0/19 = 1 "yes") (20/49 = 0 "no"), gen (fe_afb_20)
+	replace fe_afb_20 = . if v012<20
+	label var fe_afb_20 "First birth by age 20"
 
-	recode v212 (.=0) (0/21 = 1 "yes") (22/49 = 0 "no"), gen (ms_afb_22)
-	replace ms_afb_22 = . if v012<22
-	label var ms_afb_22 "First birth by age 22"
+	recode v212 (.=0) (0/21 = 1 "yes") (22/49 = 0 "no"), gen (fe_afb_22)
+	replace fe_afb_22 = . if v012<22
+	label var fe_afb_22 "First birth by age 22"
 
-	recode v212 (.=0) (0/24 = 1 "yes") (25/49 = 0 "no"), gen (ms_afb_25)
-	replace ms_afb_25 = . if v012<25
-	label var ms_afb_25 "First birth by age 25"
+	recode v212 (.=0) (0/24 = 1 "yes") (25/49 = 0 "no"), gen (fe_afb_25)
+	replace fe_afb_25 = . if v012<25
+	label var fe_afb_25 "First birth by age 25"
 
 	//Never had a first birth
 	gen fe_birth_never = 0
 	replace fe_birth_never = 1 if v201==0
+	label val fe_birth_never yesnolabel
 	label var fe_birth_never "Never had a birth"
 	
 

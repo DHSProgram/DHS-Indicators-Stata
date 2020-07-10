@@ -4,7 +4,7 @@ Purpose: 			Code to compute fertility rates
 Data inputs: 		IR survey list
 Data outputs:		coded variables, .DTA file with rates and confidence intervals, 
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
-Date last modified: October 22, 2019 by Courtney Allen
+Date last modified: July 7, 2020 by Courtney Allen
 Note:				
 					This do file will produce a table of  TFRs by background variables as shown in final report (Table_TFR.xls). 
 *****************************************************************************************************/
@@ -14,12 +14,12 @@ Note:
 /*______________________________NOTES___________________________________________
 
 VARIABLES CREATED IN THIS PROGRAM:
-	fe_asfr10_14	"age specific fertility rates for 10-14 yr olds"
+	asfr_10_14	"age specific fertility rates for 10-14 yr olds"
 
 	
 OUTPUT FILES:
-	results.dta         : asfrs and TFRs
-	results_with_ci.dta : results.dta plus estimated confidence intervals
+	FE_ASFR_10-14.dta:			asfrs for 10-14yr olds for 3yr and 5yr intervals
+								plus estimated confidence interval
 
 	Note: the main output files must be renamed or they will be over-written the
 	next time the program is run
@@ -711,8 +711,8 @@ program define final_file_save
 		  fe_ASFR_13 fe_ASFR_13_U fe_ASFR_13_L ///
 		  fe_ASFR_14 fe_ASFR_14_U fe_ASFR_14_L  	   
 
-	save               "`lcid'`lpv'_ASFR_10-14.dta", replace
-	export excel using "Tables_`lcid'`lpv'_ASFR_10-14.xlsx", firstrow(variables) replace
+	save               "FE_ASFR_10-14.dta", replace
+	export excel using "Tables_FE_ASFR_10-14.xlsx", firstrow(variables) replace
 
 	* clean up the folder
 	shell del *FL.DTA

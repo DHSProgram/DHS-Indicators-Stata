@@ -5,7 +5,7 @@ Purpose: 				Main file for the Fertility Chapter.
 						the FE indicators and produce tables.
 Data outputs:			coded variables, table output on screen, and in excel tables.  
 Author: 				Courtney Allen
-Date last modified:		November 21, 2019
+Date last modified:		July 6, 2020
 
 ********************************************************************************/
 set more off
@@ -27,7 +27,7 @@ cd "$workingpath"
 
 	* IR Files
 	global irdata "TJIR71FL"
-	*TJIR72FL GHIR72FL TJBR72FL
+	*TJIR71FL GHIR72FL TJBR72FL
 	
 	*PR Files
 	global prdata  "TJPR71FL"
@@ -57,7 +57,7 @@ use "$datapath//$irdata.dta", clear
 *Purpose: 	Code ASFR for 10-14 year olds. This file will create tables.
 
 */
-* Reopen dataset for curr ent fertility indicators.
+* Reopen dataset for current fertility indicators.
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
@@ -92,8 +92,8 @@ use "$datapath//$krdata.dta", clear
 
 gen file=substr("$krdata", 6, 1)
 
-do FE_temp.do
-* Purpose: Code 
+do FE_MEDIANS.do
+* Purpose: Code median duration of amenorrhea, postpartum abstinence, and insusceptibility fertility
 
 * Reopen dataset for the other do files
 use "$datapath//$krdata.dta", clear

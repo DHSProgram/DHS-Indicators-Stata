@@ -81,7 +81,7 @@ gen CBR_urban = CBR_urban
 gen CBR_rural = CBR_rural
 gen CBR = CBR
 	
-//make output file
+//make output file, can use local `lcid' and `lpv' for excel names if wanted
 keep CBR*
 collapse CBR CBR_urban CBR_rural
 scalar sfn="$irdata"
@@ -90,7 +90,7 @@ scalar spv =substr(sfn,5,2)
 local lcid=scid
 local lpv=spv
 
-export excel "Tables_`lcid'`lpv'_CBR.xlsx", firstrow(var) replace
+export excel "Tables_FE_CBR.xlsx", firstrow(var) replace
 
 
 
