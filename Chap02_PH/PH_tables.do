@@ -2,14 +2,15 @@
 Program: 			PH_tables.do
 Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
-Date last modified: April 28 2020 by Shireen Assaf 
+Date last modified: August 11, 2020 by Courtney Allen 
 
 *Note this do file will produce the following tables in excel:
-	1. 	Tables_hh_charac:		Contains the table for household characteristics
-	2. 	Tables_hh_poss:			Contains the table for household possessions
-	3.	Tables_handwsh:			Contains the table for handwashing indicators
-	4.	Tables_pop:				Contains the tables for the household population by age, sex, and residence and birth registration
-	5.	Tables_livarg_orph:		Contains the table for children's living arrangements and orphanhood
+	1. 	Tables_hh_wash:			Contains the table for WASH (water and santitation) indicators
+	2.  Tables_hh_charac:		Contains the table for household characteristics
+	3. 	Tables_hh_poss:			Contains the table for household possessions
+	4.	Tables_handwsh:			Contains the table for handwashing indicators
+	5.	Tables_pop:				Contains the tables for the household population by age, sex, and residence and birth registration
+	6.	Tables_livarg_orph:		Contains the table for children's living arrangements and orphanhood
 
 Notes: 					 						
 *****************************************************************************************************/
@@ -22,6 +23,75 @@ Notes:
 if file=="HR" {
 
 gen wt=hv005/1000000
+
+**************************************************************************************************
+* Indicators for WASH indicators: excel file Tables_hh_WASH will be produced
+**************************************************************************************************
+* all WASH characteristics are crosstabulated by place of residence
+
+*type of water source
+	tab ph_wtr_source hv025 [iw=wt] , col
+
+*improved drinking water source
+	tab ph_wtr_improve hv025 [iw=wt] , col
+
+*round trip time to obtaining water
+	tab ph_wtr_time hv025 [iw=wt] , col
+
+*basic or limited water service
+	tab ph_wtr_basic hv025 [iw=wt] , col
+
+*availability of water among those using piped water 
+	tab ph_wtr_avail hv025 [iw=wt] , col
+
+*treatment of water: boil
+	tab ph_wtr_trt_boil hv025 [iw=wt] , col
+	
+*treatment of water: bleach or chlorine
+	tab ph_wtr_trt_chlor hv025 [iw=wt] , col
+	
+*treatment of water: straining through cloth
+	tab ph_wtr_trt_cloth	hv025 [iw=wt] , col
+	
+*treatment of water: ceramic, sand or other filter
+	tab ph_wtr_trt_filt hv025 [iw=wt] , col
+	
+*treatment of water: solar disinfection
+	tab ph_wtr_trt_solar hv025 [iw=wt] , col
+	
+*treatment of water: letting stand and settle	
+	tab ph_wtr_trt_stand hv025 [iw=wt] , col	
+
+*treatment of water: other
+	tab ph_wtr_trt_other hv025 [iw=wt] , col
+	
+*treatment of water: no treatment	
+	tab ph_wtr_trt_none hv025 [iw=wt] , col	
+	
+*treatment of water: appropriate treatment	
+	tab ph_wtr_trt_appr hv025 [iw=wt] , col	
+	
+*type of sanitation 
+	tab ph_sani_type hv025 [iw=wt] , col
+
+*improved sanitation
+	tab ph_sani_improve hv025 [iw=wt] , col
+
+*basic or limited sanitation
+	tab ph_sani_basic hv025 [iw=wt] , col
+
+*location of sanitation facility
+	tab ph_sani_location hv025 [iw=wt] , col
+
+
+* output to excel
+tabout 	ph_wtr_source ph_wtr_improve ph_wtr_time ph_wtr_basic ph_wtr_avail ///
+		ph_wtr_trt_boil ph_wtr_trt_chlor ph_wtr_trt_cloth ph_wtr_trt_filt   ///
+		ph_wtr_trt_solar ph_wtr_trt_stand ph_wtr_trt_other ph_wtr_trt_none ///
+		ph_wtr_trt_appr ph_sani_type ph_sani_improve ph_sani_location ph_sani_basic ///
+		hv025 using Tables_hh_wash.xls [iw=wt] , c(col) f(1) replace 
+*/
+
 
 **************************************************************************************************
 * Indicators for household characteristics: excel file Tables_hh_charac will be produced
@@ -53,7 +123,8 @@ tab ph_cook_clean hv025 [iw=wt] , col
 tab ph_smoke hv025 [iw=wt] , col
 
 * output to excel
-tabout ph_electric ph_floor ph_rooms_sleep ph_cook_place ph_cook_fuel ph_cook_solid ph_cook_clean ph_smoke hv025 using Tables_hh_charac.xls [iw=wt] , c(col) f(1) replace 
+tabout 	ph_electric ph_floor ph_rooms_sleep ph_cook_place ph_cook_fuel 	///
+		ph_cook_solid ph_cook_clean ph_smoke hv025 using Tables_hh_charac.xls [iw=wt] , c(col) f(1) replace 
 */
 **************************************************************************************************
 * Indicators for household possessions: excel file Tables_hh_poss will be produced
@@ -101,7 +172,8 @@ tab ph_animals hv025 [iw=wt] , col
 
 
 * output to excel
-tabout ph_radio ph_tv ph_mobile ph_tel ph_comp ph_frig ph_bike ph_cart ph_moto ph_car ph_boat ph_agriland ph_animals hv025 using Tables_hh_poss.xls [iw=wt] , c(col) f(1) replace 
+tabout 	ph_radio ph_tv ph_mobile ph_tel ph_comp ph_frig ph_bike ph_cart	///
+		ph_moto ph_car ph_boat ph_agriland ph_animals hv025 using Tables_hh_poss.xls [iw=wt] , c(col) f(1) replace 
 */
 
 
