@@ -8,7 +8,7 @@ Date last modified: May 8, 2020 by Shireen Assaf
 Note:				This program will collapse the data and export the results to a talble called Table_gini.xls. 
 					The programs below contain many notes to describe how the Gini coefficient was computed. 
 
-
+**If you want to add other country specific covariates such as state (ex shstate in NGPR7A survey), add this to lines 158 and 214
 *****************************************************************************************************/
 
 program drop _all
@@ -155,7 +155,7 @@ scalar sGini_1=Gini
 scalar index=1
 * Categories of covariates
 * You will want to link to category labels
-local lvars "hv024 hv025 shstate"
+local lvars "hv024 hv025"
 *local lvars "hv025 hv024"
 use PR_temp_gini.dta, clear
 foreach lvar of local lvars {
@@ -207,11 +207,11 @@ set more off
 * The "keep" line is outside the subprograms because it must include any special identifiers for regions in Table 2.6
 
 use "$datapath//$prdata.dta", clear
-scalar survey="NG7A"
+scalar survey=substr("$prdata",1,2)+substr("$prdata",5,2)
 scalar list survey
 *label list HV024
 *label list SHSTATE
-keep hv005 hv012 hv024 hv025 hv101 hv270 hv271 shstate
+keep hv005 hv012 hv024 hv025 hv101 hv270 hv271
 
 quietly main
 
