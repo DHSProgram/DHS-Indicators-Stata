@@ -1,10 +1,10 @@
 /*********************************************************************
 Program: 			PH_WATER.do
 Purpose: 			creates variable for binary improved water source according to JSTOR standard 
-Data inputs: 		pr
+Data inputs: 		hr or pr file
 Data outputs:		none
 Author of do file:	04/08/2018	Courtney Allen
-Date last modified: 08/10/2020	Courtney Allen - for codeshare project
+Date last modified: 09/04/2020	Courtney Allen - for codeshare project
 Note:				These indicators can also be computed using the HR or PR file.
 					If you want to produce estimates for households, use the HR file.
 					If you want to produce estimates for the de jure population, 
@@ -66,6 +66,7 @@ cap label define yesno 0"No" 1"Yes"
 
 	// treated water by boiling
 	gen ph_wtr_trt_boil = hv237a
+	replace ph_wtr_trt_boil = 0 if hv237a>=8
 	label val ph_wtr_trt_boil yesno
 	label var ph_wtr_trt_boil	"Treated water by boiling before drinking"
 
@@ -135,7 +136,7 @@ cap label define yesno 0"No" 1"Yes"
 	foreach x in hr pr {
 	
 	// recode country specific responses to standard codes
-	if filename=="af`x'70"  {
+	if filename=="af`x'71"  {
 	recode hv201 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
@@ -712,7 +713,7 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gh`x'81"  {
+	if filename=="gh`x'82"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1222,13 +1223,6 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ml`x'7h"  {
-	recode hv201 ///
-	13 = 14 ///
-	14 = 13 ///
-	72 = 73 ///
-	, gen (ph_wtr_source)
-	}
 	if filename=="mm`x'71"  {
 	recode hv201 ///
 	14 = 13 ///
@@ -1573,7 +1567,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 40 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pg`x'70"  {
+	if filename=="pg`x'71"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -2241,12 +2235,6 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zw`x'71"  {
-	recode hv201 ///
-	13 = 14 ///
-	14 = 13 ///
-	, gen (ph_wtr_source)
-	}
 	if filename=="zw`x'72"  {
 	recode hv201 ///
 	13 = 14 ///
@@ -2354,7 +2342,8 @@ cap label define yesno 0"No" 1"Yes"
 									71	 "bottled water"					///
 									72	 "purified water, filtration plant" ///
 									73	 "satchet water"					///
-									96	 "other"			
+									96	 "other"							///			
+									99	 "missing"			
 	cap label values ph_wtr_source ph_wtr_source
 	cap label var ph_wtr_source "Source of drinking water"
 	*/

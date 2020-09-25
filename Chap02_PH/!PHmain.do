@@ -4,13 +4,13 @@ Purpose: 				Main file for the Population and Housing Chapter.
 						The main file will call other do files that will produce the PH indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
-Date last modified:		August 12, 2020 by Courtney Allen
+Date last modified:		September 9, 2020 by Courtney Allen
 *******************************************************************************************************************************/
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-global user 33697	//change employee id number to personalize path
+global user 39585	//change employee id number to personalize path
 
 cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap02_PH"
 
@@ -19,14 +19,14 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global hrdata "NGHR7AFL"
-* GHHR72FL  MMHR71FL UGHR7BFL ZMHR71FL ZWHR71FL
+global hrdata "AFHR71FL"
+* GHHR72FL  MMHR71FL UGHR7BFL ZMHR71FL  NGHR7AFL
 
-global prdata "NGPR7AFL"
-* GHPR72FL  MMPR71FL UGPR7BFL ZMPR71FL ZWPR71FL
+global prdata "ZMPR71FL"
+* GHPR72FL  MMPR71FL UGPR7BFL ZMPR71FL  NGPR7AFL
 
-global brdata "NGBR7AFL"
-* GHBR72FL  MMBR71FL UGBR7BFL ZMBR71FL ZWBR71FL
+global brdata "ZMBR71FL"
+* GHBR72FL  MMBR71FL UGBR7BFL ZMBR71FL  NGBR7AFL
 
 ****************************
 
@@ -79,7 +79,8 @@ do PH_POP.do
 
 do PH_tables2.do
 * Purpose: 	Produce tables for indicators computed from the PH_POP.do file
-
+*/
+*
 do PH_GINI.do
 * Purpose:	Code to produce Gini index table. 
 * Note: 	This code will collapse the data and produce the table Table_gini.xls

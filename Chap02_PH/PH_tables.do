@@ -2,15 +2,13 @@
 Program: 			PH_tables.do
 Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
-Date last modified: August 11, 2020 by Courtney Allen 
+Date last modified: September 4, 2020 by Courtney Allen 
 
 *Note this do file will produce the following tables in excel:
 	1. 	Tables_hh_wash:			Contains the table for WASH (water and santitation) indicators
 	2.  Tables_hh_charac:		Contains the table for household characteristics
 	3. 	Tables_hh_poss:			Contains the table for household possessions
 	4.	Tables_handwsh:			Contains the table for handwashing indicators
-	5.	Tables_pop:				Contains the tables for the household population by age, sex, and residence and birth registration
-	6.	Tables_livarg_orph:		Contains the table for children's living arrangements and orphanhood
 
 Notes: 					 						
 *****************************************************************************************************/

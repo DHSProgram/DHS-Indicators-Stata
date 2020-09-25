@@ -1,10 +1,10 @@
 /*********************************************************************
-program: 			SANIT.do
+program: 			SANI.do
 Purpose: 			creates variable for binary improved sanitation according to JSTOR standard 
 Data inputs: 		hr or pr file
 Data outputs:		none
 Author of do file:	03/15/2018	Courtney Allen
-Date last modified: 08/10/2020	Courtney Allen - for codeshare project
+Date last modified: 09/04/2020	Courtney Allen - for codeshare project
 Note:				These indicators can also be computed using the HR or PR file.
 					If you want to produce estimates for households, use the HR file.
 					If you want to produce estimates for the de jure population, 
@@ -59,7 +59,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	foreach x in hr pr {
 
 	//recode country specific responses to standard codes
-	if filename=="af`x'70"  {
+	if filename=="af`x'71"  {
 	recode hv205 ///
 	43 = 23 ///
 	44 = 51 ///
@@ -488,7 +488,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	32 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gh`x'81"  {
+	if filename=="gh`x'82"  {
 	recode hv205 ///
 	16 = 51 ///
 	, gen (ph_sani_type)
@@ -1494,6 +1494,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 
 	********************************************************************************
 	// label type of sanitation
+	recode ph_sani_type . = 99
 
 	label define ph_sani_type	11	 "flush - to piped sewer system" ///
 								12	 "flush - to septic tank"		///
@@ -1508,7 +1509,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 								42	 "bucket toilet"				///
 								43	 "hanging toilet/latrine"		///
 								51	 "other improved"				///
-								96	 "other"						
+								96	 "other"						///
+								99 	 "missing"
 	label values ph_sani_type ph_sani_type
 	label var ph_sani_type "Type of sanitation"
 	
