@@ -1,11 +1,10 @@
 /*******************************************************************************
-Program: 			FE_POST.do
-Purpose: 			Code fertility indicators from birth history reflecting
-					intervals and postpoartum experience
-Data inputs: 		KR data files
+Program: 			FE_INT.do
+Purpose: 			Code fertility indicators from birth history reflecting birth intervals 
+Data inputs: 		BR data files
 Data outputs:		coded variables
 Author:				Courtney Allen 
-Date last modified: July 7, 2020
+Date last modified: September 4, 2020
 *******************************************************************************/
 
 /*______________________________________________________________________________
@@ -60,7 +59,7 @@ gen wt = v005/1000000
 	//Sex of preceding birth, created for subcategory in final tables
 	sort caseid bord
 	gen fe_pre_sex = b4[_n-1] if caseid==caseid[_n-1]
-	replace fe_pre_sex = b4[_n-2]
+	*replace fe_pre_sex = b4[_n-2]
 	label define sexlabel 1 "male" 2 "female"
 	label val fe_pre_sex sexlabel
 	label var fe_pre_sex "Sex of preceding birth"
@@ -71,7 +70,9 @@ gen wt = v005/1000000
 	label define alivelabel 0 "not alive" 1 "alive"
 	label val fe_pre_surv alivelabel
 	label var fe_pre_surv "Survival of preceding birth"
-	
+
+	//now drop of children over 59 months, no longer needed for tabulations
+	drop if b19>59
 *********************************************************************************
 program define calc_median_mo
 
@@ -89,7 +90,7 @@ program define calc_median_mo
 	gen dummy=.
 	replace dummy=0 if  `y'==`x'
 	replace dummy=1 if  `y'==`x' & time<sp50 
-	summarize dummy [fweight=weightvar]
+	summarize dummy[fweight=weightvar]
 	scalar sL=r(mean)
 
 	replace dummy=.

@@ -4,7 +4,7 @@ Purpose: 			Code currenty fertility indicators
 Data inputs: 		IR data files
 Data outputs:		coded variables
 Author:				Courtney Allen 
-Date last modified: April 14 2020
+Date last modified: September 4 2020
 *****************************************************************************************************/
 
 /*______________________________________________________________________________
@@ -78,7 +78,8 @@ gen wt = v005/1000000
 		  
 	//Completed fertility, mean number of CEB among women age 40-49
 	mean v201 if v013>=6 [iw=wt]
-	gen fe_ceb_comp = e(b)[1,1]
+	mat mat1 = e(b)
+	gen fe_ceb_comp= mat1[1,1]
 	label var fe_ceb_comp "Mean no. of CEB among women age 40-49"
 
 	//Completed fertility, mean number of CEB among women age 40-49 by subgroups
@@ -87,7 +88,8 @@ gen wt = v005/1000000
 	local levels `r(levels)'
 	foreach y of local levels {
 		mean v201 if `x'==`y' & v013>=6 [iw=wt]
-		gen fe_ceb_comp_`x'`y' = e(b)[1,1]
+		mat mat1 = e(b)
+		gen fe_ceb_comp_`x'`y'= mat1[1,1]
 		
 		//label variable and subgroup
 		label var fe_ceb_comp_`x'`y' "Mean no. of CEB among women age 40-49, `y'"
@@ -101,7 +103,8 @@ gen wt = v005/1000000
 		
 	//Mean number of CEB among all women
 	mean v201 [iw=wt]
-	gen fe_ceb_mean = e(b)[1,1]
+	mat mat1 = e(b)
+	gen fe_ceb_mean= mat1[1,1]
 	label var fe_ceb_mean "Mean number of CEB"
 
 	//Mean number of CEB among all women, by age group
@@ -109,7 +112,8 @@ gen wt = v005/1000000
 	local levels `r(levels)'
 	foreach y of local levels {
 		mean v201 if v013==`y' [iw=wt]
-		gen fe_ceb_mean_age`y' = e(b)[1,1]
+		mat mat1 = e(b)
+		gen fe_ceb_mean_age`y'= mat1[1,1]
 	
 		//label variable and subgroups
 		local lab_val: value label v013
@@ -119,7 +123,8 @@ gen wt = v005/1000000
 			
 	//Mean number of living children among all women
 	mean v218 [iw=wt]
-	gen fe_live_mean = e(b)[1,1]
+	mat mat1 = e(b)
+	gen fe_live_mean= mat1[1,1]
 	label var fe_live_mean "Mean number of living children"
 	
 	//Mean number of living children among all women, by age group
@@ -127,7 +132,8 @@ gen wt = v005/1000000
 	local levels `r(levels)'
 	foreach y of local levels {
 		mean v218 if v013==`y' [iw=wt]
-		gen fe_live_mean_age`y' = e(b)[1,1]
+		mat mat1 = e(b)
+		gen fe_live_mean_age`y'= mat1[1,1]
 
 		//label variable and subgroups
 		local lab_val: value label v013

@@ -5,13 +5,12 @@ Purpose: 				Main file for the Fertility Chapter.
 						the FE indicators and produce tables.
 Data outputs:			coded variables, table output on screen, and in excel tables.  
 Author: 				Courtney Allen
-Date last modified:		July 6, 2020
+Date last modified:		September 4, 2020
 
 ********************************************************************************/
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
-
 global user 39585	//change employee id number to personalize path
 
 * change working path
@@ -26,17 +25,16 @@ cd "$workingpath"
 * select your survey
 
 	* IR Files
-	global irdata "TJIR71FL"
-	*TJIR71FL GHIR72FL TJBR72FL
+	global irdata "NGIR7AFL"
 	
 	*PR Files
-	global prdata  "TJPR71FL"
+	global prdata  "NGPR7AFL"
 	
 	*KR Files
-	global krdata "TJKR71FL"
+	global krdata "NGKR7AFL"
 
 	*BR Files
-	global brdata "TJBR71FL"
+	global brdata "NGBR7AFL"
 
 ********************************************************************************
 	
@@ -53,7 +51,7 @@ do FE_TFR.do
 * Reopen dataset for ASFR 10 to 14
 use "$datapath//$irdata.dta", clear
 
-*do FE_ASFR_10_14.do
+do FE_ASFR_10_14.do
 *Purpose: 	Code ASFR for 10-14 year olds. This file will create tables.
 
 */
@@ -86,22 +84,22 @@ do FE_CBR.do
 
 
 
-* KR file variables
+* BR file variables
 */
-use "$datapath//$krdata.dta", clear
+use "$datapath//$brdata.dta", clear
 
-gen file=substr("$krdata", 6, 1)
+gen file=substr("$brdata", 6, 1)
 
 do FE_MEDIANS.do
 * Purpose: Code median duration of amenorrhea, postpartum abstinence, and insusceptibility fertility
 
 * Reopen dataset for the other do files
-use "$datapath//$krdata.dta", clear
+use "$datapath//$brdata.dta", clear
 
-gen file=substr("$krdata", 3, 2)
+gen file=substr("$brdata", 3, 2)
 
-do FE_POST.do
-* Purpose: Code indicators reflecting birth intervals and postpartum experience.
+do FE_INT.do
+* Purpose: Code indicators reflecting birth intervals.
 
 do FE_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 

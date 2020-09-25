@@ -2,10 +2,10 @@
 Program: 			FE_tables.do
 Purpose: 			produce tables for fertility indicators
 Author:				Courtney Allen
-Date last modified: July 10 2020 by Courtney Allen
+Date last modified: September 4 2020 by Courtney Allen
 
 *Note this do file will produce the following tables in excel:
-	1. 	Tables_FERT:		Contains the tables for most fertility indicators created in the FE_FERT and FE_POST do files
+	1. 	FE_tables:		Contains the tables for most fertility indicators created in the FE_FERT and FE_INT do files
 
 
 Notes: 
@@ -259,8 +259,8 @@ if file=="IR" {
 
 
 ********************************************************************************
-* indicators from KR file
-if file=="KR" {
+* indicators from BR file
+if file=="BR" {
 
 
 	**************************************************************************************************
@@ -288,7 +288,7 @@ if file=="KR" {
 	tab edu fe_int  [iw=wt], row nofreq 
 
 	* output to excel
-	local subgroup fe_age_int fe_pre_sex fe_pre_surv fe_bord_cat region education wealth residence 
+	local subgroup fe_age_int fe_pre_sex fe_pre_surv fe_bord_cat residence region education wealth  
 	tabout `subgroup' fe_int using Tables_FE_Fert.xls [iw=wt] , c(row) f(1) h1(Percent distribution of non-first births in last 5 years by no. of months since preceding birth) append 
 	*/
 
