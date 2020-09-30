@@ -40,7 +40,7 @@ There are two commands that can be used for producing tables for the indicators 
 |   2|Population & Housing|PH||X||X|
 |   3|Respondents’ Characteristics|RC||X||X|
 |   4|Marriage & Sexual Activity|MS||X||X|
-|   5|   Fertility|FE||X|X||
+|   5|   Fertility|FE||X||X|
 |   6|   Fertility Preferences|FF||X||X|
 |   7|   Family Planning |FP||X||X|
 |   8|   Infant & Child Mortality|CM||X||X|
@@ -51,8 +51,8 @@ There are two commands that can be used for producing tables for the indicators 
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK||X||X|
 |  14|   HIV Prevalence|HV||X||X|
 |  15|   Women’s Empowerment|WE||X||X|
-|  16|   Adult & Maternal Mortality|AM|2020 || 2020 ||
-|  17|   Domestic Violence|DV |X|| 2020  ||
+|  16|   Adult & Maternal Mortality|AM||X|X ||
+|  17|   Domestic Violence|DV ||X| |X|
 
 
 **********************************************************************************************************************************************************
