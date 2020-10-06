@@ -5,7 +5,7 @@ Purpose: 				Main file for the Mortality Chapter.
 						the AM indicators and produce tables.
 Data outputs:			coded variables, table output on screen, and in excel tables.  
 Author: 				Courtney Allen
-Date last modified:		September 29, 2020
+Date last modified:		October 06, 2020
 
 ********************************************************************************/
 set more off
@@ -25,13 +25,13 @@ cd "$workingpath"
 * select your survey
 
 	* IR Files
-	global irdata "ZMIR71FL"
+	global irdata "NGIR7AFL"
 	
 	* MR Files
-	global mrdata "ZMMR71FL"
+	global mrdata "NGMR7AFL"
 	
 	* PR Files
-	global prdata "ZMPR71FL"
+	global prdata "NGPR7AFL"
 
 ********************************************************************************
 	

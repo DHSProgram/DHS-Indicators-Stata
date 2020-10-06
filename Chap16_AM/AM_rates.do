@@ -2,9 +2,9 @@
 Program: 			AM_RATES.do
 Purpose: 			Code to produce adult and maternal mortality rates for specific windows of time
 Data inputs: 		IR survey list
-Data outputs:		AM_Tables.xls
+Data outputs:		AM_Tables.xls and AM_completeness
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
-Date last modified: September 29, 2020 by Courtney Allen
+Date last modified: October 6, 2020 by Courtney Allen
 Note:				See below 
 *****************************************************************************************************/
 
@@ -30,6 +30,12 @@ MATERNAL MORTALITY RATIO
 	MMRate but is age-standardized according to the age distribution of the women in the IR file.  
 	Note that this GFR is defined as the number of births to women 15-49, divided by the number of 
 	(or exposure by) women age 15-49; it is not the DHS GFR.
+
+OUTPUTS
+	After this program has been run and the files have been saved you will find
+	two excel workbooks. One labeled AM_tables.xlsx will have all mortality rates.
+	The other is labeled AM_completeness and will have all completeness of sibling
+	information.
 
 NOTES
 	Executable statements and more comments begin after the multiple rows of 
@@ -276,8 +282,10 @@ program define setup_adult_mm_vars
 	}
 
 	//Need to check for mm16; if an older survey, must give it a value
+	scalar smissing_mm16=0
 	capture confirm numeric variable mm16_01, exact 
 	if _rc>0 {
+	  scalar smissing_mm16=1
 	  local li=1
 	  while `li'<=20 {
 	  gen mm16_`li'=.
@@ -414,20 +422,26 @@ program define completeness_of_information
 	#delimit cr
 	label values age_AD_YSD_missing age_AD_YSD_missing
 
+	//save
+	save completeness.dta, replace
+
 	//Create tabulations for completeness 
 
-	//survival status by sex for all deaths, unweighted and weighted, percentaged
-	tab mm2 mm1, col
-	tab mm2 mm1 [iweight=v005/1000000], col
+		//survival status by sex for all deaths, unweighted and weighted, percentaged
+		tab mm2 mm1, col
+		tab mm2 mm1 [iweight=v005/1000000], col
+		tabout mm2 mm1 using AM_completeness.xls, cells(freq col) clab(No. Col_%) replace
+		
+		//incompleteness of date by sex for surviving siblings
+		tab age_AD_YSD_missing mm1 if mm2==1, col
+		tab age_AD_YSD_missing mm1 if mm2==1 [iweight=v005/1000000], col
+		tabout age_AD_YSD_missing mm1 if mm2==1 using AM_completeness.xls, cells(freq col) clab(No. Col_%) append
 
-	//incompleteness of date by sex for surviving siblings
-	tab age_AD_YSD_missing mm1 if mm2==1, col
-	tab age_AD_YSD_missing mm1 if mm2==1 [iweight=v005/1000000], col
-
-	//incompleteness of date by sex for dead siblings
-	tab age_AD_YSD_missing mm1 if mm2==0, col
-	tab age_AD_YSD_missing mm1 if mm2==0 [iweight=v005/1000000], col
-
+		//incompleteness of date by sex for dead siblings
+		tab age_AD_YSD_missing mm1 if mm2==0, col
+		tab age_AD_YSD_missing mm1 if mm2==0 [iweight=v005/1000000], col
+		tabout age_AD_YSD_missing mm1 if mm2==0 using AM_completeness.xls, cells(freq col) clab(No. Col_%) appen
+	
 end
 ***************************************************************************
 
@@ -810,11 +824,19 @@ program define calc_mortality_rates
 
 
 	//To get the logs of the age-specific maternal death rates for women
-	***********************
-	svy, subpop(sister): poisson mdied age_grp_*, offset(lnyexp) nocons iter(50)
-	***********************
-	matrix T_maternal_asdr=r(table)
-	matrix V_maternal_asdr=e(V)
+	/*--------------------------------------------------------------------------	
+	NOTE: Maternal mortality rates can ONLY be done for surveys with var mm16 
+	--------------------------------------------------------------------------*/
+	//check for mm16, otherwise fill matrices with zeroes
+	matrix T_maternal_asdr=0
+	matrix V_maternal_asdr=0
+	if smissing_mm16==0 {
+		***********************
+		svy, subpop(sister): poisson mdied age_grp_*, offset(lnyexp) nocons iter(50)
+		***********************
+		matrix T_maternal_asdr=r(table)
+		matrix V_maternal_asdr=e(V)
+		}
 
 	/*--------------------------------------------------------------------------	
 	NOTE: To match with the reports, we also produce the numerators and denominators
@@ -1226,6 +1248,7 @@ program define main_adult_mm_mortality
 
 	//optional--erase the working files
 
+	erase completeness.dta
 	erase births.dta
 	erase exposure_and_deaths.dta
 	erase exposure.dta
@@ -1305,7 +1328,11 @@ scalar sfn_MR="$mrdata"
 scalar sfn_PR="$prdata"
 
 //include a special scalar to identify surveys for which v023 is not the stratum variable
-scalar sv023_NA=0
+	scalar sv023_NA=1
+	capture confirm numeric variable v023
+	if _rc>0 {
+	scalar sv023_NA=0
+	  }
 
 	/*--------------------------------------------------------------------------
 	NOTE:
@@ -1319,11 +1346,10 @@ main_adult_mm_mortality
 
 	/*--------------------------------------------------------------------------
 	NOTE:
-	After this program has been run and the files have been saved you can run 
-	another program that reads the saved "Adult_Mortality_by_age.dta" and 
-	"Adult_Mortality.dta" files and outputs the various rates etc. in a format 
-	that is more like the tables at the end of the main report chapter on adult 
-	and maternal mortality.
+	After this program has been run and the files have been saved you will find
+	two excel workbooks. One labeled AM_tables.xlsx will have all mortality rates.
+	The other is labeled AM_completeness and will have all completeness of sibling
+	information.
 	--------------------------------------------------------------------------*/
 *log close
 
