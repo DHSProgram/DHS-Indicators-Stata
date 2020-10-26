@@ -100,7 +100,7 @@ recode h1 (1=1 "card") (else=2 "mother"), gen(source)
 
 *** BCG ***
 //BCG either source
-recode h2 (0 8=0) (else=1), gen(ch_bcg_either)
+recode h2 (1 2 3=1) (else=0), gen(ch_bcg_either)
 
 //BCG mother's report
 gen ch_bcg_moth=ch_bcg_either 
@@ -116,9 +116,9 @@ label var ch_bcg_either	"BCG vaccination according to either source"
 
 *** Pentavalent ***
 //DPT 1, 2, 3 either source
-recode h3 (0 8=0) (else=1), gen(dpt1)
-recode h5 (0 8=0) (else=1), gen(dpt2)
-recode h7 (0 8=0) (else=1), gen(dpt3)
+recode h3 (1 2 3=1) (else=0), gen(dpt1)
+recode h5 (1 2 3=1) (else=0), gen(dpt2)
+recode h7 (1 2 3=1) (else=0), gen(dpt3)
 gen dptsum= dpt1+dpt2+dpt3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
@@ -162,11 +162,11 @@ label var ch_pent3_either	"Pentavalent 3rd dose vaccination according to either 
 *** Polio ***
 
 //polio 0, 1, 2, 3 either source
-recode h0 (0 8=0) (else=1), gen(ch_polio0_either)
+recode h0 (1 2 3=1) (else=0), gen(ch_polio0_either)
 
-recode h4 (0 8=0) (else=1), gen(polio1)
-recode h6 (0 8=0) (else=1), gen(polio2)
-recode h8 (0 8=0) (else=1), gen(polio3)
+recode h4 (1 2 3=1) (else=0), gen(polio1)
+recode h6 (1 2 3=1) (else=0), gen(polio2)
+recode h8 (1 2 3=1) (else=0), gen(polio3)
 gen poliosum=polio1 + polio2 + polio3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
@@ -223,9 +223,9 @@ cap gen h54=.
 cap gen h55=.
 cap gen h56=.
 
-recode h54 (0 8=0) (else=1), gen(peumo1)
-recode h55 (0 8=0) (else=1), gen(peumo2)
-recode h56 (0 8=0) (else=1), gen(peumo3)
+recode h54 (1 2 3=1) (else=0), gen(peumo1)
+recode h55 (1 2 3=1) (else=0), gen(peumo2)
+recode h56 (1 2 3=1) (else=0), gen(peumo3)
 gen peumosum= peumo1+peumo2+peumo3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
@@ -273,9 +273,9 @@ cap gen h57=.
 cap gen h58=.
 cap gen h59=.
 
-recode h57 (0 8=0) (else=1), gen(rotav1)
-recode h58 (0 8=0) (else=1), gen(rotav2)
-recode h59 (0 8=0) (else=1), gen(rotav3)
+recode h57 (1 2 3=1) (else=0), gen(rotav1)
+recode h58 (1 2 3=1) (else=0), gen(rotav2)
+recode h59 (1 2 3=1) (else=0), gen(rotav3)
 gen rotavsum= rotav1+rotav2+rotav3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
@@ -318,7 +318,7 @@ label var ch_rotav3_either "Rotavirus 3rd dose vaccination according to either s
 
 *** Measles ***
 //measles either source
-recode h9 (0 8=0) (else=1), gen(ch_meas_either)
+recode h9 (1 2 3=1) (else=0), gen(ch_meas_either)
 
 //measles mother's report
 gen ch_meas_moth=ch_meas_either
