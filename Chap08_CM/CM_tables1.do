@@ -6,7 +6,7 @@ Date last modified: April 30, 2019 by Shireen Assaf
 
 *Note this do file will produce the following tables in excel:
 	1. 	Tables_child_mort:	Contains the child mortality tables (Tables 1-3 in Chapter 8). See Table variable for the table number. 	
-	2. 	Tables_PMR:			Contains the tables perinatal mortality. You need to multiply the rates in the tables by 10 to get the correct rate. 
+	2. 	Tables_PMR:			Contains the tables for number of stillbirths, number of early neonatal deaths, and perinatal mortality rate. 
 *****************************************************************************************************/
 
 **************************************************************************************************
@@ -33,29 +33,87 @@ drop uw2 lw uw
 export excel "Tables_child_mort.xlsx" , firstrow(var) replace
 
 **************************************************************************************************
-* Perinatal mortality: 
+* Stillbirths, early neonatal deaths, and perinatal mortality
 **************************************************************************************************
 * open PMR data file produced by CM_PMR.do file
 use CM_PMRdata.dta, clear
 
 gen wt=v005/1000000
+svyset v001 [pw=wt], strata(v023) singleunit(centered)  //this is needed to show the perinatal as a rate
+**************************************************************************************************
+//Stillbirths, tables are for the number of stillbirths
 
 *mother's age at birth
-tab mo_age_at_birth cm_peri [iw=wt], row nofreq 
+tab mo_age_at_birth stillbirths [iw=wt]
+
+*prenancy interval
+tab preg_interval stillbirths [iw=wt]
+
+*residence
+tab v025 stillbirths [iw=wt]
+
+*region
+tab v024 stillbirths [iw=wt]
+
+*education
+tab v106 stillbirths [iw=wt]
+
+*wealth
+tab v190 stillbirths [iw=wt]
+
+* output to excel, only showing the number of stillbirths
+tabout mo_age_at_birth preg_interval v025 v106 v024 v190 stillbirths using Tables_PMR.xls [iw=wt] , c(freq) f(0) replace 
+**************************************************************************************************
+
+//Early neonatal deaths, tables are for the number of early neonatal deaths
+
+*mother's age at birth
+tab mo_age_at_birth earlyneonatal [iw=wt]
+
+*prenancy interval
+tab preg_interval earlyneonatal [iw=wt]
+
+*residence
+tab v025 earlyneonatal [iw=wt]
+
+*region
+tab v024 earlyneonatal [iw=wt]
+
+*education
+tab v106 earlyneonatal [iw=wt]
+
+*wealth
+tab v190 earlyneonatal [iw=wt]
+
+* output to excel, only showing the number of early neonatal deaths
+tabout mo_age_at_birth preg_interval v025 v106 v024 v190 earlyneonatal using Tables_PMR.xls [iw=wt] , c(freq) f(0) replace 
+
+**************************************************************************************************
+// Perinatal mortality rate per 1000
+
+*mother's age at birth
+svy: mean cm_peri, over(mo_age_at_birth) 
+
+*prenancy interval
+tab preg_interval cm_peri [iw=wt], row nofreq 
+svy: mean cm_peri, over(preg_interval) 
 
 *residence
 tab v025 cm_peri [iw=wt], row nofreq 
+svy: mean cm_peri, over(v025) 
 
 *region
 tab v024 cm_peri [iw=wt], row nofreq 
+svy: mean cm_peri, over(v024) 
 
 *education
 tab v106 cm_peri [iw=wt], row nofreq 
+svy: mean cm_peri, over(v106) 
 
 *wealth
 tab v190 cm_peri [iw=wt], row nofreq 
+svy: mean cm_peri, over(v190) 
 
 * output to excel
-tabout mo_age_at_birth v025 v106 v024 v190 cm_peri using Tables_PMR.xls [iw=wt] , c(row) f(1) replace 
-
+tabout mo_age_at_birth preg_interval v025 v106 v024 v190 using Tables_PMR.xls [aw=wt], oneway c(mean cm_peri) sum replace
 **************************************************************************************************
