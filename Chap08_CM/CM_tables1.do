@@ -86,7 +86,7 @@ tab v106 earlyneonatal [iw=wt]
 tab v190 earlyneonatal [iw=wt]
 
 * output to excel, only showing the number of early neonatal deaths
-tabout mo_age_at_birth preg_interval v025 v106 v024 v190 earlyneonatal using Tables_PMR.xls [iw=wt] , c(freq) f(0) replace 
+tabout mo_age_at_birth preg_interval v025 v106 v024 v190 earlyneonatal using Tables_PMR.xls [iw=wt] , c(freq) f(0) append 
 
 **************************************************************************************************
 // Perinatal mortality rate per 1000
@@ -115,5 +115,5 @@ tab v190 cm_peri [iw=wt], row nofreq
 svy: mean cm_peri, over(v190) 
 
 * output to excel
-tabout mo_age_at_birth preg_interval v025 v106 v024 v190 using Tables_PMR.xls [aw=wt], oneway c(mean cm_peri) sum replace
+tabout mo_age_at_birth preg_interval v025 v106 v024 v190 using Tables_PMR.xls [aw=wt], oneway c(mean cm_peri) f(0) sum append
 **************************************************************************************************

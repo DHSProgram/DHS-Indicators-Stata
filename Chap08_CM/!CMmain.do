@@ -39,7 +39,7 @@ do CM_CHILD.do
 * WARNING: This code takes some time to run (about 5mins). 
 
 do CM_PMR.do
-*Purpose: 	Code perinatal mortality
+*Purpose: 	Code stillbirths, early neonatal deaths, and perinatal mortality rate
 *This do file uses IR and BR file
 
 do CM_tables1.do
