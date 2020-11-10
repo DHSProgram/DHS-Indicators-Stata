@@ -37,13 +37,13 @@ use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
 
-do DV_viol.do
+do DV_VIOL.do
 *Purpose: 	Calculate violence indicators, such as age at first violence, ever experienced violence
 
-do DV_prtnr.do
+do DV_PRTNR.do
 *Purpose: 	Calculate violence indicators that have to do with spousal/partner violence and seeking help
 
-do DV_cntrl.do
+do DV_CNTRL.do
 *Purpose: 	Calculate violence indicators that have to do with spousal/partner violence and seeking help
 
 do DV_tables.do

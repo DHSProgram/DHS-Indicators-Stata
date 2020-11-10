@@ -1,7 +1,7 @@
 /*******************************************************************************************************************************
 Program: 				FGmain.do
 Purpose: 				Main file for the Female Genital Cutting Chapter. 
-						The main file will call other do files that will produce the DV indicators and produce tables.
+						The main file will call other do files that will produce the FG indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
 Date last modified:		October 22, 2020 by Shireen Assaf

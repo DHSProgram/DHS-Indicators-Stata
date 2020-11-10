@@ -213,7 +213,7 @@ tabout v025 v106 v024 fg_fcircum_wm v190 fg_fcircum_gl using Tables_Circum_gl.xl
 
 //Person performing the circumcision among women girls 0-14 and type of cirucumcision
 
-tab age5 fg_who_gl [iw=wt],col
+tab fg_who_gl age5  [iw=wt],col
 
 * output to excel
 tabout fg_who_gl age5 using Tables_Circum_gl.xls [iw=wt], c(col) f(1) append 
