@@ -4,7 +4,7 @@ Purpose: 			Code to produce adult and maternal mortality rates for specific wind
 Data inputs: 		IR survey list
 Data outputs:		AM_Tables.xls and AM_completeness
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
-Date last modified: October 6, 2020 by Courtney Allen
+Date last modified: November 6, 2020 by Trevor Croft
 Note:				See below 
 *****************************************************************************************************/
 
@@ -724,7 +724,7 @@ program define get_exposure_and_deaths
 	replace prdeaths_in_`li'=1 if deaths_in_`li'==1 & mm9>=2 & mm9<=6
 
 	gen mdeaths_in_`li'=0
-	replace  mdeaths_in_`li'=1 if deaths_in_`li'==1 & mm9>=2 & mm9<=5 & mm16==0
+	replace  mdeaths_in_`li'=1 if deaths_in_`li'==1 & mm9>=2 & mm9<=5 & mm16!=1 & mm16!=2
 
 
 	//Calculate exposure by subtraction

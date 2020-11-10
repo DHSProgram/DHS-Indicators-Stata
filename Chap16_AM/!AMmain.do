@@ -11,7 +11,7 @@ Date last modified:		October 06, 2020
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
-global user 39585	//change employee id number to personalize path
+global user 33697	//change employee id number to personalize path
 
 * change working path
 global workingpath "C:/Users//$user//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap16_AM"
@@ -25,13 +25,13 @@ cd "$workingpath"
 * select your survey
 
 	* IR Files
-	global irdata "NGIR7AFL"
+	global irdata "GMIR61FL"
 	
 	* MR Files
-	global mrdata "NGMR7AFL"
+	global mrdata "GMMR61FL"
 	
 	* PR Files
-	global prdata "NGPR7AFL"
+	global prdata "GMPR61FL"
 
 ********************************************************************************
 	
@@ -43,11 +43,11 @@ use "$datapath//$irdata.dta", clear
 gen file=substr("$irdata", 3, 2)
 
 * ASFR and GFR do files
-do AM_gfr.do
+do AM_GFR.do
 *Purpose: 	Code fertility rates and general fertility rate for mortality calculations.
 
 * Mortality Rate do files
-do AM_rates.do
+do AM_RATES.do
 *Purpose: 	Code fertility rates. This do file will create tables.
 
 */
