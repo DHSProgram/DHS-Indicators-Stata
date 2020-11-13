@@ -22,6 +22,7 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 global irdata "ETIR70FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7BFL KEIR71FL
 
+* MR Files
 global mrdata "ETMR70FL"
 * MMMR71FL GHMR72FL UGMR7BFL
 ****************************

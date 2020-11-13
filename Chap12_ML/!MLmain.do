@@ -17,6 +17,7 @@ cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Cha
 global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
+
 * HR Files
 global hrdata "MWHR7IFL"
 * GHHR7BFL

@@ -25,6 +25,7 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * IR Files
 global irdata "GHIR72FL"
 
+* MR Files
 global mrdata "GHMR71FL"
 ****************************
 

@@ -22,6 +22,7 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * IR Files
 global irdata "AFIR70FL"
 * MMIR71FL TJIR70FL UGIR60FL MWIR7HFL GHIR72FL 
+
 * KR Files
 global brdata "AFBR70FL"
 * MMBR71FL TJBR70FL UGBR60FL MWBR7HFL GHBR72FL 
@@ -73,7 +74,6 @@ do RH_DEL.do
 
 do RH_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. This will output 2 excel files for these indicators.
-
 
 */
 *******************************************************************************************************************************

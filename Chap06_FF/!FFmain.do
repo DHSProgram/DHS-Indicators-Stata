@@ -5,7 +5,6 @@ Purpose: 				Main file for the Fertility Preferences Chapter.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
 Date last modified:		June 21 2019 by Shireen Assaf
-
 *******************************************************************************************************************************/
 set more off
 
@@ -23,6 +22,7 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 global irdata "UGIR60FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7BFL KEIR71FL
 
+* MR Files
 global mrdata "UGMR60FL"
 * MMMR71FL TJMR70FL GHMR72FL UGMR7BFL
 ****************************

@@ -6,7 +6,6 @@ Purpose: 				Main file for the Fertility Chapter.
 Data outputs:			coded variables, table output on screen, and in excel tables.  
 Author: 				Courtney Allen
 Date last modified:		September 4, 2020
-
 ********************************************************************************/
 set more off
 
@@ -19,22 +18,21 @@ global workingpath "C:/Users//$user//ICF/Analysis - Shared Resources/Code/DHS-In
 * change data path
 global datapath "C:/Users//$user//ICF/Analysis - Shared Resources/Data/DHSdata"
 
-
 cd "$workingpath"
 
 * select your survey
 
-	* IR Files
-	global irdata "NGIR7AFL"
+* IR Files
+global irdata "NGIR7AFL"
 	
-	*PR Files
-	global prdata  "NGPR7AFL"
+*PR Files
+global prdata  "NGPR7AFL"
 	
-	*KR Files
-	global krdata "NGKR7AFL"
+*KR Files
+global krdata "NGKR7AFL"
 
-	*BR Files
-	global brdata "NGBR7AFL"
+*BR Files
+global brdata "NGBR7AFL"
 
 ********************************************************************************
 	
@@ -66,9 +64,8 @@ do FE_FERT.do
 do FE_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 
-
-
-
+*******************************************************************************************************************************
+*******************************************************************************************************************************
 
 * PR file variables
 
@@ -81,8 +78,8 @@ do FE_CBR.do
 * Purpose: 	Code crude birth rates. This file will create tables. This do file 
 * must be run after the FE_TFR.do file is run as it uses the scalars created.
 
-
-
+*******************************************************************************************************************************
+*******************************************************************************************************************************
 
 * BR file variables
 */
@@ -104,7 +101,6 @@ do FE_INT.do
 do FE_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 
-
-
 */
+*******************************************************************************************************************************
 *******************************************************************************************************************************

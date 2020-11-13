@@ -45,7 +45,7 @@ do CM_PMR.do
 do CM_tables1.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 
-/* open dataset
+* open dataset
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
@@ -61,7 +61,7 @@ do CM_tables2.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* KR file variables
+* KR file variables
 
 * open dataset
 use "$datapath//$krdata.dta", clear

@@ -23,6 +23,7 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 global krdata "UGKR7AFL"
 * MMKR71FL TJKR70FL GHKR72FL UGKR7AFL
 
+* IR Files
 global irdata "UGIR7AFL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7AFL
 ****************************
@@ -80,7 +81,6 @@ do CH_STOOL.do
 *Notes:				This do file will drop cases. 
 *					This is because the denominator is the youngest child under age 2 living with the mother. 			
 *					The do file will also produce the tables for these indicators. 
-
 
 */
 *******************************************************************************************************************************

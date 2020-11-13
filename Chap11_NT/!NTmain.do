@@ -10,7 +10,7 @@ Date last modified:
 set more off
 
 *local user 39585	//change employee id number to personalize path
-local user 39585
+local user 33697
 cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap11_NT"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
@@ -18,22 +18,23 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * KR Files
-global krdata "TJKR71FL"
+global krdata "ETKR71FL"
 * MMKR71FL TJKR70FL GHKR72FL TLKR71FL 
 
-global prdata "TJPR71FL"
+* PR Files
+global prdata "ETPR71FL"
 * MMPR71FL TJPR70FL GHPR72FL TLPR71FL 
 
 * IR Files
-global irdata "TJIR71FL"
+global irdata "ETIR71FL"
 * MMIR71FL TJIR70FL GHIR72FL TLIR71FL 
 
 * MR Files
-global mrdata "TJMR71FL"
+global mrdata "ETMR71FL"
 * MMMR71FL TJMR70FL GHMR72FL TLMR71FL 
 
 * HR Files
-global hrdata "TJHR71FL"
+global hrdata "ETHR71FL"
 * MMHR71FL TJHR70FL GHHR72FL TLHR71FL  
 ****************************
 
@@ -79,7 +80,7 @@ gen age = v008 - b3
 	}
 
 *******************
-*/
+
 do NT_BRST_FED.do
 *Purpose: 	Code breastfeeding indicators
 *
@@ -105,7 +106,7 @@ do NT_tables2.do
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************
-/* PR file variables
+* PR file variables
 
 * open dataset
 use "$datapath//$prdata.dta", clear
@@ -122,7 +123,7 @@ do NT_tables.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* HR file variables
+* HR file variables
 
 * open dataset
 use "$datapath//$hrdata.dta", clear
@@ -139,7 +140,7 @@ do NT_tables.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* IR file variables
+* IR file variables
 
 * A merge with the HR file is required to compute one of the indicators. 
 
@@ -163,7 +164,7 @@ do NT_tables.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* MR file variables
+* MR file variables
 
 * A merge with the PR file is required to compute the indicators below.
 

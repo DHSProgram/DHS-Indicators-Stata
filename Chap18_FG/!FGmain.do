@@ -49,6 +49,7 @@ do FG_tables.do
 *Purpose: 	Produce tables for indicators computed from the above do files.
 */
 *******************************************************************************************************************************
+*******************************************************************************************************************************
 
 * BR file variables
 
@@ -59,9 +60,16 @@ do FG_tables.do
 do FG_GIRLS.do
 *Purpose: 	Calculate female circumcision indicators among girls age 0-14
 *			This do file will also create the tables for these indicators
+*This code only uses the BR file. Older surveys may not information about the daughter's cirucumcision in the BR file. 
+*The information may instead be in the IR file. In that case please use the FG_GIRLS_merge.do file. 
 
+*do FG_GIRLS_merge.do
+*Purpose: 	Calculate female circumcision indicators among girls age 0-14
+*			This do file will also create the tables for these indicators
+*Use this do file if information about the daughter's circumcision status is not found in the BR file. 
 
 */
+*******************************************************************************************************************************
 *******************************************************************************************************************************
 
 * MR file variables
@@ -77,3 +85,5 @@ do FG_CIRCUM.do
 do FG_tables.do
 *Purpose: 	Produce tables for indicators computed from the above do files.
 */
+*******************************************************************************************************************************
+*******************************************************************************************************************************
