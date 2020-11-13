@@ -1,12 +1,18 @@
 /*****************************************************************************************************
-Program: 			FG_GIRLS.do
+Program: 			FG_GIRLS_merge.do
 Purpose: 			Code to compute female circumcision indicators among girls 0-14
-Data inputs: 		BR survey list
+Data inputs: 		IR and BR survey list
 Data outputs:		coded variables
-Author:				Shireen Assaf
-Date last modified: November 12, 2020 by Shireen Assaf 
-Note:				This code only uses the BR file. Older surveys may not information about the daughter's cirucumcision in the BR file. 
-					The information may instead be in the IR file. In that case please use the FG_GIRLS_merge.do file. 
+Author:				Tom Pullum and Shireen Assaf
+Date last modified: October 22, 2020 by Shireen Assaf 
+
+Note:				Use this file only if information about the daughter's cirucumcision status is not in the BR file. 
+					
+					Women in the IR file are asked about the circumcision of their daughters.
+					However, we need to reshape the file so that the data file uses daughters as the unit of analysis. 
+					We also need to merge the IR and BR file to include all daughters 0-14 in the denominator.
+					All the daughters age 0-14 must be in the denominator, including those whose mothers have
+					g100=0; just those with g121=1 go into the numerator
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -19,13 +25,54 @@ fg_sewn_gl		"Female circumcision type is sewn closed among girls age 0-14"
 	
 ----------------------------------------------------------------------------*/
 
-*select for girls age 0-14 
+***************** Creating a file for daughters age 0-14 *********************
+* Prepare the IR file for merging
+use v001 v002 v003 g* using "$datapath//$irdata.dta" , clear
+
+rename *_0* *_*
+
+* Reshape the IR file so there is one record per daughter 
+reshape long gidx_ g121_ g122_ g123_ g124_ , i(v001 v002 v003) j(sequence)
+drop sequence
+rename *_ *
+drop if gidx==.
+rename gidx bidx
+gen in_IR=1
+
+sort v001 v002 v003 bidx
+save IRtemp.dta, replace
+
+* Prepare the BR file 
+use "$datapath//$brdata.dta", clear
+* Identify girls, living and age 0-14 (b15==1 is redundant)
 keep if b4==2 & b5==1 & b8<=14
 
-*dropping cases where the mother never heard of circumcision
+* Crucial line to drop the mothers and daughters who did not get the long questionnaire
+* drop the girl if the g question were not asked of her mother
 drop if g100==.
 
-*yesno label
+keep v001-v025 v106 v190 bidx b8
+gen age5=1+int(b8/5)
+label define age5 1 " 0-4" 2 " 5-9" 3 " 10-14"
+label values age5 age5
+
+* in_BR identifies a daughter who is eligible for a g121 code
+gen in_BR=1
+
+* MERGE THE BR FILE WITH THE RESHAPED IR FILE
+sort v001 v002 v003 bidx
+merge v001 v002 v003 bidx using  IRtemp.dta
+drop _merge
+
+* Some girls in the BR file do not have a value on g121 because their mothers had not heard of female circumcision.
+* Crucial line to get the correct denominator
+replace g121=0 if in_IR==. & in_BR==1
+
+*drop if in_BR==.
+
+erase IRtemp.dta
+******************************************************************************
+
 cap label define yesno 0"No" 1"Yes"
 
 //Circumcised girls 0-14
@@ -62,11 +109,6 @@ label var fg_sewn_gl "Female circumcision type is sewn closed among girls age 0-
 
 gen wt=v005/1000000
 
-*age groups for girls 
-gen age5=1+int(b8/5)
-label define age5 1 " 0-4" 2 " 5-9" 3 " 10-14"
-label values age5 age5
-
 //Prevalence of circumcision and age of circumcision
 
 * Age of circumcision by current age
@@ -86,7 +128,8 @@ tabout age5 fg_fcircum_gl using Tables_Circum_gl.xls [iw=wt] , c(row freq) f(1) 
 //Prevalence of circumcision by mother's background characteristics
 
 *Circumcised mother
-gen fg_fcircum_wm = g102
+gen fg_fcircum_wm = g102==1
+replace fg_fcircum_wm=. if g100==.
 label values fg_fcircum_wm yesno
 label var fg_fcircum_wm	"Circumcised among women age 15-49"
 
