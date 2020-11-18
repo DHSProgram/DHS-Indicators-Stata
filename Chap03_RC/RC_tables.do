@@ -224,65 +224,65 @@ tabout v013 v025 v024 v106 v190 rc_media_none using Tables_media_wm.xls [iw=wt] 
 
 ****************************************************
 //Ever used the internet
-
+* Indicator not available in all surveys so will add cap
 *age
-tab v013 rc_intr_ever [iw=wt], row nofreq 
+cap tab v013 rc_intr_ever [iw=wt], row nofreq 
 
 *residence
-tab v025 rc_intr_ever [iw=wt], row nofreq 
+cap tab v025 rc_intr_ever [iw=wt], row nofreq 
 
 *region
-tab v024 rc_intr_ever [iw=wt], row nofreq 
+cap tab v024 rc_intr_ever [iw=wt], row nofreq 
 
 *education
-tab v106 rc_intr_ever [iw=wt], row nofreq 
+cap tab v106 rc_intr_ever [iw=wt], row nofreq 
 
 *wealth
-tab v190 rc_intr_ever [iw=wt], row nofreq 
+cap tab v190 rc_intr_ever [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_intr_ever using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+cap tabout v013 v025 v024 v106 v190 rc_intr_ever using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
 //Internet use in the last 12 months
-
+* Indicator not available in all surveys so will add cap
 *age
-tab v013 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab v013 rc_intr_use12mo [iw=wt], row nofreq 
 
 *residence
-tab v025 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab v025 rc_intr_use12mo [iw=wt], row nofreq 
 
 *region
-tab v024 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab v024 rc_intr_use12mo [iw=wt], row nofreq 
 
 *education
-tab v106 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab v106 rc_intr_use12mo [iw=wt], row nofreq 
 
 *wealth
-tab v190 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab v190 rc_intr_use12mo [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_intr_use12mo using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+cap  tabout v013 v025 v024 v106 v190 rc_intr_use12mo using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
 ****************************************************
 //Internet use frequency
-
+* Indicator not available in all surveys so will add cap
 *age
-tab v013 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab v013 rc_intr_usefreq [iw=wt], row nofreq 
 
 *residence
-tab v025 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab v025 rc_intr_usefreq [iw=wt], row nofreq 
 
 *region
-tab v024 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab v024 rc_intr_usefreq [iw=wt], row nofreq 
 
 *education
-tab v106 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab v106 rc_intr_usefreq [iw=wt], row nofreq 
 
 *wealth
-tab v190 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab v190 rc_intr_usefreq [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_intr_usefreq using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+cap tabout v013 v025 v024 v106 v190 rc_intr_usefreq using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for employment and occupation: excel file Tables_employ_wm will be produced
@@ -545,30 +545,30 @@ tabout v013 v025 v024 v106 v190 rc_tobc_smk_any using Tables_tobac_wm.xls [iw=wt
 
 ****************************************************
 * Smokeless tobacco use
-
+* These indicators are not available in all surveys so will add cap
 //Snuff by mouth
-tab rc_tobc_snuffm [iw=wt]
+cap tab rc_tobc_snuffm [iw=wt]
 
 //Snuff by nose
-tab rc_tobc_snuffn [iw=wt]
+cap tab rc_tobc_snuffn [iw=wt]
 
 //Chews tobacco
-tab rc_tobc_chew [iw=wt]
+cap tab rc_tobc_chew [iw=wt]
 
 //Betel quid with tobacco
-tab rc_tobv_betel [iw=wt]
+cap tab rc_tobv_betel [iw=wt]
 
 //Other type of smokless tobacco
-tab rc_tobc_osmkless [iw=wt]
+cap tab rc_tobc_osmkless [iw=wt]
 
 //Any smokeless tobacco
-tab rc_tobc_anysmkless [iw=wt]
+cap tab rc_tobc_anysmkless [iw=wt]
 
 //Uses any type of tobacco
-tab rc_tobc_any [iw=wt]
+cap tab rc_tobc_any [iw=wt]
 
 * output to excel
-tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_wm.xls [iw=wt] , oneway cells(cell freq) append 
+cap tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_wm.xls [iw=wt] , oneway cells(cell freq) append 
 
 }
 
@@ -775,65 +775,65 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_media_none using Tables_media_mn.xls [iw
 
 ****************************************************
 //Ever used the internet
-
+* Indicator not available in all surveys so will add cap
 *age
-tab mv013 rc_intr_ever [iw=wt], row nofreq 
+cap tab mv013 rc_intr_ever [iw=wt], row nofreq 
 
 *residence
-tab mv025 rc_intr_ever [iw=wt], row nofreq 
+cap tab mv025 rc_intr_ever [iw=wt], row nofreq 
 
 *region
-tab mv024 rc_intr_ever [iw=wt], row nofreq 
+cap tab mv024 rc_intr_ever [iw=wt], row nofreq 
 
 *education
-tab mv106 rc_intr_ever [iw=wt], row nofreq 
+cap tab mv106 rc_intr_ever [iw=wt], row nofreq 
 
 *wealth
-tab mv190 rc_intr_ever [iw=wt], row nofreq 
+cap tab mv190 rc_intr_ever [iw=wt], row nofreq 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_intr_ever using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+cap tabout mv013 mv025 mv024 mv106 mv190 rc_intr_ever using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
 //Internet use in the last 12 months
-
+* Indicator not available in all surveys so will add cap
 *age
-tab mv013 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab mv013 rc_intr_use12mo [iw=wt], row nofreq 
 
 *residence
-tab mv025 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab mv025 rc_intr_use12mo [iw=wt], row nofreq 
 
 *region
-tab mv024 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab mv024 rc_intr_use12mo [iw=wt], row nofreq 
 
 *education
-tab mv106 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab mv106 rc_intr_use12mo [iw=wt], row nofreq 
 
 *wealth
-tab mv190 rc_intr_use12mo [iw=wt], row nofreq 
+cap tab mv190 rc_intr_use12mo [iw=wt], row nofreq 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_intr_use12mo using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+cap tabout mv013 mv025 mv024 mv106 mv190 rc_intr_use12mo using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
 ****************************************************
 //Internet use frequency
-
+* Indicator not available in all surveys so will add cap
 *age
-tab mv013 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab mv013 rc_intr_usefreq [iw=wt], row nofreq 
 
 *residence
-tab mv025 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab mv025 rc_intr_usefreq [iw=wt], row nofreq 
 
 *region
-tab mv024 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab mv024 rc_intr_usefreq [iw=wt], row nofreq 
 
 *education
-tab mv106 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab mv106 rc_intr_usefreq [iw=wt], row nofreq 
 
 *wealth
-tab mv190 rc_intr_usefreq [iw=wt], row nofreq 
+cap tab mv190 rc_intr_usefreq [iw=wt], row nofreq 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_intr_usefreq using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+cap tabout mv013 mv025 mv024 mv106 mv190 rc_intr_usefreq using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for employment and occupation: excel file Tables_employ_mn will be produced
@@ -1099,70 +1099,70 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_smk_any using Tables_tobac_mn.xls [
 //Smoking frequency
 
 *age
-tab mv013 rc_smk_freq [iw=wt], row nofreq 
+cap tab mv013 rc_smk_freq [iw=wt], row nofreq 
 
 *residence
-tab mv025 rc_smk_freq [iw=wt], row nofreq 
+cap tab mv025 rc_smk_freq [iw=wt], row nofreq 
 
 *region
-tab mv024 rc_smk_freq [iw=wt], row nofreq 
+cap tab mv024 rc_smk_freq [iw=wt], row nofreq 
 
 *education
-tab mv106 rc_smk_freq [iw=wt], row nofreq 
+cap tab mv106 rc_smk_freq [iw=wt], row nofreq 
 
 *wealth
-tab mv190 rc_smk_freq [iw=wt], row nofreq 
+cap tab mv190 rc_smk_freq [iw=wt], row nofreq 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_smk_freq using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
+cap tabout mv013 mv025 mv024 mv106 mv190 rc_smk_freq using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
 //Average number of cigarettes per day
 
 *age
-tab mv013 rc_cig_day [iw=wt], row nofreq 
+cap tab mv013 rc_cig_day [iw=wt], row nofreq 
 
 *residence
-tab mv025 rc_cig_day [iw=wt], row nofreq 
+cap tab mv025 rc_cig_day [iw=wt], row nofreq 
 
 *region
-tab mv024 rc_cig_day [iw=wt], row nofreq 
+cap tab mv024 rc_cig_day [iw=wt], row nofreq 
 
 *education
-tab mv106 rc_cig_day [iw=wt], row nofreq 
+cap tab mv106 rc_cig_day [iw=wt], row nofreq 
 
 *wealth
-tab mv190 rc_cig_day [iw=wt], row nofreq 
+cap tab mv190 rc_cig_day [iw=wt], row nofreq 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_cig_day using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
+cap tabout mv013 mv025 mv024 mv106 mv190 rc_cig_day using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
 * Smokeless tobacco use
 
 //Snuff by mouth
-tab rc_tobc_snuffm [iw=wt]
+cap tab rc_tobc_snuffm [iw=wt]
 
 //Snuff by nose
-tab rc_tobc_snuffn [iw=wt]
+cap tab rc_tobc_snuffn [iw=wt]
 
 //Chews tobacco
-tab rc_tobc_chew [iw=wt]
+cap tab rc_tobc_chew [iw=wt]
 
 //Betel quid with tobacco
-tab rc_tobv_betel [iw=wt]
+cap tab rc_tobv_betel [iw=wt]
 
 //Other type of smokless tobacco
-tab rc_tobc_osmkless [iw=wt]
+cap tab rc_tobc_osmkless [iw=wt]
 
 //Any smokeless tobacco
-tab rc_tobc_anysmkless [iw=wt]
+cap tab rc_tobc_anysmkless [iw=wt]
 
 //Uses any type of tobacco
-tab rc_tobc_any [iw=wt]
+cap tab rc_tobc_any [iw=wt]
 
 * output to excel
-tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_mn.xls [iw=wt] , oneway cells(cell freq) append 
+cap tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_mn.xls [iw=wt] , oneway cells(cell freq) append 
 
 }
 

@@ -8,6 +8,7 @@ Date last modified: Oct 1, 2019 by Shireen Assaf
 Note:				The indicators below can be computed for men and women. 
 					For women and men the indicator is computed for age 15-49 in line 55 and 262. This can be commented out if the indicators are required for all women/men.
 					Please check the note on health insurance. This can be country specific and also reported for specific populations. 
+					Please check the variables available for smoking and tobacco and see notes for these variables. Variable names have changed and these indicators are country specific.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -130,17 +131,20 @@ label values rc_media_none yesno
 label var rc_media_none "Accesses none of the three media at least once a week"
 
 //Ever used internet
-recode v171a (0=0 "No") (1/3=1 "Yes"), gen(rc_intr_ever) 
-label var rc_intr_ever "Ever used the internet"
+* Indicator not available in all surveys so will add cap
+cap recode v171a (0=0 "No") (1/3=1 "Yes"), gen(rc_intr_ever) 
+cap label var rc_intr_ever "Ever used the internet"
 
 //Used interent in the past 12 months
-recode v171a (0 2/3=0 "No") (1=1 "Yes"), gen(rc_intr_use12mo) 
-label var rc_intr_use12mo "Used the internet in the past 12 months"
+* Indicator not available in all surveys so will add cap
+cap recode v171a (0 2/3=0 "No") (1=1 "Yes"), gen(rc_intr_use12mo) 
+cap label var rc_intr_use12mo "Used the internet in the past 12 months"
 
 //Internet use frequency
-gen rc_intr_usefreq= v171b if v171a==1
-label values rc_intr_usefreq V171B
-label var rc_intr_usefreq "Internet use frequency in the past month - among users in the past 12 months"
+* Indicator not available in all surveys so will add cap
+cap gen rc_intr_usefreq= v171b if v171a==1
+cap label values rc_intr_usefreq V171B
+cap label var rc_intr_usefreq "Internet use frequency in the past month - among users in the past 12 months"
 
 *** Employment ***
 //Employment status
@@ -200,8 +204,12 @@ gen rc_hins_any=0
 label var rc_hins_any "Have any health insurance"
 
 *** Tobacco use ***
+* please check all v463* variables for types of smoking and tobacco use
 
 //Smokes cigarettes
+*for some surveys v463a was used instead of v463aa
+*however v463a is not a yes/no variable for cigarette smoking, v463aa is the frequency
+cap gen v463aa=v463a 
 gen rc_tobc_cig=inlist(v463aa,1,2) | v463e==1
 label var rc_tobc_cig "Smokes cigarettes"
 
@@ -214,44 +222,51 @@ gen rc_tobc_smk_any= inlist(v463aa,1,2) | v463e==1 | v463b==1 | v463f==1 | v463g
 label var rc_tobc_smk_any "Smokes any type of tobacco"
 
 //Snuff by mouth
-gen rc_tobc_snuffm = v463h==1
-label values rc_tobc_snuffm yesno
-label var rc_tobc_snuffm "Uses snuff smokeless tobacco by mouth"
+* Indicator not available in all surveys so will add cap
+cap gen rc_tobc_snuffm = v463h==1
+cap label values rc_tobc_snuffm yesno
+cap label var rc_tobc_snuffm "Uses snuff smokeless tobacco by mouth"
 
 //Snuff by nose
-gen rc_tobc_snuffn = v463d==1
-label values rc_tobc_snuffn yesno
-label var rc_tobc_snuffn "Uses snuff smokeless tobacco by nose"
+* Indicator not available in all surveys so will add cap
+cap gen rc_tobc_snuffn = v463d==1
+cap label values rc_tobc_snuffn yesno
+cap label var rc_tobc_snuffn "Uses snuff smokeless tobacco by nose"
 
 //Chewing tobacco
-gen rc_tobc_chew = v463c==1
-label values rc_tobc_chew yesno
-label var rc_tobc_chew "Chews tobacco"
+* Indicator not available in all surveys so will add cap
+cap gen rc_tobc_chew = v463c==1
+cap label values rc_tobc_chew yesno
+cap label var rc_tobc_chew "Chews tobacco"
 
 //Betel quid with tobacco
-gen rc_tobv_betel = v463i==1
-label values rc_tobv_betel yesno
-label var rc_tobv_betel "Uses betel quid with tobacco"
+* Indicator not available in all surveys so will add cap
+cap gen rc_tobv_betel = v463i==1
+cap label values rc_tobv_betel yesno
+cap label var rc_tobv_betel "Uses betel quid with tobacco"
 
 //Other type of smokeless tobacco
 *Note: there may be other types of smokeless tobacco, please check all v463* variables. 
-gen rc_tobc_osmkless = v463l==1
-label values rc_tobc_osmkless yesno
-label var rc_tobc_osmkless "Uses other type of smokeless tobacco"
+* Indicator not available in all surveys so will add cap
+cap gen rc_tobc_osmkless = v463l==1
+cap label values rc_tobc_osmkless yesno
+cap label var rc_tobc_osmkless "Uses other type of smokeless tobacco"
 
 //Any smokeless tobacco
+* Indicator not available in all surveys so will add cap
 gen rc_tobc_anysmkless=0
 	foreach i in h d c l {
-	replace rc_tobc_anysmkless=1 if v463`i'==1
+	cap replace rc_tobc_anysmkless=1 if v463`i'==1
 	}
-replace rc_tobc_anysmkless=1 if rc_tobc_osmkless==1
+cap replace rc_tobc_anysmkless=1 if rc_tobc_osmkless==1
 label values rc_tobc_anysmkless yesno
 label var rc_tobc_anysmkless "Uses any type of smokeless tobacco"
 
-//Any tobacco 
-gen rc_tobc_any= inlist(v463aa,1,2) | inlist(v463ab,1,2)
-label values rc_tobc_any yesno
-label var rc_tobc_any "Uses any type of tobacco - smoke or smokeless"
+//Any tobacco
+* Indicator not available in all surveys so will add cap
+cap gen rc_tobc_any= inlist(v463aa,1,2) | inlist(v463ab,1,2)
+cap label values rc_tobc_any yesno
+cap label var rc_tobc_any "Uses any type of tobacco - smoke or smokeless"
 }
 
 
@@ -336,17 +351,20 @@ label values rc_media_none yesno
 label var rc_media_none "Accesses none of the three media at least once a week"
 
 //Ever used internet
-recode mv171a (0=0 "No") (1/3=1 "Yes"), gen(rc_intr_ever) 
-label var rc_intr_ever "Ever used the internet"
+* Indicator not available in all surveys so will add cap
+cap recode mv171a (0=0 "No") (1/3=1 "Yes"), gen(rc_intr_ever) 
+cap label var rc_intr_ever "Ever used the internet"
 
 //Used interent in the past 12 months
-recode mv171a (0 2/3=0 "No") (1=1 "Yes"), gen(rc_intr_use12mo) 
-label var rc_intr_use12mo "Used the internet in the past 12 months"
+* Indicator not available in all surveys so will add cap
+cap recode mv171a (0 2/3=0 "No") (1=1 "Yes"), gen(rc_intr_use12mo) 
+cap label var rc_intr_use12mo "Used the internet in the past 12 months"
 
 //Internet use frequency
-gen rc_intr_usefreq= mv171b if mv171a==1
-label values rc_intr_usefreq MV171B
-label var rc_intr_usefreq "Internet use frequency in the past month - among users in the past 12 months"
+* Indicator not available in all surveys so will add cap
+cap gen rc_intr_usefreq= mv171b if mv171a==1
+cap label values rc_intr_usefreq MV171B
+cap label var rc_intr_usefreq "Internet use frequency in the past month - among users in the past 12 months"
 
 *** Employment ***
 
@@ -409,88 +427,95 @@ gen rc_hins_any=0
 label var rc_hins_any "Have any health insurance"
 
 *** Tobacco Use ***
+*some surveys used mv463* variables for smoking and tobacco
 
 //Smokes cigarettes
 gen rc_tobc_cig=0
 	foreach i in a b c {
-	replace rc_tobc_cig= 1 if mv464`i'>0 & mv464`i'<=888
-	replace rc_tobc_cig= 1 if mv484`i'>0 & mv484`i'<=888
+	cap replace rc_tobc_cig= 1 if mv464`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_cig= 1 if mv484`i'>0 & mv484`i'<=888
 	}
+*for older surveys use mv463a variables
+cap replace rc_tobc_cig= 1 if mv463a==1
 label var rc_tobc_cig "Smokes cigarettes"
 
 //Smokes other type of tobacco
 gen rc_tobc_other= 0
 	foreach i in d e f g {
-	replace rc_tobc_other= 1 if mv464`i'>0 & mv464`i'<=888
-	replace rc_tobc_other= 1 if mv484`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_other= 1 if mv464`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_other= 1 if mv484`i'>0 & mv464`i'<=888
 	}
+*for older surveys use mv463 variables
+cap replace rc_tobc_other=1 if mv463b==1 | mv463e==1 | mv463f==1 | mv463g==1 | mv463x==1 		
 label var rc_tobc_other "Smokes other type of tobacco"
 
 //Smokes any type of tobacco
 gen rc_tobc_smk_any= 0
 	foreach i in a b c d e f g {
-	replace rc_tobc_smk_any= 1 if mv464`i'>0 & mv464`i'<=888
-	replace rc_tobc_smk_any= 1 if mv484`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_smk_any= 1 if mv464`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_smk_any= 1 if mv484`i'>0 & mv464`i'<=888
 	}
+*for older surveys use mv463 variables
+cap rc_tobc_smk_any= 1 if mv463a==1 | mv463b==1 | mv463e==1 | mv463f==1 | mv463g==1 | mv463x==1 
 label var rc_tobc_smk_any "Smokes any type of tobacoo"
 
 //Smoking frequency
-gen rc_smk_freq=mv463aa
+cap gen rc_smk_freq=mv463aa
 label define rc_smk_freq 0"Non-smoker" 1"Daily smoker" 2"Occasional smoker"
-label values rc_smk_freq rc_smk_freq
-label var rc_smk_freq "Smoking frequency"
+cap label values rc_smk_freq rc_smk_freq
+cap label var rc_smk_freq "Smoking frequency"
 
 //Average numberof cigarettes per day
 	foreach i in a b c {
-	gen cig`i'=mv464`i'
-	replace cig`i'=0 if cig`i'==888
-	qui sum cig`i'
+	cap gen cig`i'=mv464`i'
+	cap replace cig`i'=0 if cig`i'==888
+	cap qui sum cig`i'
 		if r(N)==0 {
-		replace cig`i'=0
+		cap replace cig`i'=0
 		}
 	}	
-gen cigdaily= ciga + cigb + cigc 
-recode cigdaily (1/4=1 " <5") (5/9=2 " 5-9") (10/14=3 " 10-14") (15/24=4 " 15-24") (25/95=5 " 25+") (else=9 "Don't know/missing") if rc_smk_freq==1 & cigdaily>0, gen(rc_cig_day)
-label var rc_cig_day "Average number of cigarettes smoked per day"
+cap gen cigdaily= ciga + cigb + cigc 
+cap recode cigdaily (1/4=1 " <5") (5/9=2 " 5-9") (10/14=3 " 10-14") (15/24=4 " 15-24") (25/95=5 " 25+") (else=9 "Don't know/missing") if rc_smk_freq==1 & cigdaily>0, gen(rc_cig_day)
+cap label var rc_cig_day "Average number of cigarettes smoked per day"
 
 //Snuff by mouth
-gen rc_tobc_snuffm = inlist(mv464h,1,888) | inlist(mv484h,1,888)
-label values rc_tobc_snuffm yesno
-label var rc_tobc_snuffm "Uses snuff smokeless tobacco by mouth"
+cap gen rc_tobc_snuffm = inlist(mv464h,1,888) | inlist(mv484h,1,888)
+cap label values rc_tobc_snuffm yesno
+cap label var rc_tobc_snuffm "Uses snuff smokeless tobacco by mouth"
 
 //Snuff by nose
-gen rc_tobc_snuffn = inlist(mv464i,1,888) | inlist(mv484i,1,888)
-label values rc_tobc_snuffn yesno
-label var rc_tobc_snuffn "Uses snuff smokeless tobacco by nose"
+cap gen rc_tobc_snuffn = inlist(mv464i,1,888) | inlist(mv484i,1,888)
+cap label values rc_tobc_snuffn yesno
+cap label var rc_tobc_snuffn "Uses snuff smokeless tobacco by nose"
 
 //Chewing tobacco
-gen rc_tobc_chew = inlist(mv464j,1,888) | inlist(mv484j,1,888)
-label values rc_tobc_chew yesno
-label var rc_tobc_chew "Chews tobacco"
+cap gen rc_tobc_chew = inlist(mv464j,1,888) | inlist(mv484j,1,888)
+cap label values rc_tobc_chew yesno
+cap label var rc_tobc_chew "Chews tobacco"
 
 //Betel quid with tobacco
-gen rc_tobv_betel = inlist(mv464k,1,888) | inlist(mv484k,1,888)
-label values rc_tobv_betel yesno
-label var rc_tobv_betel "Uses betel quid with tobacco"
+cap gen rc_tobv_betel = inlist(mv464k,1,888) | inlist(mv484k,1,888)
+cap label values rc_tobv_betel yesno
+cap label var rc_tobv_betel "Uses betel quid with tobacco"
 
 //Other type of smokeless tobacco
 *Note: there may be other types of smokeless tobacco, please check all mv464* and mv484* variables. 
-gen rc_tobc_osmkless = inlist(mv464l,1,888) | inlist(mv484l,1,888)
-label values rc_tobc_osmkless yesno
-label var rc_tobc_osmkless "Uses other type of smokeless tobacco"
+cap gen rc_tobc_osmkless = inlist(mv464l,1,888) | inlist(mv484l,1,888)
+cap label values rc_tobc_osmkless yesno
+cap label var rc_tobc_osmkless "Uses other type of smokeless tobacco"
 
 //Any smokeless tobacco
 gen rc_tobc_anysmkless=0
 	foreach i in h i j k l  {
-	replace rc_tobc_anysmkless=1 if mv464`i'>0 & mv464`i'<=888
-	replace rc_tobc_anysmkless=1 if mv484`i'>0 & mv484`i'<=888
+	cap replace rc_tobc_anysmkless=1 if mv464`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_anysmkless=1 if mv484`i'>0 & mv484`i'<=888
 	}
-replace rc_tobc_anysmkless=1 if rc_tobc_osmkless==1
-label values rc_tobc_anysmkless yesno
-label var rc_tobc_anysmkless "Uses any type of smokeless tobacco"
+cap replace rc_tobc_anysmkless=1 if rc_tobc_osmkless==1
+cap label values rc_tobc_anysmkless yesno
+cap label var rc_tobc_anysmkless "Uses any type of smokeless tobacco"
 
 //Any tobacco 
-gen rc_tobc_any= inlist(mv463aa,1,2) | inlist(mv463ab,1,2)
-label values rc_tobc_any yesno
-label var rc_tobc_any "Uses any type of tobacco - smoke or smokeless"
+cap gen rc_tobc_any= inlist(mv463aa,1,2) | inlist(mv463ab,1,2)
+cap label values rc_tobc_any yesno
+cap label var rc_tobc_any "Uses any type of tobacco - smoke or smokeless"
 }
