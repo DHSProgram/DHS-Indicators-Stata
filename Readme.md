@@ -56,7 +56,7 @@ There are two commands that can be used for producing tables for the indicators 
 |  16|   Adult & Maternal Mortality|AM||X|X ||
 |  17|   Domestic Violence|DV ||X| |X|
 |  18|	 Female Genital Cutting|FG| |X||X |
-|  19|	 Fistula |FS||X |X| |
+|  19|	 Fistula |FS| |X |X| |
 
 **********************************************************************************************************************************************************
 
