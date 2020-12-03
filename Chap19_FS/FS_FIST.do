@@ -85,7 +85,7 @@ label var fs_trt_provid	"Provider type for fistula treatment"
 //Outcome of treatment sought for fistula
 * find a variable with "treatment" or "leakage" in the label 
 gen fs_trt_outcome = s1111 if s1101==1 & s1107==1
-replace fs_trt_outcome=9 if s1101==1 & s1107==1 & s1109>6
+replace fs_trt_outcome=9 if s1101==1 & s1107==1 & s1111>6
 label define outcome 1"Leakage stopped completely" 2"Not stopped but reduced" 3"Not stopped at all" 4"Did not receive any treatment" 9"Missing"
 label values fs_trt_outcome outcome
 label var fs_trt_outcome "Outcome of treatment sought for fistula"
