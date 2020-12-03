@@ -53,21 +53,22 @@ do FG_tables.do
 
 * BR file variables
 
-* To compute female circumcision among girls 0-14, we need to merge the IR and BR files
-* The code below will reshape the IR file and merge with the BR file so we create a file for daughters. 
-* The information on female circumcision of daughter is reported by the mother in the IR file
+* open dataset
+use "$datapath//$brdata.dta", clear
 
 do FG_GIRLS.do
 *Purpose: 	Calculate female circumcision indicators among girls age 0-14
 *			This do file will also create the tables for these indicators
-*This code only uses the BR file. Older surveys may not information about the daughter's cirucumcision in the BR file. 
-*The information may instead be in the IR file. In that case please use the FG_GIRLS_merge.do file. 
+* This code only uses the BR file. Older surveys may not have information about the daughter's cirucumcision in the BR file. 
+* The information may instead be in the IR file. In that case please use the FG_GIRLS_merge.do file. 
 
 *do FG_GIRLS_merge.do
 *Purpose: 	Calculate female circumcision indicators among girls age 0-14
 *			This do file will also create the tables for these indicators
-*Use this do file if information about the daughter's circumcision status is not found in the BR file. 
-
+* Use this do file if information about the daughter's circumcision status is not found in the BR file. 
+* To compute female circumcision among girls 0-14, we need to merge the IR and BR files
+* This code will reshape the IR file and merge with the BR file so we create a file for daughters. 
+* The information on female circumcision of daughter is reported by the mother in the IR file
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************
