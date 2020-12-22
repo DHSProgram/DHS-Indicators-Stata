@@ -810,7 +810,7 @@ local llogfile=slogfile
 
 ***********************
 * Specify the path to the input data as a scalar
-scalar spath="C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
+scalar spath="$datapath"
 local lpath=spath
 ***********************
 
