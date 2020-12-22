@@ -790,11 +790,13 @@ scalar run_number=0
 * IDENTIFY WHERE YOU WANT THE LOG AND OUTPUT FILES TO GO AND THE NAME OF THE LOG FILE
 
 ***********************
-* Specify the path to the log file and the output files as a scalar
+/* Specify the path to the log file and the output files as a scalar
+* This path was defined in the main file. If you do not use the main file you need to provide it here.
+
 scalar soutpath="C:/Users//$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap08_CM"
 local loutpath=soutpath
 cd "`loutpath'"
-***********************
+***********************/
 
 /***********************
 * Specify the name of the log file as a scalar
@@ -810,12 +812,14 @@ local llogfile=slogfile
 
 ***********************
 * Specify the path to the input data as a scalar
+* datapath is defined in the main file. If you do not use the main file you need to provide it here.
 scalar spath="$datapath"
 local lpath=spath
 ***********************
 
 ***********************
 * Specify the file name as a scalar. This must be an IR or BR standard recode file in Stata format.
+* The survey is define in the main file. If you do not use the main file you need to provide it here.
 scalar sfn="$irdata"
 ***********************
 
