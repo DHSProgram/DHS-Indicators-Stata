@@ -2,7 +2,7 @@
 Program: 			NT_tables.do
 Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
-Date last modified: January 7 2020 by Shireen Assaf 
+Date last modified: December 10, 2020 by Courtney Allen  
 
 *Note this do file will produce the following tables in excel:
 	1. 	Tables_nut_ch:		Contains the tables for nutritional status indicators for children
@@ -388,7 +388,7 @@ tab v106 nt_bf_ever [iw=wt], row nofreq
 tab v190 nt_bf_ever [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_ever using Tables_brst_fed.xls [iw=wt] , c(row) f(1) replace 
+tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_ever using Tables_bf.xls [iw=wt] , c(row) f(1) replace 
 */
 ****************************************************
 //Breastfed within 1hr
@@ -414,7 +414,7 @@ tab v106 nt_bf_start_1hr [iw=wt], row nofreq
 tab v190 nt_bf_start_1hr [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_start_1hr using Tables_brst_fed.xls [iw=wt] , c(row) f(1) append 
+tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_start_1hr using Tables_bf.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Breastfed within 1 day
@@ -440,7 +440,7 @@ tab v106 nt_bf_start_1day [iw=wt], row nofreq
 tab v190 nt_bf_start_1day [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_start_1day using Tables_brst_fed.xls [iw=wt] , c(row) f(1) append 
+tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_start_1day using Tables_bf.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Received a prelacteal feed among breastfed children
@@ -466,7 +466,7 @@ tab v106 nt_bf_prelac [iw=wt], row nofreq
 tab v190 nt_bf_prelac [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_prelac using Tables_brst_fed.xls [iw=wt] , c(row) f(1) append 
+tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_prelac using Tables_bf.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Bottle feeding
@@ -493,13 +493,13 @@ tab nt_bottle if age>11 & age<24 [iw=wt]
 tab nt_bottle if age>19 & age<24  [iw=wt]
 
 * output to excel
-tabout agecats nt_bottle using Tables_brst_fed.xls [iw=wt] , c(row) f(1) append 
-tabout nt_bottle if age<4 using Tables_brst_fed.xls [iw=wt] , clab("0-3months") c(cell) f(1) append 
-tabout nt_bottle if age<6 using Tables_brst_fed.xls [iw=wt] , clab("0-5months") c(cell) f(1) append 
-tabout nt_bottle if age>5 & age<10 using Tables_brst_fed.xls [iw=wt] , clab("6-9months") c(cell) f(1) append 
-tabout nt_bottle if age>11 & age<16 using Tables_brst_fed.xls [iw=wt] , clab("12-15months") c(cell) f(1) append 
-tabout nt_bottle if age>11 & age<24 using Tables_brst_fed.xls [iw=wt] , clab("12-23months") c(cell) f(1) append 
-tabout nt_bottle if age>19 & age<24 using Tables_brst_fed.xls [iw=wt] , clab("20-23months") c(cell) f(1) append 
+tabout agecats nt_bottle using Tables_bf.xls [iw=wt] , c(row) f(1) append 
+tabout nt_bottle if age<4 using Tables_bf.xls [iw=wt] , clab("0-3months") c(cell) f(1) append 
+tabout nt_bottle if age<6 using Tables_bf.xls [iw=wt] , clab("0-5months") c(cell) f(1) append 
+tabout nt_bottle if age>5 & age<10 using Tables_bf.xls [iw=wt] , clab("6-9months") c(cell) f(1) append 
+tabout nt_bottle if age>11 & age<16 using Tables_bf.xls [iw=wt] , clab("12-15months") c(cell) f(1) append 
+tabout nt_bottle if age>11 & age<24 using Tables_bf.xls [iw=wt] , clab("12-23months") c(cell) f(1) append 
+tabout nt_bottle if age>19 & age<24 using Tables_bf.xls [iw=wt] , clab("20-23months") c(cell) f(1) append 
 
 * Total for IYCF tables
 tabout nt_bottle using Tables_IYCF.xls [iw=wt] , oneway c(cell freq) f(1) replace 

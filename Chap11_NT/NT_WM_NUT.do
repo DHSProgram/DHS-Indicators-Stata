@@ -4,8 +4,11 @@ Purpose: 			Code to compute anthropometry and anemia indicators in women
 Data inputs: 		IR file
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: Dec 26, 2019 by Shireen Assaf 
-Note:				
+Date last modified: July 2, 2020 by Shireen Assaf 
+Note:				For ever-married sample surveys please use the PR file instead of the IR file for anemia and anthropometry indicators.
+					Please check the guide to DHS statistics for calculations: 
+					For anemia using the PR file, use the variables ha57, hv103, and ha55 to produce the estimates
+					For anthropometry using PR file, use the variables ha3, ha40, and hv103.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -40,13 +43,13 @@ gen wt=v005/1000000
 
 //Any anemia
 gen nt_wm_any_anem=0 if v042==1 & v455==0
-replace nt_wm_any_anem=1 if (v456<120 & v213==0) | (v456<110 & v213==1)
+replace nt_wm_any_anem=1 if v457<4
 label values nt_wm_any_anem yesno
 label var nt_wm_any_anem "Any anemia - women"
 
 //Mild anemia
 gen nt_wm_mild_anem=0 if v042==1 & v455==0
-replace nt_wm_mild_anem=1 if (inrange(v456,100,119) & v213==0) | (inrange(v456,100,109) & v213==1)
+replace nt_wm_mild_anem=1 if v457==3
 label values nt_wm_mild_anem yesno
 label var nt_wm_mild_anem "Mild anemia - women"
 

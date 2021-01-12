@@ -3,14 +3,12 @@ Program: 				NTmain.do
 Purpose: 				Main file for the Nutrition Chapter. 
 						The main file will call other do files that will produce the NT indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
-Author: 				Shireen Assaf
-Date last modified:		
+Author: 				Shireen Assaf and Courtney Allen
+Date last modified:		December 10, 2020
 
 *******************************************************************************************************************************/
 set more off
 
-*local user 39585	//change employee id number to personalize path
-local user 33697
 cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap11_NT"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
@@ -47,51 +45,54 @@ use "$datapath//$hrdata.dta", clear
 rename (hv001 hv002) (v001 v002)
 keep v001 v002 hv234a
 save temp.dta, replace
+
 * open KR dataset
 use "$datapath//$krdata.dta", clear
 merge m:1 v001 v002 using temp.dta
 keep if _merge==3
 
 gen file=substr("$krdata", 3, 2)
-
-label define yesno 0"No" 1"Yes"
-
-**** child's age ****
-gen age = v008 - b3
 	
-	* to check if survey has b19, which should be used instead to compute age. 
-	scalar b19_included=1
-		capture confirm numeric variable b19, exact 
-		if _rc>0 {
-		* b19 is not present
-		scalar b19_included=0
+	* create commonly used yes/no category
+	label define yesno 0"No" 1"Yes"
+
+	**** child's age ****
+	gen age = v008 - b3
+		
+		* to check if survey has b19, which should be used instead to compute age. 
+		scalar b19_included=1
+			capture confirm numeric variable b19, exact 
+			if _rc>0 {
+			* b19 is not present
+			scalar b19_included=0
+			}
+			if _rc==0 {
+			* b19 is present; check for values
+			summarize b19
+			  if r(sd)==0 | r(sd)==. {
+			  scalar b19_included=0
+			  }
+			}
+
+		if b19_included==1 {
+		drop age
+		gen age=b19
 		}
-		if _rc==0 {
-		* b19 is present; check for values
-		summarize b19
-		  if r(sd)==0 | r(sd)==. {
-		  scalar b19_included=0
-		  }
-		}
 
-	if b19_included==1 {
-	drop age
-	gen age=b19
-	}
+	*******************
 
-*******************
-
-do NT_BRST_FED.do
-*Purpose: 	Code breastfeeding indicators
-*
 do NT_CH_MICRO.do
 *Purpose: 	Code micronutrient indicators
+
+do NT_BF_INIT.do
+*PUrpose:   Code initial breastfeeding indicators
 
 do NT_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
 
-* Note: The following do files select for the youngest child under 2 years living with the mother. Therefore some cases will be dropped. 
 
+
+* Note: The following do files select for the youngest child under 2 years living with the mother. Therefore some cases will be dropped. 
 * Selecting for youngest child under 24 months and living with mother
 keep if age < 24 & b9 == 0
 * if caseid is the same as the prior case, then not the last born
@@ -102,6 +103,54 @@ do NT_IYCF
 
 do NT_tables2.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
+
+
+*******************************************************************************************************************************
+*******************************************************************************************************************************
+* Reopen KR dataset for mean and median breastfeeding indicators
+
+use "$datapath//$krdata.dta", clear
+merge m:1 v001 v002 using temp.dta
+keep if _merge==3
+
+	* gen substring for country code
+	gen cc=substr("$krdata", 1, 2)
+
+	* gen substring for file version
+	gen fv=substr("$krdata", 5, 2)
+
+	* gen substring for country code and file version
+	gen cc_fv = cc + fv
+	
+
+	**** child's age ****
+	gen age = v008 - b3
+		
+		* to check if survey has b19, which should be used instead to compute age. 
+		scalar b19_included=1
+			capture confirm numeric variable b19, exact 
+			if _rc>0 {
+			* b19 is not present
+			scalar b19_included=0
+			}
+			if _rc==0 {
+			* b19 is present; check for values
+			summarize b19
+			  if r(sd)==0 | r(sd)==. {
+			  scalar b19_included=0
+			  }
+			}
+
+		if b19_included==1 {
+		drop age
+		gen age=b19
+		}
+
+	*******************
+
+do NT_BF_MED.do
+*Purpose: 	Code breastfeeding indicators
+
 
 */
 *******************************************************************************************************************************
