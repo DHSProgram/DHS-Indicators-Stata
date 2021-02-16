@@ -41,8 +41,6 @@ if file=="IR" {
 **********************************************************
 
 if file=="BR" {
-	
-	label define yesno 0"no" 1"yes"
 	gen age = v008 - b3
 	
 	* to check if survey has b19, which should be used instead to compute age. 

@@ -100,7 +100,6 @@ _//SEEKING HELP AFTER VIOLENCE
 	dv_help_other       "Source of help: other"
 _____________________________________________________________________________*/
 
-cap gen dwt = d005/1000000
 label define frequency 0 "no" 1 "often" 2 "sometimes"
 
 

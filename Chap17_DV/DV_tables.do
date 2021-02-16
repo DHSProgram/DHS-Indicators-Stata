@@ -17,6 +17,8 @@ Notes:
 * comment out the tables or indicator section you do not want.
 ****************************************************
 
+cap gen dwt = d005/1000000
+
 	//subgroups
 	local subgroup dv_age residence region marital work livingchild education wealth 
 
