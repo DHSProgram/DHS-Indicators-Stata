@@ -53,7 +53,7 @@ There are two commands that can be used for producing tables for the indicators 
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK||X||X|
 |  14|   HIV Prevalence|HV||X||X|
 |  15|   Women’s Empowerment|WE||X||X|
-|  16|   Adult & Maternal Mortality|AM||X|X ||
+|  16|   Adult & Maternal Mortality|AM||X| |X|
 |  17|   Domestic Violence|DV ||X| |X|
 |  18|	 Female Genital Cutting|FG| |X||X |
 |  19|	 Fistula |FS| |X ||X |
