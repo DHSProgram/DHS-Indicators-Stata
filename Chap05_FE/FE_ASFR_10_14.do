@@ -5,8 +5,9 @@ Data inputs: 		IR survey list
 Data outputs:		coded variables, .DTA file with rates and confidence intervals, 
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
 Date last modified: July 7, 2020 by Courtney Allen
+					March 16, 2021 by Trevor Croft to correct the 3 year rates to adjust for 10-14 rather than 12-14.
 Note:				
-					This do file will produce a table of  TFRs by background variables as shown in final report (Table_TFR.xls). 
+					This do file will produce a table of TFRs by background variables as shown in final report (Table_TFR.xls).
 *****************************************************************************************************/
 
 *GO TO THE MULTIPLE LINES OF ASTERISKS FOR THE BEGINNING OF THE EXECUTABLE STATEMENTS
@@ -448,14 +449,16 @@ program define calc_ci
 
 	R2 is the rate for ages 10-14 in the five years before the survey (lw is -4)
 
-	if lw==-2 {
-
-	SEGMENT FOR RE-WEIGHTING FOR THE PAST THREE YEARS
-
 	**************************************************************/
 
+	if lw==-2 {
+
+	* SEGMENT FOR RE-WEIGHTING FOR THE PAST THREE YEARS
+
+	********************************************************
+
 	* Use the Lexis Diagram
-	scalar syrsexp345=(syrsexp3/1)+(syrsexp4/3)+(syrsexp5/5)
+	scalar syrsexp345=((syrsexp3/1)+(syrsexp4/3)+(syrsexp5/5)) * 5/3
 	scalar W12=(syrsexp3/1)/syrsexp345
 	scalar W13=(syrsexp4/3)/syrsexp345
 	scalar W14=(syrsexp5/5)/syrsexp345
@@ -469,7 +472,7 @@ program define calc_ci
 
 	******************************************************
 
-	
+	}
 
 	if lw==-4 {
 
@@ -652,6 +655,7 @@ program define calc_rates
 
 	* calculate a ci for the TFR by calculating a ci for ln[sum of exp(the coeffs)] 
 	calc_ci
+
 	drop dummy
 
 	}
@@ -687,7 +691,7 @@ program define final_file_save
 	format R* L* U* %8.4f
 
 	list lw *Lexis if lw==-2, table clean noobs
-	list lw *Lexis if lw==-4, table clean  noobs
+	list lw *Lexis if lw==-4, table clean noobs
 
 	********* Export results to Excel *****************************
 	rename (r10 r10_L r10_U) (fe_ASFR_10 fe_ASFR_10_L fe_ASFR_10_U)
@@ -837,12 +841,4 @@ scalar run_number=0
 save_IRtemp
 calc_fert_rates_10to14
 final_file_save
-
-
-
-
-
-
-
-
 
