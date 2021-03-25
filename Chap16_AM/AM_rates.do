@@ -5,13 +5,14 @@ Data inputs: 		IR survey list
 Data outputs:		AM_Tables.xls and AM_completeness
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
 Date last modified: November 6, 2020 by Trevor Croft
+					March 22, 2021 by Shireen Assaf to add more desciptive labels in the exported excel file using putexcel. This code was added to the "merge_files" program.   
 Note:				See below 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
 Variables created in this file:
 mx			"mortality rate"
-q_15_to_50	(aka 15q30)	"probability of dying between ages 15 and 50"
+q_15_to_50	(aka 15q35)	"probability of dying between ages 15 and 50"
 mmx         "maternal mortality rate"
 PMDF		"proportions maternal among deaths of females of reproductive age"
 MMRatio 	"maternal mortality ratio
@@ -1120,12 +1121,18 @@ program define merge_files
 
 	export excel refdate mean_doi sex age_grp mx wtd_deaths wtd_yexp unwtd_deaths unwtd_yexp age_prop lw uw   using ///
 	 "AM_tables.xlsx", firstrow(variable) sheet("Adult mortality by age") sheetreplace 
-	 
+	putexcel set "AM_tables.xlsx", modify sheet("Adult mortality by age") 
+	putexcel D1=("Age in 5-year groups") E1=("mx: Adult mortality rate for 15-49. Multiply by 1000 to present per 1000 persons")
+	
 	export excel refdate mean_doi sex age_grp  prmx fx prpmdf wtd_prdeaths wtd_yexp unwtd_prdeaths age_prop lw uw if sex==2  using /// 
 	 "AM_tables.xlsx", firstrow(variable) sheet("PR mortality by age") sheetreplace
-
+	putexcel set "AM_tables.xlsx", modify sheet("PR mortality by age") 
+	putexcel D1=("Age in 5-year groups") E1=("mpx: Pregnancy-related mortality rate for women 15-49. Multiply by 1000 to present per 1000 women")
+	
 	export excel refdate mean_doi sex age_grp  mmx fx mpmdf wtd_mdeaths wtd_yexp unwtd_mdeaths age_prop lw uw if sex==2 using  ///
 	 "AM_tables.xlsx", firstrow(variable) sheet("Maternal mortality by age") sheetreplace
+	putexcel set "AM_tables.xlsx", modify sheet("Maternal mortality by age") 
+	putexcel D1=("Age in 5-year groups") E1=("mmx: Maternal mortality rate for women 15-49. Multiply by 1000 to present per 1000 women")
 
 	//pregnancy related mortality;
 	list sex age_grp prpmdf unwtd_prdeaths wtd_prdeaths wtd_yexp prmx fx q5 if sex==2, table clean abbreviate(20)
@@ -1214,12 +1221,26 @@ program define merge_files
 	
 	export excel sex TFR MMRatio MMRatio_L MMRatio_U mLTR1 PRMRatio PRMRatio_L PRMRatio_U prLTR1 if sex==2 using  ///
 	"AM_tables.xlsx", firstrow(variable) sheet("Maternal Mortality Ratio") sheetreplace
-
+	putexcel set "AM_tables.xlsx", modify sheet("Maternal Mortality Ratio") 
+	putexcel C1=("mmratio: Maternal mortality ratio. Multiply by 100000 to present per 100,000 live births") ///
+	F1=("mLTR1: Lifetime risk of maternal mortality") ///
+	G1=("prmratio: Pregnancy-related mortality ratio. Multiply by 100000 to present per 100,000 live births") ///
+	J1=("prLTR1: Lifetime risk of pregnancy-related mortality")
+	
 	export excel refdate mean_doi sex q_15_to_50 lw uw using  ///
 	"AM_tables.xlsx", firstrow(variable) sheet("Adult mortality probabilities") sheetreplace
 	
 	export excel using "AM_tables.xlsx", firstrow(variable) sheet("Mortality summary") sheetreplace
-	save "Adult_Mortality.dta", replace
+	putexcel set "AM_tables.xlsx", modify sheet("Mortality summary") 
+	putexcel P1=("mx_adj: Age-adjusted adult mortality rate for 15-49. Multiply by 1000 to present per 1000 persons") ///
+	Q1=("mpx_adj: Age-adjusted pregnancy-related mortality rate for women 15-49. Multiply by 1000 to present per 1000 women") ///
+	R1=("mmx_adj: Age-adjusted maternal mortality rate for women 15-49. Multiply by 1000 to present per 1000 women") ///
+	U1=("prmratio: Pregnancy-related mortality ratio. Multiply by 100000 to present per 100,000 live births") ///
+	V1=("mmratio: Maternal mortality ratio. Multiply by 100000 to present per 100,000 live births") ///
+	AA1=("prLTR1: Lifetime risk of pregnancy-related mortality") ///
+	AB1=("mLTR1: Lifetime risk of maternal mortality")
+		
+save "Adult_Mortality.dta", replace
 
 end
 ***************************************************************************

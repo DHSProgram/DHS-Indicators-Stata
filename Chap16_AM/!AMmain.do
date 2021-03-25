@@ -1,6 +1,6 @@
 /********************************************************************************
 Program: 				AMmain.do
-Purpose: 				Main file for the Mortality Chapter. 
+Purpose: 				Main file for the Adult Mortality Chapter. 
 						The main file will call other do files that will produce
 						the AM indicators and produce tables.
 Data outputs:			coded variables, table output on screen, and in excel tables.  
@@ -49,7 +49,7 @@ do AM_GFR.do
 
 * Mortality Rate do files
 do AM_RATES.do
-*Purpose: 	Code fertility rates. This do file will create tables.
+*Purpose: 	Adult mortality rates. This do file will create tables.
 
 */
 *******************************************************************************************************************************
