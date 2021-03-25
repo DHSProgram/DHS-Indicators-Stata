@@ -46,10 +46,10 @@ tab1	ch_polio0_card ch_polio0_moth ch_polio0_either ///
 		ch_polio2_card ch_polio2_moth ch_polio2_either ///
 		ch_polio3_card ch_polio3_moth ch_polio3_either [iw=wt]
 
-//Peumococcal
-tab1	ch_peumo1_card ch_peumo1_moth ch_peumo1_either ///	
-		ch_peumo2_card ch_peumo2_moth ch_peumo2_either ///
-		ch_peumo3_card ch_peumo3_moth ch_peumo3_either [iw=wt]
+//Pneumococcal
+tab1	ch_pneumo1_card ch_pneumo1_moth ch_pneumo1_either ///	
+		ch_pneumo2_card ch_pneumo2_moth ch_pneumo2_either ///
+		ch_pneumo3_card ch_pneumo3_moth ch_pneumo3_either [iw=wt]
 
 //Rotavirus
 tab1	ch_rotav1_card ch_rotav1_moth ch_rotav1_either ///	
@@ -70,8 +70,8 @@ tabout	ch_bcg_card ch_bcg_moth ch_bcg_either ch_pent1_card ch_pent1_moth ch_pent
 		ch_pent2_card ch_pent2_moth	ch_pent2_either	ch_pent3_card ch_pent3_moth ch_pent3_either	 ///
 		ch_polio0_card ch_polio0_moth ch_polio0_either ch_polio1_card ch_polio1_moth ch_polio1_either ///
 		ch_polio2_card ch_polio2_moth ch_polio2_either ch_polio3_card ch_polio3_moth ch_polio3_either ///
-		ch_peumo1_card ch_peumo1_moth ch_peumo1_either ch_peumo2_card ch_peumo2_moth ch_peumo2_either ///
-		ch_peumo3_card ch_peumo3_moth ch_peumo3_either ch_rotav1_card ch_rotav1_moth ch_rotav1_either ///	
+		ch_pneumo1_card ch_pneumo1_moth ch_pneumo1_either ch_pneumo2_card ch_pneumo2_moth ch_pneumo2_either ///
+		ch_pneumo3_card ch_pneumo3_moth ch_pneumo3_either ch_rotav1_card ch_rotav1_moth ch_rotav1_either ///	
 		ch_rotav2_card ch_rotav2_moth ch_rotav2_either ch_rotav3_card ch_rotav3_moth ch_rotav3_either ///
 		ch_meas_card ch_meas_moth ch_meas_either ch_allvac_card ch_allvac_moth ch_allvac_either ///
 		ch_novac_card ch_novac_moth ch_novac_either using Tables_Vac.xls [iw=wt] , oneway cells(cell) f(1) replace 
@@ -299,85 +299,85 @@ tab v190 ch_polio3_either [iw=wt], row nofreq
 tabout b4 birth_order ch_card_seen v025 v106 v024 v190 ch_polio3_either using Tables_Vac.xls [iw=wt], c(row) f(1) append 
 */
 ****************************************************
-//Peumococcal1
+//Pneumococcal1
 
 *child's sex
-tab b4 ch_peumo1_either [iw=wt], row nofreq 
+tab b4 ch_pneumo1_either [iw=wt], row nofreq 
 
 *birth order
-tab birth_order ch_peumo1_either [iw=wt], row nofreq 
+tab birth_order ch_pneumo1_either [iw=wt], row nofreq 
 
 *vaccination card seen
-tab ch_card_seen ch_peumo1_either [iw=wt], row nofreq 
+tab ch_card_seen ch_pneumo1_either [iw=wt], row nofreq 
 
 *residence
-tab v025 ch_peumo1_either [iw=wt], row nofreq 
+tab v025 ch_pneumo1_either [iw=wt], row nofreq 
 
 *region
-tab v024 ch_peumo1_either [iw=wt], row nofreq 
+tab v024 ch_pneumo1_either [iw=wt], row nofreq 
 
 *education
-tab v106 ch_peumo1_either [iw=wt], row nofreq 
+tab v106 ch_pneumo1_either [iw=wt], row nofreq 
 
 *wealth
-tab v190 ch_peumo1_either [iw=wt], row nofreq 
+tab v190 ch_pneumo1_either [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 birth_order ch_card_seen v025 v106 v024 v190 ch_peumo1_either using Tables_Vac.xls [iw=wt], c(row) f(1) append 
+tabout b4 birth_order ch_card_seen v025 v106 v024 v190 ch_pneumo1_either using Tables_Vac.xls [iw=wt], c(row) f(1) append 
 */
 ****************************************************
-//Peumococcal2
+//Pneumococcal2
 
 *child's sex
-tab b4 ch_peumo2_either [iw=wt], row nofreq 
+tab b4 ch_pneumo2_either [iw=wt], row nofreq 
 
 *birth order
-tab birth_order ch_peumo2_either [iw=wt], row nofreq 
+tab birth_order ch_pneumo2_either [iw=wt], row nofreq 
 
 *vaccination card seen
-tab ch_card_seen ch_peumo2_either [iw=wt], row nofreq 
+tab ch_card_seen ch_pneumo2_either [iw=wt], row nofreq 
 
 *residence
-tab v025 ch_peumo2_either [iw=wt], row nofreq 
+tab v025 ch_pneumo2_either [iw=wt], row nofreq 
 
 *region
-tab v024 ch_peumo2_either [iw=wt], row nofreq 
+tab v024 ch_pneumo2_either [iw=wt], row nofreq 
 
 *education
-tab v106 ch_peumo2_either [iw=wt], row nofreq 
+tab v106 ch_pneumo2_either [iw=wt], row nofreq 
 
 *wealth
-tab v190 ch_peumo2_either [iw=wt], row nofreq 
+tab v190 ch_pneumo2_either [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 birth_order ch_card_seen v025 v106 v024 v190 ch_peumo2_either using Tables_Vac.xls [iw=wt], c(row) f(1) append 
+tabout b4 birth_order ch_card_seen v025 v106 v024 v190 ch_pneumo2_either using Tables_Vac.xls [iw=wt], c(row) f(1) append 
 */
 ****************************************************
-//Peumococcal3
+//Pneumococcal3
 
 *child's sex
-tab b4 ch_peumo3_either [iw=wt], row nofreq 
+tab b4 ch_pneumo3_either [iw=wt], row nofreq 
 
 *birth order
-tab birth_order ch_peumo3_either [iw=wt], row nofreq 
+tab birth_order ch_pneumo3_either [iw=wt], row nofreq 
 
 *vaccination card seen
-tab ch_card_seen ch_peumo3_either [iw=wt], row nofreq 
+tab ch_card_seen ch_pneumo3_either [iw=wt], row nofreq 
 
 *residence
-tab v025 ch_peumo3_either [iw=wt], row nofreq 
+tab v025 ch_pneumo3_either [iw=wt], row nofreq 
 
 *region
-tab v024 ch_peumo3_either [iw=wt], row nofreq 
+tab v024 ch_pneumo3_either [iw=wt], row nofreq 
 
 *education
-tab v106 ch_peumo3_either [iw=wt], row nofreq 
+tab v106 ch_pneumo3_either [iw=wt], row nofreq 
 
 *wealth
-tab v190 ch_peumo3_either [iw=wt], row nofreq 
+tab v190 ch_pneumo3_either [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 birth_order ch_card_seen v025 v106 v024 v190 ch_peumo3_either using Tables_Vac.xls [iw=wt], c(row) f(1) append 
+tabout b4 birth_order ch_card_seen v025 v106 v024 v190 ch_pneumo3_either using Tables_Vac.xls [iw=wt], c(row) f(1) append 
 */
 ****************************************************
 //Rotavirus1

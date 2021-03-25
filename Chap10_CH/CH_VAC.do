@@ -5,6 +5,7 @@ Data inputs: 		KR survey list
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: March 13 2019 by Shireen Assaf 
+					March 25 2021 by Trevor Croft to correct spelling of Pneumococcal
 Notes:				Estimates can be created for two age groups (12-23) and (24-35). 
 					
 					!! Please choose the age group of interest in line 100.
@@ -42,15 +43,15 @@ ch_polio3_card		"Polio 3rd dose vaccination according to card"
 ch_polio3_moth		"Polio 3rd dose vaccination according to mother"
 ch_polio3_either	"Polio 3rd dose vaccination according to either source"
 
-ch_peumo1_card		"Peumococcal 1st dose vaccination according to card"
-ch_peumo1_moth		"Peumococcal 1st dose vaccination according to mother"
-ch_peumo1_either	"Peumococcal 1st dose vaccination according to either source"
-ch_peumo2_card		"Peumococcal 2nd dose vaccination according to card"
-ch_peumo2_moth		"Peumococcal 2nd dose vaccination according to mother"
-ch_peumo2_either	"Peumococcal 2nd dose vaccination according to either source"
-ch_peumo3_card		"Peumococcal 3rd dose vaccination according to card"
-ch_peumo3_moth		"Peumococcal 3rd dose vaccination according to mother"
-ch_peumo3_either	"Peumococcal 3rd dose vaccination according to either source"
+ch_pneumo1_card		"Pneumococcal 1st dose vaccination according to card"
+ch_pneumo1_moth		"Pneumococcal 1st dose vaccination according to mother"
+ch_pneumo1_either	"Pneumococcal 1st dose vaccination according to either source"
+ch_pneumo2_card		"Pneumococcal 2nd dose vaccination according to card"
+ch_pneumo2_moth		"Pneumococcal 2nd dose vaccination according to mother"
+ch_pneumo2_either	"Pneumococcal 2nd dose vaccination according to either source"
+ch_pneumo3_card		"Pneumococcal 3rd dose vaccination according to card"
+ch_pneumo3_moth		"Pneumococcal 3rd dose vaccination according to mother"
+ch_pneumo3_either	"Pneumococcal 3rd dose vaccination according to either source"
 
 ch_rotav1_card		"Rotavirus 1st dose vaccination according to card"
 ch_rotav1_moth		"Rotavirus 1st dose vaccination according to mother"
@@ -223,48 +224,48 @@ cap gen h54=.
 cap gen h55=.
 cap gen h56=.
 
-recode h54 (1 2 3=1) (else=0), gen(peumo1)
-recode h55 (1 2 3=1) (else=0), gen(peumo2)
-recode h56 (1 2 3=1) (else=0), gen(peumo3)
-gen peumosum= peumo1+peumo2+peumo3
+recode h54 (1 2 3=1) (else=0), gen(Pneumo1)
+recode h55 (1 2 3=1) (else=0), gen(Pneumo2)
+recode h56 (1 2 3=1) (else=0), gen(Pneumo3)
+gen Pneumosum= Pneumo1+Pneumo2+Pneumo3
 
 * this step is performed for multi-dose vaccines to take care of any gaps in the vaccination history. See DHS guide to statistics 
 * for further explanation
-gen ch_peumo1_either=peumosum>=1
-gen ch_peumo2_either=peumosum>=2
-gen ch_peumo3_either=peumosum>=3
+gen ch_pneumo1_either=Pneumosum>=1
+gen ch_pneumo2_either=Pneumosum>=2
+gen ch_pneumo3_either=Pneumosum>=3
 
 //Pneumococcal 1, 2, 3 mother's report
-gen ch_peumo1_moth=ch_peumo1_either
-replace ch_peumo1_moth=0 if source==1
+gen ch_pneumo1_moth=ch_pneumo1_either
+replace ch_pneumo1_moth=0 if source==1
 
-gen ch_peumo2_moth=ch_peumo2_either
-replace ch_peumo2_moth=0 if source==1
+gen ch_pneumo2_moth=ch_pneumo2_either
+replace ch_pneumo2_moth=0 if source==1
 
-gen ch_peumo3_moth=ch_peumo3_either
-replace ch_peumo3_moth=0 if source==1
+gen ch_pneumo3_moth=ch_pneumo3_either
+replace ch_pneumo3_moth=0 if source==1
 
 //Pneumococcal 1, 2, 3 by card
-gen ch_peumo1_card=ch_peumo1_either
-replace ch_peumo1_card=0 if source==2
+gen ch_pneumo1_card=ch_pneumo1_either
+replace ch_pneumo1_card=0 if source==2
 
-gen ch_peumo2_card=ch_peumo2_either
-replace ch_peumo2_card=0 if source==2
+gen ch_pneumo2_card=ch_pneumo2_either
+replace ch_pneumo2_card=0 if source==2
 
-gen ch_peumo3_card=ch_peumo3_either
-replace ch_peumo3_card=0 if source==2
+gen ch_pneumo3_card=ch_pneumo3_either
+replace ch_pneumo3_card=0 if source==2
 
-drop peumo1 peumo2 peumo3 peumosum
+drop Pneumo1 Pneumo2 Pneumo3 Pneumosum
 
-label var ch_peumo1_card "Peumococcal 1st dose vaccination according to card"
-label var ch_peumo1_moth "Peumococcal 1st dose vaccination according to mother"
-label var ch_peumo1_either "Peumococcal 1st dose vaccination according to either source"
-label var ch_peumo2_card "Peumococcal 2nd dose vaccination according to card"
-label var ch_peumo2_moth "Peumococcal 2nd dose vaccination according to mother"
-label var ch_peumo2_either "Peumococcal 2nd dose vaccination according to either source"
-label var ch_peumo3_card "Peumococcal 3rd dose vaccination according to card"
-label var ch_peumo3_moth "Peumococcal 3rd dose vaccination according to mother"
-label var ch_peumo3_either "Peumococcal 3rd dose vaccination according to either source"
+label var ch_pneumo1_card "Pneumococcal 1st dose vaccination according to card"
+label var ch_pneumo1_moth "Pneumococcal 1st dose vaccination according to mother"
+label var ch_pneumo1_either "Pneumococcal 1st dose vaccination according to either source"
+label var ch_pneumo2_card "Pneumococcal 2nd dose vaccination according to card"
+label var ch_pneumo2_moth "Pneumococcal 2nd dose vaccination according to mother"
+label var ch_pneumo2_either "Pneumococcal 2nd dose vaccination according to either source"
+label var ch_pneumo3_card "Pneumococcal 3rd dose vaccination according to card"
+label var ch_pneumo3_moth "Pneumococcal 3rd dose vaccination according to mother"
+label var ch_pneumo3_either "Pneumococcal 3rd dose vaccination according to either source"
 
 *** Rotavirus  ****
 //Rotavirus 1, 2, 3 either source
