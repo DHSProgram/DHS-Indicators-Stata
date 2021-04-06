@@ -3,7 +3,7 @@
 
 # The DHS Program Code Share Project
 
-This project is aimed at providing Stata and SPSS code for all DHS Program indicators listed in the Guide to DHS Statistics. The code is published on the [DHS Program Github site] (https://github.com/DHSProgram) which contains two repositories: DHS-Indicators-Stata and DHS-Indicators-SPSS. There are plans to add a repository to include R code for DHS indicators. Users can download the code from these repositories or clone the repository to their own Github site. Users can also suggest changes to the code that will be reviewed by DHS Program staff before acceptance. 
+This project is aimed at providing Stata, SPSS, and R code for all DHS Program indicators listed in the Guide to DHS Statistics. The code is published on the [DHS Program Github site] (https://github.com/DHSProgram) which contains three repositories: DHS-Indicators-Stata, DHS-Indicators-SPSS, and DHS-Indicators-R. Users can download the code from these repositories or clone the repository to their own Github site. Users can also suggest changes to the code that will be reviewed by DHS Program staff before acceptance. 
 
 
 [The Guide to DHS Statistics] (https://www.dhsprogram.com/Data/Guide-to-DHS-Statistics/index.cfm) contains 19 Chapters. Chapters 2-19 cover the chapters that would be found in a DHS final report assuming all  modules such as domestic violence, female genital cutting, and fistula were included in a survey. These chapters also cover DHS modules for Malaria and HIV Prevalence, as well as those not part of the core questionnaires. Chapter one is an introduction that does not require code. 
@@ -43,10 +43,10 @@ In Stata the tabout command is used to create tables. This is a package that nee
 |Ch. | Title | Ch. Acronym |Stata code | SPSS code | R code |
 |---|---|---|---|---|---|
 |   2|Population & Housing|PH|X|X||
-|   3|Respondents’ Characteristics|RC|X|X||
+|   3|Respondents’ Characteristics|RC|X|X|X|
 |   4|Marriage & Sexual Activity|MS|X|X||
 |   5|   Fertility|FE|X|X||
-|   6|   Fertility Preferences|FF|X|X||
+|   6|   Fertility Preferences|FF|X|X|X|
 |   7|   Family Planning |FP|X|X||
 |   8|   Infant & Child Mortality|CM|X|X||
 |   9|   Reproductive Health|RH|X|X||
