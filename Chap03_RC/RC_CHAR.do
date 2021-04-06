@@ -189,7 +189,7 @@ label var rc_hins_comm "Health insurance coverage - mutual health org. or commun
 gen rc_hins_priv = v481d==1
 label var rc_hins_priv "Health insurance coverage - privately purchased commercial insurance"
 
-//Health insrance - Other
+//Health insurance - Other
 gen rc_hins_other=0
 	foreach i in e f g h x {
 	replace rc_hins_other=1 if v481`i'==1
@@ -412,7 +412,7 @@ label var rc_hins_comm "Health insurance coverage - mutual health org. or commun
 gen rc_hins_priv = mv481d==1
 label var rc_hins_priv "Health insurance coverage - privately purchased commercial insurance"
 
-//Health insrance - Other
+//Health insurance - Other
 gen rc_hins_other=0
 	foreach i in e f g h x {
 	replace rc_hins_other=1 if mv481`i'==1
@@ -443,7 +443,7 @@ label var rc_tobc_cig "Smokes cigarettes"
 gen rc_tobc_other= 0
 	foreach i in d e f g {
 	cap replace rc_tobc_other= 1 if mv464`i'>0 & mv464`i'<=888
-	cap replace rc_tobc_other= 1 if mv484`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_other= 1 if mv484`i'>0 & mv484`i'<=888
 	}
 *for older surveys use mv463 variables
 cap replace rc_tobc_other=1 if mv463b==1 | mv463e==1 | mv463f==1 | mv463g==1 | mv463x==1 		
@@ -453,7 +453,7 @@ label var rc_tobc_other "Smokes other type of tobacco"
 gen rc_tobc_smk_any= 0
 	foreach i in a b c d e f g {
 	cap replace rc_tobc_smk_any= 1 if mv464`i'>0 & mv464`i'<=888
-	cap replace rc_tobc_smk_any= 1 if mv484`i'>0 & mv464`i'<=888
+	cap replace rc_tobc_smk_any= 1 if mv484`i'>0 & mv484`i'<=888
 	}
 *for older surveys use mv463 variables
 cap rc_tobc_smk_any= 1 if mv463a==1 | mv463b==1 | mv463e==1 | mv463f==1 | mv463g==1 | mv463x==1 
