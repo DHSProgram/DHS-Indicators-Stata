@@ -6,6 +6,7 @@ Data outputs:		coded variables, .DTA file with rates and confidence intervals,
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
 Date last modified: July 7, 2020 by Courtney Allen
 					March 16, 2021 by Trevor Croft to correct the 3 year rates to adjust for 10-14 rather than 12-14.
+					April 21, 2021 by Shireen Assaf to select for age 15-19 in line 820 instead of 10-19.
 Note:				
 					This do file will produce a table of TFRs by background variables as shown in final report (Table_TFR.xls).
 *****************************************************************************************************/
@@ -817,7 +818,7 @@ program define save_IRtemp
 	}
 
 	keep caseid v001 v002 v003 v005 v008 v011 v012 v021-v025 v201 b3_* awfact* v021
-	keep if v012>=10 & v012<=19
+	keep if v012>=15 & v012<=19
 	save IRtemp.dta, replace
 
 end
