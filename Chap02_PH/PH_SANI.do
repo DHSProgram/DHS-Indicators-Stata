@@ -1531,6 +1531,6 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	cap label var ph_sani_basic "Basic or limited sanitation"
 
 // create sanitation facility location indicator (this variable may sometimes be country specific - e.g. sh109a in some Ghana survyes)
-	clonevar ph_sani_location = hv238a
-	label var ph_sani_location	"Location of sanitation facility"
+	cap clonevar ph_sani_location = hv238a
+	cap label var ph_sani_location	"Location of sanitation facility"
 

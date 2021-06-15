@@ -9,6 +9,8 @@ Date last modified:		December 10, 2020
 *******************************************************************************************************************************/
 set more off
 
+local user 33697
+
 cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap11_NT"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
@@ -89,7 +91,6 @@ do NT_BF_INIT.do
 
 do NT_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
-
 
 
 * Note: The following do files select for the youngest child under 2 years living with the mother. Therefore some cases will be dropped. 

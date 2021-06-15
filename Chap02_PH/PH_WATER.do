@@ -2366,6 +2366,6 @@ label values ph_wtr_basic wtr_basic_label
 label var ph_wtr_basic "Basic or limited water services"
 
 // availability of piped water or water from tubewell
-clonevar ph_wtr_avail = hv201a
-label var ph_wtr_avail		"Availability of water among those using piped water or water from tube well or borehole"
+cap clonevar ph_wtr_avail = hv201a
+cap label var ph_wtr_avail "Availability of water among those using piped water or water from tube well or borehole"
 

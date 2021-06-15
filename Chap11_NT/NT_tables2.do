@@ -38,7 +38,7 @@ recode age (6/23=1 " 6-23") (else=0) , gen(agecats623)
 tab agecats nt_bf_status [iw=wt], row nofreq 
 
 *Age 0-3
-tab nt_bf_ever if age<4 [iw=wt] 
+tab nt_bf_status if age<4 [iw=wt] 
 
 *Age 0-5
 tab nt_bf_status if age<6 [iw=wt]
@@ -524,6 +524,9 @@ tabout agecats b4 v025 v024 v106 v190 nt_mad using Tables_IYCF.xls [iw=wt] , h1(
 **************************************************************************************************
 * Micronutrient intake
 **************************************************************************************************
+//Mother's age 
+cap recode v013 (1=1 "15-19") (2/3=2 "20-29") (4/5=3 "30-39") (6/7=4 "40-49"), gen(agem)
+
 //Given foods rich in Vit A. among youngest children 6-23 months living with the mother
 *child's age in months
 tab agecats nt_ch_micro_vaf [iw=wt], row nofreq 
