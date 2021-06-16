@@ -4,13 +4,14 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: Jan 9 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_ANCvisits:	Contains the tables for ANC provider, ANC skilled provider, 
-							ANC number of visits, and timing of ANC visit by background variables
-	2.	Tables_ANCcomps: 	Contains tables for all ANC components.
-	3.	Tables_Probs: 		Contains the tables for problems accessing health care
-	4.	Tables_PNC:			Contains the tables for the PNC indicators for women and newborns
-	5.	Tables_Deliv:		Contains the tables for the delivery indicators
+*This do file will produce the following tables in excel:
+1. 	Tables_ANCvisits:	Contains the tables for ANC provider, ANC skilled provider, ANC number of visits, and timing of ANC visit by background variables
+2.	Tables_ANCcomps: 	Contains tables for all ANC components.
+3.	Tables_Probs: 		Contains the tables for problems accessing health care
+4.	Tables_PNC:			Contains the tables for the PNC indicators for women and newborns
+5.	Tables_Deliv:		Contains the tables for the delivery indicators
+	
+Notes: 	The indicators are outputed for women age 15-49 in line 27. This can be commented out if the indicators are required for all women.	
 *****************************************************************************************************/
 
 gen wt=v005/1000000
@@ -21,6 +22,8 @@ gen wt=v005/1000000
 
 * indicators from IR file
 if file=="IR" {
+* limiting to women age 15-49
+drop if v012<15 | v012>49
 
 * Indicators involving ANC visit: excel file Tables_ANCvisits will be produced
 *********************************************************************************

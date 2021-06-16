@@ -1,12 +1,11 @@
 /*****************************************************************************************************
 Program: 			WE_EMPW.do
 Purpose: 			Code to compute decision making and justification of violence among in men and women
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Oct 17, 2019 by Shireen Assaf 
 Note:				The indicators below can be computed for men and women. 
-					For women and men the indicator is computed for age 15-49 in line 55 and 262. This can be commented out if the indicators are required for all women/men.
 					The indicators we_decide_all and we_decide_none have different variable labels for men compared to women. 
 *****************************************************************************************************/
 
@@ -30,7 +29,7 @@ we_dvjustify_neglect		"Agree that husband is justified in hitting or beating his
 we_dvjustify_refusesex		"Agree that husband is justified in hitting or beating his wife if she refuses to have sexual intercourse with him"
 we_dvjustify_onereas		"Agree that husband is justified in hitting or beating his wife for at least one of the reasons"
 	
-we_justify_refusesex			"Believe a woman is justified to refuse sex with her husband if she knows he's having sex with other women"
+we_justify_refusesex		"Believe a woman is justified to refuse sex with her husband if she knows he's having sex with other women"
 we_justify_cond				"Believe a women is justified in asking that her husband to use a condom if she knows that he has an STI"
 we_havesay_refusesex		"Can say no to their husband if they do not want to have sexual intercourse"
 we_havesay_condom			"Can ask their husband to use a condom"
@@ -41,12 +40,10 @@ we_num_justifydv			"Number of reasons for which wife beating is justified among 
 
 * indicators from IR file
 if file=="IR" {
-* limiting to women age 15-49
-drop if v012>49
 
 cap label define yesno 0"No" 1"Yes"
 
-*** Deciion making ***
+*** Decision making ***
 
 //Decides on own health
 gen we_decide_health= v743a if v502==1
@@ -169,12 +166,9 @@ label var we_num_justifydv "Number of reasons for which wife beating is justifie
 * indicators from MR file
 if file=="MR" {
 
-* limiting to men age 15-49
-drop if mv012>49
-
 cap label define yesno 0"No" 1"Yes"
 
-*** Deciion making ***
+*** Decision making ***
 
 //Decides on own health
 gen we_decide_health= mv743a if mv502==1

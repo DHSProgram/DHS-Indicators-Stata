@@ -1,7 +1,7 @@
 /*******************************************************************************
 Program: 			MS_MAR.do
 Purpose: 			Code to create marital indicators
-Data inputs: 		IR and MR survey list
+Data inputs: 		IR and MR dataset
 Data outputs:		coded variables and scalars
 Author:				Thomas Pullum and Courtney Allen for code share project
 Date last modified: September, 2019 by Courtney Allen 

@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			NT_CH_NUT.do
 Purpose: 			Code to compute anthropometry and anemia indicators in children
-Data inputs: 		PR file
+Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Dec 24, 2019 by Shireen Assaf 

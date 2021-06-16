@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			DV_viol.do
 Purpose: 			Code domestic violence indicators from the IR file
-Data inputs: 		IR data files
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Courtney Allen 
 Date last modified: September 24, 2020

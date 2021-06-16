@@ -102,9 +102,6 @@ erase IRARtemp.dta
 erase MRARtemp.dta
 erase temp.dta
 
-* limiting to age 15-49, you can comment this out if you want all men
-drop if v012>49
-
 gen file=substr("$mrdata", 3, 2)
 
 do HV_PREV.do
@@ -116,11 +113,11 @@ do HV_CIRCUM.do
 do HV_backgroundvars.do
 *Purpose:	Code the background variables needed for the HV_tables
 
-
 save IRMRARmerge.dta, replace
 
 do HV_tables.do
 *Purpose: 	Produce tables for indicators computed from the above do files.
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
 
 * erase merged file. Comment out if you would like to keep this file
 *erase IRMRARmerge.dta

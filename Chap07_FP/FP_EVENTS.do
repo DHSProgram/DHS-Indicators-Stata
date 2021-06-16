@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FP_EVENTS.do
 Purpose: 			Create Events Files from Calendar Data
-Data inputs: 		IR data files
+Data inputs: 		IR dataset
 Data outputs:		Reshaped events file for analysis
 Author:				Trevor Croft 
 Date last modified: Mar 5 2019 by Courtney Allen for codeshare project 				

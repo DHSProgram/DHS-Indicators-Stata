@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FF_PREF.do
 Purpose: 			Code to compute fertility preferences in men and women
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: May 13, 2019 by Shireen Assaf 

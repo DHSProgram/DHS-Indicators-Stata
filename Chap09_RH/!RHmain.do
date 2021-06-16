@@ -53,6 +53,7 @@ do RH_Probs.do
 *
 do RH_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. This will output 3 excel files for these indicators.
+* Note:		This will drop any women not in 15-49 age range. You can change this selection. Please check the notes in the do file.
 
 */
 *******************************************************************************************************************************

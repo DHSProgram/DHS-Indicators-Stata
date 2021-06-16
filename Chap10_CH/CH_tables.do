@@ -4,15 +4,17 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: May 14 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_Size:		Contains the tables for child's size indicators
-	2.	Tables_ARI_FV.xls:	Contains the tables for ARI and fever indicators
-	3.	Tables_DIAR.xls:	Contains the tables for diarrhea indicators. 
-							Note: these tabouts do not include the watsan indicators (source of drinking water and type of 
-							toilet facility). For these indicators please use the improvedtoilet_pr.do and the improvedwater_pr.do files 
-							which will produce the watsan indicators using a PR file. 
-							The PR file then needs to be merged with the coded KR file with the diarrhea indicators to include them in the tabulations. 
-	4.	Tables_KnowORS.xls:	Contains the tables for knowledge of ORS among women
+*This do file will produce the following tables in excel:
+1. 	Tables_Size:		Contains the tables for child's size indicators
+2.	Tables_ARI_FV.xls:	Contains the tables for ARI and fever indicators
+3.	Tables_DIAR.xls: 	Contains the tables for diarrhea indicators. 
+	Note: these tabouts do not include the watsan indicators (source of drinking water and type of 
+	toilet facility). For these indicators please use the improvedtoilet_pr.do and the improvedwater_pr.do files 
+	which will produce the watsan indicators using a PR file. 
+	The PR file then needs to be merged with the coded KR file with the diarrhea indicators to include them in the tabulations. 
+4.	Tables_KnowORS.xls:	Contains the tables for knowledge of ORS among women
+
+Notes: 	The indicators are outputed for women age 15-49 in line 785. This can be commented out if the indicators are required for all women/men.	
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -779,6 +781,8 @@ tabout ch_diar_govh_ors ch_diar_govcent_ors ch_diar_pclinc_ors ch_diar_pdoc_ors 
 
 * indicators from IR file
 if file=="IR" {
+* limiting to women age 15-49
+drop if v012<15 | v012>49
 
 gen wt=v005/1000000
 

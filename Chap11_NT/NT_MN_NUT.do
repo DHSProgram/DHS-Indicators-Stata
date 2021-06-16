@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			NT_MN_NUT.do
 Purpose: 			Code to compute anthropometry and anemia indicators in men
-Data inputs: 		MR file
+Data inputs: 		MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Dec 26, 2019 by Shireen Assaf 

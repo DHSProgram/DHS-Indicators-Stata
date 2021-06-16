@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			CH_DIAR.do
 Purpose: 			Code diarrhea variables.
-Data inputs: 		KR survey list
+Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: March 15 2019 by Shireen Assaf 

@@ -4,14 +4,16 @@ Purpose: 			produce tables for indicators
 Author:				Cameron Taylor
 Date last modified: Feb 19 2019 by Cameron Taylor
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_HH_ITN:		Contains the tables for houeshold possession of ITNs 
-	2.  Tables_HH_ITN_USE:	Contains the tables for ITN use among de facto population, children, and pregnant women
-	3.  Tables_MAL_ANEMIA:	Contains the table for children 6–59 months old tested for anemia and tables for children with severe anemia (<8.0 g/dL)
-	4. 	Tables_MALARIA:		Contains the table for children 6-59 months old tested for malaria and children with malaria infection via RDT and microscopy
-	5. 	Tables_IPTP:		Contains tables on IPTp uptake
-	6. 	Tables_FEVER:		Contains tables on fever careseeking for children under 5 (fever, treatment seeking)
-	7. 	Tables_Antimal:		Contains tables for antimalarial drugs
+*This do file will produce the following tables in excel:
+1. 	Tables_HH_ITN:		Contains the tables for houeshold possession of ITNs 
+2.  Tables_HH_ITN_USE:	Contains the tables for ITN use among de facto population, children, and pregnant women
+3.  Tables_MAL_ANEMIA:	Contains the table for children 6–59 months old tested for anemia and tables for children with severe anemia (<8.0 g/dL)
+4. 	Tables_MALARIA:		Contains the table for children 6-59 months old tested for malaria and children with malaria infection via RDT and microscopy
+5. 	Tables_IPTP:		Contains tables on IPTp uptake
+6. 	Tables_FEVER:		Contains tables on fever careseeking for children under 5 (fever, treatment seeking)
+7. 	Tables_Antimal:		Contains tables for antimalarial drugs
+	
+Notes: 	The indicators are outputed for women age 15-49 in line 349. This can be commented out if the indicators are required for all women.	
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -343,8 +345,10 @@ tabout hc27 hv025 hv024 hv270 ml_rdtmalpos  using Tables_MALARIA.xls [iw=wt] , c
 
 * indicators from IR file
 if file=="IR" {
-gen wt=v005/1000000
+* limiting to women age 15-49
+drop if v012<15 | v012>49
 
+gen wt=v005/1000000
 ****************************************************
 //Women age 15-49 with a live birth in the 2 years preceding the survey who, during the pregnancy that resulted in the last live birth, received one or more doses of SP/Fansidar
 

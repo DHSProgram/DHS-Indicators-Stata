@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			NT_BRST_FED.do
 Purpose: 			Code to compute breastfeeding indicators
-Data inputs: 		KR file
+Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Dec 10, 2020 by Courtney Allen

@@ -1,12 +1,11 @@
 /*****************************************************************************************************
 Program: 			WE_ASSETS.do
 Purpose: 			Code to compute employment, earnings, and asset ownership in men and women
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Oct 17, 2019 by Shireen Assaf 
 Note:				The indicators below can be computed for men and women. 
-					For women and men the indicator is computed for age 15-49 in line 33 and 111. This can be commented out if the indicators are required for all women/men.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -28,9 +27,6 @@ we_mobile_finance	"Use mobile phone for financial transactions"
 
 * indicators from IR file
 if file=="IR" {
-
-* limiting to women age 15-49
-drop if v012>49
 
 cap label define yesno 0"No" 1"Yes"
 
@@ -107,8 +103,6 @@ label var we_mobile_finance "Use mobile phone for financial transactions"
 
 * indicators from MR file
 if file=="MR" {
-* limiting to men age 15-49
-drop if mv012>49
 
 label define yesno 0"No" 1"Yes"
 

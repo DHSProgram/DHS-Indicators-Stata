@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			ML_EXISTING_ITN.do
 Purpose: 			Code indicators for source of nets
-Data inputs: 		HR survey list
+Data inputs: 		HR dataset
 Data outputs:		coded variables and the tables for the indicator produced which will be saved in the Tables_HH_ITN.xls excel file
 Author:				Cameron Taylor and modified by Shireen Assaf
 Date last modified: May 20 2019 by Shireen Assaf

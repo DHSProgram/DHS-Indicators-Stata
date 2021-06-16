@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			NT_CH_MICRO.do
 Purpose: 			Code to compute micronutrient indicators in children
-Data inputs: 		KR file
+Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Dec 26, 2019 by Shireen Assaf 

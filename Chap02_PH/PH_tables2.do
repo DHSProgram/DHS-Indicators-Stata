@@ -4,9 +4,9 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: May 1 2020 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_pop:				Contains the tables for the household population by age, sex, and residence and birth registration
-	2.	Tables_livarg_orph:		Contains the table for children's living arrangements and orphanhood
+*This do file will produce the following tables in excel:
+1. 	Tables_pop:				Contains the tables for the household population by age, sex, and residence and birth registration
+2.	Tables_livarg_orph:		Contains the table for children's living arrangements and orphanhood
 
 Notes: 					 						
 *****************************************************************************************************/

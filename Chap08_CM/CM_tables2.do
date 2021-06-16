@@ -4,16 +4,22 @@ Purpose: 			produce tables for high risk birth and high risk fertility behavior
 Author:				Shireen Assaf
 Date last modified: April 30, 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Table_Risk_wm:		Contains the tables of high risk fertility behavior indicators among women
-	2. 	Table_Risk_birth:	Contains the tables of high risk births indicators
+*This do file will produce the following tables in excel:
+1. 	Table_Risk_wm:		Contains the tables of high risk fertility behavior indicators among women
+2. 	Table_Risk_birth:	Contains the tables of high risk births indicators
+	
+Notes: 	The indicators are outputed for women age 15-49 in line 27. This can be commented out if the indicators are required for all women.	
 *****************************************************************************************************/
 
 if file=="IR" {
+* limiting to women age 15-49
+drop if v012<15 | v012>49
+
+gen wt=v005/1000000
+
 **************************************************************************************************
 * High risk fertility indicators amoung women 
 **************************************************************************************************
-gen wt=v005/1000000
 
 tab1	cm_riskw_none cm_riskw_unavoid cm_riskw_any_avoid cm_riskw_u18 cm_riskw_o34 cm_riskw_interval cm_riskw_order ///
 cm_riskw_any_single cm_riskw_mult1 cm_riskw_mult2 cm_riskw_mult3 cm_riskw_mult4 cm_riskw_mult5 cm_riskw_any_mult ///

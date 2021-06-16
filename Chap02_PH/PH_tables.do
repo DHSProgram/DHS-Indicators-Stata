@@ -4,11 +4,11 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: September 4, 2020 by Courtney Allen 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_hh_wash:			Contains the table for WASH (water and santitation) indicators
-	2.  Tables_hh_charac:		Contains the table for household characteristics
-	3. 	Tables_hh_poss:			Contains the table for household possessions
-	4.	Tables_handwsh:			Contains the table for handwashing indicators
+*This do file will produce the following tables in excel:
+1. 	Tables_hh_wash:			Contains the table for WASH (water and santitation) indicators
+2.  Tables_hh_charac:		Contains the table for household characteristics
+3. 	Tables_hh_poss:			Contains the table for household possessions
+4.	Tables_handwsh:			Contains the table for handwashing indicators
 
 Notes: 					 						
 *****************************************************************************************************/

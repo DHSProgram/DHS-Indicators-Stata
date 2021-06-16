@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			RH_probs.do
 Purpose: 			Code indicators on problems accessing health care for women
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Dec 21 2018 by Shireen Assaf 

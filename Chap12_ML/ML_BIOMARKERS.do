@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			ML_BIOMARKERS.do
 Purpose: 			Code anemia and malaria testing prevalence in children under 5
-Data inputs: 		PR survey list
+Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Cameron Taylor and Shireen Assaf
 Date last modified: May 20 2019 by Shiren Assaf

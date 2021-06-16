@@ -4,19 +4,19 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: October 17 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_emply_wm:	Contains the tables for employment and earning indicators for women
-	2.	Tables_emply_mn:	Contains the tables for employment and earning indicators for men
-	3. 	Tables_assets_wm:	Contains the tables for asset ownwership indicators for women
-	4.	Tables_assets_mn:	Contains the tables for asset ownwership indicators for men
-	5. 	Tables_empw_wm:		Contains the tables for empowerment indicators, justification of wife beating, and decision making for women
-	6.	Tables_empw_mn:		Contains the tables for empowerment indicators, justification of wife beating, and decision making for men
+*This do file will produce the following tables in excel:
+1. 	Tables_emply_wm:	Contains the tables for employment and earning indicators for women
+2.	Tables_emply_mn:	Contains the tables for employment and earning indicators for men
+3. 	Tables_assets_wm:	Contains the tables for asset ownwership indicators for women
+4.	Tables_assets_mn:	Contains the tables for asset ownwership indicators for men
+5. 	Tables_empw_wm:		Contains the tables for empowerment indicators, justification of wife beating, and decision making for women
+6.	Tables_empw_mn:		Contains the tables for empowerment indicators, justification of wife beating, and decision making for men
 
-Notes:	Please see note on line 730 for constructing addition tables for the empowerment indicators
-		For men, the tables are produced according to the age group identified in the WE_ASSETS and the WE_EMPW do files. Currently it is for men 15-49 by default. 
-		This can be changed in the do files that constuct the indicators. 
+Notes:	Please see note on line 712 for constructing addition tables for the empowerment indicators
 		
-		Please check note on line 720 and 723. Only the first column for the first crosstabulation and the last column for the second crosstabulation are reported in the final report. 
+For women and men the indicators are outputed for age 15-49 in line 28 and 727. This can be commented out if the indicators are required for all women/men.
+		
+Please check notes on lines 701 and 705. Only the first column for the first crosstabulation and the last column for the second crosstabulation are reported in the final report. 
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -24,6 +24,9 @@ Notes:	Please see note on line 730 for constructing addition tables for the empo
 
 * indicators from IR file
 if file=="IR" {
+* limiting to women age 15-49
+drop if v012<15 | v012>49
+
 gen wt=v005/1000000
 
 * Number of living children
@@ -720,6 +723,9 @@ ta v313 if we_num_decide==2 [iw=wt]
 
 * indicators from MR file
 if file=="MR" {
+* limiting to men age 15-49
+drop if mv012<15 | mv012>49
+
 gen wt=mv005/1000000
 
 * Number of living children

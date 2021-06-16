@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FG_CIRCUM.do
 Purpose: 			Code  to compute female circumcision indicators indicators among women and knowledge and opinion on female circumcision among men
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: October 22, 2020 by Shireen Assaf 

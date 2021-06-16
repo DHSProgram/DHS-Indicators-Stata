@@ -4,24 +4,25 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: November 5 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_know_wm:		Contains the tables for HIV/AIDS knowledge indicators for women
-	2.	Tables_know_mn:		Contains the tables for HIV/AIDS knowledge indicators for men
-	3. 	Tables_atd_wm:		Contains the tables for HIV/AIDS attitude indicators for women
-	4.	Tables_atd_mn:		Contains the tables for HIV/AIDS attitude indicators for men
-	5.	Tables_rsky_wm: 	Contains the tables for risky sexual behaviors for women
-	6.	Tables_rsky_mn: 	Contains the tables for risky sexual behaviors for men
-	7.	Tables_test_wm: 	Contains the tables for HIV prior testing and counseling for women
-	8.	Tables_test_mn: 	Contains the tables for HIV prior testing and counseling for men
-	9.	Tables_circum:		Contains the tables for circumcision indicators
-	10.	Tables_sti_wm:		Contains the tables for STI indicators for women
-	11. Tables_sti_mn:		Contains the tables for STI indicators for men
-	12. Tables_bhv_yng_wm:	Contains the table for sexual behavior among young people for women
-	13. Tables_bhv_yng_mn:	Contains the table for sexual behavior among young people for men
+*This do file will produce the following tables in excel:
+1. 	Tables_know_wm:		Contains the tables for HIV/AIDS knowledge indicators for women
+2.	Tables_know_mn:		Contains the tables for HIV/AIDS knowledge indicators for men
+3. 	Tables_atd_wm:		Contains the tables for HIV/AIDS attitude indicators for women
+4.	Tables_atd_mn:		Contains the tables for HIV/AIDS attitude indicators for men
+5.	Tables_rsky_wm: 	Contains the tables for risky sexual behaviors for women
+6.	Tables_rsky_mn: 	Contains the tables for risky sexual behaviors for men
+7.	Tables_test_wm: 	Contains the tables for HIV prior testing and counseling for women
+8.	Tables_test_mn: 	Contains the tables for HIV prior testing and counseling for men
+9.	Tables_circum:		Contains the tables for circumcision indicators
+10.	Tables_sti_wm:		Contains the tables for STI indicators for women
+11. Tables_sti_mn:		Contains the tables for STI indicators for men
+12. Tables_bhv_yng_wm:	Contains the table for sexual behavior among young people for women
+13. Tables_bhv_yng_mn:	Contains the table for sexual behavior among young people for men
 
 Notes:	Several tables in the final reports are reported about young people (15-24). 
 To produce these tables you can rerun the code among young people age group using v013 by droping cases over 24 years (i.e drop if v013>2).
 
+For women and men the indicators are outputed for age 15-49 in line 34 and 869. This can be commented out if the indicators are required for all women/men or changed for the age group 15-24. 
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -29,8 +30,10 @@ To produce these tables you can rerun the code among young people age group usin
 
 * indicators from IR file
 if file=="IR" {
-gen wt=v005/1000000
+* limiting to women age 15-49
+drop if v012<15 | v012>49
 
+gen wt=v005/1000000
 **************************************************************************************************
 * Knowledge of HIV/AIDS
 **************************************************************************************************
@@ -862,9 +865,10 @@ tabout age_yng marstat hk_sex_youth_test using Tables_bhv_yng_wm.xls [iw=wt] , c
 
 * indicators from MR file
 if file=="MR" {
+* limiting to men age 15-49
+drop if mv012<15 | mv012>49
+
 gen wt=mv005/1000000
-
-
 **************************************************************************************************
 * Knowledge and Attitudes towards HIV/AIDS
 **************************************************************************************************

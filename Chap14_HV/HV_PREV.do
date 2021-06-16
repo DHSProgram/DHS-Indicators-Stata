@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			HV_PREV.do
 Purpose: 			Code for HIV prevalence
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Nov 5, 2019 by Shireen Assaf 

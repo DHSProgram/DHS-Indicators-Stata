@@ -4,18 +4,20 @@ Purpose: 			produce tables for domestic violence indicators
 Author:				Courtney Allen
 Date last modified: September 09 2020 by Courtney Allen
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_DV_viol:		Contains the tables for indicators of experiencing violence ever and help seeking
-	2. 	Tables_DV_cntrl:	Contains the tables for marital control indicators
-	3. 	Tables_DV_prtnr:	Contains the tables for indicators of experiencing violence by their partners ever and help seeking
+*This do file will produce the following tables in excel:
+1. 	Tables_DV_viol:		Contains the tables for indicators of experiencing violence ever and help seeking
+2. 	Tables_DV_cntrl:	Contains the tables for marital control indicators
+3. 	Tables_DV_prtnr:	Contains the tables for indicators of experiencing violence by their partners ever and help seeking
 
-
-Notes: 
+Notes: 	The indicators are outputed for women age 15-49 in line 21. This can be commented out if the indicators are required for all women.	
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
 ****************************************************
+
+* limiting to women age 15-49
+drop if v012<15 | v012>49
 
 cap gen dwt = d005/1000000
 

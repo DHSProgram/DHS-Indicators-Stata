@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			PH_GINI.do
 Purpose: 			Code to compute the Gini coefficient
-Data inputs: 		PR survey list
+Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Tom Pullum, modified by Shireen Assaf for this project
 Date last modified: May 8, 2020 by Shireen Assaf 

@@ -1,7 +1,7 @@
 /*********************************************************************
 Program: 			improvedwater_pr.do
 Purpose: 			creates variable for binary improved water source according to JSTOR standard 
-Data inputs: 		pr
+Data inputs: 		PR dataset
 Data outputs:		none
 Author of do file:	04/08/2018	Courtney Allen
 Date last modified: 04/16/2018	Courtney Allen to use filename var

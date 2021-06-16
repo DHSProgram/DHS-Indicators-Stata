@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FE_CBR.do
 Purpose: 			Code to calculate Crude Birth Rate
-Data inputs: 		PR data files
+Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Courtney Allen for the code share project
 Date last modified: October 23, 2019 by Courtney Allen

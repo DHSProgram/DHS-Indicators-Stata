@@ -4,24 +4,26 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: Feb 5 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_Know_wm:		Contains the tables for knowledge indicators for women
-	2. 	Tables_Know_mn:		Contains the tables for knowledge indicators for men
-	3. 	Tables_Use_ev:		Contains the tables for ever use of family planning for women
-	4. 	Tables_Use_cr:		Contains the tables for current use of family planning for women + timing of sterlization
-	5.	Tables_source_info:	Contains the tables for source of family planning method, brands used, and information given about the method for women
-	6.	Tables_Need:		Contains the tables for unmet need, met need, demand satisfied, and future intention to use for women
-	7.	Tables_Communicat:	Contains the tables for exposure to FP messages, decision on use/nonuse, discussions for women
-	8.  Tables_message_mn:	Contains the tables for exposure for FP messages for men
+*This do file will produce the following tables in excel:
+1. 	Tables_Know_wm:		Contains the tables for knowledge indicators for women
+2. 	Tables_Know_mn:		Contains the tables for knowledge indicators for men
+3. 	Tables_Use_ev:		Contains the tables for ever use of family planning for women
+4. 	Tables_Use_cr:		Contains the tables for current use of family planning for women + timing of sterlization
+5.	Tables_source_info:	Contains the tables for source of family planning method, brands used, and information given about the method for women
+6.	Tables_Need:		Contains the tables for unmet need, met need, demand satisfied, and future intention to use for women
+7.	Tables_Communicat:	Contains the tables for exposure to FP messages, decision on use/nonuse, discussions for women
+8.  Tables_message_mn:	Contains the tables for exposure for FP messages for men
 
 
-Notes: 					For knowledge of contraceptive methods, ever use, current use, and unmet need variables, the population of
-						interest can be selected (all women, currently married women, and sexually active women).
-						The reminaing indicators are reported for currently married women.
+Notes: 	For knowledge of contraceptive methods, ever use, current use, and unmet need variables, the population of
+		interest can be selected (all women, currently married women, and sexually active women).
+		The reminaing indicators are reported for currently married women.
 						
-						For men, the population of interest can also be selected for the knowledge of methods variables. 
+		For men, the population of interest can also be selected for the knowledge of methods variables. 
 						
-						Make the selection of the population of interest below for IR and MR files. 
+		Make the selection of the population of interest below for IR (line 40) and MR (line 1608) files. 
+						
+		For women and men the indicators are outputed for age 15-49 in line 36 and 1604. This can be commented out if the indicators are required for all women/men.
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
@@ -30,6 +32,9 @@ Notes: 					For knowledge of contraceptive methods, ever use, current use, and u
 
 * indicators from IR file
 if file=="IR" {
+* limiting to women age 15-49
+drop if v012<15 | v012>49
+
 gen wt=v005/1000000
 
 ** Select population of interest
@@ -1595,6 +1600,8 @@ tabout v013 v025 v106 v024 v190 fp_any_notdiscuss using Tables_Communicat.xls [i
 
 * indicators from MR file
 if file=="MR" {
+* limiting to men age 15-49
+drop if mv012<15 | mv012>49
 
 gen wt=mv005/1000000
 

@@ -1,12 +1,11 @@
 /*****************************************************************************************************
 Program: 			RC_CHAR.do
 Purpose: 			Code to compute respondent characteristics in men and women
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Oct 1, 2019 by Shireen Assaf 
 Note:				The indicators below can be computed for men and women. 
-					For women and men the indicator is computed for age 15-49 in line 55 and 262. This can be commented out if the indicators are required for all women/men.
 					Please check the note on health insurance. This can be country specific and also reported for specific populations. 
 					Please check the variables available for smoking and tobacco and see notes for these variables. Variable names have changed and these indicators are country specific.
 *****************************************************************************************************/
@@ -52,8 +51,6 @@ rc_tobc_any			"Uses any type of tobacco - smoke or smokeless"
 
 * indicators from IR file
 if file=="IR" {
-* limiting to women age 15-49
-drop if v012>49
 
 label define yesno 0"No" 1"Yes"
 
@@ -272,8 +269,6 @@ cap label var rc_tobc_any "Uses any type of tobacco - smoke or smokeless"
 
 * indicators from MR file
 if file=="MR" {
-* limiting to men age 15-49
-drop if mv012>49
 
 label define yesno 0"No" 1"Yes"
 

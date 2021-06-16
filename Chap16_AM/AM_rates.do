@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			AM_RATES.do
 Purpose: 			Code to produce adult and maternal mortality rates for specific windows of time
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		AM_Tables.xls and AM_completeness
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
 Date last modified: November 6, 2020 by Trevor Croft

@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FP_USE.do
 Purpose: 			Code contraceptive use indicators (ever and current use). Also source of method, brands, and information given. 
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Jan 31 2019 by Shireen Assaf 

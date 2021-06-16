@@ -4,16 +4,16 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: November 7 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_coverage:	Contains the tables for HIV testing coverage for women, men, and total. THESE TABLES ARE UNWEIGHTED
-	2.	Tables_prev_wm:		Contains the tables for HIV prevalence for women
-	3.	Tables_prev_mn:		Contains the tables for HIV prevalence for men
-	4.	Tables_prev_tot:	Contains the tables for HIV prevalence for total
-	5.	Tables_circum:		Contains the tables for HIV prevalence by male circumcision
-	5.	Tables_prev_cpl:	Contains the tables for HIV prevalence for couples
+*This do file will produce the following tables in excel:
+1. 	Tables_coverage:	Contains the tables for HIV testing coverage for women, men, and total. THESE TABLES ARE UNWEIGHTED
+2.	Tables_prev_wm:		Contains the tables for HIV prevalence for women
+3.	Tables_prev_mn:		Contains the tables for HIV prevalence for men
+4.	Tables_prev_tot:	Contains the tables for HIV prevalence for total
+5.	Tables_circum:		Contains the tables for HIV prevalence by male circumcision
+6.	Tables_prev_cpl:	Contains the tables for HIV prevalence for couples
 
 Notes: 	Line 28 selects for the age group of interest for the coverage indicators. 
-		The default is age 15-49. For all other tables (except couples) the default was set as 15-49 in the master file. 
+		The default is age 15-49. For all other tables (except couples) the default was set as 15-49 in line 114. 
 		Not all surveys have testing that distinguish between HIV-1 and HIV-2. These tables are commented out in line 135 Uncomment if you need them. 
 		
 *****************************************************************************************************/
@@ -109,6 +109,9 @@ tabout hv025 hv024 hv_hiv_test_tot using Tables_coverage.xls , c(row) f(1) appen
 if file=="MR" {
 
 * These tables actually use the IRMRARmerge.dta file and not the MR file
+
+* limiting to women and men age 15-49
+drop if v012<15 | v012>49
 
 * use HIV weight
 gen wt=hiv05/1000000

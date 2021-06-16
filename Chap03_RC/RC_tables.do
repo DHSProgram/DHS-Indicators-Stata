@@ -4,21 +4,21 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: October 3 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_background_wm:		Contains the tables for background variables for women
-	2. 	Tables_background_mn:		Contains the tables for background variables for men
-	3. 	Tables_educ_wm:				Contains the tables for education indicators for women
-	4. 	Tables_educ_mn:				Contains the tables for education indicators for women
-	5.	Tables_media_wm:			Contains the tables for media exposure and internet use for women
-	6.	Tables_media_mn:			Contains the tables for media exposure and internet use for men
-	7.	Tables_employ_wm:			Contains the tables for employment and occupation indicators for women
-	8.	Tables_employ_mn:			Contains the tables for employment and occupation indicators for men
-	9.  Tables_insurance_wm:		Contains the tables for health insurance indicators for women
-	10. Tables_insurance_mn:		Contains the tables for health insurance indicators for men
-	11. Tables_tobac_wm:			Contains the tables for tobacco use indicators for women
-	12. Tables_tobac_mn:			Contains the tables for tobacco use indicators for men
+*This do file will produce the following tables in excel:
+1. 	Tables_background_wm:		Contains the tables for background variables for women
+2. 	Tables_background_mn:		Contains the tables for background variables for men
+3. 	Tables_educ_wm:				Contains the tables for education indicators for women
+4. 	Tables_educ_mn:				Contains the tables for education indicators for women
+5.	Tables_media_wm:			Contains the tables for media exposure and internet use for women
+6.	Tables_media_mn:			Contains the tables for media exposure and internet use for men
+7.	Tables_employ_wm:			Contains the tables for employment and occupation indicators for women
+8.	Tables_employ_mn:			Contains the tables for employment and occupation indicators for men
+9.  Tables_insurance_wm:		Contains the tables for health insurance indicators for women
+10. Tables_insurance_mn:		Contains the tables for health insurance indicators for men
+11. Tables_tobac_wm:			Contains the tables for tobacco use indicators for women
+12. Tables_tobac_mn:			Contains the tables for tobacco use indicators for men
 
-Notes: 					 						
+Notes: 	For women and men the indicators are outputed for age 15-49 in line 31 and 583. This can be commented out if the indicators are required for all women/men.				 						
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
@@ -27,8 +27,10 @@ Notes:
 
 * indicators from IR file
 if file=="IR" {
-gen wt=v005/1000000
+* limiting to women age 15-49
+drop if v012<15 | v012>49
 
+gen wt=v005/1000000
 **************************************************************************************************
 * Background characteristics: excel file Tables_background_wm will be produced
 **************************************************************************************************
@@ -577,9 +579,10 @@ cap tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmk
 
 * indicators from MR file
 if file=="MR" {
+* limiting to men age 15-49
+drop if mv012<15 | mv012>49
+
 gen wt=mv005/1000000
-
-
 **************************************************************************************************
 * Background characteristics: excel file Tables_background_mn will be produced
 **************************************************************************************************

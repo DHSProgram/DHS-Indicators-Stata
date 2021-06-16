@@ -209,6 +209,7 @@ do NT_WM_NUT.do
 
 do NT_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
 
 */
 *******************************************************************************************************************************
@@ -235,6 +236,7 @@ do NT_MN_NUT.do
 
 do NT_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
 
 */
 

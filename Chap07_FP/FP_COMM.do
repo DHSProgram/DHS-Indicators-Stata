@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FP_COMM.do
 Purpose: 			Code communication related indicators: exposure to FP messages, decision on use/nonuse, discussions. 
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Feb 5 2019 by Shireen Assaf, added men's code 

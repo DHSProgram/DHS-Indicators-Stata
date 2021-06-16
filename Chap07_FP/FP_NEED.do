@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FP_Need.do
 Purpose: 			Code contraceptive unmet need, met need, demand satisfied, intention to use
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Feb 1 2019 by Shireen Assaf 

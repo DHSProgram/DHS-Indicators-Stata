@@ -1,7 +1,7 @@
 /*******************************************************************************
 Program: 			FE_INT.do
 Purpose: 			Code fertility indicators from birth history reflecting birth intervals 
-Data inputs: 		BR data files
+Data inputs: 		BR dataset
 Data outputs:		coded variables
 Author:				Courtney Allen 
 Date last modified: September 4, 2020

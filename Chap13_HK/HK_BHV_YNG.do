@@ -1,11 +1,11 @@
 /*****************************************************************************************************
 Program: 			HK_BHV_YNG.do
 Purpose: 			Code for sexual behaviors among young people
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Nov 4, 2019 by Shireen Assaf 
-Note:				The indicators below can be computed for men and women. 
+Note:				The indicators below can be computed for men and women. No age selection is made here. 
 			
 *****************************************************************************************************/
 

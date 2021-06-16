@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FE_TFR.do
 Purpose: 			Code to compute fertility rates
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables, .DTA file with rates and confidence intervals, 
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
 Date last modified: July 7, 2020 by Courtney Allen

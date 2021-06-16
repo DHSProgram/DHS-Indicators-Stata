@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			NT_WM_NUT.do
 Purpose: 			Code to compute anthropometry and anemia indicators in women
-Data inputs: 		IR file
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: July 2, 2020 by Shireen Assaf 

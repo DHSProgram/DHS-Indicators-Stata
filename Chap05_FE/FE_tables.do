@@ -4,9 +4,8 @@ Purpose: 			produce tables for fertility indicators
 Author:				Courtney Allen
 Date last modified: September 4 2020 by Courtney Allen
 
-*Note this do file will produce the following tables in excel:
-	1. 	FE_tables:		Contains the tables for most fertility indicators created in the FE_FERT and FE_INT do files
-
+*This do file will produce the following table in excel:
+FE_tables: Contains the tables for most fertility indicators created in the FE_FERT and FE_INT do files
 
 Notes: 
 *****************************************************************************************************/

@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			ML_NETS_access.do
 Purpose: 			POPULATION ACCESS TO ITNS and POPULATION/CHILD/PREGNANT WOMEN USE OF ITNS AMONG HH WITH ITNs
-Data inputs: 		HR and PR survey list
+Data inputs: 		HR and PR dataset
 Data outputs:		coded variables and the tables Tables_ITN_access.xls and Tables_HH_ITN_USE.xls for the tabulations for the indicators
 Author:				Cameron Taylor and modified by Shireen Assaf for the code share project
 Date last modified: May 20 2019 by Shireen Assaf

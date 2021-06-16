@@ -4,19 +4,20 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: December 10, 2020 by Courtney Allen  
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_nut_ch:		Contains the tables for nutritional status indicators for children
-	2.	Tables_anemia_ch:	Contains the tables for anemia indicators for children
-	3. 	Tables_brst_fed:	Contains the tables for breastfeeding indicators
-	4.	Tables_IYCF:		Contains the tables for IYCF indicators in children
-	5. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
-	6. 	Tables_salt_hh:		Contains the tables for salt testing and iodized salt in households
-	7.	Tables_micronut_wm	Contains the tables for micronutrient intake in women
-	8. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women
-	9.	Tables_anemia_wm:	Contains the tables for anemia indicators for women
-	10. Tables_nut_mn:		Contains the tables for nutritional status indicators for men
-	11.	Tables_anemia_mn:	Contains the tables for anemia indicators for men
-Note: The tables produced for men (MR file) select for men 15-49. If all men are needed please comment out line 1148
+*This do file will produce the following tables in excel:
+1. 	Tables_nut_ch:		Contains the tables for nutritional status indicators for children
+2.	Tables_anemia_ch:	Contains the tables for anemia indicators for children
+3. 	Tables_brst_fed:	Contains the tables for breastfeeding indicators
+4.	Tables_IYCF:		Contains the tables for IYCF indicators in children
+5. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
+6. 	Tables_salt_hh:		Contains the tables for salt testing and iodized salt in households
+7.	Tables_micronut_wm	Contains the tables for micronutrient intake in women
+8. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women
+9.	Tables_anemia_wm:	Contains the tables for anemia indicators for women
+10. Tables_nut_mn:		Contains the tables for nutritional status indicators for men
+11.	Tables_anemia_mn:	Contains the tables for anemia indicators for men
+
+Notes: 	For women and men the indicators are outputed for age 15-49 in line 766 and 1165. This can be commented out if the indicators are required for all women/men.
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -761,6 +762,9 @@ tabout hv025 hv024 hv270 nt_salt_iod using Tables_salt_hh.xls [iw=wt] , c(row) f
 
 * indicators from IR file
 if file=="IR" {
+* limiting to women age 15-49
+drop if v012<15 | v012>49
+
 cap gen wt=v005/1000000
 
 **************************************************************************************************
@@ -1157,6 +1161,9 @@ tabout agecat v025 v024 v106 v190 nt_wm_micro_iod using Tables_micronut_wm.xls [
 
 * indicators from MR file
 if file=="MR" {
+* limiting to men age 15-49
+drop if mv012<15 | mv012>49
+
 cap gen wt=mv005/1000000
 
 **************************************************************************************************

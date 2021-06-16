@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			RH_DEL.do
 Purpose: 			Code Delivery Care indicators
-Data inputs: 		BR data files
+Data inputs: 		BR dataset
 Data outputs:		coded variables
 Author:				Courtney Allen 
 Date last modified: July 9 2018 by Shireen Assaf to adding missing categories and fix an error in the rh_del_cestime indicator 				

@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			PH_POP.do
 Purpose: 			Code to compute population characteristics, birth registration, education levels, household composition, orphanhood, and living arrangments
-Data inputs: 		PR survey list
+Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: April 23, 2020 by Shireen Assaf 

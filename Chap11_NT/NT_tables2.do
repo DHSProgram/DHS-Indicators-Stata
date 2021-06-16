@@ -4,13 +4,11 @@ Purpose: 			produce tables for indicators with the denominator of the youngest c
 Author:				Shireen Assaf
 Date last modified: January 8 2020 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-
+*This do file will produce the following tables in excel:
 *These tables will append to the same excel files produced in NT_tables.do
-
-	1. 	Tables_brst_fed:	Contains the tables for breastfeeding indicators
-	2.	Tables_IYCF:		Contains the tables for IYCF indicators in children
-	3. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
+1. 	Tables_brst_fed:	Contains the tables for breastfeeding indicators
+2.	Tables_IYCF:		Contains the tables for IYCF indicators in children
+3. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
 
 *****************************************************************************************************/
 * the total will show on the last row of each table.

@@ -4,14 +4,13 @@ Purpose: 			produce tables for indicators
 Author:				Courtney Allen
 Date last modified: Sept 16 2019 by Courtney Allen
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_Mar_wm:		Contains the tables for knowledge indicators for women
-	2. 	Tables_Mar_mn:		Contains the tables for knowledge indicators for men
-	3. 	Tables_Sex_wm:		Contains the tables for ever use of family planning for women
-	4. 	Tables_Sex_mn:		Contains the tables for current use of family planning for women + timing of sterlization
+*This do file will produce the following tables in excel:
+1. 	Tables_Mar_wm:		Contains the tables for knowledge indicators for women
+2. 	Tables_Mar_mn:		Contains the tables for knowledge indicators for men
+3. 	Tables_Sex_wm:		Contains the tables for ever use of family planning for women
+4. 	Tables_Sex_mn:		Contains the tables for current use of family planning for women + timing of sterlization
 
-
-Notes: 
+Notes: 	For women and men the indicators are outputed for age 15-49 in line 24 and 240. This can be commented out if the indicators are required for all women/men.
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
@@ -20,9 +19,10 @@ Notes:
 
 * indicators from IR file
 if file=="IR" {
+* limiting to women age 15-49
+drop if v012<15 | v012>49
+
 gen wt=v005/1000000
-
-
 **************************************************************************************************
 * Indicators for marriage: excel file Tables_Mar_wm will be produced
 **************************************************************************************************
@@ -230,20 +230,15 @@ foreach y in `subgroup' {
 }	
 
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
 * indicators from MR file
 if file=="MR" {
+* limiting to men age 15-49
+drop if mv012<15 | mv012>49
+
 gen wt=mv005/1000000
-
-
 **************************************************************************************************
 * Indicators for marriage: excel file Tables_Mar_mn will be produced
 **************************************************************************************************

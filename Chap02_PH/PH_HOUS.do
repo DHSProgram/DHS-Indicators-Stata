@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			PH_HOUS.do
 Purpose: 			Code to compute household characteristics, possessions, and smoking in the home
-Data inputs: 		HR survey list
+Data inputs: 		HR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: April 22, 2020 by Shireen Assaf 

@@ -1,12 +1,11 @@
 /*****************************************************************************************************
 Program: 			HK_CIRCUM.do
 Purpose: 			Code for indicators on male circumcision
-Data inputs: 		MR survey list
+Data inputs: 		MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Nov 1, 2019 by Shireen Assaf 
-Note:				The indicators are computed for me age 15-49 in line 23. 
-					This can be commented out if the indicators are required for all men.
+Note:				The indicators are computed for all men. No age selection is made here. 
 			
 *****************************************************************************************************/
 
@@ -18,9 +17,6 @@ hk_circum_status_prov	"Circumcision status and provider"
 ----------------------------------------------------------------------------*/
 
 * Indicators from MR file
-
-* limiting to men age 15-49
-drop if mv012>49
 
 cap label define yesno 0"No" 1"Yes"
 

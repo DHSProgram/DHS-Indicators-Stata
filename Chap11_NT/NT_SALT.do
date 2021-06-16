@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			NT_SALT.do
 Purpose: 			Code to compute salt indicators in households
-Data inputs: 		HR file
+Data inputs: 		HR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Dec 26, 2019 by Shireen Assaf 

@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			PH_HNDWSH.do
 Purpose: 			Code to compute handwashing indicators
-Data inputs: 		PR survey list
+Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: May 1, 2020 by Shireen Assaf 

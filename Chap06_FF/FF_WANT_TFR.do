@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FF_WANT_TFR.do
 Purpose: 			Code to compute wanted fertility rates
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Thomas Pullum and modified by Shireen Assaf for the code share project
 Date last modified: June 21, 2019 by Shireen Assaf 

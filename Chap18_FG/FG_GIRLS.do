@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FG_GIRLS.do
 Purpose: 			Code to compute female circumcision indicators among girls 0-14
-Data inputs: 		BR survey list
+Data inputs: 		BR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: November 12, 2020 by Shireen Assaf 

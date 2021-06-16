@@ -4,10 +4,11 @@ Purpose: 			produce tables for indicators of fertility preferences chapter
 Author:				Shireen Assaf
 Date last modified: March 10 2019 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-	1. 	Tables_Pref_wm:	Contains tables for fertility preferences for women 
-	2. 	Tables_Pref_mn:	Contains tables for fertility preferences for men 
+*This do file will produce the following tables in excel:
+1. 	Tables_Pref_wm:	Contains tables for fertility preferences for women 
+2. 	Tables_Pref_mn:	Contains tables for fertility preferences for men 
 
+Notes: 	For women and men the indicators are outputed for age 15-49 in line 21 and 157. This can be commented out if the indicators are required for all women/men.	
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
@@ -16,8 +17,10 @@ Date last modified: March 10 2019 by Shireen Assaf
 
 * indicators from IR file
 if file=="IR" {
-gen wt=v005/1000000
+* limiting to women age 15-49
+drop if v012<15 | v012>49
 
+gen wt=v005/1000000
 **************************************************************************************************
 * Indicators for fertilty preferences
 **************************************************************************************************
@@ -151,9 +154,10 @@ tabout v013 v025 v024 v106 v190 if v613<95 using Tables_Pref_wm.xls [fw=v005] , 
 
 * indicators from MR file
 if file=="MR" {
+* limiting to men age 15-49
+drop if mv012<15 | mv012>49
 
 gen wt=mv005/1000000
-
 **************************************************************************************************
 * Indicators for fertilty preferences
 **************************************************************************************************

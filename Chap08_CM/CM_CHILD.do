@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			CM_CHILD.do
 Purpose: 			Produce child mortality indicators 
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Tom Pullum and modified by Shireen Assaf for the code share project
 Date last modified: April 1 2019 by Shireen Assaf 

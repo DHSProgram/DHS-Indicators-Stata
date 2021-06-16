@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			CH_VAC.do
 Purpose: 			Code vaccination variables.
-Data inputs: 		KR survey list
+Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: March 13 2019 by Shireen Assaf 

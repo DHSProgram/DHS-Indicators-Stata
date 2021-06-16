@@ -31,6 +31,7 @@ In addition, older surveys (mainly before 2000) do not have a wealth index in th
 Tabulations do not check for the number of observations. The DHS convention is to suppress estimates that are based on less than 25 unweighted observations and to place in parenthesis any estimate based on 25-49 observations. It is the user’s responsibility to check the number of unweighted observations before relying on the estimate. The tabulations also do not provide any statistical testing or confidence intervals.  
 
 ## Creating tables 
+For all table syntax files, the default age selection for women/men is 15-49. Cases outside this age range are dropped. If a different age selection is required, you can make this change in the table syntax file. Please read the notes at the top of each table syntax file. 
 ### SPSS
 There are two commands that can be used for producing tables for the indicators in SPSS: ctables and crosstab. The ctables command (Custom Tables) is easier to use and more powerful, however the Custom Tables module is a separate module that must be purchased in addition to the SPSS Base module. If the user does not have this module installed then they can use the crosstab command. The current SPSS code for producing tables has both commands available with the crosstab commands commented out. Please use the appropriate command for your needs.
 ### Stata

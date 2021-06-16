@@ -1,15 +1,13 @@
 /*****************************************************************************************************
 Program: 			HK_KNW_ATD.do
 Purpose: 			Code to compute HIV-AIDS related knowledge and attitude indicators 
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Oct 29, 2019 by Shireen Assaf 
-Note:				The indicators below can be computed for men and women. 
-					For women and men the indicators are computed for age 15-49 in line 43 and 149. 
-					This can be commented out if the indicators are required for all women/men.
+Note:				The indicators below can be computed for men and women. No age selection is made here. 
 					
-					Indicator hk_knw_hiv_hlth_2miscp (line 89) is country specific, please check the final report for the two most common misconceptions. 
+					Indicator hk_knw_hiv_hlth_2miscp (line 85) is country specific, please check the final report for the two most common misconceptions. 
 					Currently coded as rejecting that HIV can be transmitted by mosquito bites and supernatural means.
 *****************************************************************************************************/
 
@@ -39,9 +37,6 @@ hk_atd_discriminat		"Have discriminatory attitudes towards people living with HI
 
 * indicators from IR file
 if file=="IR" {
-
-* limiting to women age 15-49
-drop if v012>49
 
 cap label define yesno 0"No" 1"Yes"
 
@@ -146,8 +141,6 @@ label var hk_atd_discriminat "Have discriminatory attitudes towards people livin
 
 * indicators from MR file
 if file=="MR" {
-* limiting to men age 15-49
-drop if mv012>49
 
 cap label define yesno 0"No" 1"Yes"
 

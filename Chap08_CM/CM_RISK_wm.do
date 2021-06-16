@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			CM_RISK_wm.do
 Purpose: 			Code to compute high risk birth in women
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf and Thomas Pullum
 Date last modified: April 30, 2019 by Shireen Assaf 

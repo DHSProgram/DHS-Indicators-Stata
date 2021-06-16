@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FF_Want.do
 Purpose: 			Code to compute fertility planning status in women
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Thomas Pullum and modified by Shireen Assaf for the code share project
 Date last modified: May 13, 2019 by Shireen Assaf 

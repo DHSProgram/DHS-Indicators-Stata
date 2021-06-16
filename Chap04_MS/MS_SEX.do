@@ -1,7 +1,7 @@
 /*******************************************************************************
 Program: 			MS_SEX.do
 Purpose: 			Code to create sexual activity indicators
-Data inputs: 		IR and MR survey list
+Data inputs: 		IR and MR dataset
 Data outputs:		coded variables and scalars
 Author:				Courtney Allen for code share project
 Date last modified: September, 2019 by Courtney Allen 

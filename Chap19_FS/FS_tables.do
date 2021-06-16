@@ -4,19 +4,19 @@ Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
 Date last modified: November 5, 2020 by Shireen Assaf 
 
-*Note this do file will produce the following tables in excel:
-Tables_FIST:		Contains the tables for heard of female circumcision among women and men 
-	
+*This do file will produce the following table in excel:
+Tables_FIST: Contains the tables for fistula indicators
+
+Notes: 	The indicators are outputed for women age 15-49 in line 17. This can be commented out if the indicators are required for all women.	
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
 ****************************************************
-
-gen wt=v005/1000000
-
 *select age group
 drop if v012<15 | v012>49
+
+gen wt=v005/1000000
 
 **************************************************************************************************
 //Heard of fistula

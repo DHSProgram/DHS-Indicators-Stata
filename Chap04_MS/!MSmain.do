@@ -58,16 +58,18 @@ use "$datapath//$mrdata.dta", clear
 
 gen file=substr("$mrdata", 3, 2)
 
-*Purpose: 	Code marital status variables
 cap program drop calc_median_age
 do MS_MAR.do
+*Purpose: 	Code marital status variables
 
-*Purpose: 	Code sexual activity variables
 cap program drop calc_median_age
 do MS_SEX.do
+*Purpose: 	Code sexual activity variables
 
-*Purpose: 	Produce tables for indicators computed from above do files. 
 do MS_tables.do
+*Purpose: 	Produce tables for indicators computed from above do files. 
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
+
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************

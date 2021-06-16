@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			CH_STOOL.do
 Purpose: 			Code disposal of child's stook variable
-Data inputs: 		KR survey list
+Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: September 4 2019 by Shireen Assaf 

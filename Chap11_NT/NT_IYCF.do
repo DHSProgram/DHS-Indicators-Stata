@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			NT_IYCF.do
 Purpose: 			Code to compute infant and child feeding indicators
-Data inputs: 		KR file
+Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: January 9, 2020 by Shireen Assaf 

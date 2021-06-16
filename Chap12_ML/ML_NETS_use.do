@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			ML_NETS_use.do
 Purpose: 			POPULATION/CHILD/PREGNANT WOMEN USE OF NETS
-Data inputs: 		PR survey list
+Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Cameron Taylor
 Date last modified: March 14 2019 by Cameron Taylor

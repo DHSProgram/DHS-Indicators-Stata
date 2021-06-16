@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			AM_gfr.do
 Purpose: 			Code to produce ASFRs and GFR for use in estimating maternal mortality
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
 Date last modified: September 29, 2020 by Courtney Allen

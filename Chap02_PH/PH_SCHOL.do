@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			PH_SCHOL.do
 Purpose: 			Code to compute school attendance indicators
-Data inputs: 		BR and PR survey list
+Data inputs: 		BR and PR dataset
 Data outputs:		coded variables
 Author:				Trevor Croft, modified by Shireen Assaf for this project
 Date last modified: May 6, 2020 by Shireen Assaf 
@@ -46,7 +46,6 @@ sort hv001 hv002 hvidx
 
 * save a temporary file for merging
 save tempBR, replace
-
 
 * use the PR file for household members for the NAR and GAR indicators
 use "$datapath//$prdata.dta", clear

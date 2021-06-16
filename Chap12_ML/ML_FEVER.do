@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			ML_FEVER.do
 Purpose: 			Code indicators on fever, fever care-seeking, and antimalarial drugs
-Data inputs: 		KR survey list
+Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf and Cameron Taylor
 Date last modified: May 20 2019 by Shireen Assaf

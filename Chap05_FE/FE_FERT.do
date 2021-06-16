@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			FE_FERT.do
 Purpose: 			Code currenty fertility indicators
-Data inputs: 		IR data files
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Courtney Allen 
 Date last modified: September 4 2020

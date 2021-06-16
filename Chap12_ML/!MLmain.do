@@ -87,6 +87,7 @@ do ML_IPTP.do
 
 do ML_tables.do
 *Purpose: 	Will produce the tables for indiators produced from the above do file
+* Note:		This will drop any women not in 15-49 age range. You can change this selection. Please check the notes in the do file.
 
 */
 *******************************************************************************************************************************

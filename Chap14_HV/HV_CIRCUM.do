@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			HV_CIRCUM.do
 Purpose: 			Code for Circumcision and HIV
-Data inputs: 		MR survey list
+Data inputs: 		MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Nov 6, 2019 by Shireen Assaf 

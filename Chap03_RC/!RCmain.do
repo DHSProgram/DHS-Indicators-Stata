@@ -36,10 +36,11 @@ gen file=substr("$irdata", 3, 2)
 
 do RC_CHAR.do
 *Purpose: 	Code respondent characteristic indicators for women
-* Note:		This will drop any women over age 49. You can change this selection. Please check the notes in the do file.
 
 do RC_tables.do
 *Purpose: 	Produce tables for indicators computed from RC_CHAR.do file. 
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
+
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************
@@ -53,10 +54,11 @@ gen file=substr("$mrdata", 3, 2)
 
 do RC_CHAR.do
 *Purpose: 	Code respondent characteristic indicators for men
-* Note:		This will drop any men over age 49. You can change this selection. Please check the notes in the do file.
 
 do RC_tables.do
 *Purpose: 	Produce tables for indicators computed from RC_CHAR.do file. 
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
+
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************

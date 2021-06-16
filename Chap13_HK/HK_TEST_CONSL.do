@@ -1,13 +1,11 @@
 /*****************************************************************************************************
 Program: 			HK_TEST_CONSL.do
 Purpose: 			Code for indicators on HIV prior testing and counseling 
-Data inputs: 		IR or MR survey list
+Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Oct 29, 2019 by Shireen Assaf 
-Note:				The indicators below can be computed for men and women. 
-					For women and men the indicators are computed for age 15-49 in line 42 and 148. 
-					This can be commented out if the indicators are required for all women/men.
+Note:				The indicators below can be computed for men and women. No age selection is made here. 
 			
 *****************************************************************************************************/
 
@@ -34,9 +32,6 @@ hk_test_anclbr_result	"Received HIV test during ANC visit or labor but did not r
 
 * indicators from IR file
 if file=="IR" {
-
-* limiting to women age 15-49
-drop if v012>49
 
 cap label define yesno 0"No" 1"Yes"
 
@@ -149,8 +144,6 @@ label var hk_test_anclbr_result "Received HIV test during ANC visit or labor but
 
 * indicators from MR file
 if file=="MR" {
-* limiting to men age 15-49
-drop if mv012>49
 
 cap label define yesno 0"No" 1"Yes"
 

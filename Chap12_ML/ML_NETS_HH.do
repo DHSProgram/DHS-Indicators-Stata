@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			ML_NETS_HH.do
 Purpose: 			Code indicators for household ITN ownership
-Data inputs: 		HR survey list
+Data inputs: 		HR dataset
 Data outputs:		coded variables
 Author:				Cameron Taylor 
 Date last modified: February 19 2019 by Cameron Taylor

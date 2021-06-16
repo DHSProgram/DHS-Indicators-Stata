@@ -39,6 +39,7 @@ do FF_PREF.do
 
 do FF_tables.do
 *Purpose: 	Produce tables for indicators computed from FF_PREF.do file. 
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
 
 do FF_PLAN.do
 *Purpose: 	Code fertility planning status indicator and produce table Table_FFplan
@@ -62,6 +63,8 @@ do FF_PREF.do
 
 do FF_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
+
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************

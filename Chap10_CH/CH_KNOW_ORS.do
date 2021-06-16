@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			CH_KNOW_ORS.do
 Purpose: 			Code knowledge of ORS variable.
-Data inputs: 		IR survey list
+Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: March 15 2019 by Shireen Assaf 

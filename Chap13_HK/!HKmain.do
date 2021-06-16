@@ -56,6 +56,8 @@ do HK_BHV_YNG.do
 
 do HK_tables.do
 *Purpose: 	Produce tables for indicators computed from the above do files.
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
+
 
 */
 *******************************************************************************************************************************
@@ -94,6 +96,8 @@ do HK_BHV_YNG.do
 
 do HK_tables.do
 *Purpose: 	Produce tables for indicators computed from the above do files.
+* Note:		This will drop any women and men not in 15-49 age range. You can change this selection. Please check the notes in the do file.
+
 */
 *******************************************************************************************************************************
 *******************************************************************************************************************************
