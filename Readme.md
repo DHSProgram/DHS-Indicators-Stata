@@ -47,7 +47,7 @@ In Stata the tabout command is used to create tables. This is a package that nee
 |   3|Respondents’ Characteristics|RC|X|X|X|
 |   4|Marriage & Sexual Activity|MS|X|X||
 |   5|   Fertility|FE|X|X|X|
-|   6|   Fertility Preferences|FF|X|X||
+|   6|   Fertility Preferences|FF|X|X|X|
 |   7|   Family Planning |FP|X|X|X|
 |   8|   Infant & Child Mortality|CM|X|X||
 |   9|   Reproductive Health|RH|X|X||
