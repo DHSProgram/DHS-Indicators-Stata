@@ -29,12 +29,11 @@ rh_del_stay			"Duration of stay following recent birth"
 	label var rh_del_pltype "Live births by type of health facility"
 
 //Assistance during delivery
-**Note: Assitance during delivery and skilled provider indicators are both country specific indicators. 
+**Note: Assistance during delivery and skilled provider indicators are both country specific indicators. 
 **The table for these indicators in the final report would need to be checked to confirm the code below.
 	gen rh_del_pv = 0 if m3a != .
-	replace rh_del_pv 	= 7 	if m3n == 1
-	replace rh_del_pv 	= 6 	if m3i == 1 | m3j == 1 | m3k == 1 | m3l == 1 | m3m == 1
-	replace rh_del_pv 	= 5 	if m3h == 1
+	replace rh_del_pv 	= 6 	if m3n == 1
+	replace rh_del_pv 	= 5 	if m3h == 1 | m3i == 1 | m3j == 1 | m3k == 1 | m3l == 1 | m3m == 1
 	replace rh_del_pv 	= 4 	if m3g == 1 
 	replace rh_del_pv 	= 3 	if m3c == 1 | m3d == 1 | m3e == 1 | m3f == 1 
 	replace rh_del_pv 	= 2 	if m3b == 1
@@ -47,16 +46,15 @@ rh_del_stay			"Duration of stay following recent birth"
 	2 "Nurse/midwife"			///
 	3 "Country specific health professional" ///
 	4 "Traditional birth attendant"	///
-	5 "Other health worker"		///
-	6 "Relative/other"			///
-	7 "No one"					///
+	5 "Relative/other"			///
+	6 "No one"					///
 	9 "Don't know/missing"
 	label val rh_del_pv pv
 	label var rh_del_pv "Person providing assistance during delivery"
 
 //Skilled provider during delivery
 ** Note: Please check the final report for this indicator to determine what provider is considered skilled.
-	recode rh_del_pv (1/2 = 1 "Skilled provider") (3/6 = 2 "Unskilled provider") (7 = 3 "No one") (9=4 "Don't know/missing"), gen(rh_del_pvskill)
+	recode rh_del_pv (1/2 = 1 "Skilled provider") (3/5 = 2 "Unskilled provider") (6 = 3 "No one") (9=4 "Don't know/missing"), gen(rh_del_pvskill)
 	replace rh_del_pvskill = . if age>=period
 	label var rh_del_pvskill "Skilled assistance during delivery"
 	

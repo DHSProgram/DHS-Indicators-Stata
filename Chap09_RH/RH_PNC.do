@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			RH_ANC.do
+Program: 			RH_PNC.do
 Purpose: 			Code PNC indicators for women and newborns
 Data inputs: 		IR dataset
 Data outputs:		coded variables
@@ -21,7 +21,7 @@ rh_pnc_nb_pv 		"Provider for newborn's PNC check"
 ** For surveys 2005 or after, postnatal care was asked for both institutional and non-institutional births. 
 ** surveys before 2005 only ask PNC for non-institutional births but assumed women received PNC if they delivered at health facilities	 
 ** This is checked using variable m51_1 which was used in older surveys
-** If the code does not run, perhaps it is because you need to use m51a_1. Uncomment this the next line in that case.
+** If the code does not run, perhaps it is because you need to use m51a_1. Uncomment the next line in that case.
 	*cap gen m51_1=m51a_1
 	
 scalar drop _all
@@ -56,7 +56,7 @@ if m51_included==1 {
 	label var rh_pnc_wm_timing "Timing after delivery for mother's PNC check"
 
 //PNC within 2days for mother	
-	recode rh_pnc_wm_timing (1/3= 1 "visit w/in 2 days") (0 4 5 9  = 0 "No Visit w/in 2 days"), g(rh_pnc_wm_2days)
+	recode rh_pnc_wm_timing (1/3= 1 "Visit w/in 2 days") (0 4 5 9  = 0 "No Visit w/in 2 days"), g(rh_pnc_wm_2days)
 	label var rh_pnc_wm_2days "PNC check within two days for mother"
 	
 //PNC provider for mother	
@@ -89,8 +89,8 @@ cap drop rh_pnc_wm_timing
 	replace pnc_wm_time = 0 if momcheck == 0 & age<24 
 	
 	*Recode variable into categories as in FR
-	recode pnc_wm_time (0 242/299 306/899 = 0 "No check or past 41 days") ( 100/103 = 1 "less than 4 hours") (104/123 200 = 2 "4 to 23 hours") (124/171 201/202 = 3 "1-2 days") ///
-	(172/197 203/206 = 4 "3-6 days") (207/241 300/305 = 5 "7-41 days")  (else = 9 "Don't know or missing") if age<24, gen(rh_pnc_wm_timing) 
+	recode pnc_wm_time (0 242/299 306/899 = 0 "No check or past 41 days") ( 100/103 = 1 "<4hrs") (104/123 200 = 2 "4-23hrs") (124/171 201/202 = 3 "1-2days") ///
+	(172/197 203/206 = 4 "3-6days") (207/241 301/305 = 5 "7-41days")  (else = 9 "Don't know/missing") if age<24, gen(rh_pnc_wm_timing) 
 	*label variable
 	label var rh_pnc_wm_timing "Timing after delivery for mother's PNC check"
 

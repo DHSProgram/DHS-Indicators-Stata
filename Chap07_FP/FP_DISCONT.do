@@ -3,7 +3,8 @@ Program: 			FP_DISCONT.do
 Purpose: 			Create contraceptive discontinuation rates
 Data inputs: 		Event data files (created from IR files)
 Data outputs:		data set with 12-month discontinuation rates
-Author:				Trevor Croft 
+Author:				Sarah Bradley
+					Modified by Trevor Croft for the contraceptive calendar tutorial
 Date last modified: Jun 06 2019 by Courtney Allen for codeshare project
 
 NOTE: 				this code can also be found in the online Contraceptive Tutorial: Example 9

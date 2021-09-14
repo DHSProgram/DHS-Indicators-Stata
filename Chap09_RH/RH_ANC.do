@@ -34,7 +34,7 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	replace rh_anc_pv 	= 3 	if m2c_1 == 1 | m2d_1 == 1 | m2e_1 == 1
 	replace rh_anc_pv 	= 2 	if m2b_1 == 1
 	replace rh_anc_pv 	= 1 	if m2a_1 == 1
-	replace rh_anc_pv 	= 5 	if m2a_1 == 9
+	replace rh_anc_pv 	= 9 	if m2a_1 == 9
 	replace rh_anc_pv	= .		if age>=period
 	
 	label define rh_anc_pv ///
@@ -49,7 +49,7 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	
 //ANC by skilled provider
 ** Note: Please check the final report for this indicator to determine what provider is considered skilled.
-	recode rh_anc_pv (1/3 = 1 "Skilled provider") (4/6 = 0 "Unskilled/no one") , gen(rh_anc_pvskill)
+	recode rh_anc_pv (1/2 = 1 "Skilled provider") (3/9 = 0 "Unskilled/no one") , gen(rh_anc_pvskill)
 	replace rh_anc_pvskill = . if age>=period
 	label var rh_anc_pvskill "Skilled assistance during ANC"	
 	
@@ -183,7 +183,7 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	label var rh_anc_bldsamp "Blood sample was taken during ANC visit"
 	
 //tetnaus toxoid injections
-	recode m1_1 (0 1 8 9 . = 0 "No") (1/7 = 1 "Yes"), gen(rh_anc_toxinj)
+	recode m1_1 (0 1 8 9 . = 0 "No") (2/7 = 1 "Yes"), gen(rh_anc_toxinj)
 	replace rh_anc_toxinj = . if age>=period
 	label var rh_anc_toxinj "Received 2+ tetanus injections during last pregnancy"
 	
