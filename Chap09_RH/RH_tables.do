@@ -11,7 +11,7 @@ Date last modified: Jan 9 2019 by Shireen Assaf
 4.	Tables_PNC:			Contains the tables for the PNC indicators for women and newborns
 5.	Tables_Deliv:		Contains the tables for the delivery indicators
 	
-Notes: 	The indicators are outputed for women age 15-49 in line 27. This can be commented out if the indicators are required for all women.	
+Notes: 	The indicators are outputted for women age 15-49 in line 27. This can be commented out if the indicators are required for all women.	
 *****************************************************************************************************/
 
 gen wt=v005/1000000
@@ -525,19 +525,19 @@ tabout v025 v106 v024 v190 rh_del_pv using Tables_Deliv.xls [iw=wt] , c(row) f(1
 //skilled provider
 
 *residence
-tab v025 rh_del_pv [iw=wt], row nofreq 
+tab v025 rh_del_pvskill [iw=wt], row nofreq 
 
 *region
-tab v024 rh_del_pv [iw=wt], row nofreq 
+tab v024 rh_del_pvskill [iw=wt], row nofreq 
 
 *education
-tab v106 rh_del_pv [iw=wt], row nofreq 
+tab v106 rh_del_pvskill [iw=wt], row nofreq 
 
 *wealth
-tab v190 rh_del_pv [iw=wt], row nofreq 
+tab v190 rh_del_pvskill [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v106 v024 v190 rh_del_pv using Tables_Deliv.xls [iw=wt] , c(row) f(1) append 
+tabout v025 v106 v024 v190 rh_del_pvskill using Tables_Deliv.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //C-section delivery
@@ -576,7 +576,7 @@ tab v190 rh_del_cestime [iw=wt], row nofreq
 tabout v025 v106 v024 v190 rh_del_cestime using Tables_Deliv.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//during of stay after delivery
+//duration of stay after delivery
 
 *Vaginal births
 tab rh_del_stay if rh_del_cestime ==0 [iw=wt]
