@@ -101,17 +101,8 @@ _//SEEKING HELP AFTER VIOLENCE
 _____________________________________________________________________________*/
 
 label define frequency 0 "no" 1 "often" 2 "sometimes"
+cap label define yesno 0 "no" 1 "yes" //for all yes/no binary variables
 
-
-********************************************************************************
-**covariates needed for tables
-********************************************************************************
-	//duration of marriage
-	recode v512 (0/1= 1 "<2") (2/4=2 "2-4") (5/9=3 "5-9") (10/50=4 "10+"), gen(mar_years)
-	label var mar_years "Years since first cohabitation"
-
-
-	
 ********************************************************************************	
 **Current partner physical violence, by types of violence
 ********************************************************************************	
@@ -528,8 +519,8 @@ label define frequency 0 "no" 1 "often" 2 "sometimes"
 
 		//in the last 12 months by frequency (often or sometimes)
 		gen dv_prtnr_phy_sex_12m_f = 0 if v044==1 & v502>0
-		replace dv_prtnr_phy_sex_12m_f = 2 if (dv_prtnr_phy_12m==2 & dv_prtnr_sex_12m==2)
-		replace dv_prtnr_phy_sex_12m_f = 1 if (dv_prtnr_phy_12m==1 & dv_prtnr_sex_12m==1)
+		replace dv_prtnr_phy_sex_12m_f = 2 if (dv_prtnr_phy_12m_f==2 & dv_prtnr_sex_12m_f==2)
+		replace dv_prtnr_phy_sex_12m_f = 1 if (dv_prtnr_phy_12m_f==1 & dv_prtnr_sex_12m_f==1)
 		label val dv_prtnr_phy_sex_12m_f frequency
 		label var dv_prtnr_phy_sex_12m_f	"Experienced physical and sexual violence by partner in the last 12 months, frequency"
 		
@@ -712,7 +703,7 @@ label define frequency 0 "no" 1 "often" 2 "sometimes"
 **Experience of violence by marital duration
 ********************************************************************************
 	//TIMING OF FIRST VIOLENT EVENT IN MARRIAGE (among married women who only married once)
-		//before marraige
+		//before marriage
 		gen dv_mar_viol_0= 0 if v502==1 & v503==1 & v044==1
 		replace dv_mar_viol_0 = 1 if d109==95 & v502==1 & v503==1
 		label define dv_mar_viol_0 0 "other" 1 "before marriage"

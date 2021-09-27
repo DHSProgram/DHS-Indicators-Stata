@@ -22,6 +22,7 @@ Variables created in this file:
 	
 _____________________________________________________________________________*/
 
+cap label define yesno 0 "no" 1 "yes" //for all yes/no binary variables
 
 ********************************************************************************	
 **Marital control by current or most recent partner
@@ -76,7 +77,7 @@ _____________________________________________________________________________*/
 	
 	//partner displays none of these marital control behaviors
 	egen dv_prtnr_cntrl_0 = rowtotal(dv_prtnr_jeals dv_prtnr_accus dv_prtnr_friends dv_prtnr_fam dv_prtnr_where dv_prtnr_money) if v044==1 & v502>0
-	recode dv_prtnr_cntrl_0  (1/6=1)
-	label define dv_prtnr_cntrl_0_lab 0 "no behaviors" 1 "1 or more behaviors"
+	recode dv_prtnr_cntrl_0  (1/6=0) (0=1)
+	label define dv_prtnr_cntrl_0_lab 1 "no behaviors" 0 "1 or more behaviors"
 	label val dv_prtnr_cntrl_0 dv_prtnr_cntrl_0_lab 
 	label var dv_prtnr_cntrl_0 "Current or most recent partner displays no control behaviors"
