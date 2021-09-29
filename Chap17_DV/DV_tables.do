@@ -2,7 +2,7 @@
 Program: 			DV_tables.do
 Purpose: 			produce tables for domestic violence indicators
 Author:				Courtney Allen
-Date last modified: September 23 2021 by Shireen Assaf, moved covariates from other do files to this file
+Date last modified: September 29 2021 by Shireen Assaf
 
 *This do file will produce the following tables in excel:
 1. 	Tables_DV_viol:		Contains the tables for indicators of experiencing violence ever and help seeking
@@ -286,11 +286,10 @@ cap gen dwt = d005/1000000
 	
 	**************************************************************************************************
 	//Experience of different forms of violence
-	tab dv_age dv_phy			[iw=dwt] //ever physical violence
-	tab dv_age dv_sex			[iw=dwt] //ever sexual violence
-	tab dv_age dv_phy_sex	  	[iw=dwt] //physical AND sexual violence
-	tab dv_age dv_phy_sex_any	[iw=dwt] //physical OR sexual violence
-	tab dv_age dv_viol_type     [iw=dwt] //only physical, only sexual, or both
+	tab dv_age dv_phy_only		[iw=dwt] , row //only physical violence
+	tab dv_age dv_sex_only		[iw=dwt] , row//only sexual violence
+	tab dv_age dv_phy_sex_any	[iw=dwt] , row //physical OR sexual violence
+	tab dv_age dv_phy_sex	  	[iw=dwt] , row //physical AND sexual violence
 	
 	* output to excel
 	tabout dv_age dv_phy_only 			using Tables_DV_viol.xls [iw=dwt], c(row) npos(col) nwt(dwt) f(1) append
@@ -318,18 +317,18 @@ cap gen dwt = d005/1000000
 
 	
 //SOURCES OF HELP
-	tab dv_help_fam 	dv_viol_type  [iw=dwt], row nofreq 	//by age
-	tab dv_help_hfam 	dv_viol_type  [iw=dwt], row nofreq	//by residence 
-	tab dv_help_husb   	dv_viol_type  [iw=dwt], row nofreq 	//by region
-	tab dv_help_bf   	dv_viol_type  [iw=dwt], row nofreq  //by marital status
-	tab dv_help_friend 	dv_viol_type  [iw=dwt], row nofreq 	//by working status
-	tab dv_help_neighbor dv_viol_type  [iw=dwt], row nofreq  //by number of living children
-	tab dv_help_relig 	dv_viol_type  [iw=dwt], row nofreq 	//by education
-	tab dv_help_doc    	dv_viol_type  [iw=dwt], row nofreq 	//by wealth
-	tab dv_help_police 	dv_viol_type  [iw=dwt], row nofreq 	//by wealth
-	tab dv_help_lawyer 	dv_viol_type  [iw=dwt], row nofreq 	//by wealth
-	tab dv_help_sw    	dv_viol_type  [iw=dwt], row nofreq 	//by wealth
-	tab dv_help_other  	dv_viol_type  [iw=dwt], row nofreq 	//by wealth
+	tab dv_help_fam 	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_hfam 	dv_viol_type  [iw=dwt], col nofreq	
+	tab dv_help_husb   	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_bf   	dv_viol_type  [iw=dwt], col nofreq  
+	tab dv_help_friend 	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_neighbor dv_viol_type  [iw=dwt], col nofreq  
+	tab dv_help_relig 	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_doc    	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_police 	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_lawyer 	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_sw    	dv_viol_type  [iw=dwt], col nofreq 	
+	tab dv_help_other  	dv_viol_type  [iw=dwt], col nofreq 	
 
 	* output to excel
 	tabout dv_help_fam 	dv_viol_type using Tables_DV_viol.xls [iw=dwt] , c(col) npos(col) nwt(dwt) f(1) append 
