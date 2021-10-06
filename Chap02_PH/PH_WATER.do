@@ -1387,7 +1387,7 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ng`x'7a"  {
+	if filename=="ng`x'7b"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1829,7 +1829,7 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tj`x'71"  {
+	if filename=="tj`x'72"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -2262,7 +2262,8 @@ cap label define yesno 0"No" 1"Yes"
 	
 	Bracket on 2276 hides code for Cambodia specific section
 	--------------------------------------------------------------------------*/
-{
+	
+foreach x in hr pr {
 	if filename=="kh`x'42"  {
 	recode sh22b ///
 	11 = 12 ///
@@ -2293,18 +2294,23 @@ cap label define yesno 0"No" 1"Yes"
 	if filename=="kh`x'51"  {
 	gen ph_wtr_source_wet = hv201w
 	}
+	
 	if filename=="kh`x'51"  {
 	gen ph_wtr_source_dry = hv201d
 	}
+	
 	if filename=="kh`x'61"  {
 	gen ph_wtr_source_wet = sh104b
 	}
+	
 	if filename=="kh`x'61"  {
 	gen ph_wtr_source_dry = sh102
 	}
+	
 	if filename=="kh`x'73"  {
 	gen ph_wtr_source_wet = sh104b
 	}
+	
 	if filename=="kh`x'73"  {
 	gen ph_wtr_source_dry = sh102
 	}
