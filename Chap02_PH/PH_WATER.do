@@ -10,6 +10,8 @@ Note:				These indicators can also be computed using the HR or PR file.
 					If you want to produce estimates for the de jure population, 
 					use the PR file and select for dejure household memebers using
 					hv102==1. Please see the Guide to DHS Statistics.  
+					
+					*****
 *****************************************************************************************************/
 
 /*------------------------------------------------------------------------------
