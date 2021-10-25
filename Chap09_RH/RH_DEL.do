@@ -31,7 +31,7 @@ rh_del_stay			"Duration of stay following recent birth"
 //Assistance during delivery
 **Note: Assistance during delivery and skilled provider indicators are both country specific indicators. 
 **The table for these indicators in the final report would need to be checked to confirm the code below.
-	gen rh_del_pv = 0 if m3a != .
+	gen rh_del_pv = 9 
 	replace rh_del_pv 	= 6 	if m3n == 1
 	replace rh_del_pv 	= 5 	if m3h == 1 | m3i == 1 | m3j == 1 | m3k == 1 | m3l == 1 | m3m == 1
 	replace rh_del_pv 	= 4 	if m3g == 1 
