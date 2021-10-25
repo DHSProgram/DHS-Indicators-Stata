@@ -10,7 +10,7 @@ Date last modified: September 24, 2020
 /*______________________________________________________________________________
 Variables created in this file:
 
-//EXPERIENCE OF PHYSICAL, SEXUAL, EMOTIONAL VIOLENCE
+//EXPERIENCE OF PHYSICAL and SEXUAL VIOLENCE
 	dv_phy				"Experienced physical violence since age 15"
 	dv_phy_12m			"Experienced physical violence in the past 12 months"
 	dv_phy_preg			"Experienced physical violence during pregnancy"
@@ -225,7 +225,6 @@ cap label define yesno 0 "no" 1 "yes" //for all yes/no binary variables
 	replace dv_phy_other = 1 if d115x==1 | d118x==1
 	lab var dv_phy_other		"Person committing physical violence: other"
 	label val dv_phy_other yesno
-
 
 
 **EXPERIENCED SEXUAL VIOLENCE

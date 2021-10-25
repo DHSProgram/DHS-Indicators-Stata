@@ -402,7 +402,7 @@ cap label define yesno 0 "no" 1 "yes" //for all yes/no binary variables
 **Current partner emotional violence: types of violence
 ********************************************************************************
 	
-	//EXPERIENCED AND EMOTIONAL VIOLENCE
+	//EXPERIENCED EMOTIONAL VIOLENCE
 		//ever
 		gen dv_prtnr_emot = 0 if v044==1 & v502>0
 		foreach x in a b c {
