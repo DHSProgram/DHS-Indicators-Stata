@@ -5,7 +5,9 @@ Data inputs: 		BR and PR dataset
 Data outputs:		coded variables
 Author:				Trevor Croft, modified by Shireen Assaf for this project
 Date last modified: May 6, 2020 by Shireen Assaf 
-Note:				To produce the net attendance ratios you need to provide country specific information on the year and month of the school calendar and the age range for school attendance. See lines 65-75
+                    December 1, 2021 by Trevor Croft
+					
+Note:				To produce the net attendance ratios you need to provide country specific information on the year and month of the school calendar and the age range for school attendance. See lines 63-73. You can obtain this information for each country from the UNESCO webiste: http://data.uis.unesco.org/. This would be under "Education" and then "Other policy relevant indicators". Scroll to the bottom of the list to obtain the school ages from "Offical entrance age to each ISCED level of education" and the school calendar from "Start and end of the academic year".
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -72,6 +74,7 @@ global age_sec_max = 18
 
 * produce century month code of start of school year for each state and phase
 gen cmcSch = ($school_start_yr - 1900)*12 + $school_start_mo
+replace cmcSch = cmcSch+12 if hv008 >= cmcSch+12
 * calculate the age at the start of the school year, using the date of birth from the birth history if we have it
 gen school_age = int((cmcSch - b3) / 12) if b3 != .
 * Impute an age at the beginning of the school year when CMC of birth is unknown
@@ -95,15 +98,17 @@ cap gen wt = hv005/1000000
 * NAR is just the proportion attending primary/secondary school of children in the correct age range, for de facto children 
 gen nar_prim = prim if prim_age == 1
 gen nar_sec  = sec  if sec_age  == 1
-lab var nar_prim	"Primary school net attendance ratio (NAR)"
+lab var nar_prim "Primary school net attendance ratio (NAR)"
 lab var nar_sec	"Secondary school net attendance ratio (NAR)"
 
 * tabulate primary school attendance 
 tab hv104 nar_prim [iw=wt] , row
 tab hv025 nar_prim [iw=wt] , row
+tab hv270 nar_prim [iw=wt] , row
 * tabulate secondary school attendance 
 tab hv104 nar_sec [iw=wt] , row
 tab hv025 nar_sec [iw=wt] , row
+tab hv270 nar_sec [iw=wt] , row
 
 
 * Program for calculating NAR or GAR
@@ -171,15 +176,30 @@ program define nar_gar
 	if `sex' == 1 local sexlabel males
 	if `sex' == 2 local sexlabel females
 	lab var ph_sch_`rate'_`sch'_`backvar'_`sex' "`rate' for `schooling' education for background characteristic `backvar' for `sexlabel'" 
+
+    * Tabulating indicators by background variables and exporting estimates to excel table Tables_schol.xls
+	* the tabulations will provide the estimates for the indicators for the total, males, and females for the background variable
+    tabout `backvar' using Tables_schol.xls, sum cells(mean ph_sch_`rate'_`sch'_`backvar'_`sex') ptotal(none) append
   }
+
   * gender parity index for a rate for a characteristic - female (2) rate divided by male (1) rate
-  gen ph_sch_`rate'_`sch'_`backvar'_gpi = 100 * (ph_sch_`rate'_`sch'_`backvar'_2 / ph_sch_`rate'_`sch'_`backvar'_1)
+  gen ph_sch_`rate'_`sch'_`backvar'_gpi = (ph_sch_`rate'_`sch'_`backvar'_2 / ph_sch_`rate'_`sch'_`backvar'_1)
   lab var ph_sch_`rate'_`sch'_`backvar'_gpi "gender parity index for `rate' for `schooling' education for background characteristic `backvar'"
+  
+  * Tabulating the GPI indicator by background variable and exporting estimates to excel table Tables_schol.xls
+  * the tabulations will provide the estimates for the GPI indicator for the background variable
+  mean ph_sch_`rate'_`sch'_`backvar'_gpi, over(`backvar')
+  tabout `backvar' using Tables_schol.xls, sum cells(mean ph_sch_`rate'_`sch'_`backvar'_gpi) f(2) ptotal(none) append
+  
 end
 
 * create total background characteristic
 gen total = 0
 lab var total "total"
+lab def total 0 "total"
+lab val total total
+
+cap erase Tables_schol.xls
 
 * Caculate indicators and save them in the dataset
 nar_gar nar prim total /* NAR primary   - total population */
@@ -202,38 +222,4 @@ nar_gar gar sec  hv025 /* GAR secondary - urban/rural */
 nar_gar gar sec  hv024 /* GAR secondary - region */
 nar_gar gar sec  hv270 /* GAR secondary - wealth index */
 
-
-* Dividing GPI indicators by 100 
-foreach x in ph_sch_nar_prim_total_gpi ph_sch_nar_prim_hv025_gpi ph_sch_nar_prim_hv024_gpi ph_sch_nar_prim_hv270_gpi ph_sch_nar_sec_total_gpi ph_sch_nar_sec_hv025_gpi ph_sch_nar_sec_hv024_gpi ph_sch_nar_sec_hv270_gpi  ph_sch_gar_prim_total_gpi ph_sch_gar_prim_hv025_gpi ph_sch_gar_prim_hv024_gpi ph_sch_gar_prim_hv270_gpi ph_sch_gar_sec_total_gpi ph_sch_gar_sec_hv025_gpi ph_sch_gar_sec_hv024_gpi ph_sch_gar_sec_hv270_gpi {
-	replace `x'=`x'/100
-}	
-
 erase tempBR.dta
-
-*****************************************************************************************************
-*****************************************************************************************************
-
-*Tabulating indicators by background variables and exporting estimates to excel table Tables_edu
-*the tabulations will provide the estimates for the indicators for the total, males, and females and by hv025, hv024, and hv270
-
-//Primary school net attendance ratio (NAR) and gender parity index
-tab1 ph_sch_nar_prim* [iw=wt]
-
-tabout ph_sch_nar_prim* using Tables_schol.xls [iw=wt] , oneway cells(cell) replace 
-
-//Secondary school net attendance ratio (NAR) and gender parity index
-tab1 ph_sch_nar_sec* [iw=wt]
-
-tabout ph_sch_nar_sec* using Tables_schol.xls [iw=wt] , oneway cells(cell) append 
-
-//Primary school gross attendance ratio (GAR) and gender parity index
-tab1 ph_sch_gar_prim* [iw=wt]
-
-tabout ph_sch_gar_prim* using Tables_schol.xls [iw=wt] , oneway cells(cell) append 
-		
-//Secondary school gross attendance ratio (GAR) and gender parity index
-tab1 ph_sch_gar_sec* [iw=wt]
-
-tabout ph_sch_gar_sec* using Tables_schol.xls [iw=wt] , oneway cells(cell) append 
-
-*/
