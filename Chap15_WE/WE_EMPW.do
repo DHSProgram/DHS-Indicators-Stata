@@ -75,56 +75,56 @@ gen we_decide_visits_self= inlist(v743d,1,2) if v502==1
 label values we_decide_visits_self yesno
 label var we_decide_visits_self "Decides on visits to family or relatives either alone or jointly with partner"
 
-//Decides both health and purchases either alone or jointly
+//Decides on all three: health, purchases, and visits  either alone or jointly with partner
 gen we_decide_all= inlist(v743a,1,2) & inlist(v743b,1,2) & inlist(v743d,1,2) if v502==1
 label values we_decide_all yesno
-label var we_decide_all "Decides on both health and purchases either alone or jointly with partner"
+label var we_decide_all "Decides on all three: health, purchases, and visits  either alone or jointly with partner"
 
-//Does not decide on health or purchases
+//Does not decide on any of the three decisions either alone or jointly with partner
 gen we_decide_none= 0 if v502==1
 replace we_decide_none=1 if (v743a!=1 & v743a!=2) & (v743b!=1 & v743b!=2) & (v743d!=1 & v743d!=2)& v502==1
 label values we_decide_none yesno
-label var we_decide_none "Does not decide on health or purchases either alone or jointly with partner"
+label var we_decide_none "Does not decide on any of the three decisions either alone or jointly with partner"
 
 *** Justification of violence ***
 
-//Jusity violence - burned food
+//Justify violence - burned food
 gen we_dvjustify_burn= v744e==1
 label values we_dvjustify_burn yesno
 label var we_dvjustify_burn "Agree that husband is justified in hitting or beating his wife if she burns food"
 
-//Jusity violence - argues
+//Justify violence - argues
 gen we_dvjustify_argue= v744c==1
 label values we_dvjustify_argue yesno
 label var we_dvjustify_argue "Agree that husband is justified in hitting or beating his wife if she argues with him"
 
-//Jusity violence - goes out without saying
+//Justify violence - goes out without saying
 gen we_dvjustify_goout= v744a==1
 label values we_dvjustify_goout yesno
 label var we_dvjustify_goout "Agree that husband is justified in hitting or beating his wife if she goes out without telling him"
 
-//Jusity violence - neglects children 
+//Justify violence - neglects children 
 gen we_dvjustify_neglect= v744b==1
 label values we_dvjustify_neglect yesno
 label var we_dvjustify_neglect "Agree that husband is justified in hitting or beating his wife if she neglects the children"
 
-//Jusity violence - no sex
+//Justify violence - no sex
 gen we_dvjustify_refusesex= v744d==1
 label values we_dvjustify_refusesex yesno
 label var we_dvjustify_refusesex "Agree that husband is justified in hitting or beating his wife if she refuses to have sexual intercourse with him"
 
-//Jusity violence - at least one reason
+//Justify violence - at least one reason
 gen we_dvjustify_onereas=0 
 replace we_dvjustify_onereas=1 if v744a==1 | v744b==1 | v744c==1 | v744d==1 | v744e==1
 label values we_dvjustify_onereas yesno
 label var we_dvjustify_onereas "Agree that husband is justified in hitting or beating his wife for at least one of the reasons"
 	
-//Jusity to reuse sex - he's having sex with another woman
+//Justify to reuse sex - he's having sex with another woman
 gen we_justify_refusesex= v633b==1
 label values we_justify_refusesex yesno
 label var we_justify_refusesex "Believe a woman is justified to refuse sex with her husband if she knows he's having sex with other women"
 
-//Jusity to ask to use condom - he has STI
+//Justify to ask to use condom - he has STI
 gen we_justify_cond= v822==1
 label values we_justify_cond yesno
 label var we_justify_cond "Believe a women is justified in asking that her husband to use a condom if she knows that he has an STI"
@@ -156,7 +156,7 @@ label var we_num_decide "Number of decisions made either alone or jointly with h
 	replace v744`x'2=1 if v744`x'==1
 	}
 gen reasons= v744a2 + v744b2 + v744c2 + v744d2 + v744e2
-recode reasons (0=0 " 0") (1/2=1 " 1-2") (3/4=2 " 3-4") (5=5 " 5") if v502==1, gen(we_num_justifydv)
+recode reasons (0=0 " 0") (1/2=1 " 1-2") (3/4=2 " 3-4") (5=3 " 5") if v502==1, gen(we_num_justifydv)
 label var we_num_justifydv "Number of reasons for which wife beating is justified among women currently in a union"
 	drop reasons
 	drop v744a2-v744e2

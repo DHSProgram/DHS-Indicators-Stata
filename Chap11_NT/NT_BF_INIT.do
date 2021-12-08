@@ -26,12 +26,12 @@ nt_bottle			"Drank from a bottle with a nipple yesterday - under 2 years"
 	label var nt_bf_ever "Ever breastfed - last-born in the past 2 years"
 
 	//Start breastfeeding within 1 hr
-	gen nt_bf_start_1hr= (m4!=94 & m4!=99) & (inrange(m34,0,100)) if (midx==1 & age<24)
+	gen nt_bf_start_1hr= (inrange(m34,0,100)) if (midx==1 & age<24)
 	label values nt_bf_start_1hr yesno
 	label var nt_bf_start_1hr "Started breastfeeding within one hour of birth - last-born in the past 2 years"
 
 	//Start breastfeeding within 1 day
-	gen nt_bf_start_1day= (m4!=94 & m4!=99) & (inrange(m34,0,123)) if (midx==1 & age<24)
+	gen nt_bf_start_1day= (inrange(m34,0,123)) if (midx==1 & age<24)
 	label values nt_bf_start_1day  yesno
 	label var nt_bf_start_1day	"Started breastfeeding within one day of birth - last-born in the past 2 years"
 

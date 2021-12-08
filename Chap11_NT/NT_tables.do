@@ -7,7 +7,7 @@ Date last modified: December 10, 2020 by Courtney Allen
 *This do file will produce the following tables in excel:
 1. 	Tables_nut_ch:		Contains the tables for nutritional status indicators for children
 2.	Tables_anemia_ch:	Contains the tables for anemia indicators for children
-3. 	Tables_brst_fed:	Contains the tables for breastfeeding indicators
+3. 	Tables_bf:			Contains the tables for breastfeeding indicators
 4.	Tables_IYCF:		Contains the tables for IYCF indicators in children
 5. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
 6. 	Tables_salt_hh:		Contains the tables for salt testing and iodized salt in households
@@ -177,7 +177,7 @@ tab hv270 nt_ch_sev_wast [iw=wt], row nofreq
 tabout agemonths hc27 hv025 hv024 hv270 nt_ch_sev_underwt using Tables_nut_ch.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Wasted
+//Underweight
 *age of child in months
 tab agemonths nt_ch_underwt [iw=wt], row nofreq 
 
@@ -197,7 +197,7 @@ tab hv270 nt_ch_underwt [iw=wt], row nofreq
 tabout agemonths hc27 hv025 hv024 hv270 nt_ch_underwt using Tables_nut_ch.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Overweight for height
+//Overweight for age
 *age of child in months
 tab agemonths nt_ch_ovwt_age [iw=wt], row nofreq 
 

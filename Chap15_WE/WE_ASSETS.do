@@ -12,14 +12,14 @@ Note:				The indicators below can be computed for men and women.
 Variables created in this file:
 we_empl				"Employment status in the last 12 months among those currently in a union"
 we_empl_earn		"Type of earnings among those employed in the past 12 months and currently in a union"
-we_earn_wm_decide	"Who descides on wife's cash earnings for employment in the last 12 months"
+we_earn_wm_decide	"Who decides on wife's cash earnings for employment in the last 12 months"
 we_earn_wm_compare	"Comparison of cash earnings with husband's cash earnings"
-we_earn_mn_decide	"Who descides on husband's cash earnings for employment in the last 12 months among men currently in a union"
-we_earn_hs_decide	"Who descides on husband's cash earnings for employment in the last 12 months among women currently in a union"
+we_earn_mn_decide	"Who decides on husband's cash earnings for employment in the last 12 months among men currently in a union"
+we_earn_hs_decide	"Who decides on husband's cash earnings for employment in the last 12 months among women currently in a union"
 we_own_house		"Ownership of housing"
 we_own_land			"Ownership of land"
-we_house_deed		"Title or deed possesion for owned house"
-we_land_deed		"Title or deed possesion for owned land"
+we_house_deed		"Title or deed possession for owned house"
+we_land_deed		"Title or deed possession for owned land"
 we_bank				"Use an account in a bank or other financial institution"
 we_mobile			"Own a mobile phone"
 we_mobile_finance	"Use mobile phone for financial transactions"
@@ -44,7 +44,7 @@ label var we_empl_earn "Type of earnings among those employed in the past 12 mon
 //Control over earnings
 gen we_earn_wm_decide=v739 if inlist(v731,1,2,3) & inlist(v741,1,2) & v502==1
 label values we_earn_wm_decide V739
-label var we_earn_wm_decide "Who descides on wife's cash earnings for employment in the last 12 months"
+label var we_earn_wm_decide "Who decides on wife's cash earnings for employment in the last 12 months"
 
 //Comparison of earnings with husband/partner
 gen we_earn_wm_compare=v746 if inlist(v731,1,2,3) & inlist(v741,1,2) & v502==1
@@ -57,7 +57,7 @@ gen we_earn_hs_decide=v743f if v746!=4 & v743f!=7 & v502==1
 replace we_earn_hs_decide=9 if v743f==8
 cap label define v743f 9"Don't know/Missing", modify
 label values we_earn_hs_decide V743F
-label var we_earn_hs_decide	"Who descides on husband's cash earnings for employment in the last 12 months among women currently in a union"
+label var we_earn_hs_decide	"Who decides on husband's cash earnings for employment in the last 12 months among women currently in a union"
 
 *** Ownership of assets ***
 
@@ -73,11 +73,11 @@ label var we_own_land "Ownership of land"
 
 //Ownership of house deed
 recode v745c (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(v745a,1,2,3), gen(we_house_deed)
-label var we_house_deed "Title or deed possesion for owned house"
+label var we_house_deed "Title or deed possession for owned house"
 
 //Ownership of land deed
 recode v745d (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(v745b,1,2,3), gen(we_land_deed)
-label var we_land_deed "Title or deed possesion for owned land"
+label var we_land_deed "Title or deed possession for owned land"
 
 //Own a bank account
 gen we_bank=v170
@@ -122,7 +122,7 @@ gen we_earn_mn_decide=mv739 if inlist(mv731,1,2,3) & inlist(mv741,1,2) & mv502==
 replace we_earn_mn_decide=9 if mv739==8
 cap label define mv739 9"Don't know/Missing", modify
 label values we_earn_mn_decide MV739
-label var we_earn_mn_decide	"Who descides on husband's cash earnings for employment in the last 12 months among men currently in a union"
+label var we_earn_mn_decide	"Who decides on husband's cash earnings for employment in the last 12 months among men currently in a union"
 
 *** Ownership of assets ***
 
@@ -138,11 +138,11 @@ label var we_own_land "Ownership of land"
 
 //Ownership of house deed
 recode mv745c (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(mv745a,1,2,3), gen(we_house_deed)
-label var we_house_deed "Title or deed possesion for owned house"
+label var we_house_deed "Title or deed possession for owned house"
 
 //Ownership of land deed
 recode mv745d (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(mv745b,1,2,3), gen(we_land_deed)
-label var we_land_deed "Title or deed possesion for owned land"
+label var we_land_deed "Title or deed possession for owned land"
 
 //Own a bank account
 gen we_bank=mv170

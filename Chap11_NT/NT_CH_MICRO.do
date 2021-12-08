@@ -49,7 +49,7 @@ replace nt_ch_micro_dwm=. if !inrange(age,6,59) | b5==0
 label values nt_ch_micro_dwm yesno 
 label var nt_ch_micro_dwm "Children age 6-59 mos given deworming medication"
 
-//Child living in household with idodized salt 
+//Child living in household with iodized salt 
 gen nt_ch_micro_iod= hv234a==1
 replace nt_ch_micro_iod=. if !inrange(age,6,59) | b5==0 | hv234a>1
 label values nt_ch_micro_iod yesno 

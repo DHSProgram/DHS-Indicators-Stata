@@ -7,8 +7,8 @@ Date last modified: October 17 2019 by Shireen Assaf
 *This do file will produce the following tables in excel:
 1. 	Tables_emply_wm:	Contains the tables for employment and earning indicators for women
 2.	Tables_emply_mn:	Contains the tables for employment and earning indicators for men
-3. 	Tables_assets_wm:	Contains the tables for asset ownwership indicators for women
-4.	Tables_assets_mn:	Contains the tables for asset ownwership indicators for men
+3. 	Tables_assets_wm:	Contains the tables for asset ownership indicators for women
+4.	Tables_assets_mn:	Contains the tables for asset ownership indicators for men
 5. 	Tables_empw_wm:		Contains the tables for empowerment indicators, justification of wife beating, and decision making for women
 6.	Tables_empw_mn:		Contains the tables for empowerment indicators, justification of wife beating, and decision making for men
 
@@ -98,7 +98,7 @@ tab v190 we_earn_wm_compare [iw=wt], row nofreq
 tabout v013 numch v025 v106 v024 v190 we_earn_wm_compare using Tables_emply_wm.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Decision on husbands's cash earnings
+//Decision on husband's cash earnings
 *age
 tab v013 we_earn_hs_decide [iw=wt], row nofreq 
 
@@ -128,6 +128,7 @@ tab we_earn_wm_compare we_earn_wm_decide [iw=wt], row
 tabout we_earn_wm_compare we_earn_wm_decide using Tables_emply_wm.xls [iw=wt] , c(row) f(1) append 
 
 //Decision on husband's cash earnings by comparison of wife to husband's earnings
+* first construct a new variable that includes women that do not earn cash or not working
 gen we_earn_wm_compare2=we_earn_wm_compare
 replace we_earn_wm_compare2=5 if (we_empl_earn==0 | we_empl_earn==3) 
 replace we_earn_wm_compare2=6 if we_empl==0 
@@ -184,7 +185,7 @@ tab v190 we_own_land [iw=wt], row nofreq
 tabout v013 v025 v106 v024 v190 we_own_land using Tables_assets_wm.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Title or deed ownwership for house
+//Title or deed ownership for house
 *age
 tab v013 we_house_deed [iw=wt], row nofreq 
 
@@ -816,7 +817,7 @@ tab mv190 we_own_land [iw=wt], row nofreq
 tabout mv013 mv025 mv106 mv024 mv190 we_own_land using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Title or deed ownwership for house
+//Title or deed ownership for house
 *age
 tab mv013 we_house_deed [iw=wt], row nofreq 
 
@@ -836,7 +837,7 @@ tab mv190 we_house_deed [iw=wt], row nofreq
 tabout mv013 mv025 mv106 mv024 mv190 we_house_deed using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Title or deed ownwership for land
+//Title or deed ownership for land
 *age
 tab mv013 we_land_deed [iw=wt], row nofreq 
 

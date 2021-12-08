@@ -161,7 +161,7 @@ gen nt_wm_micro_dwm= m60_1==1
 replace nt_wm_micro_dwm= . if v208==0
 label var nt_wm_micro_dwm "Women who took deworming medication during last pregnancy"
 
-//Woman living in household with idodized salt 
+//Woman living in household with iodized salt 
 gen nt_wm_micro_iod= hv234a==1
 replace nt_wm_micro_iod=. if v208==0 | hv234a>1 
 label var nt_wm_micro_iod "Women living in hh with iodized salt"

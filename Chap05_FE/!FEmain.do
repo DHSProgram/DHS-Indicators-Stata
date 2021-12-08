@@ -10,7 +10,7 @@ Date last modified:		September 4, 2020
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
-global user 39585	//change employee id number to personalize path
+global user 33697	//change employee id number to personalize path
 
 * change working path
 global workingpath "C:/Users//$user//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap05_FE"
@@ -29,14 +29,14 @@ global irdata "NGIR7AFL"
 global prdata  "NGPR7AFL"
 	
 *KR Files
-global krdata "NGKR7AFL"
+global krdata "KEKR72FL"
 
 *BR Files
 global brdata "NGBR7AFL"
 
 ********************************************************************************
 	
-* IR file variables
+/* IR file variables
 
 * open dataset
 use "$datapath//$irdata.dta", clear
@@ -53,7 +53,7 @@ do FE_ASFR_10_14.do
 *Purpose: 	Code ASFR for 10-14 year olds. This file will create tables.
 
 */
-* Reopen dataset for current fertility indicators.
+/* Reopen dataset for current fertility indicators.
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
@@ -63,11 +63,11 @@ do FE_FERT.do
 
 do FE_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
-
+*/
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-* PR file variables
+/* PR file variables
 
 * open dataset
 use "$datapath//$prdata.dta", clear
@@ -77,20 +77,22 @@ gen file=substr("$prdata", 3, 2)
 do FE_CBR.do
 * Purpose: 	Code crude birth rates. This file will create tables. This do file 
 * must be run after the FE_TFR.do file is run as it uses the scalars created.
-
-*******************************************************************************************************************************
-*******************************************************************************************************************************
-
-* BR file variables
 */
-use "$datapath//$brdata.dta", clear
+*******************************************************************************************************************************
+*******************************************************************************************************************************
 
-gen file=substr("$brdata", 6, 1)
+* KR file variables
+*
+use "$datapath//$krdata.dta", clear
+
+gen file=substr("$krdata", 6, 1)
 
 do FE_MEDIANS.do
 * Purpose: Code median duration of amenorrhea, postpartum abstinence, and insusceptibility fertility
 
-* Reopen dataset for the other do files
+
+/* BR files
+
 use "$datapath//$brdata.dta", clear
 
 gen file=substr("$brdata", 3, 2)

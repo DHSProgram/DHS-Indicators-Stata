@@ -62,8 +62,8 @@ recode hv105 (0/17=1 " 0-17") (18/97=2 " 18+") (98/max=98 "Don't know/missing") 
 label var ph_pop_cld_adlt "De facto population by child and adult populations"
 
 //Adolescent population
-recode hv105 (10/19=1 " Adolescents") (else=0 " not adolesents") if hv103==1, gen(ph_pop_adols)
-label var ph_pop_adols "De factor population that are adolesents"
+recode hv105 (10/19=1 " Adolescents") (else=0 " not adolescents") if hv103==1, gen(ph_pop_adols)
+label var ph_pop_adols "De facto population that are adolescents"
 
 *** Birth registration ***
 
@@ -147,9 +147,9 @@ qui summarize eduyr [fweight=hv005], detail
 
 	drop eduyr
 
-*** Living arrangments ***
+*** Living arrangements ***
 
-* IMPORTANT: Children must be de jure residents AND coresidence with parents requires that
+* IMPORTANT: Children must be de jure residents AND co-residence with parents requires that
 * the parents are also de jure residents
 
 * add a code 99 to hv112 if the mother is in the hh but is not de jure

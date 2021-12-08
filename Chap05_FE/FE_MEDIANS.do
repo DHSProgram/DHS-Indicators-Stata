@@ -514,7 +514,7 @@ end
 
 
 //specify a location that can be used for the output and for working files that will be deleted
-cd "C:\Users\39585\ICF\Analysis - Shared Resources\Code\DHS-Indicators-Stata\Chap05_FE"
+cd "C:\Users\\$user\ICF\Analysis - Shared Resources\Code\DHS-Indicators-Stata\Chap05_FE"
 
 
 	/*NOTE ---------------------------------------------------------------------

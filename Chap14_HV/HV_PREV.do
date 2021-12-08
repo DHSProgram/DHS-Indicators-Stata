@@ -5,8 +5,7 @@ Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: Nov 5, 2019 by Shireen Assaf 
-Note:				This is using the merged file IRMRARmerge.dta 
-			
+Note:				This is using the merged file IRMRARmerge.dta 	
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -29,7 +28,6 @@ hv_neg_ever_noresult	"Ever tested for HIV and did not receive the result of most
 hv_neg_nottested		"Not previously tested among HIV negative"
 
 hv_couple_hiv_status	"HIV status for couples living in the same household both of whom had HIV test in survey"
-	
 ----------------------------------------------------------------------------*/
 
 if file=="MR" {

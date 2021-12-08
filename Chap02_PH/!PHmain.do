@@ -10,7 +10,7 @@ set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-global user 39585	//change employee id number to personalize path
+global user 33697	//change employee id number to personalize path
 
 cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap02_PH"
 
@@ -18,8 +18,8 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
-* IR Files
-global hrdata "AFHR71FL"
+* HR Files
+global hrdata "ZMHR71FL"
 * GHHR72FL  MMHR71FL UGHR7BFL ZMHR71FL  NGHR7AFL
 
 * PR Files
@@ -81,7 +81,7 @@ do PH_POP.do
 
 do PH_tables2.do
 * Purpose: 	Produce tables for indicators computed from the PH_POP.do file
-*/
+
 *
 do PH_GINI.do
 * Purpose:	Code to produce Gini index table. 

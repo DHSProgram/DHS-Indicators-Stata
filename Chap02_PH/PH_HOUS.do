@@ -5,9 +5,9 @@ Data inputs: 		HR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: April 22, 2020 by Shireen Assaf 
-Note:				These indicators can also be computed using the PR file but you would need to select for dejure household memebers
+Note:				These indicators can also be computed using the PR file but you would need to select for dejure household members
 					using hv102==1. Please see the Guide to DHS Statistics.  
-					There may be some other country specific household possessions available in the dataset. 
+					There may be some other country specific household possessions available in the dataset that may not be coded here. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -54,20 +54,22 @@ label values ph_floor HV213
 label var ph_floor "Flooring material"
 
 //Number of rooms for sleeping
-recode hv216 (1=1 "One") (2=2 "Two") (3/max=3 "Three or more") , gen(ph_rooms_sleep)
+recode hv216 (1=1 "One") (2=2 "Two") (3/98=3 "Three or more") (else=9 "Missing") , gen(ph_rooms_sleep)
 label var ph_rooms_sleep "Rooms for sleeping"
 
 //Place for cooking
 gen ph_cook_place = hv241 
+replace ph_cook_place= 9 if hv241==. 
 replace ph_cook_place= 4 if hv226==95 
-label define HV241 4 "No food cooked in household", modify
+label define HV241 9"Missing" 4 "No food cooked in household", modify
 label values ph_cook_place HV241
 label var ph_cook_place "Place for cooking"
 
 //Type of cooking fuel
 gen ph_cook_fuel= hv226 
+replace ph_cook_fuel= 99 if hv226==. 
 label values ph_cook_fuel HV226
-label var ph_cook_fuel "Type fo cooking fuel"
+label var ph_cook_fuel "Type of cooking fuel"
 
 //Solid fuel for cooking
 gen ph_cook_solid= inrange(hv226,6,11) 
@@ -81,6 +83,8 @@ label var ph_cook_clean "Using clean fuel for cooking"
 
 //Frequency of smoking in the home
 gen ph_smoke= hv252
+replace ph_smoke = 9 if hv252==. 
+label define HV252 9"Missing" , modify
 label values ph_smoke HV252	
 label var ph_smoke "Frequency of smoking at home"
 
@@ -124,7 +128,7 @@ label var ph_bike "Owns a bicycle"
 //Animal drawn cart
 gen ph_cart= hv243c==1
 label values ph_cart yesno
-label var ph_cart "Owns a animal drawn cart"
+label var ph_cart "Owns an animal drawn cart"
 
 //Motorcycle or scooter
 gen ph_moto= hv211==1
