@@ -57,7 +57,7 @@ In Stata the tabout command is used to create tables. This is a package that nee
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|X|X||
 |  14|   HIV Prevalence|HV|X|X|X|
 |  15|   Women’s Empowerment|WE|X|X|X|
-|  16|   Adult & Maternal Mortality|AM|X|X||
+|  16|   Adult & Maternal Mortality|AM|X|X|X|
 |  17|   Domestic Violence|DV|X|X|X|
 |  18|	 Female Genital Cutting|FG|X|X||
 |  19|	 Fistula |FS|X|X||
