@@ -3,7 +3,7 @@ Program: 			PH_POP.do
 Purpose: 			Code to compute population characteristics, birth registration, education levels, household composition, orphanhood, and living arrangments
 Data inputs: 		PR dataset
 Data outputs:		coded variables
-Author:				Shireen Assaf
+Author:				Shireen Assaf for population indicators and Tom Pullum for living arrangements and orphanhood indicators
 Date last modified: April 23, 2020 by Shireen Assaf 
 Note:				In line 244 the code will collapse the data and therefore some indicators produced will be lost. However, they are saved in the file PR_temp_children.dta and this data file will be used to produce the tables for these indicators in the PH_table code. This code will produce the Tables_hh_comps for household composition. 
 *****************************************************************************************************/
@@ -297,9 +297,7 @@ save PR_temp_children.dta, replace
 
 *** Household characteristics *** 
 *  Warning, this code will collapse the data and therefore the indicators produced will be lost. However, they are saved in the file PR_temp2_children.dta 
-
 use PR_temp.dta, clear
-keep if hv102==1
 sort hv001 hv002 hvidx
 merge hv001 hv002 hvidx using PR_temp_children.dta
 drop _merge
@@ -310,11 +308,19 @@ egen hhsize=count(n), by(hv001 hv002)
 gen     ph_num_members=hhsize
 replace ph_num_members=9 if hhsize>9 
 
+* Construct totals of the different child types, restricted to hv102==1
+local lch_types ph_orph_double ph_orph_single ph_foster ph_orph_foster
+foreach lch of local lch_types {
+rename `lch' tempvar
+egen `lch'=total(tempvar) if hv102==1, by(hv001 hv002)
+drop tempvar
+}
+
 * Sort to be sure that the head of the household (with hv101=1) is the first person listed in the household
-sort hv001 hv002 hv101
+*sort hv001 hv002 hv101
 
 * Reduce to one record per household, that of the hh head
-collapse (first) hv005 hhsize ph_num_members hv104 hv025 hv024 (sum) ph_orph_double ph_orph_single ph_foster ph_orph_foster, by(hv001 hv002)
+collapse (first) hv005 hhsize ph_num_members hv104 hv025 hv024 ph_orph_double ph_orph_single ph_foster ph_orph_foster, by(hv001 hv002)
 
 * re-attach labels after collapse
 label values hv024 HV024
