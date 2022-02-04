@@ -43,7 +43,7 @@ In Stata the tabout command is used to create tables. This is a package that nee
 
 |Ch. | Title | Ch. Acronym |Stata code | SPSS code | R code |
 |---|---|---|---|---|---|
-|   2|Population & Housing|PH|X|X||
+|   2|Population & Housing|PH|X|X|X|
 |   3|Respondents’ Characteristics|RC|X|X|X|
 |   4|Marriage & Sexual Activity|MS|X|X||
 |   5|   Fertility|FE|X|X|X|
@@ -52,8 +52,8 @@ In Stata the tabout command is used to create tables. This is a package that nee
 |   8|   Infant & Child Mortality|CM|X|X|X|
 |   9|   Reproductive Health|RH|X|X|X|
 |  10|   Child Health|CH|X|X||
-|  11|   Nutrition of Children & Adults|NT|X|X||
-|  12|   Malaria| ML|X|X||
+|  11|   Nutrition of Children & Adults|NT|X|X|X|
+|  12|   Malaria| ML|X|X|X|
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|X|X||
 |  14|   HIV Prevalence|HV|X|X|X|
 |  15|   Women’s Empowerment|WE|X|X|X|
