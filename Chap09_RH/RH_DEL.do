@@ -78,9 +78,9 @@ rh_del_stay			"Duration of stay following recent birth"
 		label var rh_del_cestime "Timing of decision to have Caesarean"
 		}
 //Duration of stay following recent birth
-	recode m61 (0/105 = 1 "<6 hours") (106/111 = 2 "6-11 hours") (112/123 = 3 "12-23 hours") ///
-	(124/171 201/202 = 4 "1-2 days") (172/199 203/399= 5 "3+ days") (998 = 9 "Don't know/Missing") (else= 9), gen(rh_del_stay)
-	replace rh_del_stay = . if rh_del_place!=1 | bidx!=1 | age>=period
+	recode m61 (0/105 = 1 "<6 hours") (106/111 = 2 "6-11 hours") (112/123 200= 3 "12-23 hours") ///
+	(124/171 201/202 = 4 "1-2 days") (172/197 203/297 301/397= 5 "3+ days") (198 199 298 299 398 399 998 999= 9 "Don't know/Missing") (else= 9), gen(rh_del_stay)
+	replace rh_del_stay = . if rh_del_place!=1 | bidx!=1 | age>=period | m61==.
 	label var rh_del_stay "Duration of stay following recent birth"
 	
 	

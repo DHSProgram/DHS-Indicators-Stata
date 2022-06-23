@@ -447,7 +447,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="cm`x'44"  {
+	if filename=="cm`x'45"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 15 ///
@@ -735,7 +735,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gn`x'52"  {
+	if filename=="gn`x'53"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1092,6 +1092,11 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
+	if filename=="lb`x'7a"  {
+	recode hv201 ///
+	92 = 73 ///
+	, gen (ph_wtr_source)
+	}
 	if filename=="ls`x'41"  {
 	recode hv201 ///
 	13 = 14 ///
@@ -1361,7 +1366,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 21 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ng`x'4b"  {
+	if filename=="ng`x'4c"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -2192,7 +2197,7 @@ cap label define yesno 0"No" 1"Yes"
 	33 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zm`x'42"  {
+	if filename=="zm`x'43"  {
 	recode hv201 ///
 	22 = 32 ///
 	23 = 32 ///

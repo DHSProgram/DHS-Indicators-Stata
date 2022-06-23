@@ -288,7 +288,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="cm`x'44"  {
+	if filename=="cm`x'45"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
@@ -501,7 +501,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gn`x'52"  {
+	if filename=="gn`x'53"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
@@ -913,7 +913,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	23 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ng`x'4b"  {
+	if filename=="ng`x'4c"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
@@ -1458,7 +1458,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="zm`x'42"  {
+	if filename=="zm`x'43"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///

@@ -126,7 +126,7 @@ label var nt_bf_cont_2yr "Continuing breastfeeding at 2 year (20-23 months) - la
 *** Foods consumed ***
 
 *country specific foods. These can be added to the foods below based on the survey.
-*see examples in lines 186 and 200
+*see examples in lines 175 and 190
 gen food1= v414a==1
 gen food2= v414b==1
 gen food3= v414c==1
@@ -147,7 +147,7 @@ gen nt_liquids= v410==1 | v412c==1 | v413==1
 label values nt_liquids yesno 
 label var nt_liquids "Child given other liquids in day/night before survey- last-born under 2 years"
 
-//Give fortified baby food
+//Given fortified baby food
 gen nt_bbyfood= v412a==1
 label values nt_bbyfood yesno 
 label var nt_bbyfood "Child given fortified baby food in day/night before survey- last-born under 2 years"
