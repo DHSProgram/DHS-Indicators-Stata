@@ -5,7 +5,7 @@ Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: March 13 2019 by Shireen Assaf 
-Notes:				
+Notes:				Check notes for ARI/fever care and treatment variables which are country specific.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -205,7 +205,7 @@ replace ch_fev_care_day=1 if ch_fever==1 & ch_fev_care==1 & h46b<2
 replace ch_fev_care_day =. if b5==0
 label var ch_fev_care_day "Advice or treatment sought for fever symptoms on the same or next day"
 
-//Fiven antibiotics for fever 
+//Given antibiotics for fever 
 gen ch_fev_antib=0 if ch_fever==1
 cap replace ch_fev_antib=1 if ch_fever==1 & (h37i==1 | h37j==1)
 cap replace ch_fev_antib=1 if ch_fever==1 & (ml13i==1 | ml13j ==1)

@@ -8,7 +8,7 @@ Date last modified: March 13 2019 by Shireen Assaf
 					March 25 2021 by Trevor Croft to correct spelling of Pneumococcal
 Notes:				Estimates can be created for two age groups (12-23) and (24-35). 
 					
-					!! Please choose the age group of interest in line 100.
+					!! Please choose the age group of interest in line 82. Default is age group 12-23.
 					
 					Vaccination indicators are country specific. However, most common vaccines are coded below and the same logic can be applied to others.
 					When the vaccine is a single dose, the logic for single dose vaccines can be used (ex: bcg).
@@ -75,7 +75,7 @@ ch_novac_card		"No vaccinations according to card"
 ch_novac_moth		"No vaccinations according to mother"
 ch_novac_either		"No vaccinations according to either source"
 
-ch_card_ever_had	"Ever had a vacciation card"
+ch_card_ever_had	"Ever had a vaccination card"
 ch_card_seen		"Vaccination card seen"
 ----------------------------------------------------------------------------*/
 
@@ -360,7 +360,7 @@ label var ch_novac_card "No vaccinations according to card"
 
 *** vaccination card possession ***
 recode h1(1/3=1) (else=0), gen(ch_card_ever_had)
-label var ch_card_ever_had "Ever had a vacciation card"
+label var ch_card_ever_had "Ever had a vaccination card"
 
 recode h1(1=1) (else=0), gen(ch_card_seen)
 label var ch_card_seen "Vaccination card seen"

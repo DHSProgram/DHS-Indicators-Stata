@@ -5,7 +5,7 @@ Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: March 15 2019 by Shireen Assaf 
-Notes:				
+Notes:				Check notes for diarrhea care and treatment variables which are country specific.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ gen ch_diar_ort_feed=0 if ch_diar==1
 replace ch_diar_ort_feed=1 if ((h13==1 | h13==2 | h13b==1 | h14==1 | h14==2 | h38==5)&(h39>=3 & h39<=5))
 label var ch_diar_ort_feed "Given ORT and continued feeding for diarrhea"
 
-//Antiobiotics
+//Antibiotics
 gen ch_diar_antib=0 if ch_diar==1
 replace ch_diar_antib=1 if (h15==1 | h15b==1)
 label var ch_diar_antib "Given antibiotic drugs for diarrhea"
@@ -150,10 +150,12 @@ label var ch_diar_notrt "No treatment for diarrhea"
 	
 
 ***Diarrhea treatment by source (among children with diarrhea symptoms)
+* Three population bases: 1. among children with diarrhea, 2. among children with diarrhea that sought treatment
+*                         3. among children with diarrhea that received ORS
 * This is country specific and needs to be checked to produce the specific source of interest. 
 * Some sources are coded below and the same logic can be used to code other sources. h12a-z indicates the source.
 
-//Diarrhea treamtment in government hospital
+//Diarrhea treatment in government hospital
 gen ch_diar_govh=0 if ch_diar==1
 replace ch_diar_govh=1 if ch_diar==1 & h12a==1
 replace ch_diar_govh =. if b5==0
@@ -169,7 +171,7 @@ replace ch_diar_govh_ors=1 if ch_diar_ors==1 & h12a==1
 replace ch_diar_govh_ors =. if b5==0
 label var ch_diar_govh_ors "Diarrhea treatment sought from government hospital among children with diarrhea that received ORS"
 
-//Diarrhea treamtment in government health center
+//Diarrhea treatment in government health center
 gen ch_diar_govcent=0 if ch_diar==1
 replace ch_diar_govcent=1 if ch_diar==1 & h12b==1
 replace ch_diar_govcent =. if b5==0
