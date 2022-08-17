@@ -51,7 +51,7 @@ In Stata the tabout command is used to create tables. This is a package that nee
 |   7|   Family Planning |FP|X|X|X|
 |   8|   Infant & Child Mortality|CM|X|X|X|
 |   9|   Reproductive Health|RH|X|X|X|
-|  10|   Child Health|CH|X|X||
+|  10|   Child Health|CH|X|X|X|
 |  11|   Nutrition of Children & Adults|NT|X|X|X|
 |  12|   Malaria| ML|X|X|X|
 |  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|X|X||
