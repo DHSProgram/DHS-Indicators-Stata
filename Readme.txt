@@ -14,7 +14,7 @@ This DHS Code Share Project provides the code that can be used to produce these 
 
 ## Main files:
 Each folder contains a Main File from which the user can run all the code files (.do, .sps, or .R files) that will code the indicators and produce the tables for that chapter. The user only needs to change the paths in the Main File and the file name for the survey of interest. The user should not delete the globals (macros), and should only change to the correct path and survey for their project. 
-Before running any code, it is advisable to read the Main File for a specific chapter and the associated code files for any notes. For some chapters a selection is required to choose the population of interest; for example, selecting the age group for the children’s vaccination indicators in the CH_VAC.do file or for indicators restricted to married women versus all women in the Family Planning chapter. 
+Before running any code, it is advisable to read the Main File for a specific chapter and the associated code files for any notes. For some chapters a selection is required to choose the population of interest; for example, selecting the age group for the children?s vaccination indicators in the CH_VAC.do file or for indicators restricted to married women versus all women in the Family Planning chapter. 
 The user may also select the indicators they are interested in for the chapter. Therefore, certain code files can be commented out in the Main Files so they do not run, or certain sections within a code file can also be commented out. If certain indicators are commented out, the same indicators in the table code file for the tabulations will also need to be commented out. 
 
 ## Country-specific changes in indicators:
@@ -25,7 +25,14 @@ Additionally, because the indicators that are created using the Code Share Proje
 In addition, older surveys (mainly before 2000) do not have a wealth index in the dataset and the files would need to be merged with a WI file to include the wealth index. For anthropometry indicators, surveys before roughly 2006 need to be merged with a HW file to obtain the WHO haz, waz, and whz indicators. Please visit https://www.dhsprogram.com/data/Merging-Datasets.cfm to learn how to merge DHS datasets. 
 
 ## Checking for small observations:
-Tabulations do not check for the number of observations. The DHS convention is to suppress estimates that are based on less than 25 unweighted observations and to place in parenthesis any estimate based on 25-49 observations. It is the user’s responsibility to check the number of unweighted observations before relying on the estimate. The tabulations also do not provide any statistical testing or confidence intervals.  
+Tabulations do not check for the number of observations. The DHS convention is to suppress estimates that are based on less than 25 unweighted observations and to place in parenthesis any estimate based on 25-49 observations. It is the user?s responsibility to check the number of unweighted observations before relying on the estimate. The tabulations also do not provide any statistical testing or confidence intervals.  
+
+## Ever-married women surveys:
+Some DHS surveys only interview ever-married women in the woman's questionnaire. This can effect the calculation of some of the indicators. The current code adjusts for ever-married samples only for the fertility indicators in Chapter 5 and the wanted fertility rates in Chapter 6. 
+The following indicators that can also be affected by ever-married samples do not include this adjustment: 
+Chapter 4: Current marital status, first married by specific ages, median age at first marriage, first sexual intercourse by specific ages, and median age at first sexual intercourse.
+Chapter 5: Currently pregnant, mean number of children ever born to women age 40-49, number of children ever born, mean number of children ever born, mean number of living children, women who gave birth by specific ages, median age at first birth, and teenage girls who are mothers. 
+For more information about adjusting for ever-married samples using the all woman factors, please see [The Guide to DHS Statistics] https://www.dhsprogram.com/data/Guide-to-DHS-Statistics/Analyzing_DHS_Data.htm?rhtocid=_4_4_4#All_Women_Factors
 
 ## Creating tables 
 For all table syntax files, the default age selection for women/men is 15-49. Cases outside this age range are dropped. If a different age selection is required, you can make this change in the table syntax file. Please read the notes at the top of each table syntax file. 
@@ -33,6 +40,9 @@ For all table syntax files, the default age selection for women/men is 15-49. Ca
 There are two commands that can be used for producing tables for the indicators in SPSS: ctables and crosstab. The ctables command (Custom Tables) is easier to use and more powerful, however the Custom Tables module is a separate module that must be purchased in addition to the SPSS Base module. If the user does not have this module installed then they can use the crosstab command. The current SPSS code for producing tables has both commands available with the crosstab commands commented out. Please use the appropriate command for your needs.
 ### Stata
 In Stata the tabout command is used to create tables. This is a package that needs to be installed before it can be used. To install tabout, enter "ssc install tabout" in the Stata command window.
+### R
+These scripts typically use `expss` package to create tables that can utilize survey weights and labelled data. More recent scripts use `openxlsx` package to export tables to excel. Older scripts may use `xlsx` package. 
+
 **********************************************************************************************************************************************************
 
 ## Completion list (this list will be updated periodically)
@@ -47,11 +57,11 @@ In Stata the tabout command is used to create tables. This is a package that nee
 |       |                                              |             |            |           |        |                    
 +-------+----------------------------------------------+-------------+------------+-----------+--------+
 |       |                                              |             |            |           |        |                    
-|   3   |   Respondents’ Characteristics               |   RC        |     X      |     X     |   X    |   
+|   3   |   Respondents? Characteristics               |   RC        |     X      |     X     |   X    |   
 |       |                                              |             |            |           |        |          
 +-------+----------------------------------------------+-------------+------------+-----------+--------+
 |       |                                              |             |            |           |        | 
-|   4   |   Marriage & Sexual Activity                 |   MS        |     X      |     X     |        |    
+|   4   |   Marriage & Sexual Activity                 |   MS        |     X      |     X     |   X    |    
 |       |                                              |             |            |           |        | 
 +-------+----------------------------------------------+-------------+------------+-----------+--------+
 |       |                                              |             |            |           |        | 
@@ -95,7 +105,7 @@ In Stata the tabout command is used to create tables. This is a package that nee
 |       |                                              |             |            |           |        | 
 +-------+----------------------------------------------+-------------+------------+-----------+--------+
 |       |                                              |             |            |           |        | 
-|   15  |   Women’s Empowerment                        |   WE        |     X      |     X     |   X    |
+|   15  |   Women?s Empowerment                        |   WE        |     X      |     X     |   X    |
 |       |                                              |             |            |           |        | 
 +-------+----------------------------------------------+-------------+------------+-----------+--------+
 |       |                                              |             |            |           |        | 
