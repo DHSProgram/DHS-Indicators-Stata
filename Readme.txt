@@ -97,7 +97,7 @@ These scripts typically use `expss` package to create tables that can utilize su
 |       |                                              |             |            |           |        | 
 +-------+----------------------------------------------+-------------+------------+-----------+--------+
 |       |                                              |             |            |           |        | 
-|   13  |   HIV-AIDS Knowledge, Attitudes, & Behaviors |   HK        |     X      |     X     |        |
+|   13  |   HIV-AIDS Knowledge, Attitudes, & Behaviors |   HK        |     X      |     X     |   X    |
 |       |                                              |             |            |           |        | 
 +-------+----------------------------------------------+-------------+------------+-----------+--------+
 |       |                                              |             |            |           |        | 

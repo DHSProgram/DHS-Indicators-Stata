@@ -66,7 +66,7 @@ These scripts typically use `expss` package to create tables that can utilize su
 |  10|   Child Health|CH|X|X|X|
 |  11|   Nutrition of Children & Adults|NT|X|X|X|
 |  12|   Malaria| ML|X|X|X|
-|  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|X|X||
+|  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|X|X|X|
 |  14|   HIV Prevalence|HV|X|X|X|
 |  15|   Women?s Empowerment|WE|X|X|X|
 |  16|   Adult & Maternal Mortality|AM|X|X|X|
