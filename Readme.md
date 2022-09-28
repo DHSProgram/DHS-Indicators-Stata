@@ -1,6 +1,4 @@
 
-
-
 # The DHS Program Code Share Project
 
 This project is aimed at providing Stata, SPSS, and R code for all DHS Program indicators listed in the Guide to DHS Statistics. The code is published on the [DHS Program Github site](https://github.com/DHSProgram) which contains three repositories: DHS-Indicators-Stata, DHS-Indicators-SPSS, and DHS-Indicators-R. Users can download the code from these repositories or clone the repository to their own Github site. Users can also suggest changes to the code that will be reviewed by DHS Program staff before acceptance.
@@ -37,7 +35,6 @@ Chapter 4: Current marital status, first married by specific ages, median age at
 Chapter 5: Currently pregnant, mean number of children ever born to women age 40-49, number of children ever born, mean number of children ever born, mean number of living children, women who gave birth by specific ages, median age at first birth, and teenage girls who are mothers. 
 For more information about adjusting for ever-married samples using the all woman factors, please see [The Guide to DHS Statistics](https://www.dhsprogram.com/data/Guide-to-DHS-Statistics/Analyzing_DHS_Data.htm?rhtocid=_4_4_4#All_Women_Factors).
 
-
 ## Creating tables 
 For all table syntax files, the default age selection for women/men is 15-49. Cases outside this age range are dropped. If a different age selection is required, you can make this change in the table syntax file. Please read the notes at the top of each table syntax file. 
 
@@ -51,28 +48,28 @@ These scripts typically use `expss` package to create tables that can utilize su
 
 **********************************************************************************************************************************************************
 
-## Completion list (this list will be updated periodically)
+## Chapter codes
 
-|Ch. | Title | Ch. Acronym |Stata code | SPSS code | R code |
-|---|---|---|---|---|---|
-|   2|Population & Housing|PH|X|X|X|
-|   3|Respondents? Characteristics|RC|X|X|X|
-|   4|Marriage & Sexual Activity|MS|X|X|X|
-|   5|   Fertility|FE|X|X|X|
-|   6|   Fertility Preferences|FF|X|X|X|
-|   7|   Family Planning |FP|X|X|X|
-|   8|   Infant & Child Mortality|CM|X|X|X|
-|   9|   Reproductive Health|RH|X|X|X|
-|  10|   Child Health|CH|X|X|X|
-|  11|   Nutrition of Children & Adults|NT|X|X|X|
-|  12|   Malaria| ML|X|X|X|
-|  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|X|X|X|
-|  14|   HIV Prevalence|HV|X|X|X|
-|  15|   Women?s Empowerment|WE|X|X|X|
-|  16|   Adult & Maternal Mortality|AM|X|X|X|
-|  17|   Domestic Violence|DV|X|X|X|
-|  18|	 Female Genital Cutting|FG|X|X||
-|  19|	 Fistula |FS|X|X||
+|Ch. | Title | Ch. Acronym |
+|---|---|---|
+|   2|Population & Housing|PH|
+|   3|Respondents? Characteristics|RC|
+|   4|Marriage & Sexual Activity|MS|
+|   5|   Fertility|FE|
+|   6|   Fertility Preferences|FF|
+|   7|   Family Planning |FP|
+|   8|   Infant & Child Mortality|CM|
+|   9|   Reproductive Health|RH|
+|  10|   Child Health|CH|
+|  11|   Nutrition of Children & Adults|NT|
+|  12|   Malaria| ML|
+|  13|   HIV-AIDS Knowledge, Attitudes, & Behaviors |HK|
+|  14|   HIV Prevalence|HV|
+|  15|   Women?s Empowerment|WE|
+|  16|   Adult & Maternal Mortality|AM|
+|  17|   Domestic Violence|DV|
+|  18|	 Female Genital Cutting|FG|
+|  19|	 Fistula |FS|
 
 **********************************************************************************************************************************************************
 
