@@ -5,8 +5,9 @@ Data inputs: 		BR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: November 12, 2020 by Shireen Assaf 
-Note:				This code only uses the BR file. Older surveys may not information about the daughter's cirucumcision in the BR file. 
+Note:				This code only uses the BR file. Older surveys may not information about the daughter's circumcision in the BR file. 
 					The information may instead be in the IR file. In that case please use the FG_GIRLS_merge.do file. 
+					This code also produces the tables for circumcision indicators among girls age 0-14
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -16,13 +17,12 @@ fg_fcircum_gl	"Circumcised among girls age 0-14"
 fg_age_gl		"Age at circumcision among girls age 0-14"
 fg_who_gl		"Person who performed the circumcision among girls age 0-14"
 fg_sewn_gl		"Female circumcision type is sewn closed among girls age 0-14"
-	
 ----------------------------------------------------------------------------*/
 
 *select for girls age 0-14 
 keep if b4==2 & b5==1 & b8<=14
 
-*dropping cases where the mother never heard of circumcision
+*dropping cases where the mother was not asked whether she ever heard of circumcision
 drop if g100==.
 
 *yesno label
@@ -171,7 +171,7 @@ tab v190 fg_fcircum_gl [iw=wt], row
 tabout v025 v106 v024 fg_fcircum_wm v190 fg_fcircum_gl using Tables_Circum_gl.xls [iw=wt] , clab(Among_age_0_14) c(row) f(1) append 
 **************************************************************************************************
 
-//Person performing the circumcision among women girls 0-14 and type of cirucumcision
+//Person performing the circumcision among women girls 0-14 and type of circumcision
 
 tab fg_who_gl age5  [iw=wt],col
 

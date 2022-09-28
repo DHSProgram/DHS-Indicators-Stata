@@ -6,7 +6,7 @@ Data outputs:		coded variables
 Author:				Tom Pullum and Shireen Assaf
 Date last modified: October 22, 2020 by Shireen Assaf 
 
-Note:				Use this file only if information about the daughter's cirucumcision status is not in the BR file. 
+Note:				Use this file only if information about the daughter's circumcision status is not in the BR file. 
 					
 					Women in the IR file are asked about the circumcision of their daughters.
 					However, we need to reshape the file so that the data file uses daughters as the unit of analysis. 

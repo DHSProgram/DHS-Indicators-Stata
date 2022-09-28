@@ -6,8 +6,8 @@ Data outputs:		coded variables
 Author:				Shireen Assaf
 Date last modified: October 22, 2020 by Shireen Assaf 
 
-Note:				Heard of female cirucumcision and opinions on female cirucumcision can be computed for men and women
-					In older surveys there may be altnative variable names related to female circumcision. 
+Note:				Heard of female circumcision and opinions on female circumcision can be computed for men and women
+					In older surveys there may be alternative variable names related to female circumcision. 
 					Please check Chapter 18 in Guide to DHS Statistics and the section "Changes over Time" to find alternative names.
 					Link:				https://www.dhsprogram.com/Data/Guide-to-DHS-Statistics/index.htm#t=Knowledge_of_Female_Circumcision.htm%23Percentage_of_women_and8bc-1&rhtocid=_21_0_0
 					
@@ -26,7 +26,6 @@ fg_who_wm			"Person who performed the circumcision among women age 15-49"
 	
 fg_relig			"Opinion on whether female circumcision is required by their religion" 
 fg_cont				"Opinion on whether female circumcision should continue" 
-
 ----------------------------------------------------------------------------*/
 
 
@@ -63,7 +62,7 @@ replace fg_age_wm = 2 if inrange(g106,5,9)
 replace fg_age_wm = 3 if inrange(g106,10,14) 
 replace fg_age_wm = 4 if inrange(g106,15,49) 
 replace fg_age_wm = 9 if g106==98
-label define fg_age 1"<5" 2"5-19" 3"10-14" 4"15+" 9"Don't know/missing"
+label define fg_age 1"<5" 2"5-9" 3"10-14" 4"15+" 9"Don't know/missing"
 label values fg_age_wm fg_age
 label var fg_age_wm "Age at circumcision among women age 15-49"
 
