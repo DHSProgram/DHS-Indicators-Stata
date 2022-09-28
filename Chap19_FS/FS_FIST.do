@@ -4,12 +4,17 @@ Purpose: 			Code to compute fistula indicators among women
 Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: November 4, 2020 by Shireen Assaf 
+Date last modified: September 27, 2022 by Shireen Assaf 
 
-Note:				
-There are no standard variables names for these variables. These variables will likely be included in the data file as country-specific variables. Country-specific variables begin with an “s”, though in this chapter we use “fistula_v*” to denote variables as they are not standard. Country-specific variables should be checked. These tables are not standard across all surveys over time. There is some variation in the presentation of these results among final reports.
+Notes:				
+There are no standard variables names for these variables. These variables will likely be included in the data file as country-specific variables. 
+Country-specific variables begin with an “s”.
+There is also some variation in the presentation of these results among final reports.
 
 This do file provides a guide to how the fistula indicators can be computed but it is necessary to check the country-specific variables for each survey and adjust the code accordingly. 
+
+Change variables that need to be recoded according to the survey: the variables below are for Afghanistan 2015 survey. 
+Use lookfor command in Stata or the variable manager to find fistula related variables. 
 					
 *****************************************************************************************************/
 
@@ -27,16 +32,13 @@ fs_trt_provid	"Provider type for fistula treatment"
 fs_trt_outcome	"Outcome of treatment sought for fistula"
 fs_trt_operat	"Had operation for fistula"
 fs_notrt_reason	"Reason for not seeking treatment"
-
 ----------------------------------------------------------------------------*/
 
-*Change variables below according to the survey: the variables below are for Afghanistan 2015 survey. 
-*Use lookfor command in Stata or the variable manager to find fistula related varaibles. 
 
 cap label define yesno 0"No" 1"Yes"
 
 //Heard of fistula
-*use varaible labeled as "ever heard of fistula"
+*use variable labeled as "ever heard of fistula"
 gen fs_heard = 0
 replace fs_heard=1 if s1102==1  
 label values fs_heard yesno 
@@ -96,7 +98,7 @@ replace fs_trt_operat=1 if s1110==1
 label var fs_trt_operat "Had operation for fistula"
 
 //Reason for not seeking treatment
-gen fs_notrt_reason = . if fs_ever_exp==1 & fs_trt_outcome==4
+gen fs_notrt_reason = 9 if s1101==1 & s1107!=1
 replace fs_notrt_reason = 8 if s1108x==1 | s1108e==1
 replace fs_notrt_reason = 7 if s1108f==1
 replace fs_notrt_reason = 6 if s1108h==1
@@ -105,7 +107,6 @@ replace fs_notrt_reason = 4 if s1108g==1
 replace fs_notrt_reason = 3 if s1108c==1
 replace fs_notrt_reason = 2 if s1108b==1
 replace fs_notrt_reason = 1 if s1108a==1
-replace fs_notrt_reason = 9 if s1108a==. & fs_ever_exp==1 & fs_trt_outcome==4
 label define reason 1"Did not know the problem can be fixed" 2"Did not know where to go" 3"Too expensive" 4"Embarrassment" 5"Too far" 6"Problem disappeard" 7"Could not get permission" 8"Other" 9"Missing"
 label values fs_notrt_reason reason
 label var fs_notrt_reason "Reason for not seeking treatment"
