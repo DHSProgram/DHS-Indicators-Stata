@@ -6,7 +6,7 @@ Data outputs:		coded variables
 Author:				Thomas Pullum and modified by Courtney Allen for the code share project
 Date last modified: July 7, 2020 by Courtney Allen
 Note:				Please see notes in lines 568, and 704. 
-					This do file will produce a table of  TFRs by background variables as shown in final report (Table_TFR.xls). 
+					This do file will produce a table of  TFRs by background variables as shown in final report (Tables_FE_ASFR.xls). 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -586,7 +586,7 @@ program define final_file_save
 	*/
 
 	********* Produce Table as in Final report *****************************
-	* Table_TFR would be produced. This will contain the fertility rates by background variables.
+	* Tables_FE_ASFR would be produced. This will contain the fertility rates by background variables.
 	gen N = _n
 	keep N covariate value label valuelabel TFR DHSGFR ASFR_15_19 ASFR_20_24 ASFR_25_29 ASFR_30_34 ASFR_35_39 ASFR_40_44 ASFR_45_49
 	

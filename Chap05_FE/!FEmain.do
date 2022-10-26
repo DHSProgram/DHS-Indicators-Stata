@@ -23,16 +23,16 @@ cd "$workingpath"
 * select your survey
 
 * IR Files
-global irdata "NGIR7AFL"
+global irdata "MRIR71FL"
 	
 *PR Files
-global prdata  "NGPR7AFL"
+global prdata "MRPR71FL"
 	
 *KR Files
-global krdata "KEKR72FL"
+global krdata "MRKR71FL"
 
 *BR Files
-global brdata "NGBR7AFL"
+global brdata "MRBR71FL"
 
 ********************************************************************************
 	
