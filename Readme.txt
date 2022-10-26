@@ -14,7 +14,7 @@ This DHS Code Share Project provides the code that can be used to produce these 
 
 ## Main files:
 Each folder contains a Main File from which the user can run all the code files (.do, .sps, or .R files) that will code the indicators and produce the tables for that chapter. The user only needs to change the paths in the Main File and the file name for the survey of interest. The user should not delete the globals (macros), and should only change to the correct path and survey for their project. 
-Before running any code, it is advisable to read the Main File for a specific chapter and the associated code files for any notes. For some chapters a selection is required to choose the population of interest; for example, selecting the age group for the children?s vaccination indicators in the CH_VAC.do file or for indicators restricted to married women versus all women in the Family Planning chapter. 
+Before running any code, it is advisable to read the Main File for a specific chapter and the associated code files for any notes. For some chapters a selection is required to choose the population of interest; for example, selecting the age group for the children's vaccination indicators in the CH_VAC.do file or for indicators restricted to married women versus all women in the Family Planning chapter. 
 The user may also select the indicators they are interested in for the chapter. Therefore, certain code files can be commented out in the Main Files so they do not run, or certain sections within a code file can also be commented out. If certain indicators are commented out, the same indicators in the table code file for the tabulations will also need to be commented out. 
 
 ## Country-specific changes in indicators:
@@ -105,7 +105,7 @@ These scripts typically use `expss` package to create tables that can utilize su
 |       |                                              |             |            
 +-------+----------------------------------------------+-------------+
 |       |                                              |             |            
-|   15  |   Women?s Empowerment                        |   WE        |     
+|   15  |   Women's Empowerment                        |   WE        |     
 |       |                                              |             |            
 +-------+----------------------------------------------+-------------+
 |       |                                              |             |           
