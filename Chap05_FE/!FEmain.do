@@ -34,8 +34,7 @@ global krdata "MRKR71FL"
 *BR Files
 global brdata "MRBR71FL"
 
-********************************************************************************
-	
+********************************************************************************	
 * IR file variables
 
 * open dataset
@@ -52,10 +51,8 @@ use "$datapath//$irdata.dta", clear
 do FE_ASFR_10_14.do
 *Purpose: 	Code ASFR for 10-14 year olds. This file will create tables.
 
-
 * Reopen dataset for current fertility indicators.
 use "$datapath//$irdata.dta", clear
-
 gen file=substr("$irdata", 3, 2)
  
 do FE_FERT.do
@@ -89,7 +86,6 @@ gen file=substr("$krdata", 6, 1)
 
 do FE_MEDIANS.do
 * Purpose: Code median duration of amenorrhea, postpartum abstinence, and insusceptibility fertility
-
 
 * BR files
 

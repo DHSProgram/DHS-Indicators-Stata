@@ -902,10 +902,10 @@ tabout v013 v025 v106 v024 v190 fp_cruse_other if select==1 using Tables_Use_cr.
 tab v319 fp_ster_age [iw=wt], row nofreq
 
 * output to excel
-tabout v319 fp_ster_age using Tables_Use_cr.xls [iw=wt] , c(row) f(1) append 
+cap tabout v319 fp_ster_age using Tables_Use_cr.xls [iw=wt] , c(row) f(1) append 
 
 //Median age at sterlization
-tabout fp_ster_median using Tables_Use_cr.xls [iw=wt] , oneway cells(cell) append 
+cap tabout fp_ster_median using Tables_Use_cr.xls [iw=wt] , oneway cells(cell) append 
 
 **************************************************************************************************
 * Indicators for source and info. contraceptive methods: excel file Tables_source_info will be produced
@@ -915,8 +915,9 @@ tabout fp_ster_median using Tables_Use_cr.xls [iw=wt] , oneway cells(cell) appen
 tab1 fp_source_fster fp_source_iud fp_source_inj fp_source_imp fp_source_pill fp_source_mcond fp_source_tot [iw=wt] 
 
 * output to excel
-tabout	fp_source_fster fp_source_iud fp_source_inj fp_source_imp fp_source_pill fp_source_mcond fp_source_tot ///
-		using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) replace 
+cap tabout	fp_source_fster using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) replace 
+tabout  fp_source_iud fp_source_inj fp_source_imp fp_source_pill fp_source_mcond fp_source_tot ///
+		using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) append 
 
 ****************************************************
 //Pill users using a brand
@@ -957,7 +958,7 @@ tab v106 fp_brand_cond [iw=wt], row nofreq
 tab v190 fp_brand_cond [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_brand_cond using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
+cap tabout v013 v025 v106 v024 v190 fp_brand_cond using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
 ****************************************************
 //Informed of side effects
 

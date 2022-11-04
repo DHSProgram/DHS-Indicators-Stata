@@ -434,7 +434,7 @@ eventsfile.dta				Events dataset file for the survey
 	label val method method
 
 	//Now tabulate (using table instead of tab to avoid extra Totals)
-	table method reason [iw=drate_], cellwidth(10) f(%3.1f)
+	table method reason [iw=drate_]
 
 
 	//close loop if multiple durations used and file clean up

@@ -5,6 +5,7 @@ Purpose: 				Main file for the Family Planning Chapter.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf 
 Date last modified:		June 20 by Courtney Allen to add discontinuation section
+						October 27, 2022 by Shireen Assaf to add condition for currently married women to run discontinuation code. 
 
 Notes:					Indicators for men only cover knowledge of contraceptive methods and exposure to family planning messages.
 						Indicators are coded for all women/all men unless indicated otherwise. 
@@ -14,8 +15,8 @@ set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-local user 39585	//change employee id number to personalize path
-*local user 33697
+*local user 39585	//change employee id number to personalize path
+local user 33697
 cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap07_FP"
 
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
@@ -23,11 +24,11 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "UGIR7BFL"
+global irdata "MRIR71FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7BFL
 
 * MR Files
-global mrdata "UGMR7BFL"
+global mrdata "MRMR71FL"
 * MMMR71FL TJMR70FL GHMR72FL UGMR7BFL
 ****************************
 
@@ -86,6 +87,15 @@ do FP_tables.do
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
+
+gen cntry=substr("$irdata", 1, 2)
+
+*For some surveys (example Mauritania DHS 2019-2021), the discontinuation estimates are only for currently married women. 
+*The estimates can only be produced if we keep currently married women. 
+
+	if cntry=="MR"{
+	keep if v502==1
+	}
 
 do FP_EVENTS.do
 * Purpose: 	Create an event file where the episode of contraceptive use is the unit of analysis.

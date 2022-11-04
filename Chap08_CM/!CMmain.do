@@ -19,15 +19,15 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "ZMIR61FL"
+global irdata "MRIR71FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7AFL UGIR60FL
 
 *BR files
-global brdata "ZMBR61FL"
+global brdata "MRBR71FL"
 * MMBR71FL TJBR70FL GHBR72FL UGBR7AFL UGBR60FL
 
 *KR files
-global krdata "ZMKR61FL"
+global krdata "MRKR71FL"
 ****************************
 
 * do files that use the IR files

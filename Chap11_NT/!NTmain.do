@@ -18,23 +18,23 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * KR Files
-global krdata "ETKR71FL"
+global krdata "MRKR71FL"
 * MMKR71FL TJKR70FL GHKR72FL TLKR71FL 
 
 * PR Files
-global prdata "ETPR71FL"
+global prdata "MRPR71FL"
 * MMPR71FL TJPR70FL GHPR72FL TLPR71FL 
 
 * IR Files
-global irdata "ETIR71FL"
+global irdata "MRIR71FL"
 * MMIR71FL TJIR70FL GHIR72FL TLIR71FL 
 
 * MR Files
-global mrdata "ETMR71FL"
+global mrdata "MRMR71FL"
 * MMMR71FL TJMR70FL GHMR72FL TLMR71FL 
 
 * HR Files
-global hrdata "ETHR71FL"
+global hrdata "MRHR71FL"
 * MMHR71FL TJHR70FL GHHR72FL TLHR71FL  
 ****************************
 
@@ -221,7 +221,7 @@ do NT_tables.do
 
 use "$datapath//$prdata.dta", clear
 rename (hv001 hv002 hvidx) (mv001 mv002 mv003)
-keep mv001 mv002 mv003 hv042 hb55 hb56 hb57 hb40 hv103
+cap keep mv001 mv002 mv003 hv042 hb55 hb56 hb57 hb40 hv103
 save temp.dta, replace
 * open MR dataset
 use "$datapath//$mrdata.dta", clear
