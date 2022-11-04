@@ -2,20 +2,21 @@
 Program: 			NT_tables.do
 Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
-Date last modified: December 10, 2020 by Courtney Allen  
+Date last modified: November 3, 2022 by Shireen Assaf 	
 
 *This do file will produce the following tables in excel:
 1. 	Tables_nut_ch:		Contains the tables for nutritional status indicators for children
-2.	Tables_anemia_ch:	Contains the tables for anemia indicators for children
-3. 	Tables_bf:			Contains the tables for breastfeeding indicators
-4.	Tables_IYCF:		Contains the tables for IYCF indicators in children
-5. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
-6. 	Tables_salt_hh:		Contains the tables for salt testing and iodized salt in households
-7.	Tables_micronut_wm	Contains the tables for micronutrient intake in women
-8. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women
-9.	Tables_anemia_wm:	Contains the tables for anemia indicators for women
-10. Tables_nut_mn:		Contains the tables for nutritional status indicators for men
-11.	Tables_anemia_mn:	Contains the tables for anemia indicators for men
+2. 	Tables_gwth_monit:	Contains the tables for child growth monitoring 
+3.	Tables_anemia_ch:	Contains the tables for anemia indicators for children
+4. 	Tables_bf:			Contains the tables for breastfeeding indicators
+5.	Tables_IYCF:		Contains the tables for IYCF indicators in children
+6. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
+7. 	Tables_salt_hh:		Contains the tables for salt testing and iodized salt in households
+8.	Tables_micronut_wm	Contains the tables for micronutrient intake in women
+9. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women
+10.	Tables_anemia_wm:	Contains the tables for anemia indicators for women
+11. Tables_nut_mn:		Contains the tables for nutritional status indicators for men
+12.	Tables_anemia_mn:	Contains the tables for anemia indicators for men
 
 Notes: 	For women and men the indicators are outputed for age 15-49 in line 766 and 1165. This can be commented out if the indicators are required for all women/men.
 *****************************************************************************************************/
@@ -31,7 +32,7 @@ cap gen wt=hv005/1000000
 * background variables
 
 //Age in months
-recode hc1 (0/5=1 " <6") (6/8=2 " 6-8") (9/11=3 " 9-11") (12/17=4 " 12-17") (18/23=5 " 18-23") (24/35=6 " 24-35") (36/47=7 " 36-47") (48/59=8 " 48-59"), gen(agemonths)
+recode hc1 (0/5=1 " <6") (6/11=2 " 6-11") (12/23=3 " 12-23") (24/35=4 " 24-35") (36/47=5 " 36-47") (48/59=6 " 48-59"), gen(agemonths)
 
 * Note: other variables such as size at birth (from KR file) and mother's BMI (from IR) are found in other files and need to be merged with PR file
 * These tables are only for variables available in the PR file
@@ -130,22 +131,22 @@ tabout agemonths hc27 hv025 hv024 hv270 nt_ch_wast using Tables_nut_ch.xls [iw=w
 ****************************************************
 //Overweight for height
 *age of child in months
-tab agemonths nt_ch_ovwt_ht [iw=wt], row nofreq 
+tab agemonths nt_ch_ovwt [iw=wt], row nofreq 
 
 *child's sex
-tab hc27 nt_ch_ovwt_ht [iw=wt], row nofreq 
+tab hc27 nt_ch_ovwt [iw=wt], row nofreq 
 
 *residence
-tab hv025 nt_ch_ovwt_ht [iw=wt], row nofreq 
+tab hv025 nt_ch_ovwt [iw=wt], row nofreq 
 
 *region
-tab hv024 nt_ch_ovwt_ht [iw=wt], row nofreq 
+tab hv024 nt_ch_ovwt [iw=wt], row nofreq 
 
 *wealth
-tab hv270 nt_ch_ovwt_ht [iw=wt], row nofreq 
+tab hv270 nt_ch_ovwt [iw=wt], row nofreq 
 
 * output to excel
-tabout agemonths hc27 hv025 hv024 hv270 nt_ch_ovwt_ht using Tables_nut_ch.xls [iw=wt] , c(row) f(1) append 
+tabout agemonths hc27 hv025 hv024 hv270 nt_ch_ovwt using Tables_nut_ch.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Mean whz
@@ -195,26 +196,6 @@ tab hv270 nt_ch_underwt [iw=wt], row nofreq
 
 * output to excel
 tabout agemonths hc27 hv025 hv024 hv270 nt_ch_underwt using Tables_nut_ch.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Overweight for age
-*age of child in months
-tab agemonths nt_ch_ovwt_age [iw=wt], row nofreq 
-
-*child's sex
-tab hc27 nt_ch_ovwt_age [iw=wt], row nofreq 
-
-*residence
-tab hv025 nt_ch_ovwt_age [iw=wt], row nofreq 
-
-*region
-tab hv024 nt_ch_ovwt_age [iw=wt], row nofreq 
-
-*wealth
-tab hv270 nt_ch_ovwt_age [iw=wt], row nofreq 
-
-* output to excel
-tabout agemonths hc27 hv025 hv024 hv270 nt_ch_ovwt_age using Tables_nut_ch.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Mean whz
@@ -315,13 +296,13 @@ tabout agemonths hc27 hv025 hv024 hv270 nt_ch_sev_anem using Tables_anemia_ch.xl
 
 * indicators from KR file
 if file=="KR" {
-gen wt=v005/1000000
+cap gen wt=v005/1000000
 
 **************************************************************************************************
 * background variables
 
 //Age in months
-recode age (0/5=1 " <6") (6/8=2 " 6-8") (9/11=3 " 9-11") (12/17=4 " 12-17") (18/23=5 " 18-23") (24/35=6 " 24-35") (36/47=7 " 36-47") (48/59=8 " 48-59"), gen(agemonths)
+recode age (0/5=1 " <6") (6/11=2 " 6-11") (12/23=3 " 12-23") (24/35=4 " 24-35") (36/47=5 " 36-47") (48/59=6 " 48-59"), gen(agemonths)
 
 //Age categories for children 0-23
 cap recode age (0/1=1 " 0-1") (2/3=2 " 2-3") (4/5=3 " 4-5") (6/8=4 " 6-8") (9/11=5 " 9-11") (12/17=6 " 12-17") (18/23=7 " 18-23") , gen(agecats)
@@ -362,6 +343,107 @@ replace waste=2 if hw72>=-300 & hw72<-200
 replace waste=3 if hw72>=-200 & hw72<9996
 label define waste 1 "Severe acute malnutrition" 2 "Moderate acute malnutrition" 3 "Not wasted"
 label values waste waste
+
+
+**************************************************************************************************
+* Child grown monitoring indicators
+**************************************************************************************************
+//weight measured
+
+*child's age
+tab agemonths nt_ch_wt_msrd [iw=wt], row nofreq 
+
+*child's sex
+tab b4 nt_ch_wt_msrd [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_ch_wt_msrd [iw=wt], row nofreq 
+
+*region
+tab v024 nt_ch_wt_msrd [iw=wt], row nofreq 
+
+*mother's education
+tab v106 nt_ch_wt_msrd [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_ch_wt_msrd [iw=wt], row nofreq 
+
+* output to excel
+tabout agemonths b4 v025 v024 v106 v190 nt_ch_wt_msrd using Tables_gwth_monit.xls [iw=wt] , c(row) f(1) replace 
+*/
+****************************************************
+
+//weight and height measured
+
+*child's age
+tab agemonths nt_ch_wtht_msrd [iw=wt], row nofreq 
+
+*child's sex
+tab b4 nt_ch_wtht_msrd [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_ch_wtht_msrd [iw=wt], row nofreq 
+
+*region
+tab v024 nt_ch_wtht_msrd [iw=wt], row nofreq 
+
+*mother's education
+tab v106 nt_ch_wtht_msrd [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_ch_wtht_msrd [iw=wt], row nofreq 
+
+* output to excel
+tabout agemonths b4 v025 v024 v106 v190 nt_ch_wtht_msrd using Tables_gwth_monit.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//MUAC measured
+
+*child's age
+tab agemonths nt_ch_muac_msrd [iw=wt], row nofreq 
+
+*child's sex
+tab b4 nt_ch_muac_msrd [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_ch_muac_msrd [iw=wt], row nofreq 
+
+*region
+tab v024 nt_ch_muac_msrd [iw=wt], row nofreq 
+
+*mother's education
+tab v106 nt_ch_muac_msrd [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_ch_muac_msrd [iw=wt], row nofreq 
+
+* output to excel
+tabout agemonths b4 v025 v024 v106 v190 nt_ch_muac_msrd using Tables_gwth_monit.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//weight, height, and MUAC measured
+
+*child's age
+tab agemonths nt_ch_all_msrd [iw=wt], row nofreq 
+
+*child's sex
+tab b4 nt_ch_all_msrd [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_ch_all_msrd [iw=wt], row nofreq 
+
+*region
+tab v024 nt_ch_all_msrd [iw=wt], row nofreq 
+
+*mother's education
+tab v106 nt_ch_all_msrd [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_ch_all_msrd [iw=wt], row nofreq 
+
+* output to excel
+tabout agemonths b4 v025 v024 v106 v190 nt_ch_all_msrd using Tables_gwth_monit.xls [iw=wt] , c(row) f(1) append 
+*/
 
 **************************************************************************************************
 * Initial breastfeeding 
@@ -509,7 +591,7 @@ tabout nt_bottle using Tables_IYCF.xls [iw=wt] , oneway c(cell freq) f(1) replac
 **************************************************************************************************
 * Micronutrient intake
 **************************************************************************************************
-//Given Vitamin and Mineral Powder among children 6-23 months
+//Given Vitamin and Mineral Powder among children 6-59 months
 *child's age in months
 tab agemonths nt_ch_micro_mp [iw=wt], row nofreq 
 
@@ -538,7 +620,7 @@ tab v190 nt_ch_micro_mp [iw=wt], row nofreq
 tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_mp using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) replace 
 */
 ****************************************************
-//Given iron supplements among children 6-59 months
+//Given iron tablets or syrups among children 6-59 months
 *child's age in months
 tab agemonths nt_ch_micro_iron [iw=wt], row nofreq 
 
@@ -562,6 +644,35 @@ tab v106 nt_ch_micro_iron [iw=wt], row nofreq
 
 *wealth
 tab v190 nt_ch_micro_iron [iw=wt], row nofreq 
+
+* output to excel
+tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_iron using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Given iron supplements children 6-59 months
+*child's age in months
+tab agemonths nt_ch_micro_ironsup [iw=wt], row nofreq 
+
+*child's sex
+tab b4 nt_ch_micro_ironsup [iw=wt], row nofreq 
+
+*Breastfeeding status
+tab brstfed nt_ch_micro_ironsup [iw=wt], row nofreq 
+
+*Mother's age
+tab agem nt_ch_micro_ironsup [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_ch_micro_ironsup [iw=wt], row nofreq 
+
+*region
+tab v024 nt_ch_micro_ironsup [iw=wt], row nofreq 
+
+*mother's education
+tab v106 nt_ch_micro_ironsup [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_ch_micro_ironsup [iw=wt], row nofreq 
 
 * output to excel
 tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_iron using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) append 
@@ -596,7 +707,7 @@ tab v190 nt_ch_micro_vas [iw=wt], row nofreq
 tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_vas using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Given deworming medication among children 6-59 months
+//Given deworming medication among children 12-59 months
 *child's age in months
 tab agemonths nt_ch_micro_dwm [iw=wt], row nofreq 
 
@@ -624,100 +735,6 @@ tab v190 nt_ch_micro_dwm [iw=wt], row nofreq
 * output to excel
 tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_dwm using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) append 
 */
-****************************************************
-//Children age 6-59 living in household with iodized salt 
-*child's age in months
-tab agemonths nt_ch_micro_iod [iw=wt], row nofreq 
-
-*child's sex
-tab b4 nt_ch_micro_iod [iw=wt], row nofreq 
-
-*Breastfeeding status
-tab brstfed nt_ch_micro_iod [iw=wt], row nofreq 
-
-*Mother's age
-tab agem nt_ch_micro_iod [iw=wt], row nofreq 
-
-*residence
-tab v025 nt_ch_micro_iod [iw=wt], row nofreq 
-
-*region
-tab v024 nt_ch_micro_iod [iw=wt], row nofreq 
-
-*mother's education
-tab v106 nt_ch_micro_iod [iw=wt], row nofreq 
-
-*wealth
-tab v190 nt_ch_micro_iod [iw=wt], row nofreq 
-
-* output to excel
-tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_iod using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Given therapeutic food among children 6-35 months
-*child's age in months
-tab agemonths nt_ch_food_ther [iw=wt], row nofreq 
-
-*child's sex
-tab b4 nt_ch_food_ther [iw=wt], row nofreq 
-
-*Breastfeeding status
-tab brstfed nt_ch_food_ther [iw=wt], row nofreq 
-
-*Wasting status
-tab waste nt_ch_food_ther [iw=wt], row nofreq 
-
-*Mother's age
-tab agem nt_ch_food_ther [iw=wt], row nofreq 
-
-*residence
-tab v025 nt_ch_food_ther [iw=wt], row nofreq 
-
-*region
-tab v024 nt_ch_food_ther [iw=wt], row nofreq 
-
-*mother's education
-tab v106 nt_ch_food_ther [iw=wt], row nofreq 
-
-*wealth
-tab v190 nt_ch_food_ther [iw=wt], row nofreq 
-
-* output to excel
-tabout agemonths b4 brstfed waste agem v025 v024 v106 v190 nt_ch_food_ther using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Given supplemental food among children 6-35 months
-*child's age in months
-tab agemonths nt_ch_food_supp [iw=wt], row nofreq 
-
-*child's sex
-tab b4 nt_ch_food_supp [iw=wt], row nofreq 
-
-*Breastfeeding status
-tab brstfed nt_ch_food_supp [iw=wt], row nofreq 
-
-*Wasting status
-tab waste nt_ch_food_supp [iw=wt], row nofreq 
-
-*Mother's age
-tab agem nt_ch_food_supp [iw=wt], row nofreq 
-
-*residence
-tab v025 nt_ch_food_supp [iw=wt], row nofreq 
-
-*region
-tab v024 nt_ch_food_supp [iw=wt], row nofreq 
-
-*mother's education
-tab v106 nt_ch_food_supp [iw=wt], row nofreq 
-
-*wealth
-tab v190 nt_ch_food_supp [iw=wt], row nofreq 
-
-* output to excel
-tabout agemonths b4 brstfed waste agem v025 v024 v106 v190 nt_ch_food_supp using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
 }
 
 ****************************************************************************

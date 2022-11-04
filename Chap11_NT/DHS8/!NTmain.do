@@ -1,63 +1,45 @@
 /*******************************************************************************************************************************
 Program: 				NTmain.do
-Purpose: 				Main file for the Nutrition Chapter. 
+Purpose: 				Main file for the Nutrition Chapter - DHS8 update
 						The main file will call other do files that will produce the NT indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf and Courtney Allen
-Date last modified:		December 10, 2020
+Date last modified:		November 2, 2022
 
 *******************************************************************************************************************************/
 set more off
 
-local user 33697
+global user 33697
 
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap11_NT"
+cd "C:/Users//$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap11_NT"
 
-global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
+*global datapath "C:/Users/$user//ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * KR Files
-global krdata "MRKR71FL"
-* MMKR71FL TJKR70FL GHKR72FL TLKR71FL 
+global krdata "CIKR80FL"
 
 * PR Files
-global prdata "MRPR71FL"
-* MMPR71FL TJPR70FL GHPR72FL TLPR71FL 
+global prdata "CIPR80FL"
 
 * IR Files
-global irdata "MRIR71FL"
-* MMIR71FL TJIR70FL GHIR72FL TLIR71FL 
+global irdata "CIIR80FL"
 
 * MR Files
-global mrdata "MRMR71FL"
-* MMMR71FL TJMR70FL GHMR72FL TLMR71FL 
+global mrdata "CIMR80FL"
 
 * HR Files
-global hrdata "MRHR71FL"
-* MMHR71FL TJHR70FL GHHR72FL TLHR71FL  
+global hrdata "CIHR80FL" 
 ****************************
 
 * KR file variables
 
-* Note: For the NT_MICRO do file, you need to merge the KR with the HR file. 
-* The merge will be performed before running any of the do files below. 
-
-use "$datapath//$hrdata.dta", clear
-rename (hv001 hv002) (v001 v002)
-keep v001 v002 hv234a
-save temp.dta, replace
-
 * open KR dataset
 use "$datapath//$krdata.dta", clear
-merge m:1 v001 v002 using temp.dta
-keep if _merge==3
 
 gen file=substr("$krdata", 3, 2)
 	
-	* create commonly used yes/no category
-	label define yesno 0"No" 1"Yes"
-
 	**** child's age ****
 	gen age = v008 - b3
 		
@@ -82,6 +64,8 @@ gen file=substr("$krdata", 3, 2)
 		}
 
 	*******************
+do NT_CH_GWTH.do
+*Purpose: 	Code child growth monitoring indicators
 
 do NT_CH_MICRO.do
 *Purpose: 	Code micronutrient indicators
