@@ -43,6 +43,10 @@ In Stata the tabout command is used to create tables. This is a package that nee
 ### R
 These scripts typically use `expss` package to create tables that can utilize survey weights and labelled data. More recent scripts use `openxlsx` package to export tables to excel. Older scripts may use `xlsx` package. 
 
+
+## DHS8 updates
+The DHS Program is making updates and adding new indicators in DHS Phase 8. Please check the IndicatorList_DHS8 excel file for the updated list of indicators and their labels. Each chapter of the Code Share Library will contain a subfolder for DHS8 updates when they are available. Updates will begin with the Stata code which will be completed in September 2023 and updates to R and SPSS code will be completed in September 2024. Currently DHS8 updates to Chapter 7 are available. 
+
 **********************************************************************************************************************************************************
 
 ## Chapter codes

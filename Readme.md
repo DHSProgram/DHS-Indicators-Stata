@@ -9,7 +9,6 @@ This project is aimed at providing Stata, SPSS, and R code for all DHS Program i
 
 The Guide defines an indicator, names the pertinent variables, and explains how the indicator is computed. The DHS Program Code Share Project follows the instructions in the guide required to produce the indicators. 
 
-
 ## General instructions:
 This DHS Code Share Project provides the code that can be used to produce these indicators as well as the standard tables found in a DHS Final Report. The code is organized into one folder for each chapter to follow the organization of the Guide to DHS Statistics. Each chapter has a two-letter abbreviation as shown in the table below. IndicatorList.xlsx provides a list of all the indicators along with their labels that will be coded in this project. 
 
@@ -45,6 +44,8 @@ In Stata the tabout command is used to create tables. This is a package that nee
 ### R
 These scripts typically use `expss` package to create tables that can utilize survey weights and labelled data. More recent scripts use `openxlsx` package to export tables to excel. Older scripts may use `xlsx` package. 
 
+## DHS8 updates
+The DHS Program is making updates and adding new indicators in DHS Phase 8. Please check the IndicatorList_DHS8 excel file for the updated list of indicators and their labels. Each chapter of the Code Share Library will contain a subfolder for DHS8 updates when they are available. Updates will begin with the Stata code which will be completed in September 2023 and updates to R and SPSS code will be completed in September 2024. Currently DHS8 updates to Chapter 7 are available. 
 
 **********************************************************************************************************************************************************
 
