@@ -1,35 +1,32 @@
 /*******************************************************************************************************************************
 Program: 				FPmain.do
-Purpose: 				Main file for the Family Planning Chapter. 
+Purpose: 				Main file for the Family Planning Chapter - DHS8 update
 						The main file will call other do files that will produce the FP indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf 
-Date last modified:		June 20 by Courtney Allen to add discontinuation section
-						October 27, 2022 by Shireen Assaf to add condition for currently married women to run discontinuation code. 
+Date last modified:		November 7, 2022 
 
 Notes:					Indicators for men only cover knowledge of contraceptive methods and exposure to family planning messages.
-						Indicators are coded for all women/all men unless indicated otherwise. 
-						In the tables do file you can select other populations of interest (ex: among those currently in a union)
+						In the tables do file you can select different populations of interest (ex: all, among those currently in a union, among sexually active, etc.)
+						The tables also default to the age 15-49 for men and women unless indicated otherwise. 
 *******************************************************************************************************************************/
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-*local user 39585	//change employee id number to personalize path
-local user 33697
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap07_FP"
+global user 33697
 
-global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
+cd "C:/Users/$user//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap07_FP/DHS8"
+
+global datapath "C:/Users/$user//ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * IR Files
-global irdata "MRIR71FL"
-* MMIR71FL TJIR70FL GHIR72FL UGIR7BFL
+global irdata "CIIR80FL"
 
 * MR Files
-global mrdata "MRMR71FL"
-* MMMR71FL TJMR70FL GHMR72FL UGMR7BFL
+global mrdata "CIMR80FL"
 ****************************
 
 * IR file variables

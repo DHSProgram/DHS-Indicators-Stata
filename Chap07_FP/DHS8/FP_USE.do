@@ -1,10 +1,13 @@
 /*****************************************************************************************************
-Program: 			FP_USE.do
+Program: 			FP_USE.do - DHS8 update
 Purpose: 			Code contraceptive use indicators (ever and current use). Also source of method, brands, and information given. 
 Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: Jan 31 2019 by Shireen Assaf 
+Date last modified: November 8, 2022  by Shireen Assaf 
+Note:				Five new indicators for DH8, see below. 				
+					Ever use of methods can also be computed for men using mv variables with the same number. DHS no longer includes tables for ever-use. 
+					
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -46,6 +49,11 @@ fp_cruse_trad		"Currently use any traditional method"
 fp_cruse_rhy		"Currently use rhythm"
 fp_cruse_wthd		"Currently use withdrawal"
 fp_cruse_other		"Currently use other"
+fp_not_cruse		"Not currently using any method" - NEW Indicator in DHS8
+
+fp_inj_dmpa			"Current injectable users using DMPA-SC/Sayana Press" - NEW Indicator in DHS8
+fp_inj_dmpa_pr		"Among users of DMPA-SC/Sayana Press, person administering the injection the last time" - NEW Indicator in DHS8
+fp_cruse_ec_12mo	"Currently use emergency contraception in the last 12 months" - NEW Indicator in DHS8
 
 fp_ster_age			"Age at time of sterilization for women"
 fp_ster_median		"Median age at time of sterilization for women"
@@ -65,7 +73,7 @@ fp_info_sideff		"Informed about side effects or problems among female sterilizat
 fp_info_what_to_do	"Informed of what to do if experienced side effects among female sterilization, pill, IUD, injectables, and implant users"
 fp_info_other_meth	"Informed of other methods by health or FP worker among female sterilization, pill, IUD, injectables, and implant users"
 fp_info_all 		"Informed of all three (method information index) among female sterilization, pill, IUD, injectables, and implant users"
-
+fp_info_switch		"Informed that they could switch if needed among female sterilization, pill, IUD, injectables, and implant users" - NEW Indicator in DHS8
 ----------------------------------------------------------------------------*/
 
 *** Ever use of contraceptive methods ***
@@ -234,6 +242,25 @@ label var fp_cruse_other "Currently used other method"
 gen fp_cruse_trad = (v313>0 & v313<3)
 label var fp_cruse_trad "Currently used any traditional method"
 
+//Not currently using any method - NEW Indicator in DHS8
+gen fp_not_cruse = v313==0
+label var fp_not_cruse "Not currently using any method"
+
+//Current injectable users using DMPA-SC/Sayana Press - NEW Indicator in DHS8
+gen fp_inj_dmpa= v3a11==1
+replace fp_inj_dmpa=. if v3a11==.
+label var fp_inj_dmpa "Current injectable users using DMPA-SC/Sayana Press"
+
+//Person administering MPA-SC/Sayana Press injection - NEW Indicator in DHS8
+gen fp_inj_dmpa_pr= v3a12
+replace fp_inj_dmpa_pr=. if v3a12==.
+label values fp_inj_dmpa_pr V3A12 
+label var fp_inj_dmpa_pr "Among users of DMPA-SC/Sayana Press, person administering the injection the last time"
+
+//Used emergency contraceptionin the last 12 months - NEW Indicator in DHS8
+gen fp_cruse_ec_12mo=v312==16 | v3a13==1 
+label var fp_cruse_ec_12mo	"Used emergency contraception in the last 12 months"
+
 ********************************************************************************/
 
 //Age at female sterilization
@@ -267,7 +294,8 @@ summarize ster_age [fweight=v005], detail
 
 	gen fp_ster_median=round(sp50+(.5-sL)/(sU-sL),.01)
 	label var fp_ster_median "Median age at time of sterilization for women"
-	
+
+********************************************************************************/
 *** Source of Contraceptive method ***
 ** only for women that are using a moden method and do not use LAM
 
@@ -314,6 +342,7 @@ label var fp_source_mcond "Source for male condom"
 *******************************************************************************
 
 *** Brands used for pill and condom ***
+* Country-specific variables. Recode to a binary variable to match the final report.
 
 //Brand used for pill
 gen fp_brand_pill = v323
@@ -352,3 +381,9 @@ label var fp_info_other_meth "Informed of other methods by health or FP worker a
 gen fp_info_all = 0 if inlist(v312,1,2,3,6,11) & (v008-v317<60)
 replace fp_info_all = 1 if ((v3a02==1 | v3a03==1) & v3a04==1 & (v3a05==1 | v3a06==1)) & inlist(v312,1,2,3,6,11) & (v008-v317<60)
 label var fp_info_all "Informed of all three (method information index) among female sterilization, pill, IUD, injectables, and implant users"
+
+//Informed that they could switch if needed - NEW Indicator in DHS8
+gen fp_info_switch = 0 if inlist(v312,1,2,3,6,11) & (v008-v317<60)
+replace fp_info_switch = 1 if v3a14==1 & inlist(v312,1,2,3,6,11) & (v008-v317<60)
+label var fp_info_switch "Informed that they could switch if needed among female sterilization, pill, IUD, injectables, and implant users"
+

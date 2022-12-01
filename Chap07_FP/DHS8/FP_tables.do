@@ -1,8 +1,8 @@
 /*****************************************************************************************************
 Program: 			FP_tables.do
-Purpose: 			produce tables for indicators
+Purpose: 			produce tables for indicators - DHS8 update
 Author:				Shireen Assaf
-Date last modified: Feb 5 2019 by Shireen Assaf 
+Date last modified: November 8, 2022 by Shireen Assaf 
 
 *This do file will produce the following tables in excel:
 1. 	Tables_Know_wm:		Contains the tables for knowledge indicators for women
@@ -11,13 +11,13 @@ Date last modified: Feb 5 2019 by Shireen Assaf
 4. 	Tables_Use_cr:		Contains the tables for current use of family planning for women + timing of sterlization
 5.	Tables_source_info:	Contains the tables for source of family planning method, brands used, and information given about the method for women
 6.	Tables_Need:		Contains the tables for unmet need, met need, demand satisfied, and future intention to use for women
-7.	Tables_Communicat:	Contains the tables for exposure to FP messages, decision on use/nonuse, discussions for women
+7.	Tables_Communicat:	Contains the tables for decision on use/nonuse and discussions for women
+8. 	Tables_message_wn:  Contains the tables for exposure for FP messages for women
 8.  Tables_message_mn:	Contains the tables for exposure for FP messages for men
-
 
 Notes: 	For knowledge of contraceptive methods, ever use, current use, and unmet need variables, the population of
 		interest can be selected (all women, currently married women, and sexually active women).
-		The reminaing indicators are reported for currently married women.
+		The remaining indicators are reported for currently married women.
 						
 		For men, the population of interest can also be selected for the knowledge of methods variables. 
 						
@@ -35,16 +35,16 @@ if file=="IR" {
 * limiting to women age 15-49
 drop if v012<15 | v012>49
 
-gen wt=v005/1000000
+cap gen wt=v005/1000000
 
 ** Select population of interest
 
-	*all women
+	/*all women
 	cap drop select
 	gen select=1
 	*/
 
-	/*currently married women
+	*currently married women
 	cap drop select
 	gen select=v502==1
 	*/
@@ -64,14 +64,14 @@ tab1	fp_know_any fp_know_mod fp_know_fster fp_know_mster fp_know_pill fp_know_iu
 		fp_know_mcond fp_know_fcond fp_know_ec fp_know_sdm fp_know_lam fp_know_omod fp_know_trad fp_know_rhy ///
 		fp_know_wthd fp_know_other if select==1 [iw=wt] 
 		
-tab1 fp_know_mean_all fp_know_mean_mar [iw=wt]
+tab1 fp_know_mean_all fp_know_mean_mar fp_know_mean_sexactv [iw=wt]
 
 * output to excel
 tabout 	fp_know_any fp_know_mod fp_know_fster fp_know_mster fp_know_pill fp_know_iud fp_know_inj fp_know_imp ///
 		fp_know_mcond fp_know_fcond fp_know_ec fp_know_sdm fp_know_lam fp_know_omod fp_know_trad fp_know_rhy ///
 		fp_know_wthd fp_know_other if select==1 using Tables_Know_wm.xls [iw=wt] , oneway cells(cell) f(1) replace 
 		
-tabout fp_know_mean_all fp_know_mean_mar using Tables_Know_wm.xls [iw=wt] , oneway cells(cell) append 
+tabout fp_know_mean_all fp_know_mean_mar fp_know_mean_sexactv using Tables_Know_wm.xls [iw=wt] , oneway cells(cell) append 
 
 */
 ****************************************************
@@ -130,389 +130,6 @@ tab	v013 fp_know_fert_cor [iw=wt], row nofreq
 * output to excel
 tabout v013 fp_know_fert_cor using Tables_Know_wm.xls [iw=wt] , c(row) f(1) append 
 
-**************************************************************************************************
-* Indicators for ever use of contraceptive methods: excel file Tables_Use_ev will be produced
-**************************************************************************************************
-** Ever use in not reported in DHS7 tabplan and many recent surveys do not have these variables.
-
-//Ever use any by background variables
-
-*age
-tab v013 fp_evuse_any if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_any if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_any if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_any if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_any if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_any if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) replace 
-*/
-****************************************************
-//Ever use modern by background variables
-
-*age
-tab v013 fp_evuse_mod if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_mod if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_mod if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_mod if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_mod if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_mod if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-
-****************************************************
-//Ever use female sterlization by background variables
-
-*age
-tab v013 fp_evuse_fster if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_fster if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_fster if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_fster if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_fster if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_fster if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use male sterlization by background variables
-
-*age
-tab v013 fp_evuse_mster if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_mster if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_mster if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_mster if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_mster if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_mster if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use pill by background variables
-
-*age
-tab v013 fp_evuse_pill if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_pill if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_pill if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_pill if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_pill if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_pill if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use IUD by background variables
-
-*age
-tab v013 fp_evuse_iud if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_iud if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_iud if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_iud if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_iud if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_iud if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use injectables by background variables
-
-*age
-tab v013 fp_evuse_inj if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_inj if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_inj if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_inj if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_inj if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_inj if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use implants by background variables
-
-*age
-tab v013 fp_evuse_imp if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_imp if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_imp if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_imp if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_imp if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_imp if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use male condoms by background variables
-
-*age
-tab v013 fp_evuse_mcond if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_mcond if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_mcond if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_mcond if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_mcond if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_mcond if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use female condoms by background variables
-
-*age
-tab v013 fp_evuse_fcond if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_fcond if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_fcond if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_fcond if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_fcond if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_fcond if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use diaphragm by background variables
-
-*age
-tab v013 fp_evuse_diaph if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_diaph if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_diaph if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_diaph if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_diaph if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_diaph if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use LAM by background variables
-
-*age
-tab v013 fp_evuse_lam if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_lam if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_lam if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_lam if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_lam if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_lam if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use emergency contraceptive by background variables
-
-*age
-tab v013 fp_evuse_ec if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_ec if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_ec if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_ec if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_ec if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_ec if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use other moden method by background variables
-
-*age
-tab v013 fp_evuse_omod if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_omod if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_omod if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_omod if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_omod if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_omod if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use traditional method by background variables
-
-*age
-tab v013 fp_evuse_trad if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_trad if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_trad if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_trad if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_trad if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_trad if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use rhythm by background variables
-
-*age
-tab v013 fp_evuse_rhy if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_rhy if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_rhy if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_rhy if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_rhy if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_rhy if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use withdrawal by background variables
-
-*age
-tab v013 fp_evuse_wthd if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_wthd if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_wthd if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_wthd if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_wthd if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_wthd if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Ever use other method by background variables
-
-*age
-tab v013 fp_evuse_other if select==1 [iw=wt], row nofreq 
-
-*residence
-tab v025 fp_evuse_other if select==1 [iw=wt], row nofreq 
-
-*region
-tab v024 fp_evuse_other if select==1 [iw=wt], row nofreq 
-
-*education
-tab v106 fp_evuse_other if select==1 [iw=wt], row nofreq 
-
-*wealth
-tab v190 fp_evuse_other if select==1 [iw=wt], row nofreq 
-
-* output to excel
-tabout v013 v025 v106 v024 v190 fp_evuse_other if select==1 using Tables_Use_ev.xls [iw=wt] , c(row) f(1) append 
-*/
 
 **************************************************************************************************
 * Indicators for current use of contraceptive methods: excel file Tables_Use_cr will be produced
@@ -897,6 +514,93 @@ tab v190 fp_cruse_other if select==1 [iw=wt], row nofreq
 tabout v013 v025 v106 v024 v190 fp_cruse_other if select==1 using Tables_Use_cr.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
+//Not currently using
+
+*age
+tab v013 fp_not_cruse if select==1 [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_not_cruse if select==1 [iw=wt], row nofreq 
+
+*region
+tab v024 fp_not_cruse if select==1 [iw=wt], row nofreq 
+
+*education
+tab v106 fp_not_cruse if select==1 [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_not_cruse if select==1 [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 fp_not_cruse if select==1 using Tables_Use_cr.xls [iw=wt] , c(row) f(1) append 
+
+****************************************************
+//Currently using DMPA-SC/Sayana Press among injectable users
+*Tabulated for all women
+
+*age
+tab v013 fp_inj_dmpa [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_inj_dmpa [iw=wt], row nofreq 
+
+*region
+tab v024 fp_inj_dmpa [iw=wt], row nofreq 
+
+*education
+tab v106 fp_inj_dmpa [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_inj_dmpa [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 fp_inj_dmpa using Tables_Use_cr.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Person administering the DMPA-SC/Sayana Press injection
+*Tabulated for all women
+
+*age
+tab v013 fp_inj_dmpa_pr [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_inj_dmpa_pr [iw=wt], row nofreq 
+
+*region
+tab v024 fp_inj_dmpa_pr [iw=wt], row nofreq 
+
+*education
+tab v106 fp_inj_dmpa_pr [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_inj_dmpa_pr [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 fp_inj_dmpa_pr using Tables_Use_cr.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Used emergency contraception in the last 12 months
+*Tabulated for all women
+
+*age
+tab v013 fp_cruse_ec_12mo [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_cruse_ec_12mo [iw=wt], row nofreq 
+
+*region
+tab v024 fp_cruse_ec_12mo [iw=wt], row nofreq 
+
+*education
+tab v106 fp_cruse_ec_12mo [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_cruse_ec_12mo [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 fp_cruse_ec_12mo using Tables_Use_cr.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
 //Timing of sterlization
 
 tab v319 fp_ster_age [iw=wt], row nofreq
@@ -921,6 +625,7 @@ tabout  fp_source_iud fp_source_inj fp_source_imp fp_source_pill fp_source_mcond
 
 ****************************************************
 //Pill users using a brand
+* country-specific variable. Recode to a binary variable to match the final report.
 
 *age
 tab v013 fp_brand_pill [iw=wt], row nofreq 
@@ -941,6 +646,7 @@ tab v190 fp_brand_pill [iw=wt], row nofreq
 tabout v013 v025 v106 v024 v190 fp_brand_pill using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
 ****************************************************
 //Condom users using a brand
+* country-specific variable. Recode to a binary variable to match the final report.
 
 *age
 tab v013 fp_brand_cond [iw=wt], row nofreq 
@@ -982,10 +688,10 @@ tab fp_source_tot fp_info_sideff [iw=wt], row nofreq
 
 * output to excel 
 tabout	fp_info_sideff if v312==6  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(female_ster_users) append 
-tabout	fp_info_sideff if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout	fp_info_sideff if v312==2  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(IUD_users) append 
 tabout	fp_info_sideff if v312==3  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(inject_users) append 
 tabout	fp_info_sideff if v312==11 using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(implant_users) append 
+tabout	fp_info_sideff if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout  fp_source_tot fp_info_sideff using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
@@ -1011,10 +717,10 @@ tab fp_source_tot fp_info_what_to_do [iw=wt], row nofreq
 
 * output to excel 
 tabout	fp_info_what_to_do if v312==6  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(female_ster_users) append 
-tabout	fp_info_what_to_do if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout	fp_info_what_to_do if v312==2  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(IUD_users) append 
 tabout	fp_info_what_to_do if v312==3  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(inject_users) append 
 tabout	fp_info_what_to_do if v312==11 using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(implant_users) append 
+tabout	fp_info_what_to_do if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout  fp_source_tot fp_info_what_to_do using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
@@ -1040,14 +746,14 @@ tab fp_source_tot fp_info_other_meth [iw=wt], row nofreq
 
 * output to excel 
 tabout	fp_info_other_meth if v312==6  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(female_ster_users) append 
-tabout	fp_info_other_meth if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout	fp_info_other_meth if v312==2  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(IUD_users) append 
 tabout	fp_info_other_meth if v312==3  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(inject_users) append 
 tabout	fp_info_other_meth if v312==11 using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(implant_users) append 
+tabout	fp_info_other_meth if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout  fp_source_tot fp_info_other_meth using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
-//Informed of al three (Method Information Mix)
+//Informed of all three (Method Information Mix)
 
 *female sterlization users
 tab fp_info_all if v312==6 [iw=wt]
@@ -1069,14 +775,44 @@ tab fp_source_tot fp_info_all [iw=wt], row nofreq
 
 * output to excel 
 tabout	fp_info_all if v312==6  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(female_ster_users) append 
-tabout	fp_info_all if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout	fp_info_all if v312==2  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(IUD_users) append 
 tabout	fp_info_all if v312==3  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(inject_users) append 
 tabout	fp_info_all if v312==11 using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(implant_users) append 
+tabout	fp_info_all if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
 tabout  fp_source_tot fp_info_all using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
+****************************************************
+//Informed that they could switch if needed 
+
+*female sterlization users
+tab fp_info_switch if v312==6 [iw=wt]
+
+*pill users
+tab fp_info_switch if v312==1 [iw=wt]
+
+*IUD users
+tab fp_info_switch if v312==2 [iw=wt]
+
+*Injectables users
+tab fp_info_switch if v312==3 [iw=wt]
+
+*Implant users
+tab fp_info_switch if v312==11 [iw=wt]
+
+*by source of method (may need to recode, country specific)
+tab fp_source_tot fp_info_switch [iw=wt], row nofreq 
+
+* output to excel 
+tabout	fp_info_switch if v312==6  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(female_ster_users) append 
+tabout	fp_info_switch if v312==2  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(IUD_users) append 
+tabout	fp_info_switch if v312==3  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(inject_users) append 
+tabout	fp_info_switch if v312==11 using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(implant_users) append 
+tabout	fp_info_switch if v312==1  using Tables_source_info.xls [iw=wt] , oneway cells(cell) f(1) clab(pill_users) append 
+tabout  fp_source_tot fp_info_switch using Tables_source_info.xls [iw=wt] , c(row) f(1) append 
+
 
 **************************************************************************************************
 * Indicators for unmet, met, demand satisfied and intention to use: excel file Tables_Need will be produced
+* Note: you can produce the same tables for all women and sexually active women not currently in a union. The default selection is women in a union. 
 **************************************************************************************************
 ****************************************************
 //Unmet for spacing
@@ -1331,7 +1067,7 @@ tabout fp_future_use  numchild if v502==1 using Tables_Need.xls [iw=wt] , c(col)
 */
 
 **************************************************************************************************
-* Indicators for messages, decisions, and discussion: excel file Tables_Communicat will be produced
+* Indicators for family planning messages: excel file Tables_message_wn will be produced
 **************************************************************************************************
 ****************************************************
 //FP messages by radio
@@ -1352,7 +1088,7 @@ tab v106 fp_message_radio [iw=wt], row nofreq
 tab v190 fp_message_radio [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_message_radio using Tables_Communicat.xls [iw=wt] , c(row) f(1) replace 
+tabout v013 v025 v106 v024 v190 fp_message_radio using Tables_message_wn.xls [iw=wt] , c(row) f(1) replace 
 */
 
 ****************************************************
@@ -1374,7 +1110,7 @@ tab v106 fp_message_tv [iw=wt], row nofreq
 tab v190 fp_message_tv [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_message_tv using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v106 v024 v190 fp_message_tv using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
 */
 
 ****************************************************
@@ -1396,7 +1132,7 @@ tab v106 fp_message_paper [iw=wt], row nofreq
 tab v190 fp_message_paper [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_message_paper using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v106 v024 v190 fp_message_paper using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //FP messages by mobile
@@ -1417,93 +1153,204 @@ tab v106 fp_message_mobile [iw=wt], row nofreq
 tab v190 fp_message_mobile [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_message_mobile using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v106 v024 v190 fp_message_mobile using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//FP messages none of four
+//FP messages by social media
 
 *age
-tab v013 fp_message_noneof4 [iw=wt], row nofreq 
+tab v013 fp_message_socialm [iw=wt], row nofreq 
 
 *residence
-tab v025 fp_message_noneof4 [iw=wt], row nofreq 
+tab v025 fp_message_socialm [iw=wt], row nofreq 
 
 *region
-tab v024 fp_message_noneof4 [iw=wt], row nofreq 
+tab v024 fp_message_socialm [iw=wt], row nofreq 
 
 *education
-tab v106 fp_message_noneof4 [iw=wt], row nofreq 
+tab v106 fp_message_socialm [iw=wt], row nofreq 
 
 *wealth
-tab v190 fp_message_noneof4 [iw=wt], row nofreq 
+tab v190 fp_message_socialm [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_message_noneof4 using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v106 v024 v190 fp_message_socialm using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
 */
-
 ****************************************************
-//FP messages by none of three
+//FP messages by poster/leaflet/brochure
 
 *age
-tab v013 fp_message_noneof3 [iw=wt], row nofreq 
+tab v013 fp_message_poster [iw=wt], row nofreq 
 
 *residence
-tab v025 fp_message_noneof3 [iw=wt], row nofreq 
+tab v025 fp_message_poster [iw=wt], row nofreq 
 
 *region
-tab v024 fp_message_noneof3 [iw=wt], row nofreq 
+tab v024 fp_message_poster [iw=wt], row nofreq 
 
 *education
-tab v106 fp_message_noneof3 [iw=wt], row nofreq 
+tab v106 fp_message_poster [iw=wt], row nofreq 
 
 *wealth
-tab v190 fp_message_noneof3 [iw=wt], row nofreq 
+tab v190 fp_message_poster [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_message_noneof3 using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
+tabout v013 v025 v106 v024 v190 fp_message_poster using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
+//FP messages by outdoor sign/billboard
+
+*age
+tab v013 fp_message_signs [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_message_signs [iw=wt], row nofreq 
+
+*region
+tab v024 fp_message_signs [iw=wt], row nofreq 
+
+*education
+tab v106 fp_message_signs [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_message_signs [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 fp_message_signs using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//FP messages by community meetings/events
+
+*age
+tab v013 fp_message_comnty [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_message_comnty [iw=wt], row nofreq 
+
+*region
+tab v024 fp_message_comnty [iw=wt], row nofreq 
+
+*education
+tab v106 fp_message_comnty [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_message_comnty [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 fp_message_comnty using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//FP messages none of eight
+
+*age
+tab v013 fp_message_noneof8 [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_message_noneof8 [iw=wt], row nofreq 
+
+*region
+tab v024 fp_message_noneof8 [iw=wt], row nofreq 
+
+*education
+tab v106 fp_message_noneof8 [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_message_noneof8 [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 fp_message_noneof8 using Tables_message_wn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+**************************************************************************************************
+* Indicators for FP decisions, and discussion: excel file Tables_Communicat will be produced
+**************************************************************************************************
+
+*recode number of living children
+recode v219 (0=0 "0") (1/2=1 " 1-2") (3/4=2 " 3-4") (4/max=3 "5+"), gen(numchild2)
+
+*FP use
+recode v313 (0=0 "Not currently using") (1/3=1 "Currently using"), gen(fpuse)
+
 //Decide to use FP among users
 
 *age
-tab v013 fp_decyes_user [iw=wt], row nofreq 
+tab v013 fp_dec_who [iw=wt], row nofreq 
+
+*FP use
+tab fpuse fp_dec_who [iw=wt], row nofreq 
+
+*Number of living children
+tab numchild2 fp_dec_who [iw=wt], row nofreq 
 
 *residence
-tab v025 fp_decyes_user [iw=wt], row nofreq 
+tab v025 fp_dec_who [iw=wt], row nofreq 
 
 *region
-tab v024 fp_decyes_user [iw=wt], row nofreq 
+tab v024 fp_dec_who [iw=wt], row nofreq 
 
 *education
-tab v106 fp_decyes_user [iw=wt], row nofreq 
+tab v106 fp_dec_who [iw=wt], row nofreq 
 
 *wealth
-tab v190 fp_decyes_user [iw=wt], row nofreq 
+tab v190 fp_dec_who [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_decyes_user using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
+tabout v013 fpuse numchild2 v025 v106 v024 v190 fp_dec_who using Tables_Communicat.xls [iw=wt] , c(row) f(1) replace 
+*/
+****************************************************
+//Woman participated in decisionmaking about family planning
+
+*age
+tab v013 fp_dec_wm [iw=wt], row nofreq 
+
+*FP use
+tab fpuse fp_dec_wm [iw=wt], row nofreq 
+
+*Number of living children
+tab numchild2 fp_dec_wm [iw=wt], row nofreq 
+
+*residence
+tab v025 fp_dec_wm [iw=wt], row nofreq 
+
+*region
+tab v024 fp_dec_wm [iw=wt], row nofreq 
+
+*education
+tab v106 fp_dec_wm [iw=wt], row nofreq 
+
+*wealth
+tab v190 fp_dec_wm [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 fpuse numchild2 v025 v106 v024 v190 fp_dec_wm using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
 */
 
 ****************************************************
-//Decide not to use FP among nonusers
+//Woman pressured to become pregnant
 
 *age
-tab v013 fp_decno_nonuser [iw=wt], row nofreq 
+tab v013 fp_preg_pressure [iw=wt], row nofreq 
+
+*FP use
+tab fpuse fp_preg_pressure [iw=wt], row nofreq 
+
+*Number of living children
+tab numchild2 fp_preg_pressure [iw=wt], row nofreq 
 
 *residence
-tab v025 fp_decno_nonuser [iw=wt], row nofreq 
+tab v025 fp_preg_pressure [iw=wt], row nofreq 
 
 *region
-tab v024 fp_decno_nonuser [iw=wt], row nofreq 
+tab v024 fp_preg_pressure [iw=wt], row nofreq 
 
 *education
-tab v106 fp_decno_nonuser [iw=wt], row nofreq 
+tab v106 fp_preg_pressure [iw=wt], row nofreq 
 
 *wealth
-tab v190 fp_decno_nonuser [iw=wt], row nofreq 
+tab v190 fp_preg_pressure [iw=wt], row nofreq 
 
 * output to excel
-tabout v013 v025 v106 v024 v190 fp_decno_nonuser using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
+tabout v013 fpuse numchild2 v025 v106 v024 v190 fp_preg_pressure using Tables_Communicat.xls [iw=wt] , c(row) f(1) append 
 */
 
 ****************************************************
@@ -1635,14 +1482,14 @@ tab1	fp_know_any fp_know_mod fp_know_fster fp_know_mster fp_know_pill fp_know_iu
 		fp_know_mcond fp_know_fcond fp_know_ec fp_know_sdm fp_know_lam fp_know_omod fp_know_trad fp_know_rhy ///
 		fp_know_wthd fp_know_other if select==1 & mv013<8 [iw=wt] 
 
-tab1 fp_know_mean_all fp_know_mean_mar [iw=wt]		
+tab1 fp_know_mean_all fp_know_mean_mar fp_know_mean_sexactv [iw=wt]		
 
 * output to excel
 tabout 	fp_know_any fp_know_mod fp_know_fster fp_know_mster fp_know_pill fp_know_iud fp_know_inj fp_know_imp ///
 		fp_know_mcond fp_know_fcond fp_know_ec fp_know_sdm fp_know_lam fp_know_omod fp_know_trad fp_know_rhy ///
 		fp_know_wthd fp_know_other if select==1 & mv013<8 using Tables_Know_mn.xls [iw=wt] , oneway cells(cell) f(1) replace 
 		
-tabout fp_know_mean_all fp_know_mean_mar using Tables_Know_mn.xls [iw=wt] , oneway cells(cell) append 
+tabout fp_know_mean_all fp_know_mean_mar fp_know_mean_sexactv using Tables_Know_mn.xls [iw=wt] , oneway cells(cell) append 
 
 */
 ****************************************************
@@ -1781,49 +1628,109 @@ tab mv190 fp_message_mobile if mv013<8 [iw=wt], row nofreq
 tabout mv013 mv025 mv106 mv024 mv190 fp_message_mobile if mv013<8 using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//FP messages none of four
+//FP messages by social media
 
 *age
-tab mv013 fp_message_noneof4 if mv013<8 [iw=wt], row nofreq 
+tab mv013 fp_message_socialm [iw=wt], row nofreq 
 
 *residence
-tab mv025 fp_message_noneof4 if mv013<8 [iw=wt], row nofreq 
+tab mv025 fp_message_socialm [iw=wt], row nofreq 
 
 *region
-tab mv024 fp_message_noneof4 if mv013<8 [iw=wt], row nofreq 
+tab mv024 fp_message_socialm [iw=wt], row nofreq 
 
 *education
-tab mv106 fp_message_noneof4 if mv013<8 [iw=wt], row nofreq 
+tab mv106 fp_message_socialm [iw=wt], row nofreq 
 
 *wealth
-tab mv190 fp_message_noneof4 if mv013<8 [iw=wt], row nofreq 
+tab mv190 fp_message_socialm [iw=wt], row nofreq 
 
 * output to excel
-tabout mv013 mv025 mv106 mv024 mv190 fp_message_noneof4 if mv013<8 using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
+tabout mv013 mv025 mv106 mv024 mv190 fp_message_socialm using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
 */
-
 ****************************************************
-//FP messages noen of three
+//FP messages by poster/leaflet/brochure
 
 *age
-tab mv013 fp_message_noneof3 if mv013<8 [iw=wt], row nofreq 
+tab mv013 fp_message_poster [iw=wt], row nofreq 
 
 *residence
-tab mv025 fp_message_noneof3 if mv013<8 [iw=wt], row nofreq 
+tab mv025 fp_message_poster [iw=wt], row nofreq 
 
 *region
-tab mv024 fp_message_noneof3 if mv013<8 [iw=wt], row nofreq 
+tab mv024 fp_message_poster [iw=wt], row nofreq 
 
 *education
-tab mv106 fp_message_noneof3 if mv013<8 [iw=wt], row nofreq 
+tab mv106 fp_message_poster [iw=wt], row nofreq 
 
 *wealth
-tab mv190 fp_message_noneof3 if mv013<8 [iw=wt], row nofreq 
+tab mv190 fp_message_poster [iw=wt], row nofreq 
 
 * output to excel
-tabout mv013 mv025 mv106 mv024 mv190 fp_message_noneof3 if mv013<8 using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
+tabout mv013 mv025 mv106 mv024 mv190 fp_message_poster using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
+//FP messages by outdoor sign/billboard
 
+*age
+tab mv013 fp_message_signs [iw=wt], row nofreq 
+
+*residence
+tab mv025 fp_message_signs [iw=wt], row nofreq 
+
+*region
+tab mv024 fp_message_signs [iw=wt], row nofreq 
+
+*education
+tab mv106 fp_message_signs [iw=wt], row nofreq 
+
+*wealth
+tab mv190 fp_message_signs [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv106 mv024 mv190  fp_message_signs using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//FP messages by community meetings/events
+
+*age
+tab mv013 fp_message_comnty [iw=wt], row nofreq 
+
+*residence
+tab mv025 fp_message_comnty [iw=wt], row nofreq 
+
+*region
+tab mv024 fp_message_comnty [iw=wt], row nofreq 
+
+*education
+tab mv106 fp_message_comnty [iw=wt], row nofreq 
+
+*wealth
+tab mv190 fp_message_comnty [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv106 mv024 mv190  fp_message_comnty using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//FP messages none of eight
+
+*age
+tab mv013 fp_message_noneof8 [iw=wt], row nofreq 
+
+*residence
+tab mv025 fp_message_noneof8 [iw=wt], row nofreq 
+
+*region
+tab mv024 fp_message_noneof8 [iw=wt], row nofreq 
+
+*education
+tab mv106 fp_message_noneof8 [iw=wt], row nofreq 
+
+*wealth
+tab mv190 fp_message_noneof8 [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv106 mv024 mv190  fp_message_noneof8 using Tables_message_mn.xls [iw=wt] , c(row) f(1) append 
+*/
 }
 

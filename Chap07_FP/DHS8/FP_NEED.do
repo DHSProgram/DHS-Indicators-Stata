@@ -7,6 +7,7 @@ Author:				Shireen Assaf
 Date last modified: Feb 1 2019 by Shireen Assaf 
 					March 17 2021 by Trevor Croft to update coding to match v626a when generating for older surveys, 
 					  and allow for DHS-7 surveys in general code and add in some survey-specific code
+					November 8 2022 by Shireen Assaf - for the indicator fp_future_use included missing (9) with "Does not intend to use" (5) 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -259,6 +260,7 @@ label var fp_demsat_any "Demand satisfied by any methods"
 
 //Future intention to use
 gen fp_future_use = v362 
+replace fp_future_use=5 if fp_future_use==9
 replace fp_future_use = . if  (v502!=1 | v312!=0)
 label values fp_future_use V362
 label var fp_future_use "Intention of use of contraception in the future among non-users"

@@ -4,7 +4,7 @@ Purpose: 			Code contraceptive knowledge indicators
 Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: Jan 31 2019 by Shireen Assaf 
+Date last modified: November 2, 2022 by Shireen Assaf to add missing fp_know_mean_sexactv indicator
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------//
@@ -29,6 +29,8 @@ fp_know_wthd		"Know withdrawal method"
 fp_know_other		"Know other method"
 fp_know_mean_all	"Mean number of methods known - all"
 fp_know_mean_mar	"Mean number of methods known - among currently married"
+fp_know_mean_sexactv "Mean number of methods known - among unmarried & sexually active"
+
 fp_know_fert_all	"Knowledge of fertile period among all women"
 fp_know_fert_rhy	"Knowledge of fertile period among rhythm method users"
 fp_know_fert_sdm	"Knowledge of fertile period among standard days method users"
@@ -125,14 +127,15 @@ gen fp_know_sum	=	fp_know_fster + fp_know_mster + fp_know_pill + fp_know_iud + f
 				
 sum fp_know_sum [iw=v005/1000000]
 gen fp_know_mean_all=r(mean)
-
 label var fp_know_mean_all "Mean number of methods known - all"
 
 sum fp_know_sum if v502==1 [iw=v005/1000000]
 gen fp_know_mean_mar=r(mean)
-
 label var fp_know_mean_mar "Mean number of methods known - among currently married"
 
+sum fp_know_sum if v502!=1 & v528<=30 [iw=v005/1000000]
+gen fp_know_mean_sexactv=r(mean)
+label var fp_know_mean_sexactv "Mean number of methods known - among unmarried & sexually active"
 
 *** Knowledge of fertile period ***
 recode v217 (4=1 "Just before her menstrual period begins") (1=2 "During her menstrual period") (2=3 "Right after her menstrual period has ended") ///
@@ -250,5 +253,9 @@ sum fp_know_sum if mv502==1 [iw=mv005/1000000]
 gen fp_know_mean_mar=r(mean)
 
 label var fp_know_mean_mar "Mean number of methods known - among currently married"
+
+sum fp_know_sum if mv502!=1 & mv528<=30 [iw=mv005/1000000]
+gen fp_know_mean_sexactv=r(mean)
+label var fp_know_mean_sexactv "Mean number of methods known - among unmarried & sexually active"
 
 }
