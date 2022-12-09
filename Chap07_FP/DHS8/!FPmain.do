@@ -1,6 +1,6 @@
 /*******************************************************************************************************************************
-Program: 				FPmain.do
-Purpose: 				Main file for the Family Planning Chapter - DHS8 update
+Program: 				FPmain.do - DHS8 update
+Purpose: 				Main file for the Family Planning Chapter 
 						The main file will call other do files that will produce the FP indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf 

@@ -42,7 +42,7 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	2 "Nurse/midwife"	///
 	3 "Other health worker" ///
 	4 "TBA/other/relative"		///
-	5 "Missing" ///
+	9 "Missing" ///
 	6 "No ANC" 
 	label val rh_anc_pv rh_anc_pv
 	label var rh_anc_pv "Person providing assistance during ANC"
