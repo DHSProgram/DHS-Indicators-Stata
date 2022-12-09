@@ -45,7 +45,7 @@ These scripts typically use `expss` package to create tables that can utilize su
 
 
 ## DHS8 updates
-The DHS Program is making updates and adding new indicators in DHS Phase 8. Please check the IndicatorList_DHS8 excel file for the updated list of indicators and their labels. Each chapter of the Code Share Library will contain a subfolder for DHS8 updates when they are available. Updates will begin with the Stata code which will be completed in September 2023 and updates to R and SPSS code will be completed in September 2024. Currently DHS8 updates to Chapter 7 are available. 
+The DHS Program is making updates and adding new indicators in DHS Phase 8. Please check the IndicatorList_DHS8 excel file for the updated list of indicators and their labels. Each chapter of the Code Share Library will contain a subfolder for DHS8 updates when they are available. Updates will begin with the Stata code which will be completed in September 2023 and updates to R and SPSS code will be completed in September 2024. Currently DHS8 updates to Chapters 7 and 9 are available. 
 
 **********************************************************************************************************************************************************
 
