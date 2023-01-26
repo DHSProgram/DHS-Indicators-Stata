@@ -40,23 +40,23 @@ use "$datapath//$krdata.dta", clear
 
 gen file=substr("$krdata", 3, 2)
 	
-	**** child's age ****
-	gen age = v008 - b3
+**** child's age ****
+gen age = v008 - b3
 		
-		* to check if survey has b19, which should be used instead to compute age. 
-		scalar b19_included=1
-			capture confirm numeric variable b19, exact 
-			if _rc>0 {
-			* b19 is not present
-			scalar b19_included=0
+	* to check if survey has b19, which should be used instead to compute age. 
+	scalar b19_included=1
+		capture confirm numeric variable b19, exact 
+		if _rc>0 {
+		* b19 is not present
+		scalar b19_included=0
 			}
-			if _rc==0 {
-			* b19 is present; check for values
-			summarize b19
-			  if r(sd)==0 | r(sd)==. {
-			  scalar b19_included=0
+		if _rc==0 {
+		* b19 is present; check for values
+		summarize b19
+		if r(sd)==0 | r(sd)==. {
+		scalar b19_included=0
 			  }
-			}
+		}
 
 		if b19_included==1 {
 		drop age
@@ -176,24 +176,14 @@ do NT_tables.do
 
 * IR file variables
 
-* A merge with the HR file is required to compute one of the indicators. 
-
-use "$datapath//$hrdata.dta", clear
-rename (hv001 hv002) (v001 v002)
-keep v001 v002 hv234a
-save temp.dta, replace
 * open IR dataset
 use "$datapath//$irdata.dta", clear
-merge m:1 v001 v002 using temp.dta
-keep if _merge==3
-gen file=substr("$irdata", 3, 2)
 
 do NT_WM_NUT.do
-*Purpose: 	Code women's anthropometric indicators
+*Purpose: 	Code women's anthropometric indicators if they are available in the IR File. If not use the PR file. 
 
 do NT_tables.do
 *Purpose: 	Produce tables for indicators computed from above do files. 
-* Note:		This will drop any women not in 15-49 age range. You can change this selection. Please check the notes in the do file.
 
 */
 *******************************************************************************************************************************
@@ -205,7 +195,7 @@ do NT_tables.do
 
 use "$datapath//$prdata.dta", clear
 rename (hv001 hv002 hvidx) (mv001 mv002 mv003)
-cap keep mv001 mv002 mv003 hv042 hb55 hb56 hb57 hb40 hv103
+cap keep mv001 mv002 mv003 hv042 hb* hv103
 save temp.dta, replace
 * open MR dataset
 use "$datapath//$mrdata.dta", clear

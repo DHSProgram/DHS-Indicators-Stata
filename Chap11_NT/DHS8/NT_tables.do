@@ -1,8 +1,8 @@
 /*****************************************************************************************************
 Program: 			NT_tables.do
-Purpose: 			produce tables for indicators
+Purpose: 			produce tables for indicators - DHS8 update
 Author:				Shireen Assaf
-Date last modified: November 3, 2022 by Shireen Assaf 	
+Date last modified: November 16, 2022 by Shireen Assaf 	
 
 *This do file will produce the following tables in excel:
 1. 	Tables_nut_ch:		Contains the tables for nutritional status indicators for children
@@ -12,13 +12,13 @@ Date last modified: November 3, 2022 by Shireen Assaf
 5.	Tables_IYCF:		Contains the tables for IYCF indicators in children
 6. 	Tables_micronut_ch:	Contains the tables for micronutrient intake in children
 7. 	Tables_salt_hh:		Contains the tables for salt testing and iodized salt in households
-8.	Tables_micronut_wm	Contains the tables for micronutrient intake in women
-9. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women
+8. 	Tables_nut_wm:		Contains the tables for nutritional status indicators for women (first for women age 20-49 then for women age 15-19)
+9. 	Tables_foodliq_wm:	Contains tables for food and liquid consumption for women
 10.	Tables_anemia_wm:	Contains the tables for anemia indicators for women
-11. Tables_nut_mn:		Contains the tables for nutritional status indicators for men
+11. Tables_nut_mn:		Contains the tables for nutritional status indicators for men (first for men age 20-49 then for men age 15-19)
 12.	Tables_anemia_mn:	Contains the tables for anemia indicators for men
 
-Notes: 	For women and men the indicators are outputed for age 15-49 in line 766 and 1165. This can be commented out if the indicators are required for all women/men.
+Notes: 	For men indicators are anthropometric indicators are computed for men age 20-49 and 15-19. Anemia is computed for all men but men age 15-49 are selected in line 1292. To compute these indicators for all men, remove that line. 
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -305,7 +305,7 @@ cap gen wt=v005/1000000
 recode age (0/5=1 " <6") (6/11=2 " 6-11") (12/23=3 " 12-23") (24/35=4 " 24-35") (36/47=5 " 36-47") (48/59=6 " 48-59"), gen(agemonths)
 
 //Age categories for children 0-23
-cap recode age (0/1=1 " 0-1") (2/3=2 " 2-3") (4/5=3 " 4-5") (6/8=4 " 6-8") (9/11=5 " 9-11") (12/17=6 " 12-17") (18/23=7 " 18-23") , gen(agecats)
+cap recode age (0/1=1 " 0-1") (2/3=2 " 2-3") (4/5=3 " 4-5") (6/11=4 " 6-11") (12/15=5 " 12-15") (16/19=6 " 16-19") (20/23=7 " 20-23") , gen(agecats)
 
 //Place of delivery
 recode m15 (20/39 = 1 "Health facility") (10/19 = 2 "Home") (40/99 = 3 "Other/Missing"), gen(del_place)
@@ -335,14 +335,6 @@ replace brstfed = 1 if caseid == caseid[_n-1] & b3 == b3[_n-1] & brstfed[_n-1] =
 label values brstfed yesno
 label var brstfed "Currently breastfeeding"
 *recode m4 (95=1 "Breastfeeding ") (93 94=2 "Not breastfeeding"), gen(brstfed)
-
-//Wasting status
-gen waste=. if hw72<9996
-replace waste=1 if hw72<-300
-replace waste=2 if hw72>=-300 & hw72<-200
-replace waste=3 if hw72>=-200 & hw72<9996
-label define waste 1 "Severe acute malnutrition" 2 "Moderate acute malnutrition" 3 "Not wasted"
-label values waste waste
 
 
 **************************************************************************************************
@@ -478,12 +470,6 @@ tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_ever using Tables_bf.xls [i
 *child's sex
 tab b4 nt_bf_start_1hr [iw=wt], row nofreq 
 
-*Assistance during delivery
-tab del_pv nt_bf_start_1hr [iw=wt], row nofreq 
-
-*Place of delivery
-tab del_place nt_bf_start_1hr [iw=wt], row nofreq 
-
 *residence
 tab v025 nt_bf_start_1hr [iw=wt], row nofreq 
 
@@ -500,94 +486,85 @@ tab v190 nt_bf_start_1hr [iw=wt], row nofreq
 tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_start_1hr using Tables_bf.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Breastfed within 1 day
+//Exclusively breastfed for the first 2 days after birth 
 *child's sex
-tab b4 nt_bf_start_1day [iw=wt], row nofreq 
+tab b4 nt_ebf_2days [iw=wt], row nofreq 
 
 *Assistance during delivery
-tab del_pv nt_bf_start_1day [iw=wt], row nofreq 
+tab del_pv nt_ebf_2days [iw=wt], row nofreq 
 
 *Place of delivery
-tab del_place nt_bf_start_1day [iw=wt], row nofreq 
+tab del_place nt_ebf_2days [iw=wt], row nofreq 
 
 *residence
-tab v025 nt_bf_start_1day [iw=wt], row nofreq 
+tab v025 nt_ebf_2days [iw=wt], row nofreq 
 
 *region
-tab v024 nt_bf_start_1day [iw=wt], row nofreq 
+tab v024 nt_ebf_2days [iw=wt], row nofreq 
 
 *mother's education
-tab v106 nt_bf_start_1day [iw=wt], row nofreq 
+tab v106 nt_ebf_2days [iw=wt], row nofreq 
 
 *wealth
-tab v190 nt_bf_start_1day [iw=wt], row nofreq 
+tab v190 nt_ebf_2days [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_start_1day using Tables_bf.xls [iw=wt] , c(row) f(1) append 
+tabout b4 del_pv del_place v025 v024 v106 v190 nt_ebf_2days using Tables_bf.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
-//Received a prelacteal feed among breastfed children
+//Currently breastfeeding : age 12-23
+
+*child's age
+tab agecats nt_bf_curr [iw=wt], row nofreq 
+
 *child's sex
-tab b4 nt_bf_prelac [iw=wt], row nofreq 
-
-*Assistance during delivery
-tab del_pv nt_bf_prelac [iw=wt], row nofreq 
-
-*Place of delivery
-tab del_place nt_bf_prelac [iw=wt], row nofreq 
+tab b4 nt_bf_curr [iw=wt], row nofreq 
 
 *residence
-tab v025 nt_bf_prelac [iw=wt], row nofreq 
+tab v025 nt_bf_curr [iw=wt], row nofreq 
 
 *region
-tab v024 nt_bf_prelac [iw=wt], row nofreq 
+tab v024 nt_bf_curr [iw=wt], row nofreq 
 
 *mother's education
-tab v106 nt_bf_prelac [iw=wt], row nofreq 
+tab v106 nt_bf_curr [iw=wt], row nofreq 
 
 *wealth
-tab v190 nt_bf_prelac [iw=wt], row nofreq 
+tab v190 nt_bf_curr [iw=wt], row nofreq 
 
 * output to excel
-tabout b4 del_pv del_place v025 v024 v106 v190 nt_bf_prelac using Tables_bf.xls [iw=wt] , c(row) f(1) append 
+tabout agecats b4 v025 v024 v106 v190 nt_bf_curr using Tables_bf.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Bottle feeding
-* For breastfeeding status table 
-*Age categories
-tab agecats nt_bottle if age<24 [iw=wt], row nofreq 
+*child's age
+tab agecats nt_bottle [iw=wt], row nofreq 
 
-*Age 0-3
-tab nt_bottle if age<4 [iw=wt] 
+*child's sex
+tab b4 nt_bottle [iw=wt], row nofreq 
 
-*Age 0-5
-tab nt_bottle if age<6 [iw=wt]
+*residence
+tab v025 nt_bottle [iw=wt], row nofreq 
 
-*Age 6-9
-tab nt_bottle if age>5 & age<10 [iw=wt]
+*region
+tab v024 nt_bottle [iw=wt], row nofreq 
 
-*Age 12-15
-tab nt_bottle if age>11 & age<16 [iw=wt] 
+*mother's education
+tab v106 nt_bottle [iw=wt], row nofreq 
 
-*Age 12-23
-tab nt_bottle if age>11 & age<24 [iw=wt]
-
-*Age 20-23
-tab nt_bottle if age>19 & age<24  [iw=wt]
+*wealth
+tab v190 nt_bottle [iw=wt], row nofreq 
 
 * output to excel
-tabout agecats nt_bottle using Tables_bf.xls [iw=wt] , c(row) f(1) append 
-tabout nt_bottle if age<4 using Tables_bf.xls [iw=wt] , clab("0-3months") c(cell) f(1) append 
-tabout nt_bottle if age<6 using Tables_bf.xls [iw=wt] , clab("0-5months") c(cell) f(1) append 
-tabout nt_bottle if age>5 & age<10 using Tables_bf.xls [iw=wt] , clab("6-9months") c(cell) f(1) append 
-tabout nt_bottle if age>11 & age<16 using Tables_bf.xls [iw=wt] , clab("12-15months") c(cell) f(1) append 
-tabout nt_bottle if age>11 & age<24 using Tables_bf.xls [iw=wt] , clab("12-23months") c(cell) f(1) append 
-tabout nt_bottle if age>19 & age<24 using Tables_bf.xls [iw=wt] , clab("20-23months") c(cell) f(1) append 
-
-* Total for IYCF tables
-tabout nt_bottle using Tables_IYCF.xls [iw=wt] , oneway c(cell freq) f(1) replace 
-
+tabout agecats b4 v025 v024 v106 v190 nt_bottle using Tables_bf.xls [iw=wt] , c(row) f(1) append 
 */
+**************************************************************************************************
+* IYCF table with several indicators: this also includes indicators tabulated in the NT_tables2.do file
+
+tab1 nt_bf_ever nt_bf_start_1hr nt_ebf_2days nt_bf_curr nt_bottle [iw=wt]
+
+tabout nt_bf_ever nt_bf_start_1hr nt_ebf_2days nt_bf_curr nt_bottle  using Tables_IYCF.xls [iw=wt] , oneway c(cell) f(1) append 
+
 **************************************************************************************************
 * Micronutrient intake
 **************************************************************************************************
@@ -617,7 +594,7 @@ tab v106 nt_ch_micro_mp [iw=wt], row nofreq
 tab v190 nt_ch_micro_mp [iw=wt], row nofreq 
 
 * output to excel
-tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_mp using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) replace 
+cap tabout agemonths b4 brstfed agem v025 v024 v106 v190 nt_ch_micro_mp using Tables_micronut_ch.xls [iw=wt] , c(row) f(1) replace 
 */
 ****************************************************
 //Given iron tablets or syrups among children 6-59 months
@@ -806,7 +783,7 @@ label values mstat mstat
 label var mstat "Maternity status"
 
 **************************************************************************************************
-* Nutritional status of women
+* Nutritional status of women age 20-49
 **************************************************************************************************
 //Height below 145cm
 *age
@@ -978,6 +955,202 @@ tabout agecat v025 v024 v106 v190 nt_wm_obese using Tables_nut_wm.xls [iw=wt] , 
 */
 
 **************************************************************************************************
+* Nutritional status of women age 15-19
+**************************************************************************************************
+//Height below 145cm
+*age
+tab agecat nt_wm2_ht [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_ht [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_ht [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_ht [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_ht [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_ht using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Mean bmi
+tab nt_wm2_bmi_mean
+
+* this is a scalar and only produced for the total. 
+
+* output to excel
+tabout nt_wm2_bmi_mean using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Normal BMI
+*age
+tab agecat nt_wm2_norm [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_norm [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_norm [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_norm [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_norm [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_norm using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Thin BMI
+*age
+tab agecat nt_wm2_thin [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_thin [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_thin [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_thin [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_thin [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_thin using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Mildly thin BMI
+*age
+tab agecat nt_wm2_mthin [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_mthin [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_mthin [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_mthin [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_mthin [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_mthin using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Moderately and severely thin BMI
+*age
+tab agecat nt_wm2_modsevthin [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_modsevthin [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_modsevthin [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_modsevthin [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_modsevthin [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_modsevthin using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Overweight or obese BMI
+*age
+tab agecat nt_wm2_ovobese [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_ovobese [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_ovobese [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_ovobese [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_ovobese [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_ovobese using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Overweight BMI
+*age
+tab agecat nt_wm2_ovwt [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_ovwt [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_ovwt [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_ovwt [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_ovwt [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_ovwt using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Obese BMI
+*age
+tab agecat nt_wm2_obese [iw=wt], row nofreq 
+
+*residence
+tab v025 nt_wm2_obese [iw=wt], row nofreq 
+
+*region
+tab v024 nt_wm2_obese [iw=wt], row nofreq 
+
+*education
+tab v106 nt_wm2_obese [iw=wt], row nofreq 
+
+*wealth
+tab v190 nt_wm2_obese [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat v025 v024 v106 v190 nt_wm2_obese using Tables_nut_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+**************************************************************************************************
+* Foods and liquids consumed among women age 15-49
+**************************************************************************************************
+* These tables include foods and liquids consumption as well as minimum dietary diversity and consumption of sweet drinks and unhealthy foods.
+
+tab1 nt_wm_grains nt_wm_root nt_wm_beans nt_wm_nuts nt_wm_dairy nt_meatfish nt_wm_eggs nt_wm_dkgreens nt_wm_vita nt_wm_veg nt_wm_fruit nt_wm_insect nt_wm_palm nt_wm_sweets nt_wm_salty nt_wm_juice nt_wm_soda nt_wm_teacoff nt_wm_mdd nt_wm_swt_drink nt_wm_unhlth_food [iw=wt]
+
+*age
+tabout  nt_wm_grains nt_wm_root nt_wm_beans nt_wm_nuts nt_wm_dairy nt_meatfish nt_wm_eggs nt_wm_dkgreens nt_wm_vita nt_wm_veg nt_wm_fruit nt_wm_insect nt_wm_palm nt_wm_sweets nt_wm_salty nt_wm_juice nt_wm_soda nt_wm_teacoff nt_wm_mdd nt_wm_swt_drink nt_wm_unhlth_food agecat using Tables_foodliq_wm.xls [iw=wt] , c(col) f(1) replace 
+
+*pregancy status
+tabout  nt_wm_grains nt_wm_root nt_wm_beans nt_wm_nuts nt_wm_dairy nt_meatfish nt_wm_eggs nt_wm_dkgreens nt_wm_vita nt_wm_veg nt_wm_fruit nt_wm_insect nt_wm_palm nt_wm_sweets nt_wm_salty nt_wm_juice nt_wm_soda nt_wm_teacoff nt_wm_mdd nt_wm_swt_drink nt_wm_unhlth_food v213 using Tables_foodliq_wm.xls [iw=wt] , c(col) f(1) append 
+
+* residence
+tabout  nt_wm_grains nt_wm_root nt_wm_beans nt_wm_nuts nt_wm_dairy nt_meatfish nt_wm_eggs nt_wm_dkgreens nt_wm_vita nt_wm_veg nt_wm_fruit nt_wm_insect nt_wm_palm nt_wm_sweets nt_wm_salty nt_wm_juice nt_wm_soda nt_wm_teacoff nt_wm_mdd nt_wm_swt_drink nt_wm_unhlth_food v025 using Tables_foodliq_wm.xls [iw=wt] , c(col) f(1) append 
+
+*region
+tabout  nt_wm_grains nt_wm_root nt_wm_beans nt_wm_nuts nt_wm_dairy nt_meatfish nt_wm_eggs nt_wm_dkgreens nt_wm_vita nt_wm_veg nt_wm_fruit nt_wm_insect nt_wm_palm nt_wm_sweets nt_wm_salty nt_wm_juice nt_wm_soda nt_wm_teacoff nt_wm_mdd nt_wm_swt_drink nt_wm_unhlth_food v024 using Tables_foodliq_wm.xls [iw=wt] , c(col) f(1) append 
+
+*education
+tabout  nt_wm_grains nt_wm_root nt_wm_beans nt_wm_nuts nt_wm_dairy nt_meatfish nt_wm_eggs nt_wm_dkgreens nt_wm_vita nt_wm_veg nt_wm_fruit nt_wm_insect nt_wm_palm nt_wm_sweets nt_wm_salty nt_wm_juice nt_wm_soda nt_wm_teacoff nt_wm_mdd nt_wm_swt_drink nt_wm_unhlth_food v106 using Tables_foodliq_wm.xls [iw=wt] , c(col) f(1) append 
+
+*wealth
+tabout  nt_wm_grains nt_wm_root nt_wm_beans nt_wm_nuts nt_wm_dairy nt_meatfish nt_wm_eggs nt_wm_dkgreens nt_wm_vita nt_wm_veg nt_wm_fruit nt_wm_insect nt_wm_palm nt_wm_sweets nt_wm_salty nt_wm_juice nt_wm_soda nt_wm_teacoff nt_wm_mdd nt_wm_swt_drink nt_wm_unhlth_food v190 using Tables_foodliq_wm.xls [iw=wt] , c(col) f(1) append 
+*/
+**************************************************************************************************
 * Anemia in women
 **************************************************************************************************
 //Any anemia
@@ -1108,69 +1281,6 @@ tab v190 nt_wm_sev_anem [iw=wt], row nofreq
 tabout agecat ceb mstat iud v463a v025 v024 v106 v190 nt_wm_sev_anem using Tables_anemia_wm.xls [iw=wt] , c(row) f(1) append 
 */
 
-**************************************************************************************************
-* Micronutrient intake among women
-**************************************************************************************************
-//Number of days women took iron tablets or syrup during pregnancy 
-*age
-tab agecat nt_wm_micro_iron [iw=wt], row nofreq 
-
-*residence
-tab v025 nt_wm_micro_iron [iw=wt], row nofreq 
-
-*region
-tab v024 nt_wm_micro_iron [iw=wt], row nofreq 
-
-*education
-tab v106 nt_wm_micro_iron [iw=wt], row nofreq 
-
-*wealth
-tab v190 nt_wm_micro_iron [iw=wt], row nofreq 
-
-* output to excel
-tabout agecat v025 v024 v106 v190 nt_wm_micro_iron using Tables_micronut_wm.xls [iw=wt] , c(row) f(1) replace 
-*/
-****************************************************
-//Took deworming medication during pregnancy
-*age
-tab agecat nt_wm_micro_dwm [iw=wt], row nofreq 
-
-*residence
-tab v025 nt_wm_micro_dwm [iw=wt], row nofreq 
-
-*region
-tab v024 nt_wm_micro_dwm [iw=wt], row nofreq 
-
-*education
-tab v106 nt_wm_micro_dwm [iw=wt], row nofreq 
-
-*wealth
-tab v190 nt_wm_micro_dwm [iw=wt], row nofreq 
-
-* output to excel
-tabout agecat v025 v024 v106 v190 nt_wm_micro_dwm using Tables_micronut_wm.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
-//Live in a household with iodized salt
-*age
-tab agecat nt_wm_micro_iod [iw=wt], row nofreq 
-
-*residence
-tab v025 nt_wm_micro_iod [iw=wt], row nofreq 
-
-*region
-tab v024 nt_wm_micro_iod [iw=wt], row nofreq 
-
-*education
-tab v106 nt_wm_micro_iod [iw=wt], row nofreq 
-
-*wealth
-tab v190 nt_wm_micro_iod [iw=wt], row nofreq 
-
-* output to excel
-tabout agecat v025 v024 v106 v190 nt_wm_micro_iod using Tables_micronut_wm.xls [iw=wt] , c(row) f(1) append 
-*/
-****************************************************
 }
 
 ****************************************************************************
@@ -1186,24 +1296,107 @@ cap gen wt=mv005/1000000
 **************************************************************************************************
 * background variables
 
-* Note: droping men over age 49. If you want to produce tables for all men then comment out this line. 
-drop if mv013>7
-
 //Age 
 recode mv013 (1=1 "15-19") (2/3=2 "20-29") (4/5=3 "30-39") (6/7=4 "40-49"), gen(agecat)
-
-//Smokes cigarettes
-gen smoke=0
-replace smoke=1 if inrange(mv464a,1,888) | inrange(mv464b,1,888) | inrange(mv464c,1,888) | inrange(mv484a,1,888) | inrange(mv484b,1,888) | inrange(mv484c,1,888) 
-label values smoke yesno
-
 **************************************************************************************************
-* Nutritional status of men
+* Anemia in men
 **************************************************************************************************
-//Mean bmi - men 15-49
+//Any anemia
+*age
+tab agecat nt_mn_any_anem [iw=wt], row nofreq 
+
+*smokes
+tab smoke nt_mn_any_anem [iw=wt], row nofreq 
+
+*residence
+tab mv025 nt_mn_any_anem [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn_any_anem [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn_any_anem [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn_any_anem [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat smoke mv025 mv024 mv106 mv190 nt_mn_any_anem using Tables_anemia_mn.xls [iw=wt] , c(row) f(1) replace 
+*/
+
+//Mild anemia
+*age
+tab agecat nt_mn_mild_anem [iw=wt], row nofreq 
+
+*smokes
+tab smoke nt_mn_mild_anem [iw=wt], row nofreq 
+
+*residence
+tab mv025 nt_mn_mild_anem [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn_mild_anem [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn_mild_anem [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn_mild_anem [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat smoke mv025 mv024 mv106 mv190 nt_mn_mild_anem using Tables_anemia_mn.xls [iw=wt] , c(row) f(1) replace 
+*/
+//Moderate anemia
+*age
+tab agecat nt_mn_mod_anem [iw=wt], row nofreq 
+
+*smokes
+tab smoke nt_mn_mod_anem [iw=wt], row nofreq 
+
+*residence
+tab mv025 nt_mn_mod_anem [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn_mod_anem [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn_mod_anem [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn_mod_anem [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat smoke mv025 mv024 mv106 mv190 nt_mn_mod_anem using Tables_anemia_mn.xls [iw=wt] , c(row) f(1) replace 
+*/
+//Severe anemia
+*age
+tab agecat nt_mn_sev_anem [iw=wt], row nofreq 
+
+*smokes
+tab smoke nt_mn_sev_anem [iw=wt], row nofreq 
+
+*residence
+tab mv025 nt_mn_sev_anem [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn_sev_anem [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn_sev_anem [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn_sev_anem [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat smoke mv025 mv024 mv106 mv190 nt_mn_sev_anem using Tables_anemia_mn.xls [iw=wt] , c(row) f(1) replace 
+*/
+**************************************************************************************************
+* Nutritional status of men - among men age 20-49
+**************************************************************************************************
+//Mean bmi - men 20-49
 tab nt_mn_bmi_mean
 
-//Mean bmi - men 15-54
+//Mean bmi - men 20+
 tab nt_mn_bmi_mean_all
 
 * this is a scalar and only produced for the total. 
@@ -1353,29 +1546,139 @@ tabout agecat mv025 mv024 mv106 mv190 nt_mn_obese using Tables_nut_mn.xls [iw=wt
 */
 
 **************************************************************************************************
-* Anemia in men
+* Nutritional status of men - among men age 15-19
 **************************************************************************************************
-//Any anemia
-*age
-tab agecat nt_mn_any_anem [iw=wt], row nofreq 
+//Mean bmi - men 15-19
+tab nt_mn2_bmi_mean
 
-*smokes
-tab smoke nt_mn_any_anem [iw=wt], row nofreq 
-
-*residence
-tab mv025 nt_mn_any_anem [iw=wt], row nofreq 
-
-*region
-tab mv024 nt_mn_any_anem [iw=wt], row nofreq 
-
-*education
-tab mv106 nt_mn_any_anem [iw=wt], row nofreq 
-
-*wealth
-tab mv190 nt_mn_any_anem [iw=wt], row nofreq 
+* this is a scalar and only produced for the total. 
 
 * output to excel
-tabout agecat smoke mv025 mv024 mv106 mv190 nt_mn_any_anem using Tables_anemia_mn.xls [iw=wt] , c(row) f(1) replace 
+tabout nt_mn2_bmi_mean using Tables_nut_mn.xls [iw=wt] , oneway c(cell) f(1) append 
 */
+****************************************************
+//Normal BMI
 
+*residence
+tab mv025 nt_mn2_norm [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn2_norm [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn2_norm [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn2_norm [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat mv025 mv024 mv106 mv190 nt_mn2_norm using Tables_nut_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Thin BMI
+*residence
+tab mv025 nt_mn2_thin [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn2_thin [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn2_thin [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn2_thin [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat mv025 mv024 mv106 mv190 nt_mn2_thin using Tables_nut_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Mildly thin BMI
+
+*residence
+tab mv025 nt_mn2_mthin [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn2_mthin [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn2_mthin [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn2_mthin [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat mv025 mv024 mv106 mv190 nt_mn2_mthin using Tables_nut_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Moderately and severely thin BMI
+
+*residence
+tab mv025 nt_mn2_modsevthin [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn2_modsevthin [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn2_modsevthin [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn2_modsevthin [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat mv025 mv024 mv106 mv190 nt_mn2_modsevthin using Tables_nut_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Overweight or obese BMI
+
+*residence
+tab mv025 nt_mn2_ovobese [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn2_ovobese [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn2_ovobese [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn2_ovobese [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat mv025 mv024 mv106 mv190 nt_mn2_ovobese using Tables_nut_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Overweight BMI
+
+*residence
+tab mv025 nt_mn2_ovwt [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn2_ovwt [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn2_ovwt [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn2_ovwt [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat mv025 mv024 mv106 mv190 nt_mn2_ovwt using Tables_nut_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Obese BMI
+
+*residence
+tab mv025 nt_mn2_obese [iw=wt], row nofreq 
+
+*region
+tab mv024 nt_mn2_obese [iw=wt], row nofreq 
+
+*education
+tab mv106 nt_mn2_obese [iw=wt], row nofreq 
+
+*wealth
+tab mv190 nt_mn2_obese [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat mv025 mv024 mv106 mv190 nt_mn2_obese using Tables_nut_mn.xls [iw=wt] , c(row) f(1) append 
+*/
 }
