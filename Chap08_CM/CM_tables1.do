@@ -46,7 +46,7 @@ svyset v001 [pw=wt], strata(v023) singleunit(centered)  //this is needed to show
 *mother's age at birth
 tab mo_age_at_birth stillbirths [iw=wt]
 
-*prenancy interval
+*pregnancy interval
 tab preg_interval stillbirths [iw=wt]
 
 *residence
@@ -70,7 +70,7 @@ tabout mo_age_at_birth preg_interval v025 v106 v024 v190 stillbirths using Table
 *mother's age at birth
 tab mo_age_at_birth earlyneonatal [iw=wt]
 
-*prenancy interval
+*pregnancy interval
 tab preg_interval earlyneonatal [iw=wt]
 
 *residence
@@ -94,7 +94,7 @@ tabout mo_age_at_birth preg_interval v025 v106 v024 v190 earlyneonatal using Tab
 *mother's age at birth
 svy: mean cm_peri, over(mo_age_at_birth) 
 
-*prenancy interval
+*pregnancy interval
 tab preg_interval cm_peri [iw=wt], row nofreq 
 svy: mean cm_peri, over(preg_interval) 
 

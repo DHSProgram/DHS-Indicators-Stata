@@ -8,7 +8,7 @@ Date last modified: April 30, 2019 by Shireen Assaf
 1. 	Table_Risk_wm:		Contains the tables of high risk fertility behavior indicators among women
 2. 	Table_Risk_birth:	Contains the tables of high risk births indicators
 	
-Notes: 	The indicators are outputed for women age 15-49 in line 27. This can be commented out if the indicators are required for all women.	
+Notes: 	The indicators are outputted for women age 15-49 in line 27. This can be commented out if the indicators are required for all women.	
 *****************************************************************************************************/
 
 if file=="IR" {
@@ -18,7 +18,7 @@ drop if v012<15 | v012>49
 gen wt=v005/1000000
 
 **************************************************************************************************
-* High risk fertility indicators amoung women 
+* High risk fertility indicators among women 
 **************************************************************************************************
 
 tab1	cm_riskw_none cm_riskw_unavoid cm_riskw_any_avoid cm_riskw_u18 cm_riskw_o34 cm_riskw_interval cm_riskw_order ///
@@ -36,7 +36,7 @@ if file=="KR" {
 **************************************************************************************************
 gen wt=v005/1000000
 
-* Percentage of births with risk - among births in the 5 years precedig the survey
+* Percentage of births with risk - among births in the 5 years preceding the survey
 tab1 cm_riskb_none cm_riskb_unavoid cm_riskb_any_avoid cm_riskb_u18 cm_riskb_o34 cm_riskb_interval cm_riskb_order ///
 cm_riskb_any_single cm_riskb_mult1 cm_riskb_mult2 cm_riskb_mult3 cm_riskb_mult4 cm_riskb_mult5 cm_riskb_any_mult ///
 cm_riskb_u18_avoid cm_riskb_o34_avoid cm_riskb_interval_avoid cm_riskb_order_avoid [iw=wt] 
@@ -45,7 +45,7 @@ tabout 	cm_riskb_none cm_riskb_unavoid cm_riskb_any_avoid cm_riskb_u18 cm_riskb_
 cm_riskb_any_single cm_riskb_mult1 cm_riskb_mult2 cm_riskb_mult3 cm_riskb_mult4 cm_riskb_mult5 cm_riskb_any_mult ///
 cm_riskb_u18_avoid cm_riskb_o34_avoid cm_riskb_interval_avoid cm_riskb_order_avoid using Tables_Risk_births.xls [iw=wt] , oneway cells(cell) f(1) replace 
 
-* Risk ratios - among births in the 5 years precedig the survey
+* Risk ratios - among births in the 5 years preceding the survey
 * these are scalars that can be listed using the command below
 
 scalar list _all

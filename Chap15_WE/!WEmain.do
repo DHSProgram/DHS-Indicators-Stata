@@ -11,7 +11,7 @@ set more off
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
 *global user 39585	//change employee id number to personalize path
-global user 33697
+global user 39585
 cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap15_WE"
 
 global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
@@ -19,11 +19,11 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "ETIR70FL"
+global irdata "ETIR71FL"
 * MMIR71FL TJIR70FL GHIR72FL UGIR7BFL KEIR71FL
 
 * MR Files
-global mrdata "ETMR70FL"
+global mrdata "ETMR71FL"
 * MMMR71FL GHMR72FL UGMR7BFL
 ****************************
 

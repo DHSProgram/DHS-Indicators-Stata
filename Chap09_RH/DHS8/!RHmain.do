@@ -24,7 +24,7 @@ global nrdata "CINR80FL"
 * IR Files
 global irdata "CIIR80FL"
 
-* BR Files
+* MR Files
 global mrdata "CIMR80FL"
 
 ****************************
