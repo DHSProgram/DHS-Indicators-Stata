@@ -4,17 +4,20 @@ Purpose: 			Code vaccination variables.
 Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: Jan 24, 2023 by Shireen Assaf 
+Date last modified: June 26, 2023 by Shireen Assaf 
 
 Notes:				Estimates can be created for two age groups (12-23) and (24-35). 
 					
-					!! Please choose the age group of interest in line 94, after the list of indicators. Default is age group 12-23.
+					!! Please choose the age group of interest in line 99, after the list of indicators. Default is age group 12-23.
 					
 					Vaccination indicators are country specific. However, most common vaccines are coded below and the same logic can be applied to others.
 					When the vaccine is a single dose, the logic for single dose vaccines can be used (ex: bcg).
 					When the vaccine has 3 doses, the logic for multiple dose vaccines can be used (ex: dpt)
+					For instance, there are 6 new indicators in DHS that are country-specific (2nd dose of measles and HepB at birth) that may not be in other tables.
+					New indicators on vaccinations according to national schedule are country-specific. 
+					Please check final report if vaccines should be included or excluded from cacluation below. 
 					
-					Seven new indicators in DHS8, see below
+					Thirteen new indicators in DHS8, see below
 *****************************************************************************************************/
 /*----------------------------------------------------------------------------
 Variables created in this file:
@@ -79,6 +82,13 @@ ch_meas_either		"Measles vaccination according to either source"
 ch_allvac_card		"All basic vaccinations according to card"
 ch_allvac_moth		"All basic vaccinations according to mother"
 ch_allvac_either	"All basic vaccinations according to either source"
+ch_meas2_card 		"Measles 2 vaccination according to card" - NEW Indicator in DHS8 (country specific)
+ch_meas2_moth 		"Measles 2 vaccination according to mother" - NEW Indicator in DHS8 (country specific)
+ch_meas2_either 	"Measles 2 vaccination according to either source" - NEW Indicator in DHS8 (country specific)
+
+ch_hepb_birth_card 		"HepB at birth vaccination according to card" - NEW Indicator in DHS8 (country specific)
+ch_hepb_birth_moth 		"HepB at birth vaccination according to mother" - NEW Indicator in DHS8 (country specific)
+ch_hepb_birth_either 	"HepB at birth vaccination according to either source" - NEW Indicator in DHS8 (country specific)
 
 ch_allvac_schd_card		"All vaccinations according to national schedule and card" - NEW Indicator in DHS8
 ch_allvac_schd_moth		"All vaccinations according to national schedule and mother" - NEW Indicator in DHS8
@@ -125,18 +135,17 @@ recode h1 (1=1 "card") (else=2 "mother"), gen(source)
 *** BCG ***
 //BCG either source
 recode h2 (1 2 3=1) (else=0), gen(ch_bcg_either)
+label var ch_bcg_either	"BCG vaccination according to either source"
 
 //BCG mother's report
 gen ch_bcg_moth=ch_bcg_either 
 replace ch_bcg_moth=0 if source==1
+label var ch_bcg_moth	"BCG vaccination according to mother"
 
 //BCG by card
 gen ch_bcg_card=ch_bcg_either
 replace ch_bcg_card=0 if source==2
-
 label var ch_bcg_card	"BCG vaccination according to card"
-label var ch_bcg_moth	"BCG vaccination according to mother"
-label var ch_bcg_either	"BCG vaccination according to either source"
 
 *** Pentavalent ***
 //DPT 1, 2, 3 either source
@@ -246,18 +255,17 @@ label var ch_polio3_either 	"Polio 3rd dose vaccination according to either sour
 
 //IPV either source - NEW Indicator in DHS8
 recode h60 (1 2 3=1) (else=0), gen(ch_ipv_either)
+label var ch_ipv_either	"IPV vaccination according to either source"
 
 //IPV mother's report - NEW Indicator in DHS8
 gen ch_ipv_moth=ch_ipv_either  
 replace ch_ipv_moth=0 if source==1
+label var ch_ipv_moth	"IPV vaccination according to mother"
 
 //IPV by card - NEW Indicator in DHS8
 gen ch_ipv_card=ch_ipv_either
 replace ch_ipv_card=0 if source==2
-
 label var ch_ipv_card	"IPV vaccination according to card"
-label var ch_ipv_moth	"IPV vaccination according to mother"
-label var ch_ipv_either	"IPV vaccination according to either source"
 
 *** Pneumococcal  ***
 //Pneumococcal 1, 2, 3 either source
@@ -299,14 +307,14 @@ replace ch_pneumo3_card=0 if source==2
 
 drop Pneumo1 Pneumo2 Pneumo3 Pneumosum
 
-label var ch_pneumo1_card "Pneumococcal 1st dose vaccination according to card"
-label var ch_pneumo1_moth "Pneumococcal 1st dose vaccination according to mother"
+label var ch_pneumo1_card 	"Pneumococcal 1st dose vaccination according to card"
+label var ch_pneumo1_moth 	"Pneumococcal 1st dose vaccination according to mother"
 label var ch_pneumo1_either "Pneumococcal 1st dose vaccination according to either source"
-label var ch_pneumo2_card "Pneumococcal 2nd dose vaccination according to card"
-label var ch_pneumo2_moth "Pneumococcal 2nd dose vaccination according to mother"
+label var ch_pneumo2_card 	"Pneumococcal 2nd dose vaccination according to card"
+label var ch_pneumo2_moth 	"Pneumococcal 2nd dose vaccination according to mother"
 label var ch_pneumo2_either "Pneumococcal 2nd dose vaccination according to either source"
-label var ch_pneumo3_card "Pneumococcal 3rd dose vaccination according to card"
-label var ch_pneumo3_moth "Pneumococcal 3rd dose vaccination according to mother"
+label var ch_pneumo3_card 	"Pneumococcal 3rd dose vaccination according to card"
+label var ch_pneumo3_moth 	"Pneumococcal 3rd dose vaccination according to mother"
 label var ch_pneumo3_either "Pneumococcal 3rd dose vaccination according to either source"
 
 *** Rotavirus  ****
@@ -349,39 +357,75 @@ replace ch_rotav3_card=0 if source==2
 
 drop rotav1 rotav2 rotav3 rotavsum
 
-label var ch_rotav1_card "Rotavirus 1st dose vaccination according to card"
-label var ch_rotav1_moth "Rotavirus 1st dose vaccination according to mother"
-label var ch_rotav1_either "Rotavirus 1st dose vaccination according to either source"
-label var ch_rotav2_card "Rotavirus 2nd dose vaccination according to card"
-label var ch_rotav2_moth "Rotavirus 2nd dose vaccination according to mother"
-label var ch_rotav2_either "Rotavirus 2nd dose vaccination according to either source"
-label var ch_rotav3_card "Rotavirus 3rd dose vaccination according to card"
-label var ch_rotav3_moth "Rotavirus 3rd dose vaccination according to mother"
-label var ch_rotav3_either "Rotavirus 3rd dose vaccination according to either source"
+label var ch_rotav1_card 	"Rotavirus 1st dose vaccination according to card"
+label var ch_rotav1_moth 	"Rotavirus 1st dose vaccination according to mother"
+label var ch_rotav1_either 	"Rotavirus 1st dose vaccination according to either source"
+label var ch_rotav2_card 	"Rotavirus 2nd dose vaccination according to card"
+label var ch_rotav2_moth 	"Rotavirus 2nd dose vaccination according to mother"
+label var ch_rotav2_either 	"Rotavirus 2nd dose vaccination according to either source"
+label var ch_rotav3_card 	"Rotavirus 3rd dose vaccination according to card"
+label var ch_rotav3_moth 	"Rotavirus 3rd dose vaccination according to mother"
+label var ch_rotav3_either 	"Rotavirus 3rd dose vaccination according to either source"
 
 *** Measles ***
 
 //Measles either source
+* 2nd dose of measles is a new country-specific indicator in DHS8 
 recode h9 (1 2 3=1) (else=0), gen(meas1)
 recode h9a (1 2 3=1) (else=0), gen(meas2)
 gen meassum= meas1+ meas2
 
+*first dose measles
 gen ch_meas_either=meassum>=1
-gen ch_meas2_either=meassum>=2
+
+*second dose measles - NEW Indicator in DHS8 (country specific)
+gen ch_meas2_either=meassum>=2 
 
 *recode h9 (1 2 3=1) (else=0), gen(ch_meas_either)
 
 //measles mother's report
+
+*first dose
 gen ch_meas_moth=ch_meas_either
 replace ch_meas_moth=0 if source==1
 
+*second dose - NEW Indicator in DHS8 (country specific)
+gen ch_meas2_moth=ch_meas2_either
+replace ch_meas2_moth=0 if source==1
+
 //measles by card
+
+*first dose
 gen ch_meas_card=ch_meas_either
 replace ch_meas_card=0 if source==2
 
-label var ch_meas_card 	"Measles vaccination according to card"
-label var ch_meas_moth 	"Measles vaccination according to mother"
-label var ch_meas_either "Measles vaccination according to either source"
+*second dose - NEW Indicator in DHS8 (country specific)
+gen ch_meas2_card=ch_meas2_either
+replace ch_meas2_card=0 if source==2
+
+label var ch_meas_card 		"Measles vaccination according to card"
+label var ch_meas_moth 		"Measles vaccination according to mother"
+label var ch_meas_either 	"Measles vaccination according to either source"
+label var ch_meas2_card 	"Measles 2 vaccination according to card"
+label var ch_meas2_moth 	"Measles 2 vaccination according to mother"
+label var ch_meas2_either 	"Measles 2 vaccination according to either source"
+
+
+*** HepB at birth ***
+
+// HepB at birth either source - NEW Indicator in DHS8 (country specific)
+recode h50 (1 2 3=1) (else=0), gen(ch_hepb_birth_either)
+label var ch_hepb_birth_either "HepB at birth vaccination according to either source"
+
+// HepB at birth mother's report - NEW Indicator in DHS8 (country specific)
+gen ch_hepb_birth_moth=ch_hepb_birth_either
+replace ch_hepb_birth_moth=0 if source==1
+label var ch_hepb_birth_moth "HepB at birth vaccination according to mother"
+
+// HepB at birth by card - NEW Indicator in DHS8 (country specific)
+gen ch_hepb_birth_card=ch_hepb_birth_either
+replace ch_hepb_birth_card=0 if source==2
+label var ch_hepb_birth_card "HepB at birth vaccination according to card"
 
 *** All vaccinations ***
 //all basic vaccinations either source
@@ -402,19 +446,20 @@ label values ch_allvac_card yesno
 label var ch_allvac_card "All vaccinations according to card"
 
 
-*hepB at birth
-recode h50 (1 2 3=1) (else=0), gen(ch_hepb_birth_either)
-*ch_hepb_birth_either==1&
-
-
 //all national schedule vaccinations either source - NEW Indicator in DHS8
-if b19<24 {
-gen ch_allvac_schd_either= ch_bcg_either==1 & ch_pent3_either==1& (ch_polio3_either==1 | ch_polio4_either==1) & ch_ipv_either==1 & (ch_pneumo2_either==1 | ch_pneumo3_either==1) & (ch_rotav2_either==1 | ch_rotav3_either==1) & ch_meas_either==1
+* this is a country-specific indicator. Please check the footnote of the table in the final report to include or exclude other vaccines in this list. 
+sum b19
+
+*age 12-23 months
+if r(max)==23 {
+gen ch_allvac_schd_either= ch_bcg_either==1 & ch_hepb_birth_either==1 & ch_pent3_either==1 & ch_polio3_either==1 & ch_ipv_either==1 & ch_pneumo3_either==1 & ch_meas_either==1
 label values ch_allvac_schd_either yesno
 label var ch_allvac_schd_either "All vaccinations according to national schedule and either source"
-} 
-else {
-gen ch_allvac_schd_either= ch_bcg_either==1 & (ch_pent3_either==1| ch_pent4_either==1 ) & (ch_polio3_either==1 | ch_polio4_either==1) & ch_ipv_either==1 & (ch_pneumo2_either==1 | ch_pneumo3_either==1) & (ch_rotav2_either==1 | ch_rotav3_either==1) & (ch_meas_either==1 | ch_meas2_either==1 )
+}
+
+*age 24-35 months
+if r(max)==35{
+gen ch_allvac_schd_either= ch_bcg_either==1 & ch_hepb_birth_either==1 & ch_pent3_either==1 & ch_polio3_either==1 & ch_ipv_either==1 & ch_pneumo3_either==1 & ch_meas2_either==1
 label values ch_allvac_schd_either yesno
 label var ch_allvac_schd_either "All vaccinations according to national schedule and either source"		
 }
