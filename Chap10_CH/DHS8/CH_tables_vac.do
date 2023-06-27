@@ -2,7 +2,7 @@
 Program: 			CH_tables_vac.do
 Purpose: 			produce tables for vaccination indicators
 Author:				Shireen Assaf
-Date last modified: Jan 24, 2023 by Shireen Assaf 
+Date last modified: June 27, 2023 by Shireen Assaf 
 	
 This do file will produce the following tables in excel:
 1. 	Tables_Vac_card:		Contains the tables for possession and observation of vaccination cards
@@ -12,6 +12,7 @@ This do file will produce the following tables in excel:
 Notes:	These tables will be produced for the age group selection in the CH_VAC.do file. 
 		The default section is children 12-23 months. If estimates are requried for children 24-35 months, 
 		the CH_VAC.do file needs to be run again with that age group selection and then this do file to produce the tables. 
+		A few country specific vaccinations such as the 2nd dose of measles and HepB at birth were not tabulated here. 
 		
 *****************************************************************************************************/
 

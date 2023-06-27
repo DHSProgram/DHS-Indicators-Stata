@@ -19,13 +19,13 @@ global datapath "C:/Users/$user//ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 * NR Files
-global nrdata "CINR80FL"
+global nrdata "KHNR81FL"
 
 * IR Files
-global irdata "CIIR80FL"
+global irdata "KHIR81FL"
 
 * MR Files
-global mrdata "CIMR80FL"
+global mrdata "KHMR81FL"
 
 ****************************
 
