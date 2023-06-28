@@ -2,7 +2,7 @@
 Program: 			RC_tables.do
 Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
-Date last modified: October 3 2019 by Shireen Assaf 
+Date last modified: June 28, 2023 by Shireen Assaf 
 
 *This do file will produce the following tables in excel:
 1. 	Tables_background_wm:		Contains the tables for background variables for women
@@ -17,8 +17,13 @@ Date last modified: October 3 2019 by Shireen Assaf
 10. Tables_insurance_mn:		Contains the tables for health insurance indicators for men
 11. Tables_tobac_wm:			Contains the tables for tobacco use indicators for women
 12. Tables_tobac_mn:			Contains the tables for tobacco use indicators for men
+13. Tables_alco_wm:				Contains the tables for alcohol use indicators for women
+14. Tables_alco_mn:				Contains the tables for alcohol use indicators for men
+15. Tables_migrant_wm:			Contains the tables for migration indicators for women
+16. Tables_migrant_mn:			Contains the tables for migration indicators for men
 
-Notes: 	For women and men the indicators are outputed for age 15-49 in line 31 and 583. This can be commented out if the indicators are required for all women/men.				 						
+
+Notes: 	For women and men the indicators are outputed for age 15-49 in line 31 and 714. This can be commented out if the indicators are required for all women/men.				 						
 *****************************************************************************************************/
 
 * the total will show on the last row of each table.
@@ -571,6 +576,132 @@ cap tab rc_tobc_any [iw=wt]
 
 * output to excel
 cap tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_wm.xls [iw=wt] , oneway cells(cell freq) append 
+
+**************************************************************************************************
+* Indicators for alcohol use: excel file Tables_alco_wm will be produced
+**************************************************************************************************
+// Consumed any alcohol
+
+*age
+tab v013 rc_alc_any [iw=wt], row nofreq 
+
+*residence
+tab v025 rc_alc_any [iw=wt], row nofreq 
+
+*region
+tab v024 rc_alc_any [iw=wt], row nofreq 
+
+*education
+tab v106 rc_alc_any [iw=wt], row nofreq 
+
+*wealth
+tab v190 rc_alc_any [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v106 v190 rc_alc_any using Tables_alco_wm.xls [iw=wt] , c(row) f(1) replace 
+****************************************************
+//Frequency of drinking 
+*age
+tab v013 rc_alc_freq [iw=wt], row nofreq 
+
+*residence
+tab v025 rc_alc_freq [iw=wt], row nofreq 
+
+*region
+tab v024 rc_alc_freq [iw=wt], row nofreq 
+
+*education
+tab v106 rc_alc_freq [iw=wt], row nofreq 
+
+*wealth
+tab v190 rc_alc_freq [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v106 v190 rc_alc_freq using Tables_alco_wm.xls [iw=wt] , c(row) f(1) append 
+
+****************************************************
+//Average number of drinks
+*age
+tab v013 rc_alc_drinks [iw=wt], row nofreq 
+
+*age
+tab rc_alc_freq rc_alc_drinks [iw=wt], row nofreq 
+
+*residence
+tab v025 rc_alc_drinks [iw=wt], row nofreq 
+
+*region
+tab v024 rc_alc_drinks [iw=wt], row nofreq 
+
+*education
+tab v106 rc_alc_drinks [iw=wt], row nofreq 
+
+*wealth
+tab v190 rc_alc_drinks [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 rc_alc_freq v025 v024 v106 v190 rc_alc_drinks using Tables_alco_wm.xls [iw=wt] , c(row) f(1) append 
+
+**************************************************************************************************
+* Indicators for migration: excel file Tables_migrant_wm will be produced
+**************************************************************************************************
+//Place of birth
+*age
+tab v013 rc_place_birth [iw=wt], row nofreq 
+
+*residence
+tab v025 rc_place_birth [iw=wt], row nofreq 
+
+*region
+tab v024 rc_place_birth [iw=wt], row nofreq 
+
+*wealth
+tab v190 rc_place_birth [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v190 rc_place_birth using Tables_migrant_wm.xls [iw=wt] , c(row) f(1) replace 
+****************************************************
+//Migrated in the last 5 years
+*age
+tab v013 rc_migrant_5yrs [iw=wt], row nofreq 
+
+*residence
+tab v025 rc_migrant_5yrs [iw=wt], row nofreq 
+
+*region
+tab v024 rc_migrant_5yrs [iw=wt], row nofreq 
+
+*wealth
+tab v190 rc_migrant_5yrs [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v190 rc_migrant_5yrs using Tables_migrant_wm.xls [iw=wt] , c(row) f(1) append
+****************************************************
+//Type of migration by age
+
+tab v013 rc_migrant_type [iw=wt], row nofreq 
+tabout v013 rc_migrant_type using Tables_migrant_wm.xls [iw=wt] , c(row) f(1) append
+
+****************************************************
+//Reason for migration
+
+*age
+tab v013 rc_migrant_reason [iw=wt], row nofreq 
+
+*residence
+tab v025 rc_migrant_reason [iw=wt], row nofreq 
+
+*type of migration
+tab v025 rc_migrant_type [iw=wt], row nofreq 
+
+*region
+tab v024 rc_migrant_reason [iw=wt], row nofreq 
+
+*wealth
+tab v190 rc_migrant_reason [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 rc_migrant_type v025 v024 v190 rc_migrant_reason using Tables_migrant_wm.xls [iw=wt] , c(row) f(1) append
 
 }
 
@@ -1166,6 +1297,130 @@ cap tab rc_tobc_any [iw=wt]
 
 * output to excel
 cap tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_mn.xls [iw=wt] , oneway cells(cell freq) append 
+**************************************************************************************************
+* Indicators for alcohol use: excel file Tables_alco_mn will be produced
+**************************************************************************************************
+// Consumed any alcohol
 
+*age
+tab mv013 rc_alc_any [iw=wt], row nofreq 
+
+*residence
+tab mv025 rc_alc_any [iw=wt], row nofreq 
+
+*region
+tab mv024 rc_alc_any [iw=wt], row nofreq 
+
+*education
+tab mv106 rc_alc_any [iw=wt], row nofreq 
+
+*wealth
+tab mv190 rc_alc_any [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv024 mv106 mv190 rc_alc_any using Tables_alco_mn.xls [iw=wt] , c(row) f(1) replace 
+****************************************************
+//Frequency of drinking 
+*age
+tab mv013 rc_alc_freq [iw=wt], row nofreq 
+
+*residence
+tab mv025 rc_alc_freq [iw=wt], row nofreq 
+
+*region
+tab mv024 rc_alc_freq [iw=wt], row nofreq 
+
+*education
+tab mv106 rc_alc_freq [iw=wt], row nofreq 
+
+*wealth
+tab mv190 rc_alc_freq [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv024 mv106 mv190 rc_alc_freq using Tables_alco_mn.xls [iw=wt] , c(row) f(1) append 
+
+****************************************************
+//Average number of drinks
+*age
+tab mv013 rc_alc_drinks [iw=wt], row nofreq 
+
+*age
+tab rc_alc_freq rc_alc_drinks [iw=wt], row nofreq 
+
+*residence
+tab mv025 rc_alc_drinks [iw=wt], row nofreq 
+
+*region
+tab mv024 rc_alc_drinks [iw=wt], row nofreq 
+
+*education
+tab mv106 rc_alc_drinks [iw=wt], row nofreq 
+
+*wealth
+tab mv190 rc_alc_drinks [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 rc_alc_freq mv025 mv024 mv106 mv190 rc_alc_drinks using Tables_alco_mn.xls [iw=wt] , c(row) f(1) append 
+
+**************************************************************************************************
+* Indicators for migration: excel file Tables_migrant_mn will be produced
+**************************************************************************************************
+//Place of birth
+*age
+tab mv013 rc_place_birth [iw=wt], row nofreq 
+
+*residence
+tab mv025 rc_place_birth [iw=wt], row nofreq 
+
+*region
+tab mv024 rc_place_birth [iw=wt], row nofreq 
+
+*wealth
+tab mv190 rc_place_birth [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv024 mv190 rc_place_birth using Tables_migrant_mn.xls [iw=wt] , c(row) f(1) replace 
+****************************************************
+//Migrated in the last 5 years
+*age
+tab mv013 rc_migrant_5yrs [iw=wt], row nofreq 
+
+*residence
+tab mv025 rc_migrant_5yrs [iw=wt], row nofreq 
+
+*region
+tab mv024 rc_migrant_5yrs [iw=wt], row nofreq 
+
+*wealth
+tab mv190 rc_migrant_5yrs [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv024 mv190 rc_migrant_5yrs using Tables_migrant_mn.xls [iw=wt] , c(row) f(1) append
+****************************************************
+//Type of migration by age
+
+tab v013 rc_migrant_type [iw=wt], row nofreq 
+tabout v013 rc_migrant_type using Tables_migrant_mn.xls [iw=wt] , c(row) f(1) append
+
+****************************************************
+//Reason for migration
+
+*age
+tab mv013 rc_migrant_reason [iw=wt], row nofreq 
+
+*residence
+tab mv025 rc_migrant_reason [iw=wt], row nofreq 
+
+*type of migration
+tab mv025 rc_migrant_type [iw=wt], row nofreq 
+
+*region
+tab mv024 rc_migrant_reason [iw=wt], row nofreq 
+
+*wealth
+tab mv190 rc_migrant_reason [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 rc_migrant_type mv025 mv024 mv190 rc_migrant_reason using Tables_migrant_mn.xls [iw=wt] , c(row) f(1) append
 }
 

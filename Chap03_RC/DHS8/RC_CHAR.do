@@ -1,13 +1,16 @@
 /*****************************************************************************************************
-Program: 			RC_CHAR.do
+Program: 			RC_CHAR.do - DHS8 update
 Purpose: 			Code to compute respondent characteristics in men and women
 Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: Oct 1, 2019 by Shireen Assaf 
+Date last modified: June 28, 2023 by Shireen Assaf 
 Note:				The indicators below can be computed for men and women. 
 					Please check the note on health insurance. This can be country specific and also reported for specific populations. 
 					Please check the variables available for smoking and tobacco and see notes for these variables. Variable names have changed and these indicators are country specific.
+					
+					Seven new indicators in DHS8, see below
+					When generating the new indicators, the code was preceded with "cap" in case the variables are not present in the survey. This will allow the code to run without stopping. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -16,6 +19,7 @@ rc_edu				"Highest level of schooling attended or completed"
 rc_edu_median		"Median years of education"
 rc_litr_cats		"Level of literacy"
 rc_litr				"Literate - higher than secondary or can read part or whole sentence"
+
 rc_media_newsp		"Reads a newspaper at least once a week"
 rc_media_tv			"Watches television at least once a week"
 rc_media_radio		"Listens to radio at least once a week"
@@ -24,17 +28,20 @@ rc_media_none		"Accesses none of the three media at least once a week"
 rc_intr_ever		"Ever used the internet"
 rc_intr_use12mo		"Used the internet in the past 12 months"
 rc_intr_usefreq		"Internet use frequency in the past month - among users in the past 12 months"
+
 rc_empl				"Employment status"
 rc_occup			"Occupation among those employed in the past 12 months"
 rc_empl_type		"Type of employer among those employed in the past 12 months"
 rc_empl_earn		"Type of earnings among those employed in the past 12 months"
 rc_empl_cont		"Continuity of employment among those employed in the past 12 months"
+
 rc_hins_ss			"Health insurance coverage - social security"
 rc_hins_empl		"Health insurance coverage - other employer-based insurance"
 rc_hins_comm		"Health insurance coverage - mutual health org. or community-based insurance"
 rc_hins_priv		"Health insurance coverage - privately purchased commercial insurance"
 rc_hins_other		"Health insurance coverage - other type of insurance"
 rc_hins_any			"Have any health insurance"
+
 rc_tobc_cig			"Smokes cigarettes"
 rc_tobc_other		"Smokes other type of tobacco"
 rc_tobc_smk_any		"Smokes any type of tobacco"
@@ -47,6 +54,16 @@ rc_tobv_betel		"Uses betel quid with tobacco"
 rc_tobc_osmkless	"Uses other type of smokeless tobacco"
 rc_tobc_anysmkless	"Uses any type of smokeless tobacco"
 rc_tobc_any			"Uses any type of tobacco - smoke or smokeless"
+
+rc_alc_any		"Consumed alcohol in the last one month" - NEW Indicator in DHS8
+rc_alc_freq		"Frequency of drinking among those who consumed alcohol in the last one month"	- NEW Indicator in DHS8
+rc_alc_drinks	"Average number of drinks consumed among those who consumed alcohol in the last one month"	- NEW Indicator in DHS8
+			
+rc_place_birth	"Place of birth and residence"	- NEW Indicator in DHS8
+rc_migrant_5yrs	"Migrant that moved to current place of residence in the last 5 years"	- NEW Indicator in DHS8
+rc_migrant_type	"Type of migrant that moved to current place of residence in the last 5 years"	- NEW Indicator in DHS8
+rc_migrant_reason	"Reason for migration among those who moved to current place of residence in the last 5 years" - NEW Indicator in DHS8
+
 ----------------------------------------------------------------------------*/
 
 * indicators from IR file
@@ -149,7 +166,7 @@ recode v731 (0=0 "Not employed in last 12 months") (1=1 "Not curcently working b
 label var rc_empl "Employment status"
 
 //Occupation
-recode v717 (1=1 "Professional") (2=2 "Clerical") (3 7=3 "Sales and services") (8=4 "Skilled manual") (9=5 "Unskilled manual") (6=6 "Domestic service") (4/5=7 "Agriculture") (96/99 .=9 "Don't know/missing") if inlist(v731,1,2,3), gen(rc_occup)
+recode v717 (1=1 "Professional") (2=2 "Clerical") (3 7=3 "Sales and services") (8=4 "Skilled manual") (9=5 "Unskilled manual") (6=6 "Domestic service") (4/5=7 "Agriculture") (96/99 . .a=9 "Don't know/missing") if inlist(v731,1,2,3), gen(rc_occup)
 label var rc_occup "Occupation among those employed in the past 12 months"
 
 //Type of employer
@@ -264,6 +281,45 @@ label var rc_tobc_anysmkless "Uses any type of smokeless tobacco"
 cap gen rc_tobc_any= inlist(v463aa,1,2) | inlist(v463ab,1,2)
 cap label values rc_tobc_any yesno
 cap label var rc_tobc_any "Uses any type of tobacco - smoke or smokeless"
+
+//Consumed any alcohol - NEW Indicator in DHS8
+cap gen rc_alc_any = inrange(v485a,1,31) | v485a==95
+cap label values rc_alc_any yesno
+cap label var rc_alc_any "Consumed alcohol in the last one month" 
+
+//Frequency of drinking - NEW Indicator in DHS8
+cap recode v485a (25/31 95=1 "Every day/almost daily") (1/5=2 "1-5 days in the past month") (6/10=3 "6-10 days in the past month") (11/24=4 "11-24 days in the past month") if rc_alc_any==1, gen(rc_alc_freq)
+cap label var rc_alc_freq "Frequency of drinking among those who consumed alcohol in the last one month"
+
+//Average number of drinks - NEW Indicator in DHS8
+cap recode v485b (0=0 "Less than one") (1=1 "One") (2=2 "Two") (3=3 "Three") (4=4 "Four") (5=5 "Five") (6/40=6 "Six or more") if rc_alc_any==1, gen(rc_alc_drinks)
+label var rc_alc_drinks	"Average number of drinks consumed among those who consumed alcohol in the last one month"	
+
+//Place of birth - NEW Indicator in DHS8
+cap gen rc_place_birth = .  if v104!=96		
+cap replace rc_place_birth = 1 if v104==95 & v172!=96
+cap replace rc_place_birth = 2 if v104 <95 & v172!=96 
+cap replace rc_place_birth = 3 if v172==96
+cap label define birthplace 1 "Born in current place of residence" 2"Born in country but not in current place of residence" 3"Born outside of the country"
+cap label values rc_place_birth birthplace
+cap label var rc_place_birth "Place of birth and residence"
+
+//Migrant that moved to current place of residence in the last 5 years - NEW Indicator in DHS8
+cap gen rc_migrant_5yrs =  inrange(v104,0,4) if v104<95 & rc_place_birth>1
+cap label values rc_migrant_5yrs yesno
+cap label var rc_migrant_5yrs "Migrant that moved to current place of residence in the last 5 years"	
+
+//Type of migrant - NEW Indicator in DHS8
+cap recode v105 (0/2=1 urban) (3=2 rural), gen(prevresid)
+cap egen rc_migrant_type = group(prevresid v102) 
+cap replace rc_migrant_type=. if rc_migrant_5yrs!=1
+cap label define migrant_type  1"Urban to urban" 2"Urban to rural" 3"Rural to urban" 4"Rural to rural"
+cap label values rc_migrant_type migrant_type
+cap label var rc_migrant_type "Type of migrant that moved to current place of residence in the last 5 years"	
+
+//Reason for migration - NEW Indicator in DHS8
+cap recode v175 (1=1 "Employment") (2=2 "Education/training") (3=3 "Marriage") (4=4 "Family reunification/family reasons") (5=5 "Forced displacement") (6=6 "Migration") (7=7 "COVID-19") (96=96 "Other") , gen(rc_migrant_reason)
+cap label var rc_migrant_reason	"Reason for migration among those who moved to current place of residence in the last 5 years" 
 }
 
 
@@ -335,7 +391,7 @@ label var rc_media_radio "Listens to radio at least once a week"
 
 //Media exposure - all three
 gen rc_media_allthree=0
-replace rc_media_allthree=1 if inlist(mv157,2,3) & inlist(mv158,2,3) & inlist(mv159,2,3) 
+replace rc_media_allthree=1 if inlist(mv157,2,3) & inlist(mv158,2,3) & inrange(mv159,2,3) 
 label values rc_media_allthree yesno
 label var rc_media_allthree "Accesses to all three media at least once a week"
 
@@ -368,7 +424,7 @@ recode mv731 (0=0 "Not employed in last 12 months") (1=1 "Not currently working 
 label var rc_empl "Employment status"
 
 //Occupation
-recode mv717 (1=1 "Professional") (2=2 "Clerical") (3 7=3 "Sales and services") (8=4 "Skilled manual") (9=5 "Unskilled manual") (6=6 "Domestic service") (4/5=7 "Agriculture") (96/99 .=9 "Don't know/missing") if inlist(mv731,1,2,3), gen(rc_occup)
+recode mv717 (1=1 "Professional") (2=2 "Clerical") (3 7=3 "Sales and services") (8=4 "Skilled manual") (9=5 "Unskilled manual") (6=6 "Domestic service") (4/5=7 "Agriculture") (96/99 . .a=9 "Don't know/missing") if inlist(mv731,1,2,3), gen(rc_occup)
 label var rc_occup "Occupation among those employed in the past 12 months"
 
 * Some survyes do not ask the following employment questions so a capture was added to skip these variables if they are not present. 
@@ -470,32 +526,32 @@ cap label var rc_smk_freq "Smoking frequency"
 		}
 	}	
 cap gen cigdaily= ciga + cigb + cigc 
-cap recode cigdaily (1/4=1 " <5") (5/9=2 " 5-9") (10/14=3 " 10-14") (15/24=4 " 15-24") (25/95=5 " 25+") (else=9 "Don't know/missing") if rc_smk_freq==1 & cigdaily>0, gen(rc_cig_day)
+cap recode cigdaily (1/4=1 " <5") (5/9=2 " 5-9") (10/14=3 " 10-14") (15/24=4 " 15-24") (25/max=5 " 25+") if rc_smk_freq==1 & cigdaily>0, gen(rc_cig_day)
 cap label var rc_cig_day "Average number of cigarettes smoked per day"
 
 //Snuff by mouth
-cap gen rc_tobc_snuffm = inlist(mv464h,1,888) | inlist(mv484h,1,888)
+cap gen rc_tobc_snuffm = inrange(mv464h,1,888) | inrange(mv484h,1,888)
 cap label values rc_tobc_snuffm yesno
 cap label var rc_tobc_snuffm "Uses snuff smokeless tobacco by mouth"
 
 //Snuff by nose
-cap gen rc_tobc_snuffn = inlist(mv464i,1,888) | inlist(mv484i,1,888)
+cap gen rc_tobc_snuffn = inrange(mv464i,1,888) | inrange(mv484i,1,888)
 cap label values rc_tobc_snuffn yesno
 cap label var rc_tobc_snuffn "Uses snuff smokeless tobacco by nose"
 
 //Chewing tobacco
-cap gen rc_tobc_chew = inlist(mv464j,1,888) | inlist(mv484j,1,888)
+cap gen rc_tobc_chew = inrange(mv464j,1,888) | inrange(mv484j,1,888)
 cap label values rc_tobc_chew yesno
 cap label var rc_tobc_chew "Chews tobacco"
 
 //Betel quid with tobacco
-cap gen rc_tobv_betel = inlist(mv464k,1,888) | inlist(mv484k,1,888)
+cap gen rc_tobv_betel = inrange(mv464k,1,888) | inrange(mv484k,1,888)
 cap label values rc_tobv_betel yesno
 cap label var rc_tobv_betel "Uses betel quid with tobacco"
 
 //Other type of smokeless tobacco
 *Note: there may be other types of smokeless tobacco, please check all mv464* and mv484* variables. 
-cap gen rc_tobc_osmkless = inlist(mv464l,1,888) | inlist(mv484l,1,888)
+cap gen rc_tobc_osmkless = inrange(mv464l,1,888) | inrange(mv484l,1,888)
 cap label values rc_tobc_osmkless yesno
 cap label var rc_tobc_osmkless "Uses other type of smokeless tobacco"
 
@@ -513,4 +569,51 @@ cap label var rc_tobc_anysmkless "Uses any type of smokeless tobacco"
 cap gen rc_tobc_any= inlist(mv463aa,1,2) | inlist(mv463ab,1,2)
 cap label values rc_tobc_any yesno
 cap label var rc_tobc_any "Uses any type of tobacco - smoke or smokeless"
+
+//Consumed any alcohol - NEW Indicator in DHS8
+cap gen rc_alc_any = inrange(mv485a,1,31) | mv485a==95
+cap label values rc_alc_any yesno
+cap label var rc_alc_any "Consumed alcohol in the last one month" 
+
+//Frequency of drinking - NEW Indicator in DHS8
+cap recode mv485a (25/31 95=1 "Every day/almost daily") (1/5=2 "1-5 days in the past month") (6/10=3 "6-10 days in the past month") (11/24=4 "11-24 days in the past month") if rc_alc_any==1, gen(rc_alc_freq)
+cap label var rc_alc_freq "Frequency of drinking among those who consumed alcohol in the last one month"
+
+//Average number of drinks - NEW Indicator in DHS8
+cap recode mv485b (0=0 "Less than one") (1=1 "One") (2=2 "Two") (3=3 "Three") (4=4 "Four") (5=5 "Five") (6/50=6 "Six or more") if rc_alc_any==1, gen(rc_alc_drinks)
+label var rc_alc_drinks	"Average number of drinks consumed among those who consumed alcohol in the last one month"	
+
+//Place of birth - NEW Indicator in DHS8
+cap gen rc_place_birth = .  if mv104!=96		
+cap replace rc_place_birth = 1 if mv104==95 & mv172!=96
+cap replace rc_place_birth = 2 if mv104 <95 & mv172!=96 
+cap replace rc_place_birth = 3 if mv172==96
+cap label define birthplace 1 "Born in current place of residence" 2"Born in country but not in current place of residence" 3"Born outside of the country"
+cap label values rc_place_birth birthplace
+cap label var rc_place_birth "Place of birth and residence"
+
+//Migrant that moved to current place of residence in the last 5 years - NEW Indicator in DHS8
+cap gen rc_migrant_5yrs =  .
+cap replace rc_migrant_5yrs = 0 if mv104 >4 & mv104<95
+cap replace rc_migrant_5yrs = 1 if mv104 <5
+cap label values rc_migrant_5yrs yesno
+cap label var rc_migrant_5yrs "Migrant that moved to current place of residence in the last 5 years"	
+
+//Migrant that moved to current place of residence in the last 5 years - NEW Indicator in DHS8
+cap gen rc_migrant_5yrs =  inrange(mv104,0,4) if mv104<95 & rc_place_birth>1
+cap label values rc_migrant_5yrs yesno
+cap label var rc_migrant_5yrs "Migrant that moved to current place of residence in the last 5 years"	
+
+//Type of migrant - NEW Indicator in DHS8
+cap recode mv105 (0/2=1 urban) (3=2 rural), gen(prevresid)
+cap egen rc_migrant_type = group(prevresid mv102) 
+cap replace rc_migrant_type=. if rc_migrant_5yrs!=1
+cap label define migrant_type  1"Urban to urban" 2"Urban to rural" 3"Rural to urban" 4"Rural to rural"
+cap label values rc_migrant_type migrant_type
+cap label var rc_migrant_type "Type of migrant that moved to current place of residence in the last 5 years"	
+
+//Reason for migration - NEW Indicator in DHS8
+cap recode mv175 (1=1 "Employment") (2=2 "Education/training") (3=3 "Marriage") (4=4 "Family reunification/family reasons") (5=5 "Forced displacement") (6=6 "Migration") (7=7 "COVID-19") (96=96 "Other") , gen(rc_migrant_reason)
+cap label var rc_migrant_reason	"Reason for migration among those who moved to current place of residence in the last 5 years" 
+
 }
