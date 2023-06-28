@@ -474,28 +474,28 @@ cap recode cigdaily (1/4=1 " <5") (5/9=2 " 5-9") (10/14=3 " 10-14") (15/24=4 " 1
 cap label var rc_cig_day "Average number of cigarettes smoked per day"
 
 //Snuff by mouth
-cap gen rc_tobc_snuffm = inlist(mv464h,1,888) | inlist(mv484h,1,888)
+cap gen rc_tobc_snuffm = inrange(mv464h,1,888) | inrange(mv484h,1,888)
 cap label values rc_tobc_snuffm yesno
 cap label var rc_tobc_snuffm "Uses snuff smokeless tobacco by mouth"
 
 //Snuff by nose
-cap gen rc_tobc_snuffn = inlist(mv464i,1,888) | inlist(mv484i,1,888)
+cap gen rc_tobc_snuffn = inrange(mv464i,1,888) | inrange(mv484i,1,888)
 cap label values rc_tobc_snuffn yesno
 cap label var rc_tobc_snuffn "Uses snuff smokeless tobacco by nose"
 
 //Chewing tobacco
-cap gen rc_tobc_chew = inlist(mv464j,1,888) | inlist(mv484j,1,888)
+cap gen rc_tobc_chew = inrange(mv464j,1,888) | inrange(mv484j,1,888)
 cap label values rc_tobc_chew yesno
 cap label var rc_tobc_chew "Chews tobacco"
 
 //Betel quid with tobacco
-cap gen rc_tobv_betel = inlist(mv464k,1,888) | inlist(mv484k,1,888)
+cap gen rc_tobv_betel = inrange(mv464k,1,888) | inrange(mv484k,1,888)
 cap label values rc_tobv_betel yesno
 cap label var rc_tobv_betel "Uses betel quid with tobacco"
 
 //Other type of smokeless tobacco
 *Note: there may be other types of smokeless tobacco, please check all mv464* and mv484* variables. 
-cap gen rc_tobc_osmkless = inlist(mv464l,1,888) | inlist(mv484l,1,888)
+cap gen rc_tobc_osmkless = inrange(mv464l,1,888) | inrange(mv484l,1,888)
 cap label values rc_tobc_osmkless yesno
 cap label var rc_tobc_osmkless "Uses other type of smokeless tobacco"
 
