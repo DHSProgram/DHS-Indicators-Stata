@@ -1,8 +1,8 @@
 /*****************************************************************************************************
-Program: 			MS_tables.do
+Program: 			MS_tables.do - DHS8 update
 Purpose: 			produce tables for indicators
 Author:				Courtney Allen
-Date last modified: Sept 16 2019 by Courtney Allen
+Date last modified: June 29, 2023 by Shireen Assaf
 
 *This do file will produce the following tables in excel:
 1. 	Tables_Mar_wm:		Contains the tables for knowledge indicators for women
@@ -53,7 +53,59 @@ tab v013 ms_mar_union [iw=wt], row nofreq
 * output to excel
 tabout v013 ms_mar_union  using Tables_Mar_wm.xls [iw=wt] , c(row) f(1) append 
 */
+****************************************************
+//Marriage registration by background variables
 
+//Marriage registered
+* age 
+tab v013 ms_mar_regis [iw=wt], row nofreq 
+
+*residence
+tab v025 ms_mar_regis  [iw=wt], row nofreq 
+
+*region
+tab v024 ms_mar_regis  [iw=wt], row nofreq 
+
+*wealth
+tab v190 ms_mar_regis  [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v190 ms_mar_regis  using Tables_Mar_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+
+//Marriage documented
+* age 
+tab v013 ms_mar_doc [iw=wt], row nofreq 
+
+*residence
+tab v025 ms_mar_doc  [iw=wt], row nofreq 
+
+*region
+tab v024 ms_mar_doc  [iw=wt], row nofreq 
+
+*wealth
+tab v190 ms_mar_doc  [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v190 ms_mar_doc  using Tables_Mar_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+
+//Marriage has marriage certificate
+* age 
+tab v013 ms_mar_cert [iw=wt], row nofreq 
+
+*residence
+tab v025 ms_mar_cert  [iw=wt], row nofreq 
+
+*region
+tab v024 ms_mar_cert  [iw=wt], row nofreq 
+
+*wealth
+tab v190 ms_mar_cert  [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v190 ms_mar_cert  using Tables_Mar_wm.xls [iw=wt] , c(row) f(1) append 
+*/
 
 ****************************************************
 //Number of women's co-wives by background variables
@@ -170,24 +222,23 @@ foreach y in `subgroup' {
 
 * percent had sex by specific ages, by age group
 
-*percent married by age 15 
-tab v013 ms_afs_15  [iw=wt], row nofreq //percent married by age 15, by age
-tab ms_afm_15 if v013>=2 [iw=wt]		//percent married by age 15, by age, among age 20-49
-tab ms_afs_15 if v013>=3 [iw=wt]		//percent married by age 15, by age, among age 25-49
+tab v013 ms_afs_15  [iw=wt], row nofreq //percent had first sex by age 15, by age
+tab ms_afm_15 if v013>=2 [iw=wt]		//percent had first sex by age 15, by age, among age 20-49
+tab ms_afs_15 if v013>=3 [iw=wt]		//percent had first sex by age 15, by age, among age 25-49
 
-tab v013 ms_afs_18 if v013>=2  [iw=wt], row nofreq   //percent married by age 18, by age
-tab ms_afs_18 if v013>=2 [iw=wt]		//percent married by age, 18 by age, among age 20-49
-tab ms_afs_18 if v013>=3 [iw=wt]		//percent married by age, 18 by age, among age 25-49
+tab v013 ms_afs_18 if v013>=2  [iw=wt], row nofreq   //percent had first sex by age 18, by age
+tab ms_afs_18 if v013>=2 [iw=wt]		//percent had first sex by age, 18 by age, among age 20-49
+tab ms_afs_18 if v013>=3 [iw=wt]		//percent had first sex by age, 18 by age, among age 25-49
 
-tab v013 ms_afs_20 if v013>=2  [iw=wt], row nofreq  //percent married by age 20, by age
-tab ms_afs_20 if v013>=2 [iw=wt]		//percent married by age, 20 by age, among age 20-49
-tab ms_afs_20 if v013>=3 [iw=wt]		//percent married by age, 20 by age, among age 25-49
+tab v013 ms_afs_20 if v013>=2  [iw=wt], row nofreq  //percent had first sex by age 20, by age
+tab ms_afs_20 if v013>=2 [iw=wt]		//percent had first sex by age, 20 by age, among age 20-49
+tab ms_afs_20 if v013>=3 [iw=wt]		//percent had first sex by age, 20 by age, among age 25-49
 
-tab v013 ms_afs_22 if v013>=3  [iw=wt], row nofreq  //percent married by age 22, by age
-tab ms_afs_22 if v013>=3 [iw=wt]		//percent married by age, 22 by age, among age 25-49
+tab v013 ms_afs_22 if v013>=3  [iw=wt], row nofreq  //percent had first sex by age 22, by age
+tab ms_afs_22 if v013>=3 [iw=wt]		//percent had first sex by age, 22 by age, among age 25-49
 
-tab v013 ms_afs_25 if v013>=3  [iw=wt], row nofreq  //percent married by age 25, by age
-tab ms_afs_25 if v013>=3 [iw=wt]		//percent married by age 25, by age, among age 25-49
+tab v013 ms_afs_25 if v013>=3  [iw=wt], row nofreq  //percent had first sex by age 25, by age
+tab ms_afs_25 if v013>=3 [iw=wt]		//percent had first sex by age 25, by age, among age 25-49
 
 
 * output to excel
@@ -227,6 +278,31 @@ local subgroup residence region education wealth
 foreach y in `subgroup' {
 	tabout mafs_2549_`y'*  using Tables_Sex_wm.xls [iw=wt] , oneway  c(cell) f(1) ptotal(none)  append 
 	}
+**************************************************************************************************
+* Timing of recent sexual activity
+
+*age
+tab v013 ms_sex_timing  [iw=wt], row nofreq 
+
+*marital status
+tab v502 ms_sex_timing  [iw=wt], row nofreq 
+
+*residence
+tab v025 ms_sex_timing  [iw=wt], row nofreq 
+
+*region
+tab v024 ms_sex_timing  [iw=wt], row nofreq 
+
+*education
+tab v106 ms_sex_timing  [iw=wt], row nofreq 
+
+*wealth
+tab v190 ms_sex_timing  [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v024 v106 v190 ms_sex_timing  using Tables_Sex_wm.xls [iw=wt] , c(row) f(1) append 
+
+
 }	
 
 
@@ -460,6 +536,32 @@ local subgroup residence region education wealth
 foreach y in `subgroup' {
 	tabout mafs_2549_`y'*  using Tables_Sex_mn.xls [iw=wt] , oneway  c(cell) f(1) ptotal(none)  append 
 	}
+	
+**************************************************************************************************
+* Timing of recent sexual activity
+
+*age
+tab mv013 ms_sex_timing  [iw=wt], row nofreq 
+
+*marital status
+tab mv502 ms_sex_timing  [iw=wt], row nofreq 
+
+*residence
+tab mv025 ms_sex_timing  [iw=wt], row nofreq 
+
+*region
+tab mv024 ms_sex_timing  [iw=wt], row nofreq 
+
+*education
+tab mv106 ms_sex_timing  [iw=wt], row nofreq 
+
+*wealth
+tab mv190 ms_sex_timing  [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv024 mv106 mv190 ms_sex_timing  using Tables_Sex_mn.xls [iw=wt] , c(row) f(1) append 
+	
+	
 }	
 	
 	

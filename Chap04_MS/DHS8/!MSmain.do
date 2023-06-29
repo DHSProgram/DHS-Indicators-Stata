@@ -1,10 +1,10 @@
 /*******************************************************************************************************************************
-Program: 				MSmain.do
+Program: 				MSmain.do - DHS8 update
 Purpose: 				Main file for the Marriage and Sexual Activity Chapter. 
 						The main file will call other do files that will produce the MS indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Courtney Allen
-Date last modified:		September 24, 2019
+Date last modified:		June 29, 2023 by Shireen Assaf
 
 *******************************************************************************************************************************/
 set more off
@@ -15,7 +15,7 @@ set more off
 local user 33697
 
 * change working path
-cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap04_MS"
+cd "C:/Users//`user'//ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap04_MS/DHS8"
 
 * change data path
 global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
@@ -23,10 +23,10 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 * select your survey
 
 * IR Files
-global irdata "AFIR71FL"
+global irdata "KHIR81FL"
 
 * MR Files
-global mrdata "GHMR71FL"
+global mrdata "KHMR81FL"
 ****************************
 
 * IR file variables
@@ -40,7 +40,7 @@ gen file=substr("$irdata", 3, 2)
 cap program drop calc_median_age
 do MS_MAR.do
 
-/*Purpose: 	Code sexual activity variables
+*Purpose: 	Code sexual activity variables
 cap program drop calc_median_age
 do MS_SEX.do
 
@@ -51,7 +51,7 @@ do MS_tables.do
 *******************************************************************************************************************************
 *******************************************************************************************************************************
 
-/* MR file variables
+* MR file variables
 
 * open dataset
 use "$datapath//$mrdata.dta", clear

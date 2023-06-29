@@ -1,11 +1,12 @@
 /*******************************************************************************
-Program: 			MS_MAR.do
+Program: 			MS_MAR.do - DHS8 update
 Purpose: 			Code to create marital indicators
 Data inputs: 		IR and MR dataset
 Data outputs:		coded variables and scalars
 Author:				Thomas Pullum and Courtney Allen for code share project
-Date last modified: September, 2019 by Courtney Allen 
-Note:				
+Date last modified: June 29, 2023 by Shireen Assaf
+Note:				3 new indicators in DHS8 see below. 
+					Contains country-specific code for Cambodia 2021-22, please check footnote of table for country-specific changes. 
 *********************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -14,6 +15,11 @@ Variables created in this file:
 ms_mar_stat		"Current marital status"
 ms_mar_union	"Currently in union"
 ms_mar_never	"Never in union"
+
+ms_mar_regis	"Current marriage is registered with civil authorities" - NEW Indicator in DHS8
+ms_mar_doc		"Current marriage is registered and has documentation recognizing the marriage/union" - NEW Indicator in DHS8
+ms_mar_cert		"Current marriage is registered and has a marriage certificate" - NEW Indicator in DHS8
+
 ms_afm_15		"First marriage by age 15"
 ms_afm_18		"First marriage by age 18"
 ms_afm_20		"First marriage by age 20"
@@ -127,7 +133,6 @@ if file=="IR" {
 	clonevar residence = v025
 	label define NA 0 "NA" //for sub groups where no median can be defined
 
-	
 	//setup variables for median age at first marriage calculated from v511, for women age 20 to 49
 	gen afm=v511
 	replace afm=99 if v511==. 
@@ -156,6 +161,36 @@ gen ms_mar_never = 0
 replace ms_mar_never = 1 if v501==0
 label var ms_mar_never "Never in union"
 
+// Marriage is registered - NEW Indicator in DHS8
+gen ms_mar_regis = (v542==1 | v544==1) if v502==1
+label var ms_mar_regis	"Current marriage is registered with civil authorities"
+
+//Marriage is registered and documented - NEW Indicator in DHS8
+gen ms_mar_doc = (v542==1 | v544==1) &  (v543a==1 | v543b==1 | v543c==1 | v543d==1) if v502==1
+label var ms_mar_doc "Current marriage is registered and has documentation recognizing the marriage/union"
+
+//Marriage is registered and has marriage certificate - NEW Indicator in DHS8
+gen ms_mar_cert = (v542==1 | v544==1) &  (v543a==1 | v543b==1) if v502==1
+label var ms_mar_cert	"Current marriage is registered and has a marriage certificate"
+
+*Country-specific code for Cambodia 2021-22
+if v000=="KH8" {
+
+drop ms_mar_regis ms_mar_doc ms_mar_cert
+
+// Marriage is registered - NEW Indicator in DHS8
+gen ms_mar_regis = (s706==1 | v544==1) if v501==1
+label var ms_mar_regis	"Current marriage is registered with civil authorities"
+
+//Marriage is registered and documented - NEW Indicator in DHS8
+gen ms_mar_doc = .
+label var ms_mar_doc "NA - Current marriage is registered and has documentation recognizing the marriage/union"
+
+//Marriage is registered and has marriage certificate - NEW Indicator in DHS8
+gen ms_mar_cert = s706==1  if v501==1
+label var ms_mar_cert	"Current marriage is registered and has a marriage certificate"	
+		
+}
 
 //Co-wives
 recode v505 (0=0 "None") (1=1 "1") (2/97 = 2 "2+") (98=98 "Don't know"), gen(ms_cowives_num)

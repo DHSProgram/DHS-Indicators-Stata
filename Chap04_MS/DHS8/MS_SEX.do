@@ -1,11 +1,11 @@
 /*******************************************************************************
-Program: 			MS_SEX.do
+Program: 			MS_SEX.do - DHS8 update
 Purpose: 			Code to create sexual activity indicators
 Data inputs: 		IR and MR dataset
 Data outputs:		coded variables and scalars
 Author:				Courtney Allen for code share project
-Date last modified: September, 2019 by Courtney Allen 
-Note:				
+Date last modified: June, 2023 by Shireen Assaf 
+Note:				1 new indicator in DHS 8, see below
 *********************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -19,6 +19,7 @@ ms_afs_25		"First sexual intercourse by age 25"
 ms_mafs_25		 Median age at first sexual intercourse among age 25-49" (scalar, not a variable)
 ms_sex_never	"Never had intercourse"
 
+ms_sex_timing	"Timing of recent sexual activity" - NEW Indicator in DHS8
 ----------------------------------------------------------------------------*/
 
 /* NOTES
@@ -141,7 +142,6 @@ replace ms_sex_never = 1 if v531==0
 label var ms_sex_never "Never had sex"
 
 
-
 //Had sex by specific ages
 recode v531 (97 . =0) (1/14 = 1 "yes") (15/49 = 0 "no"), gen (ms_afs_15)
 label var ms_afs_15 "First sex by age 15"
@@ -162,14 +162,20 @@ recode v531 (97 .=0) (1/24 = 1 "yes") (25/49 = 0 "no"), gen (ms_afs_25)
 replace ms_afs_25 = . if v012<25
 label var ms_afs_25 "First sex by age 25"
 
+//Timing of recent sexual activity - NEW Indicator in DHS8
+gen ms_sex_timing=.
+replace ms_sex_timing=1 if v528<=28
+replace ms_sex_timing=2 if inrange(v527,129,311) & v528>28
+replace ms_sex_timing=3 if v527>=401
+replace ms_sex_timing=0 if v531==0
+cap label define sextiming 0"Never had sex" 1"Within last 4 weeks" 2"Within 1 year" 3"One or more years"
+label values ms_sex_timing sextiming
+label var ms_sex_timing	"Timing of recent sexual activity" 
+
 }
 
 
-
-
 *****************************************************************************************************
-
-
 
 
 * indicators from MR file
@@ -201,14 +207,11 @@ if file=="MR" {
 				
 				macro shift
 				}
-
-
 	
 //Never had sex
 gen ms_sex_never = 0
 replace ms_sex_never = 1 if mv531==0
 label var ms_sex_never "Never had sex"
-
 
 
 //Had sex by specific ages
@@ -230,5 +233,17 @@ label var ms_afs_22 "First sex by age 22"
 recode mv531 (97 .=0) (1/24 = 1 "yes") (25/max = 0 "no"), gen (ms_afs_25)
 replace ms_afs_25 = . if mv012<25
 label var ms_afs_25 "First sex by age 25"
+
+
+//Timing of recent sexual activity - NEW Indicator in DHS8
+gen ms_sex_timing=.
+replace ms_sex_timing=1 if mv528<=28
+replace ms_sex_timing=2 if inrange(mv527,129,311) & mv528>28
+replace ms_sex_timing=3 if mv527>=401
+replace ms_sex_timing=0 if mv531==0
+cap label define sextiming 0"Never had sex" 1"Within last 4 weeks" 2"Within 1 year" 3"One or more years"
+label values ms_sex_timing sextiming
+label var ms_sex_timing	"Timing of recent sexual activity" 
+
 
 }
