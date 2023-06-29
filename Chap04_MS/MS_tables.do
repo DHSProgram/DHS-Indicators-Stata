@@ -170,24 +170,23 @@ foreach y in `subgroup' {
 
 * percent had sex by specific ages, by age group
 
-*percent married by age 15 
-tab v013 ms_afs_15  [iw=wt], row nofreq //percent married by age 15, by age
-tab ms_afm_15 if v013>=2 [iw=wt]		//percent married by age 15, by age, among age 20-49
-tab ms_afs_15 if v013>=3 [iw=wt]		//percent married by age 15, by age, among age 25-49
+tab v013 ms_afs_15  [iw=wt], row nofreq //percent had first sex by age 15, by age
+tab ms_afm_15 if v013>=2 [iw=wt]		//percent had first sex by age 15, by age, among age 20-49
+tab ms_afs_15 if v013>=3 [iw=wt]		//percent had first sex by age 15, by age, among age 25-49
 
-tab v013 ms_afs_18 if v013>=2  [iw=wt], row nofreq   //percent married by age 18, by age
-tab ms_afs_18 if v013>=2 [iw=wt]		//percent married by age, 18 by age, among age 20-49
-tab ms_afs_18 if v013>=3 [iw=wt]		//percent married by age, 18 by age, among age 25-49
+tab v013 ms_afs_18 if v013>=2  [iw=wt], row nofreq   //percent had first sex by age 18, by age
+tab ms_afs_18 if v013>=2 [iw=wt]		//percent had first sex by age, 18 by age, among age 20-49
+tab ms_afs_18 if v013>=3 [iw=wt]		//percent had first sex by age, 18 by age, among age 25-49
 
-tab v013 ms_afs_20 if v013>=2  [iw=wt], row nofreq  //percent married by age 20, by age
-tab ms_afs_20 if v013>=2 [iw=wt]		//percent married by age, 20 by age, among age 20-49
-tab ms_afs_20 if v013>=3 [iw=wt]		//percent married by age, 20 by age, among age 25-49
+tab v013 ms_afs_20 if v013>=2  [iw=wt], row nofreq  //percent had first sex by age 20, by age
+tab ms_afs_20 if v013>=2 [iw=wt]		//percent had first sex by age, 20 by age, among age 20-49
+tab ms_afs_20 if v013>=3 [iw=wt]		//percent had first sex by age, 20 by age, among age 25-49
 
-tab v013 ms_afs_22 if v013>=3  [iw=wt], row nofreq  //percent married by age 22, by age
-tab ms_afs_22 if v013>=3 [iw=wt]		//percent married by age, 22 by age, among age 25-49
+tab v013 ms_afs_22 if v013>=3  [iw=wt], row nofreq  //percent had first sex by age 22, by age
+tab ms_afs_22 if v013>=3 [iw=wt]		//percent had first sex by age, 22 by age, among age 25-49
 
-tab v013 ms_afs_25 if v013>=3  [iw=wt], row nofreq  //percent married by age 25, by age
-tab ms_afs_25 if v013>=3 [iw=wt]		//percent married by age 25, by age, among age 25-49
+tab v013 ms_afs_25 if v013>=3  [iw=wt], row nofreq  //percent had first sex by age 25, by age
+tab ms_afs_25 if v013>=3 [iw=wt]		//percent had first sex by age 25, by age, among age 25-49
 
 
 * output to excel
