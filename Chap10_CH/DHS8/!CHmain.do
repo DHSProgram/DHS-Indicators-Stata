@@ -4,7 +4,7 @@ Purpose: 				Main file for the Child Health Chapter.
 						The main file will call other do files that will produce the CH indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf	
-Date last modified:		Jan 24, 2023 by Shireen Assaf
+Date last modified:		Jan 30, 2023 by Shireen Assaf
 
 *******************************************************************************************************************************/
 set more off
@@ -62,6 +62,7 @@ do CH_tables.do
 do CH_VAC.do
 *Purpose: 	Code vaccination indicators
 *!!!! Note: This do file drops children that are not in a specific age group. So if you need all children for your analysis you need to reopen the KR file.
+* Please check the notes in this do file for more detail.
 
 do CH_tables_vac.do
 *Purpose: 	Produce tables for vaccination indicators.
