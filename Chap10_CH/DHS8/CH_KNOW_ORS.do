@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			CH_KNOW_ORS.do
+Program: 			CH_KNOW_ORS.do - No changes in DHS8
 Purpose: 			Code knowledge of ORS variable.
 Data inputs: 		IR dataset
 Data outputs:		coded variables

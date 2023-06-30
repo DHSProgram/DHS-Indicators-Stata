@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			CH_STOOL.do
+Program: 			CH_STOOL.do - No changes in DHS8
 Purpose: 			Code disposal of child's stook variable
 Data inputs: 		KR dataset
 Data outputs:		coded variables
