@@ -4,25 +4,25 @@ Purpose: 			creates variable for binary improved sanitation according to JSTOR s
 Data inputs: 		hr or pr file
 Data outputs:		none
 Author of do file:	03/15/2018	Courtney Allen
-Date last modified: 09/04/2020	Courtney Allen - for codeshare project
+Date last modified: 06/30/2023	Courtney Allen -  update countries for codeshare project
 Note:				These indicators can also be computed using the HR or PR file.
 					If you want to produce estimates for households, use the HR file.
 					If you want to produce estimates for the de jure population, 
 					use the PR file and select for dejure household memebers using
-					hv102==1. Please see the Guide to DHS Statistics.  
+					hv102==1. Please see the Guide to DHS Statistics. 
+					
+					09/30/2022 Shireen Assaf to use hv000 and hv007 instead of file names. This alternative will not be effected by changes in data file versions. 
 *****************************************************************************************************/
 
 /*------------------------------------------------------------------------------
-This do file can be run on any loop of countries indicating the dataset name 
-with variable called filename. Code should be same for pr or hr files.
+This do file can be run on any loop of countries. Code should be same for pr or hr files.
 
 VARIABLES CREATED:
 	
 	ph_sani_type		"Type of sanitation facility"
 	ph_sani_improve		"Access to improved sanitation"
 	ph_sani_basic		"Basic or limited sanitation facility"
-	ph_sani_location	"Location of sanitation facility"
-		
+	ph_sani_location	"Location of sanitation facility"	
 
 NOTE: 
 STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
@@ -45,44 +45,38 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 		96	 other
 	3-open defecation
 		31	 no facility/bush/field/river/sea/lake
-
 ------------------------------------------------------------------------------*/
 
 // generate type of sanitation facility  
 	/*--------------------------------------------------------------------------
-	NOTE: this cycles through ALL country specific coding and ends around 
-	line 1491.
-	Close bracket around line 59 to hide country specific code.
+	NOTE: this cycles through ALL country specific coding and ends around line 1098.
 	--------------------------------------------------------------------------*/
 
-	// check if "hr" or "pr" file is being used
-	foreach x in hr pr {
-
 	//recode country specific responses to standard codes
-	if filename=="af`x'71"  {
+	if hv000=="AF7" {
 	recode hv205 ///
 	43 = 23 ///
 	44 = 51 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="am`x'42"  {
+	if hv000=="AM4" & hv007==2000 {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="am`x'54"  {
+	if hv000=="AM4" & hv007==2005  {
 	recode hv205 ///
 	41 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="am`x'61"  {
+	if hv000=="AM6"  {
 	recode hv205 ///
 	44 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ao`x'71"  {
+	if hv000=="AO7"  {
 	recode hv205 ///
 	13 = 14 ///
 	14 = 11 ///
@@ -101,7 +95,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	42 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bd`x'31"  {
+	* same recode for 4 surveys: three that all have hv000=BD3 (BDHR31, BDHR3A, and BDHR41) and one that is BD4
+	if hv000=="BD3" | hv000=="BD4" {
 	recode hv205 ///
 	11 = 12 ///
 	21 = 22 ///
@@ -109,31 +104,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	24 = 43 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bd`x'3a"  {
-	recode hv205 ///
-	11 = 12 ///
-	21 = 22 ///
-	22 = 23 ///
-	24 = 43 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="bd`x'41"  {
-	recode hv205 ///
-	11 = 12 ///
-	21 = 22 ///
-	22 = 23 ///
-	24 = 43 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="bd`x'4j"  {
-	recode hv205 ///
-	11 = 12 ///
-	21 = 22 ///
-	22 = 23 ///
-	24 = 43 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="bf`x'21"  {
+	* same recode for 3 surveys: BFHR21, BFHR31, and BFHR43. BFHR31 and BFHR43 do not have a 41 category for hv205 and BFHR43 does not have a 12 category. 
+	if hv000=="BF2" | hv000=="BF3" | hv000=="BF4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -142,48 +114,33 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bf`x'31"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="bf`x'43"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="bj`x'31"  {
+	if hv000=="BJ3"  {
 	recode hv205 ///
 	21 = 22 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bj`x'41"  {
+	if hv000=="BJ4"  {
 	recode hv205 ///
 	11 = 15 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bj`x'51"  {
+	if hv000=="BJ5"  {
 	recode hv205 ///
 	15 = 14 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bo`x'31"  {
+	if hv000=="BO3" & hv007<95 {
 	recode hv205 ///
 	11 = 15 ///
 	13 = 12 ///
 	21 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bo`x'3b"  {
+	if hv000=="BO3" & hv007==98  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -192,13 +149,13 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bo`x'41"  {
+	if hv000=="BO4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="br`x'21"  {
+	if hv000=="BR2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -206,7 +163,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="br`x'31"  {
+	if hv000=="BR3"  {
 	recode hv205 ///
 	12 = 14 ///
 	13 = 14 ///
@@ -214,20 +171,20 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="bu`x'6a"  {
+	if hv000=="BU6" & inrange(hv007,2012,2013) {
 	recode hv205 ///
 	23 = 22 ///
 	24 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="cd`x'51"  {
+	if hv000=="CD5"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	23 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="cf`x'31"  {
+	if hv000=="CF3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -235,20 +192,24 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="cg`x'51"  {
+	* missing information for hv007 in CG surveys that are both hv000 CG5 so included obserations to select for correct survey
+	if hv000=="CG5"  {
+		qui sum hv007
+		if r(N)<6000 {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
-	}
-	if filename=="cg`x'5a"  {
+	} 
+	else {
 	recode hv205 ///
 	11 = 15 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ci`x'35"  {
+	}
+	if hv000=="CI3" & hv007==94  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -257,21 +218,21 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	23 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ci`x'3a"  {
+	if hv000=="CI3" & hv007>97 {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ci`x'51"  {
+	if hv000=="CI5"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="cm`x'22"  {
+	if hv000=="CM2"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 42 ///
@@ -281,63 +242,57 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="cm`x'31"  {
+	if hv000=="CM3"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="cm`x'45"  {
+	if hv000=="CM4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="co`x'22"  {
+	if hv000=="CO2"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="co`x'31"  {
+	if hv000=="CO3"  {
 	recode hv205 ///
 	12 = 13 ///
 	13 = 14 ///
 	21 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="co`x'41"  {
+	if hv000=="CO4" & hv007==2000 {
 	recode hv205 ///
 	12 = 13 ///
 	13 = 14 ///
 	21 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="co`x'53"  {
+	if hv000=="CO4" & hv007>=2004 {
 	recode hv205 ///
 	13 = 14 ///
 	21 = 23 ///
 	22 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="co`x'61"  {
+	* same recode for two surveys COHR61 and COHR72
+	if hv000=="CO5" |  (hv000=="CO7" & hv007>=2015)   {
 	recode hv205 ///
 	13 = 14 ///
 	21 = 23 ///
 	22 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="co`x'72"  {
-	recode hv205 ///
-	13 = 14 ///
-	21 = 23 ///
-	22 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="dr`x'21"  {
+	if hv000=="DR2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -346,7 +301,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="dr`x'32"  {
+	if hv000=="DR3" & hv007==96 {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -356,14 +311,15 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	24 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="dr`x'41"  {
+	if hv000=="DR3" & hv007==99 {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="dr`x'4b"  {
+	* same recode for 3 surveys: DRHR4B, DRHR52, and DRHR5A
+	if hv000=="DR4" | hv000=="DR5" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -373,27 +329,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	24 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="dr`x'52"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 22 ///
-	22 = 23 ///
-	23 = 22 ///
-	24 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="dr`x'5a"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 22 ///
-	22 = 23 ///
-	23 = 22 ///
-	24 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="eg`x'21"  {
+	if hv000=="EG2"  {
 	recode hv205 ///
 	13 = 15 ///
 	14 = 15 ///
@@ -402,28 +338,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="eg`x'33"  {
-	recode hv205 ///
-	12 = 15 ///
-	13 = 15 ///
-	21 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="eg`x'42"  {
-	recode hv205 ///
-	12 = 15 ///
-	13 = 15 ///
-	21 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="eg`x'4a"  {
-	recode hv205 ///
-	12 = 15 ///
-	13 = 15 ///
-	21 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="eg`x'51"  {
+	* same recode for 4 surveys: EGHR33, EGHR42, EGHR4A, and EGHR51. Only EGHR51 has category 32 for hv205
+	if hv000=="EG3" | hv000=="EG4" {
 	recode hv205 ///
 	12 = 15 ///
 	13 = 15 ///
@@ -431,69 +347,55 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	32 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="eg`x'5a"  {
+	if hv000=="EG5"  {
 	recode hv205 ///
 	12 = 15 ///
 	13 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="eg`x'61"  {
+	if hv000=="EG6"  {
 	recode hv205 ///
 	16 = 12 ///
 	17 = 11 ///
 	18 = 11 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="et`x'41"  {
+	if hv000=="ET4" & hv007==1992 {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="et`x'51"  {
+	if hv000=="ET4" & hv007==1997  {
 	recode hv205 ///
 	24 = 41 ///
 	25 = 42 ///
 	26 = 43 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ga`x'41"  {
+	if hv000=="GA3"  {
 	recode hv205 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gh`x'31"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="gh`x'41"  {
+	*same recode for three surveys: GHHR31, GHHR41, and GHHR4B. Only GHHR4B has category 32 for hv205 and only GHHR41 has category 23. 
+	if hv000=="GH2" | hv000=="GH3" | hv000=="GH4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	23 = 42 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="gh`x'4b"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
 	32 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gh`x'82"  {
+	if hv000=="GH7" & hv007==2019 {
 	recode hv205 ///
 	16 = 51 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gn`x'41"  {
+	if hv000=="GN3"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
@@ -501,14 +403,14 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gn`x'53"  {
+	if hv000=="GN4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	23 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gu`x'34"  {
+	if hv000=="GU3" & hv007==95  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -516,26 +418,27 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gu`x'41"  {
+	if hv000=="GU3" & hv007>98 {
 	recode hv205 ///
 	12 = 11 ///
 	13 = 12 ///
 	21 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gu`x'71"  {
+	if hv000=="GU6"  {
 	recode hv205 ///
 	13 = 14 ///
 	14 = 15 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="gy`x'51"  {
+	if hv000=="GY4"  {
 	recode hv205 ///
 	61 = 43 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="hn`x'52"  {
+	* same recode for two surveys HNHR52 and HNHR62
+	if hv000=="HN5" | hv000=="HN6" {
 	recode hv205 ///
 	13 = 15 ///
 	21 = 51 ///
@@ -543,15 +446,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	24 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="hn`x'62"  {
-	recode hv205 ///
-	13 = 15 ///
-	21 = 51 ///
-	22 = 41 ///
-	24 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ht`x'31"  {
+	if hv000=="HT3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -561,26 +456,27 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	24 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ht`x'42"  {
+	if hv000=="HT4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ht`x'52"  {
+	if hv000=="HT5"  {
 	recode hv205 ///
 	51 = 42 ///
 	61 = 43 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ht`x'61"  {
+	if hv000=="HT6"  {
 	recode hv205 ///
 	44 = 43 ///
 	45 = 51 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ia`x'23"  {
+	* same recode for two surveys: IAHR23 and IAHR42. Only IAHR23 has category 41 for hv205
+	if hv000=="IA2" | hv000=="IA3" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -590,26 +486,13 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ia`x'42"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	13 = 15 ///
-	21 = 23 ///
-	22 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ia`x'52"  {
+	* same recode for two surveys: IAHR52 (2005-2006), IAHR74 (2015-16), and IAHR7E (2019-21)
+	if hv000=="IA5" | hv000=="IA6" | hv000=="IA7" {
 	recode hv205 ///
 	44 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ia`x'74"  {
-	recode hv205 ///
-	44 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="id`x'42"  {
+	if hv000=="ID4"  {
 	recode hv205 ///
 	11 = 12 ///
 	12 = 14 ///
@@ -618,7 +501,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	51 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="id`x'51"  {
+	* same recode for two surveys: IDHR51 and IDHR63. Only IDHR51 has categories 33 to 36 for hv205
+	if hv000=="ID5" | hv000=="ID6" {
 	recode hv205 ///
 	11 = 12 ///
 	12 = 14 ///
@@ -631,49 +515,29 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	36 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="id`x'63"  {
-	recode hv205 ///
-	11 = 12 ///
-	12 = 14 ///
-	13 = 15 ///
-	21 = 23 ///
-	32 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="id`x'71"  {
+	if hv000=="ID7" & hv007==2017 {
 	recode hv205 ///
 	16 = 14 ///
 	17 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="jo`x'31"  {
+	* same recode for two surveys: JOHR31 and JOHR42. Only JOHR42 has category 22 for hv205
+	if hv000=="JO3" | hv000=="JO4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
 	21 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="jo`x'42"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="jo`x'51"  {
+	* same recode for two surveys: JOHR51 and JOHR61 both are hv000=JO5
+	if hv000=="JO5"  {
 	recode hv205 ///
 	12 = 13 ///
 	13 = 14 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="jo`x'61"  {
-	recode hv205 ///
-	12 = 13 ///
-	13 = 14 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ke`x'33"  {
+	* same recode for three surveys: KEHR33, KEHR3A, and KEHR42. Only KEHR33 has category 41 for hv205 and there is no category 12 in KEHR42
+	if hv000=="KE2" | hv000=="KE3" | hv000=="KE4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -682,22 +546,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ke`x'3a"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ke`x'42"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="kh`x'42"  {
+	if hv000=="KH4"  {
 	recode hv205 ///
 	11 = 12 ///
 	12 = 14 ///
@@ -705,7 +554,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="kk`x'31"  {
+	* same recode for two surveys KKHR31 and KKHR42, both are hv000=KK3. Only KKHR31 has categories 12 and 22 for hv205
+	if hv000=="KK3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -713,13 +563,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="kk`x'42"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="km`x'32"  {
+	if hv000=="KM3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -727,7 +571,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ky`x'31"  {
+	if hv000=="KY3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -735,14 +579,14 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ls`x'41"  {
+	if hv000=="LS4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ma`x'21"  {
+	if hv000=="MA2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -751,7 +595,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ma`x'43"  {
+	if hv000=="MA4"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -761,13 +605,14 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	32 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="mb`x'53"  {
+	if hv000=="MB4"  {
 	recode hv205 ///
 	31 = 41 ///
 	41 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="md`x'21"  {
+	* same recode for two surveys: MDHR21 and MDHR31. Only MDHR21 has categories 12, 23, and 41 for hv205
+	if hv000=="MD2" | hv000=="MD3" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -777,38 +622,26 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="md`x'31"  {
+	if hv000=="MD4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="md`x'42"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="md`x'51"  {
+	if hv000=="MD5"  {
 	recode hv205 ///
 	24 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="md`x'61"  {
+	* same recode for two surveys: MDHR61 and MDHR6A both are hv000=MD6
+	if hv000=="MD6"  {
 	recode hv205 ///
 	23 = 22 ///
 	24 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="md`x'6a"  {
-	recode hv205 ///
-	23 = 22 ///
-	24 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ml`x'32"  {
+	if hv000=="ML3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -816,21 +649,16 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ml`x'41"  {
+	* same recode for two surveys: MLHR41 and MLHR53
+	if hv000=="ML4" | (hv000=="ML5" & hv007==2006) {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ml`x'53"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="mw`x'22"  {
+	* same recode for 3 surveys: MWHR22, MWHR41, and MWHR4E. Only MWHR22 has categories 12 and 41 for hv205
+	if hv000=="MW2" | hv000=="MW4"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -839,26 +667,12 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="mw`x'41"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="mw`x'4e"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="mw`x'61"  {
+	if hv000=="MW5"  {
 	recode hv205 ///
 	11 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="mz`x'31"  {
+	if hv000=="MZ3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -866,7 +680,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="mz`x'41"  {
+	if hv000=="MZ4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
@@ -874,19 +688,20 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	30 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="mz`x'62"  {
+	if hv000=="MZ6" & hv007==2011  {
 	recode hv205 ///
 	16 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="mz`x'71"  {
+	if hv000=="MZ6" & hv007==2015 {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="nc`x'31"  {
+	* same recode for two surveys: NCHR31 and NCHR41. NCHR31 does not have category 32 for hv205 and NCHR41 does not have category 24 for hv205
+	if hv000=="NC3" | hv000=="NC4" {
 	recode hv205 ///
 	15 = 14 ///
 	21 = 23 ///
@@ -895,16 +710,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	30 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="nc`x'41"  {
-	recode hv205 ///
-	15 = 14 ///
-	21 = 23 ///
-	22 = 21 ///
-	30 = 31 ///
-	32 = 43 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ng`x'41"  {
+	* same recode for two surveys: NGHR41 and NGHR4B. NGHR41 does not have category 32 for hv205 and NGHR4B does not have categories 12 and 23
+	if hv000=="NG3" | hv000=="NG4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -913,15 +720,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	23 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ng`x'4c"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	32 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ni`x'22"  {
+	if hv000=="NI2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -931,7 +730,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ni`x'31"  {
+	if hv000=="NI3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -939,14 +738,14 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ni`x'51"  {
+	if hv000=="NI5"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="nm`x'21"  {
+	if hv000=="NM2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -956,7 +755,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="nm`x'41"  {
+	if hv000=="NM4"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 22 ///
@@ -965,7 +764,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	23 = 42 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="np`x'31"  {
+	if hv000=="NP3"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
@@ -974,14 +773,20 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	32 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="np`x'41"  {
+	if hv000=="NP4"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="pe`x'21"  {
+	if hv000=="NP8"  {
+	recode hv205 ///
+	44 = 42 ///
+	45 = 51 ///
+	, gen (ph_sani_type)
+	}
+	if hv000=="PE2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -992,7 +797,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="pe`x'31"  {
+	if hv000=="PE3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1003,7 +808,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	32 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="pe`x'41"  {
+	if hv000=="PE4"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1015,7 +820,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="pe`x'51"  {
+	* same recode for five surveys: PEHR51, PEHR5I, PEHR61, PEHR61, and PEHR6I
+	if hv000=="PE5" | hv000=="PE6" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1024,43 +830,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	32 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="pe`x'5i"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	22 = 12 ///
-	24 = 31 ///
-	32 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="pe`x'61"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	22 = 12 ///
-	24 = 31 ///
-	32 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="pe`x'6a"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	22 = 12 ///
-	24 = 31 ///
-	32 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="pe`x'6i"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	22 = 12 ///
-	24 = 31 ///
-	32 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ph`x'31"  {
+	if hv000=="PH2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1070,7 +840,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ph`x'3b"  {
+	* same recode for two surveys: PHHR3B and PHHR41. Only PHHR3B has category 30 for hv205 and only PHHR41 has category 32
+	if hv000=="PH3" | hv000=="PH4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1080,79 +851,49 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	31 = 43 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ph`x'41"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 13 ///
-	22 = 23 ///
-	31 = 43 ///
-	32 = 31 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ph`x'61"  {
+	if hv000=="PH6"  {
 	recode hv205 ///
 	51 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ph`x'71"  {
+	if hv000=="PH7"  {
 	recode hv205 ///
 	71 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="pk`x'21"  {
+	if hv000=="PK2"  {
 	recode hv205 ///
 	13 = 15 ///
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="pk`x'52"  {
+	if hv000=="PK5"  {
 	recode hv205 ///
 	13 = 14 ///
 	14 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="rw`x'21"  {
+	if hv000=="RW2"  {
 	recode hv205 ///
 	13 = 15 ///
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="rw`x'41"  {
+	* same recode for three surveys: RWHR41, RWHR53, and RWHR5A
+	if hv000=="RW4" | hv000=="RW5"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="rw`x'53"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="rw`x'5a"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sl`x'51"  {
+	if hv000=="SL5"  {
 	recode hv205 ///
 	71 = 31 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="sn`x'21"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sn`x'32"  {
+	* same recode for two surveys: SNHR21 and SNHR32 both are hv000=SN2 . Only survey SNHR32 has category 41 for hv205
+	if hv000=="SN2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1161,7 +902,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="sn`x'4a"  {
+	if hv000=="SN4"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 14 ///
@@ -1169,56 +910,22 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="sn`x'61"  {
+	* same recode for 6 surveys: SNHR61, SNHR6D, SNHR6R, SNHR7H, SNHR7I, and SNHRG0. All are hv000=SN6. 
+	if hv000=="SN6" {
 	recode hv205 ///
 	24 = 22 ///
 	26 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="sn`x'6d"  {
-	recode hv205 ///
-	24 = 22 ///
-	26 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sn`x'6r"  {
-	recode hv205 ///
-	24 = 22 ///
-	26 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sn`x'70"  {
-	recode hv205 ///
-	24 = 22 ///
-	26 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sn`x'7h"  {
-	recode hv205 ///
-	24 = 22 ///
-	26 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sn`x'7i"  {
-	recode hv205 ///
-	24 = 22 ///
-	26 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sn`x'g0"  {
-	recode hv205 ///
-	24 = 22 ///
-	26 = 23 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="sz`x'51"  {
+	if hv000=="SZ5"  {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="td`x'31"  {
+	* same recode for two surveys: TDHR31 and TDHR41
+	if hv000=="TD3" | hv000=="TD4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1226,15 +933,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="td`x'41"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="td`x'71"  {
+	if hv000=="TD6"  {
 	recode hv205 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -1242,7 +941,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	14 = 15 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="tg`x'31"  {
+	if hv000=="TG3"  {
 	recode hv205 ///
 	21 = 22 ///
 	22 = 23 ///
@@ -1250,7 +949,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	24 = 22 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="tr`x'31"  {
+	if hv000=="TR2"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1258,7 +957,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="tr`x'41"  {
+	* same recode for two surveys: TRHR41 and TRHR4A. Only survey TRHR41 has category 12 for hv205
+	if hv000=="TR3" | hv000=="TR4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1266,14 +966,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 13 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="tr`x'4a"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 13 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="tz`x'21"  {
+	* same recode for 5 surveys: TZHR21, TZHR3A, TZHR41, TZHR4A, and TZHR4I. Only surveys TZHR21 and TZHR3A have category 12 for hv205
+	if hv000=="TZ2" | hv000=="TZ3" | hv000=="TZ4" | (hv000=="TZ5" & inrange(hv007,2003,2004)) {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1281,56 +975,20 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="tz`x'3a"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="tz`x'41"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="tz`x'4a"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="tz`x'4i"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="tz`x'51"  {
+	*check if TZHR63 (which is hv000=TZ5 as well) should be included here. 
+	if hv000=="TZ5" & inrange(hv007,2007,2008) {
 	recode hv205 ///
 	24 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="tz`x'6a"  {
+	* same recode for three surveys: TZHR6A, TZHR7B, and TZHR7I
+	if hv000=="TZ6" | hv000=="TZ7" {
 	recode hv205 ///
 	24 = 22 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="tz`x'7b"  {
-	recode hv205 ///
-	24 = 22 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="tz`x'7i"  {
-	recode hv205 ///
-	24 = 22 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ug`x'33"  {
+	* same recode for two surveys: UGHR33 and UGHR41. Only UGHR33 has category 12 for hv205
+	if hv000=="UG3" | hv000=="UG4" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1338,14 +996,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ug`x'41"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ug`x'52"  {
+	* same recode for three surveys: UGHR52, UGHR5A, and UGHR61. Only survey UGHR61 has category 44 for variable hv205
+	if hv000=="UG5" | (hv000=="UG6" & hv007==2011) {
 	recode hv205 ///
 	11 = 15 ///
 	22 = 23 ///
@@ -1354,32 +1006,14 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	25 = 22 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ug`x'5a"  {
-	recode hv205 ///
-	11 = 15 ///
-	22 = 23 ///
-	23 = 22 ///
-	24 = 23 ///
-	25 = 22 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ug`x'61"  {
-	recode hv205 ///
-	11 = 15 ///
-	22 = 23 ///
-	23 = 22 ///
-	24 = 23 ///
-	25 = 22 ///
-	44 = 51 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="ug`x'72"  {
+	* check if surveys UGHR6A and UGHR7I should be included here. 
+	if (hv000=="UG6" & inrange(hv007,2014,2015)) {
 	recode hv205 ///
 	24 = 22 ///
 	25 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="uz`x'31"  {
+	if hv000=="UZ3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1387,7 +1021,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="vn`x'31"  {
+	* same recode for two surveys VNHR31 and VNHR41. Both are hv000=VNT
+	if hv000=="VNT" {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1395,21 +1030,13 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="vn`x'41"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="vn`x'52"  {
+	if hv000=="VN5" {
 	recode hv205 ///
 	11 = 15 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ye`x'21"  {
+	if hv000=="YE2" {
 	recode hv205 ///
 	13 = 11 ///
 	14 = 15 ///
@@ -1421,13 +1048,13 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="ye`x'61"  {
+	if hv000=="YE6"  {
 	recode hv205 ///
 	24 = 23 ///
 	25 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="za`x'31"  {
+	if hv000=="ZA3"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1435,13 +1062,14 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="za`x'71"  {
+	if hv000=="ZA7" & hv007==2016 {
 	recode hv205 ///
 	23 = 21 ///
 	44 = 51 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="zm`x'21"  {
+	* same recode for three surveys: ZMHR21, ZMHR31, and ZMHR42. Only survey ZMHR21 has category 41 for hv025 and survey ZMHR42 does not have categories 41 or 12. 
+	if hv000=="ZM2" | hv000=="ZM3" | hv000=="ZM4"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1450,7 +1078,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 96 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="zm`x'31"  {
+	* same recode for two surveys: ZWHR31 and ZWHR42. Only survey ZWHR31 has category 12 for hv205. 
+	if hv000=="ZW3" | hv000=="ZW4"  {
 	recode hv205 ///
 	11 = 15 ///
 	12 = 15 ///
@@ -1458,37 +1087,16 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	if filename=="zm`x'43"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="zw`x'31"  {
-	recode hv205 ///
-	11 = 15 ///
-	12 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="zw`x'42"  {
-	recode hv205 ///
-	11 = 15 ///
-	21 = 23 ///
-	22 = 21 ///
-	, gen (ph_sani_type)
-	}
-	if filename=="zw`x'52"  {
+	if hv000=="ZW5" {
 	recode hv205 ///
 	91 = 41 ///
 	92 = 42 ///
 	, gen (ph_sani_type)
 	}
 
-} //close bracket for hiding country specific code
+	* End of country specific codes
 	
+	********************************************************************************
 	// for all other countries
 	cap gen ph_sani_type = hv205
 
@@ -1518,7 +1126,6 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	recode ph_sani_type (11/13 15 21 22 41 51 = 1 "improved sanitation") (14 23 42 43 96 = 2 "unimproved sanitation") (31 = 3 "open defecation") (99=.), gen(ph_sani_improve)
 	label var ph_sani_improve "Improved sanitation"
 	*cap replace ph_sani_improve = 2 if hv225==1 //shared toilet is not improved. Note: this is used in the old definition and no longer required. 
-
 
 // create basic or limited sanitation services indicator
 	cap gen ph_sani_basic = .

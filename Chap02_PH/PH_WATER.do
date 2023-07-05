@@ -4,19 +4,20 @@ Purpose: 			creates variable for binary improved water source according to JSTOR
 Data inputs: 		hr or pr file
 Data outputs:		none
 Author of do file:	04/08/2018	Courtney Allen
-Date last modified: 09/04/2020	Courtney Allen - for codeshare project
+Date last modified: 06/23/2023	Courtney Allen - for codeshare project
 Note:				These indicators can also be computed using the HR or PR file.
 					If you want to produce estimates for households, use the HR file.
 					If you want to produce estimates for the de jure population, 
 					use the PR file and select for dejure household memebers using
 					hv102==1. Please see the Guide to DHS Statistics.  
 					
-					*****
+					10/3/2022 Shireen Assaf to use hv000 and hv007 instead of file names. This alternative will not be effected by changes in data file versions. 
 *****************************************************************************************************/
 
 /*------------------------------------------------------------------------------
-This do file can be run on any loop of countries indicating the dataset name 
-with variable called filename. Code should be same for pr or hr files.
+This do file can be run on any loop of countries indicating the dataset with
+the country code (hv000) and the year (hv007) when necessary. 
+Code should be same for pr or hr files.
 
 VARIABLES CREATED
 	ph_wtr_trt_boil		"Treated water by boiling before drinking"
@@ -125,30 +126,23 @@ cap label define yesno 0"No" 1"Yes"
 	label val ph_wtr_trt_appr yesno
 	label var ph_wtr_trt_appr	"Appropriately treated water before drinking"
 
-
-	
 // generate water source indicator 
 	/*--------------------------------------------------------------------------
-	NOTE: this cycles through ALL country specific coding and ends around 
-	line 2252. 
-	Close bracket around line 130 to hide country specific code.
+	NOTE: this cycles through ALL country specific coding and ends around line 2252. 
 	--------------------------------------------------------------------------*/
-	
-	// check if "hr" or "pr" file is being used
-	foreach x in hr pr {
-	
+		
 	// recode country specific responses to standard codes
-	if filename=="af`x'71"  {
+	if hv000=="AF7" & hv007==1394 {
 	recode hv201 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="al`x'71"  {
+	if hv000=="AL7" & hv007<=2018 {
 	recode hv201 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="am`x'42"  {
+	if  hv000=="AM4" & hv007==2000 {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -159,24 +153,24 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="am`x'54"  {
+	if hv000=="AM4" & hv007==2005 {
 	recode hv201 ///
 	21 = 32 ///
 	32 = 41 ///
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="am`x'61"  {
+	if hv000=="AM6" {
 	recode hv201 ///
 	14 = 11 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="am`x'72"  {
+	if hv000=="AM7" & inrange(hv007,2015,2016) {
 	recode hv201 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ao`x'71"  {
+	if hv000=="AO7" & inrange(hv007,2015,2016) {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -184,7 +178,8 @@ cap label define yesno 0"No" 1"Yes"
 	63 = 62 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bd`x'31"  {
+	* same recode for 3 surveys that all have hv000=BD3 (BDHR31, BDHR3A, and BDHR41). BDHR41 does not have category 41 for hv201
+	if hv000=="BD3" {
 	recode hv201 ///
 	22 = 32 ///
 	31 = 43 ///
@@ -192,22 +187,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bd`x'3a"  {
-	recode hv201 ///
-	22 = 32 ///
-	31 = 43 ///
-	32 = 43 ///
-	41 = 51 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="bd`x'41"  {
-	recode hv201 ///
-	22 = 32 ///
-	31 = 43 ///
-	32 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="bd`x'4j"  {
+	if hv000=="BD4" {
 	recode hv201 ///
 	22 = 32 ///
 	23 = 31 ///
@@ -216,7 +196,7 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bf`x'21"  {
+	if hv000=="BF2" {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -230,7 +210,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bf`x'31"  {
+	if hv000=="BF3" {
 	recode hv201 ///
 	12 = 11 ///
 	21 = 30 ///
@@ -244,7 +224,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bf`x'43"  {
+	if hv000=="BF4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -256,13 +236,13 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bf`x'7a"  {
+	if hv000=="BF7" & inrange(hv007,2017,2018) {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bj`x'31"  {
+	if hv000=="BJ3"  {
 	recode hv201 ///
 	22 = 31 ///
 	23 = 32 ///
@@ -272,7 +252,7 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bj`x'41"  {
+	if hv000=="BJ4"  {
 	recode hv201 ///
 	22 = 31 ///
 	23 = 32 ///
@@ -281,19 +261,19 @@ cap label define yesno 0"No" 1"Yes"
 	52 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bj`x'51"  {
+	if hv000=="BJ5"  {
 	recode hv201 ///
 	52 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bj`x'71"  {
+	if hv000=="BJ7" & inrange(hv007,2017,2018) {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bo`x'31"  {
+	if hv000=="BO3" & hv007<95  {
 	recode hv201 ///
 	12 = 13 ///
 	13 = 14 ///
@@ -302,7 +282,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bo`x'3b"  {
+	if hv000=="BO3" & hv007==98   {
 	recode hv201 ///
 	13 = 15 ///
 	21 = 30 ///
@@ -310,7 +290,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bo`x'41"  {
+	if hv000=="BO4"  {
 	recode hv201 ///
 	13 = 15 ///
 	22 = 32 ///
@@ -318,12 +298,12 @@ cap label define yesno 0"No" 1"Yes"
 	45 = 14 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bo`x'51"  {
+	if hv000=="BO5"  {
 	recode hv201 ///
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="br`x'21"  {
+	if hv000=="BR2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -338,26 +318,20 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="br`x'31"  {
+	if hv000=="BR3"  {
 	recode hv201 ///
 	21 = 30 ///
 	22 = 30 ///
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bu`x'70"  {
+	if hv000=="BU7" & inrange(hv007,2016,2017) {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="bu`x'71"  {
-	recode hv201 ///
-	13 = 14 ///
-	14 = 13 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="cd`x'51"  {
+	if hv000=="CD5"  {
 	recode hv201 ///
 	32 = 31 ///
 	33 = 31 ///
@@ -368,7 +342,7 @@ cap label define yesno 0"No" 1"Yes"
 	45 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="cf`x'31"  {
+	if hv000=="CF3"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -380,8 +354,11 @@ cap label define yesno 0"No" 1"Yes"
 	33 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="cg`x'51"  {
-	recode hv201 ///
+	* missing information for hv007 in CG surveys that are both hv000 CG5 so included obserations to select for correct survey
+	if hv000=="CG5"  {
+		qui sum hv007
+		if r(N)<6000 {	
+			recode hv201 ///
 	13 = 14 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -389,7 +366,9 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ci`x'35"  {
+	}
+	* same recode for two surveys: CIHR35 and CIHR3A both are hv000=CI3. Only survey CIHR35 has categories 51 and 61 for hv201
+	if hv000=="CI3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -403,19 +382,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ci`x'3a"  {
-	recode hv201 ///
-	12 = 13 ///
-	21 = 30 ///
-	22 = 30 ///
-	31 = 40 ///
-	32 = 43 ///
-	33 = 43 ///
-	34 = 43 ///
-	41 = 51 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="ci`x'51"  {
+	if hv000=="CI5"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -426,7 +393,7 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="cm`x'22"  {
+	if hv000=="CM2"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -437,7 +404,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="cm`x'31"  {
+	if hv000=="CM3"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -447,7 +414,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="cm`x'45"  {
+	if hv000=="CM4"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 15 ///
@@ -457,14 +424,15 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 41 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="cm`x'71"  {
+	if hv000=="CM7" & inrange(hv007,2018,2019) {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	92 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="co`x'22"  {
+	* same recode for two surveys: COHR22 and COHR31. Only survey COHR22 has category 71 for hv201
+	if hv000=="CO2" | hv000=="CO3" {
 	recode hv201 ///
 	12 = 11 ///
 	13 = 15 ///
@@ -476,46 +444,30 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="co`x'31"  {
-	recode hv201 ///
-	12 = 11 ///
-	13 = 15 ///
-	14 = 13 ///
-	21 = 30 ///
-	31 = 43 ///
-	41 = 51 ///
-	51 = 61 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="co`x'41"  {
+	if hv000=="CO4" & hv007<=2000 {
 	recode hv201 ///
 	12 = 11 ///
 	21 = 30 ///
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="co`x'53"  {
+	if hv000=="CO4" & hv007>=2004  {
 	recode hv201 ///
 	12 = 11 ///
 	22 = 32 ///
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="co`x'61"  {
+	* same recode for two surveys COHR61 and COHR72
+	if hv000=="CO5" | (hv000=="CO7" & inrange(hv007,2015,2016))   {
 	recode hv201 ///
 	12 = 11 ///
 	22 = 32 ///
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="co`x'72"  {
-	recode hv201 ///
-	12 = 11 ///
-	22 = 32 ///
-	42 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="dr`x'21"  {
+	* same recode for two surveys: DRHR21 and DRHR32. Only survey DRHR21 has category 71 for hv201
+	if hv000=="DR2" | (hv000=="DR3" & hv007==96) {
 	recode hv201 ///
 	21 = 30 ///
 	31 = 43 ///
@@ -525,16 +477,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="dr`x'32"  {
-	recode hv201 ///
-	21 = 30 ///
-	31 = 43 ///
-	41 = 51 ///
-	51 = 61 ///
-	61 = 71 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="dr`x'41"  {
+	if hv000=="DR3" & hv007==99  {
 	recode hv201 ///
 	22 = 32 ///
 	23 = 32 ///
@@ -547,13 +490,14 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="dr`x'4b"  {
+	if hv000=="DR4" & hv007==2002  {
 	recode hv201 ///
 	21 = 30 ///
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="eg`x'21"  {
+	* same recode for two surveys: EGHR21 and EGHR33. Only survey EGHR21 has category 71 for hv201
+	if hv000=="EG2" | hv000=="EG3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -562,15 +506,8 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="eg`x'33"  {
-	recode hv201 ///
-	12 = 13 ///
-	21 = 30 ///
-	22 = 30 ///
-	31 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="eg`x'42"  {
+	* same recode for two surveys: EGHR42 and EGHR4A. Both surveys are hv000=EG4. Only survey EGHR42 has category 72 for hv201
+	if hv000=="EG4" & hv007<2005  {
 	recode hv201 ///
 	21 = 30 ///
 	22 = 30 ///
@@ -582,18 +519,8 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="eg`x'4a"  {
-	recode hv201 ///
-	21 = 30 ///
-	22 = 30 ///
-	23 = 30 ///
-	31 = 30 ///
-	32 = 30 ///
-	33 = 30 ///
-	41 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="eg`x'51"  {
+	* this is survey EGHR51 which is also hv000=EG4 as the previous two surveys. Use hv007=2005 to specify 
+	if hv000=="EG4" & hv007==2005  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 42 ///
@@ -603,7 +530,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="et`x'41"  {
+	if hv000=="ET4" & hv007==1992  {
 	recode hv201 ///
 	13 = 15 ///
 	21 = 32 ///
@@ -615,7 +542,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="et`x'51"  {
+	if hv000=="ET4" & hv007==1997  {
 	recode hv201 ///
 	13 = 15 ///
 	21 = 32 ///
@@ -626,13 +553,13 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="et`x'71"  {
+	if hv000=="ET7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ga`x'41"  {
+	if hv000=="GA3"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -647,29 +574,15 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ga`x'61"  {
+	if hv000=="GA6"  {
 	recode hv201 ///
 	32 = 31 ///
 	33 = 32 ///
 	34 = 32 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gh`x'31"  {
-	recode hv201 ///
-	12 = 13 ///
-	21 = 30 ///
-	22 = 30 ///
-	23 = 21 ///
-	31 = 40 ///
-	32 = 43 ///
-	33 = 43 ///
-	34 = 43 ///
-	35 = 43 ///
-	41 = 51 ///
-	51 = 61 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="gh`x'41"  {
+	*same recode for two surveys: GHHR31 and GHHR41. Only survey GHHR41 has category 61 for hv201
+	if hv000=="GH2" | hv000=="GH3"   {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -685,7 +598,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gh`x'4b"  {
+	if hv000=="GH4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -698,31 +611,27 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gh`x'5a"  {
+	* same recode for two surveys: GHHR5A and GHHR72
+	if hv000=="GH5" | hv000=="GH6" {
 	recode hv201 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gh`x'72"  {
-	recode hv201 ///
-	72 = 73 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="gh`x'7b"  {
+	* same recode for two surveys: GHHR7B and GHHR82. Both are hv000=GH7
+	if hv000=="GH7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gh`x'82"  {
-	recode hv201 ///
+	if hv000=="GM7"  {
+	recode  hv201 ///
 	13 = 14 ///
 	14 = 13 ///
-	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gn`x'41"  {
+	if hv000=="GN3"  {
 	recode hv201 ///
 	21 = 30 ///
 	22 = 30 ///
@@ -735,7 +644,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gn`x'53"  {
+	if hv000=="GN4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -747,13 +656,13 @@ cap label define yesno 0"No" 1"Yes"
 	45 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gn`x'71"  {
+	if hv000=="GN7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gu`x'34"  {
+	if hv000=="GU3" & hv007==95  {
 	recode hv201 ///
 	11 = 13 ///
 	12 = 13 ///
@@ -765,7 +674,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gu`x'41"  {
+	if hv000=="GU3" & hv007>95   {
 	recode hv201 ///
 	11 = 13 ///
 	12 = 13 ///
@@ -778,7 +687,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gu`x'71"  {
+	if hv000=="GU6"  {
 	recode hv201 ///
 	14 = 15 ///
 	31 = 13 ///
@@ -789,7 +698,7 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 42 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="gy`x'51"  {
+	if hv000=="GY4"  {
 	recode hv201 ///
 	22 = 32 ///
 	81 = 43 ///
@@ -797,7 +706,7 @@ cap label define yesno 0"No" 1"Yes"
 	92 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="hn`x'52"  {
+	if hv000=="HN5"  {
 	recode hv201 ///
 	13 = 11 ///
 	14 = 11 ///
@@ -808,7 +717,7 @@ cap label define yesno 0"No" 1"Yes"
 	62 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="hn`x'62"  {
+	if hv000=="HN6"  {
 	recode hv201 ///
 	13 = 11 ///
 	14 = 11 ///
@@ -817,7 +726,7 @@ cap label define yesno 0"No" 1"Yes"
 	45 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ht`x'31"  {
+	if hv000=="HT3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -832,7 +741,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ht`x'42"  {
+	if hv000=="HT4"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -844,13 +753,13 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ht`x'52"  {
+	if hv000=="HT5"  {
 	recode hv201 ///
 	63 = 43 ///
 	64 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ht`x'61"  {
+	if hv000=="HT6"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -860,14 +769,14 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ht`x'71"  {
+	if hv000=="HT7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ia`x'23"  {
+	if hv000=="IA2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -883,7 +792,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ia`x'42"  {
+	if hv000=="IA3"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -900,7 +809,14 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="id`x'21"  {
+	if hv000=="IA7"  {
+	recode hv201 ///
+	13 = 14 ///
+	14 = 13 ///
+	92 = 72 ///
+	, gen (ph_wtr_source)
+	}	
+	if hv000=="ID2"  {
 	recode hv201 ///
 	22 = 30 ///
 	31 = 40 ///
@@ -909,7 +825,8 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="id`x'31"  {
+	* same recode for two surveys: IDHR31 (1994) and IDHR3A (1997). Both are hv000=ID3
+	if hv000=="ID3"  {
 	recode hv201 ///
 	22 = 31 ///
 	23 = 32 ///
@@ -919,17 +836,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="id`x'3a"  {
-	recode hv201 ///
-	22 = 31 ///
-	23 = 32 ///
-	31 = 41 ///
-	32 = 42 ///
-	33 = 43 ///
-	41 = 51 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="id`x'42"  {
+	if hv000=="ID4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -941,21 +848,8 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="id`x'51"  {
-	recode hv201 ///
-	33 = 32 ///
-	34 = 32 ///
-	35 = 32 ///
-	36 = 31 ///
-	37 = 31 ///
-	38 = 31 ///
-	44 = 40 ///
-	45 = 43 ///
-	46 = 43 ///
-	47 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="id`x'63"  {
+	* same recode for two surveys: IDHR51 (2002) and IDHR63 (2007). Only IDHR63 has category 81 for hv201
+	if hv000=="ID5" | hv000=="ID6" {
 	recode hv201 ///
 	33 = 32 ///
 	34 = 32 ///
@@ -970,14 +864,14 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="id`x'71"  {
+	if hv000=="ID7" & hv007==2017  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="jo`x'31"  {
+	if hv000=="JO3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -988,12 +882,12 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="jo`x'42"  {
+	if hv000=="JO4"  {
 	recode hv201 ///
 	41 = 40 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ke`x'33"  {
+	if hv000=="KE2"  {
 	recode hv201 ///
 	12 = 13 ///
 	22 = 32 ///
@@ -1003,7 +897,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ke`x'3a"  {
+	if hv000=="KE3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1013,7 +907,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ke`x'42"  {
+	if hv000=="KE4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1023,12 +917,18 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ke`x'7a"  {
+	if hv000=="KE6" & hv007==2015  {
 	recode hv201 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="kh`x'42"  {
+	if hv000=="KE7"  {
+	recode hv201 ///
+	13 = 14 ///
+	14 = 13 ///
+	, gen (ph_wtr_source)
+	}
+	if hv000=="KH4"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -1041,7 +941,13 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="kk`x'31"  {
+	if hv000=="KH8"  {
+	recode hv201 ///
+	13 = 14 ///
+	14 = 13 ///
+	, gen (ph_wtr_source)
+	}
+	if hv000=="KK3" & hv007==95  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1052,7 +958,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="kk`x'42"  {
+	if hv000=="KK3" & hv007==99  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1062,7 +968,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="km`x'32"  {
+	if hv000=="KM3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1074,7 +980,7 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ky`x'31"  {
+	if hv000=="KY3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1085,19 +991,21 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="lb`x'71"  {
+	if hv000=="LB7" & hv007==2016  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="lb`x'7a"  {
+	if hv000=="LB7" & inrange(hv007,2019,2020)  {
 	recode hv201 ///
+	13 = 14 ///
+	14 = 13 ///
 	92 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ls`x'41"  {
+	if hv000=="LS4"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1111,12 +1019,12 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ls`x'61"  {
+	if hv000=="LS5"  {
 	recode hv201 ///
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ma`x'21"  {
+	if hv000=="MA2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1131,7 +1039,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ma`x'43"  {
+	if hv000=="MA4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1143,14 +1051,14 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mb`x'53"  {
+	if hv000=="MB4"  {
 	recode hv201 ///
 	63 = 62 ///
 	81 = 41 ///
 	82 = 42 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="md`x'21"  {
+	if hv000=="MD2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1165,7 +1073,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="md`x'31"  {
+	if hv000=="MD3"  {
 	recode hv201 ///
 	22 = 30 ///
 	23 = 32 ///
@@ -1180,7 +1088,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="md`x'42"  {
+	if hv000=="MD4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1192,13 +1100,14 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="md`x'71"  {
+	*same recode for two surveys: MDHR7- (2016) and MDHR8- (2021), both have hv000==MD7
+	if hv000=="MD7"   {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ml`x'32"  {
+	if hv000=="ML3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1211,7 +1120,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ml`x'41"  {
+	if hv000=="ML4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1223,30 +1132,37 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ml`x'7a"  {
+	*same recode for two surveys: MLHR7- (2018) and MDHR8- (2021), both have hv000==ML7
+	if hv000=="ML7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mm`x'71"  {
+	if hv000=="MM7"  {
 	recode hv201 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mv`x'52"  {
+	if hv000=="MR7"  {
+	recode hv201 ///
+	13 = 14 ///
+	14 = 13 ///
+	, gen (ph_wtr_source)
+	}
+	if hv000=="MV5"  {
 	recode hv201 ///
 	52 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mv`x'71"  {
+	if hv000=="MV7"  {
 	recode hv201 ///
 	14 = 13 ///
 	52 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mw`x'22"  {
+	if hv000=="MW2"  {
 	recode hv201 ///
 	12 = 13 ///
 	13 = 12 ///
@@ -1258,7 +1174,7 @@ cap label define yesno 0"No" 1"Yes"
 	34 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mw`x'41"  {
+	if hv000=="MW4" & hv007==2000  {
 	recode hv201 ///
 	21 = 32 ///
 	32 = 21 ///
@@ -1267,7 +1183,7 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mw`x'4e"  {
+	if hv000=="MW4" & inrange(hv007,2004,2005)  {
 	recode hv201 ///
 	22 = 32 ///
 	23 = 32 ///
@@ -1278,19 +1194,14 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mw`x'7a"  {
+	*same recode for two surveys: MWHR7A (2015) and MWHR7I (2017). Both are hv000=MW7
+	if hv000=="MW7" & hv007<=2017  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mw`x'7i"  {
-	recode hv201 ///
-	13 = 14 ///
-	14 = 13 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="mz`x'31"  {
+	if hv000=="MZ3"  {
 	recode hv201 ///
 	12 = 14 ///
 	21 = 30 ///
@@ -1304,7 +1215,7 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mz`x'41"  {
+	if hv000=="MZ4"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 14 ///
@@ -1314,23 +1225,19 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mz`x'62"  {
+	* same recode for two surveys: MZHR62 (2011) and MZHR71 (2015). Both are hv000=MZ6
+	if hv000=="MZ6"  {
 	recode hv201 ///
 	33 = 21 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="mz`x'71"  {
-	recode hv201 ///
-	33 = 21 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="mz`x'7a"  {
+	if hv000=="MZ7" & hv007==2018  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="nc`x'31"  {
+	if hv000=="NC3"  {
 	recode hv201 ///
 	21 = 30 ///
 	22 = 30 ///
@@ -1340,7 +1247,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="nc`x'41"  {
+	if hv000=="NC4"  {
 	recode hv201 ///
 	31 = 30 ///
 	32 = 30 ///
@@ -1349,7 +1256,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ng`x'41"  {
+	if hv000=="NG3"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -1366,7 +1273,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 21 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ng`x'4c"  {
+	if hv000=="NG4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1379,29 +1286,27 @@ cap label define yesno 0"No" 1"Yes"
 	62 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ng`x'61"  {
+	* same recode for three surveys: NGHR61 (2010), NGHR6A (2013), and NGHR71 (2015). All are hv000=NG6
+	if hv000=="NG6"  {
 	recode hv201 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ng`x'6a"  {
-	recode hv201 ///
-	72 = 73 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="ng`x'71"  {
-	recode hv201 ///
-	72 = 73 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="ng`x'7b"  {
+	if hv000=="NG7" & hv007==2018  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	92 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ni`x'22"  {
+	if hv000=="NG8"  {
+	recode hv201 ///
+	13 = 14 ///
+	14 = 13 ///
+	72 = 73 ///
+	, gen (ph_wtr_source)
+	}
+	if hv000=="NI2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1416,7 +1321,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ni`x'31"  {
+	if hv000=="NI3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1431,17 +1336,24 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 62 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ni`x'51"  {
+	if hv000=="NI5"  {
 	recode hv201 ///
 	41 = 40 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ni`x'61"  {
+	if hv000=="NI6"  {
 	recode hv201 ///
 	63 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="nm`x'21"  {
+	if hv000=="NI7"  {
+	recode hv201 ///
+	13 = 14 ///
+	14 = 13 ///
+	72 = 73 ///
+	, gen (ph_wtr_source)
+	}
+	if hv000=="NM2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1456,7 +1368,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="nm`x'41"  {
+	if hv000=="NM4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 42 ///
@@ -1466,7 +1378,7 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="np`x'31"  {
+	if hv000=="NP3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1478,7 +1390,7 @@ cap label define yesno 0"No" 1"Yes"
 	34 = 41 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="np`x'41"  {
+	if hv000=="NP4"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -1491,23 +1403,20 @@ cap label define yesno 0"No" 1"Yes"
 	43 = 41 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="np`x'51"  {
+	* same recode for two surveys: NPHR51 (2006) and NPHR61 (2011). 
+	if hv000=="NP5" | hv000=="NP6" {
 	recode hv201 ///
 	44 = 41 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="np`x'61"  {
-	recode hv201 ///
-	44 = 41 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="np`x'7h"  {
+	* same recode for two surveys: NPHR7H (2016) and NPHR81 (2022). 
+	if hv000=="NP7" | hv000=="NP8" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pe`x'21"  {
+	if hv000=="PE2"  {
 	recode hv201 ///
 	12 = 13 ///
 	13 = 12 ///
@@ -1520,7 +1429,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pe`x'31"  {
+	if hv000=="PE3"  {
 	recode hv201 ///
 	12 = 11 ///
 	21 = 30 ///
@@ -1531,7 +1440,8 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pe`x'41"  {
+	* same recode for six surveys: PEHR41,51,5I,61,6A,and 6I. The last three surveys all are hv000=PE6. Only survey PEHR41 has category 42 for hv201
+	if hv000=="PE4" | hv000=="PE5"  | hv000=="PE6" {
 	recode hv201 ///
 	21 = 30 ///
 	22 = 30 ///
@@ -1539,48 +1449,13 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pe`x'51"  {
-	recode hv201 ///
-	21 = 30 ///
-	22 = 30 ///
-	41 = 40 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="pe`x'5i"  {
-	recode hv201 ///
-	21 = 30 ///
-	22 = 30 ///
-	41 = 40 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="pe`x'61"  {
-	recode hv201 ///
-	21 = 30 ///
-	22 = 30 ///
-	41 = 40 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="pe`x'6a"  {
-	recode hv201 ///
-	21 = 30 ///
-	22 = 30 ///
-	41 = 40 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="pe`x'6i"  {
-	recode hv201 ///
-	21 = 30 ///
-	22 = 30 ///
-	41 = 40 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="pg`x'71"  {
+	if hv000=="PG7" & inrange(hv007,2016,2018) {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ph`x'31"  {
+	if hv000=="PH2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 11 ///
@@ -1591,7 +1466,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ph`x'3b"  {
+	if hv000=="PH3"  {
 	recode hv201 ///
 	21 = 31 ///
 	22 = 32 ///
@@ -1605,30 +1480,28 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ph`x'41"  {
+	if hv000=="PH4"  {
 	recode hv201 ///
 	21 = 32 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ph`x'52"  {
+	* same recode for two surveys: PHHR52 (2008) and PHHR61 (2013). Only survey PHHR52 has categories 72 and 73 fpr hv201 
+	if hv000=="PH5" |  hv000=="PH6" {
 	recode hv201 ///
 	33 = 32 ///
 	72 = 14 ///
 	73 = 14 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ph`x'61"  {
-	recode hv201 ///
-	33 = 32 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="ph`x'71"  {
+
+	* same recode for two surveys: PHHR71 (2017) and PHHR81 (2022)	
+	if hv000=="PH7" | hv000=="PH8"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pk`x'21"  {
+	if hv000=="PK2"  {
 	recode hv201 ///
 	12 = 13 ///
 	13 = 12 ///
@@ -1640,25 +1513,21 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pk`x'52"  {
-	recode hv201 ///
-	22 = 21 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="pk`x'61"  {
+	* same recode for two surveys: PKHR52 (2006) and PKHR61 (2012). Only survey PKHR61 has category 63 for hv201
+	if hv000=="PK5" |hv000=="PK6"  {
 	recode hv201 ///
 	22 = 21 ///
 	63 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="pk`x'71"  {
+	if hv000=="PK7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	63 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="rw`x'21"  {
+	if hv000=="RW2"  {
 	recode hv201 ///
 	12 = 13 ///
 	13 = 12 ///
@@ -1670,18 +1539,8 @@ cap label define yesno 0"No" 1"Yes"
 	51 = 61 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="rw`x'41"  {
-	recode hv201 ///
-	22 = 32 ///
-	23 = 32 ///
-	32 = 31 ///
-	33 = 31 ///
-	41 = 40 ///
-	42 = 43 ///
-	44 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="rw`x'53"  {
+	* same recode for three surveys: RWHR41, RWHR53, and RWHR5A. Survey RWHR41 does not have category 21 for hv201
+	if hv000=="RW4" | hv000=="RW5"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1693,46 +1552,24 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="rw`x'5a"  {
-	recode hv201 ///
-	21 = 32 ///
-	22 = 32 ///
-	23 = 32 ///
-	32 = 31 ///
-	33 = 31 ///
-	41 = 40 ///
-	42 = 43 ///
-	44 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="rw`x'7a"  {
-	recode hv201 ///
-	13 = 14 ///
-	14 = 13 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="sl`x'72"  {
+	* same recode for two surveys: RWHR7- (2017) and RWHR8- (2019-20), both have hv000=="RW7"
+	if hv000=="RW7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="sn`x'21"  {
+	* same recode for two surveys: SLHR73 (2016) and SLHR7A- (2019), both have hv000=="SL7"
+	if hv000=="SL7" {
 	recode hv201 ///
-	11 = 12 ///
-	12 = 13 ///
-	21 = 30 ///
-	22 = 30 ///
-	23 = 21 ///
-	31 = 40 ///
-	32 = 43 ///
-	33 = 43 ///
-	51 = 61 ///
-	71 = 96 ///
+	13 = 14 ///
+	14 = 13 ///
+	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="sn`x'32"  {
+	* same recode for two surveys: SNHR21 (1992-93) and SNHR32 (1997). Both are hv000=SN2. Only survey SNHR32 has categories 34, 41, and 61 for variable hv201
+	if hv000=="SN2"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -1749,7 +1586,8 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="sn`x'4a"  {
+	* same recode for two surveys: SNHR4A (2005) and SNHR51 (2006).
+	if hv000=="SN4" | hv000=="SN5" {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1760,30 +1598,14 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="sn`x'51"  {
-	recode hv201 ///
-	21 = 32 ///
-	22 = 32 ///
-	23 = 32 ///
-	32 = 31 ///
-	33 = 31 ///
-	41 = 40 ///
-	42 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="sn`x'7z"  {
+	* same recode for four surveys: SNHR7Z (2017), SNHR80 (2018), SNHR8B (2019), SNHR8I (2020-21), all are hv000==SN7
+	if hv000=="SN7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="sn`x'80"  {
-	recode hv201 ///
-	13 = 14 ///
-	14 = 13 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="td`x'31"  {
+	if hv000=="TD3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 32 ///
@@ -1797,7 +1619,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="td`x'41"  {
+	if hv000=="TD4"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -1811,7 +1633,7 @@ cap label define yesno 0"No" 1"Yes"
 	55 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tg`x'31"  {
+	if hv000=="TG3"  {
 	recode hv201 ///
 	12 = 14 ///
 	22 = 31 ///
@@ -1824,31 +1646,31 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tg`x'61"  {
+	if hv000=="TG6"  {
 	recode hv201 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tg`x'71"  {
+	if hv000=="TG7" & hv007==2017  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tj`x'72"  {
+	if hv000=="TJ7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tl`x'71"  {
+	if hv000=="TL7" & hv007==2016 {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tr`x'31"  {
+	if hv000=="TR2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1864,7 +1686,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tr`x'41"  {
+	if hv000=="TR3"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -1879,7 +1701,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tr`x'4a"  {
+	if hv000=="TR4"  {
 	recode hv201 ///
 	11 = 12 ///
 	21 = 30 ///
@@ -1888,7 +1710,13 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'21"  {
+	if hv000=="TR7"  {
+	recode hv201 ///
+	14 = 13 ///
+	, gen (ph_wtr_source)
+	}
+	* same recode for two surveys: TZHR21 (1991-92) and TZHR3A (1996). Only survey TZHR21 has categories 51 and 71 for hv201
+	if hv000=="TZ2" | (hv000=="TZ3" & hv007==96) {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -1903,19 +1731,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'3a"  {
-	recode hv201 ///
-	12 = 13 ///
-	21 = 30 ///
-	22 = 30 ///
-	31 = 40 ///
-	32 = 43 ///
-	33 = 43 ///
-	34 = 43 ///
-	41 = 51 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="tz`x'41"  {
+	if hv000=="TZ3" & hv007==99  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 31 ///
@@ -1928,7 +1744,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'4a"  {
+	if hv000=="TZ5" & inrange(hv007,2003,2004)  {
 	recode hv201 ///
 	21 = 32 ///
 	32 = 21 ///
@@ -1936,7 +1752,7 @@ cap label define yesno 0"No" 1"Yes"
 	45 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'4i"  {
+	if hv000=="TZ4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1951,7 +1767,7 @@ cap label define yesno 0"No" 1"Yes"
 	62 = 65 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'51"  {
+	if hv000=="TZ5" & inrange(hv007,2007,2008) {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -1966,7 +1782,7 @@ cap label define yesno 0"No" 1"Yes"
 	91 = 62 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'63"  {
+	if hv000=="TZ5" & inrange(hv007,2009,2010) {
 	recode hv201 ///
 	22 = 32 ///
 	23 = 32 ///
@@ -1979,19 +1795,14 @@ cap label define yesno 0"No" 1"Yes"
 	45 = 40 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'7b"  {
+	* same recode for two surveys: TZHR7B (2015-16) and TZHR7I (2017), both are hv000=TZ7
+	if hv000=="TZ7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="tz`x'7i"  {
-	recode hv201 ///
-	13 = 14 ///
-	14 = 13 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="ug`x'33"  {
+	if hv000=="UG3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -2005,7 +1816,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ug`x'41"  {
+	if hv000=="UG4"  {
 	recode hv201 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -2018,7 +1829,7 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 41 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ug`x'52"  {
+	if hv000=="UG5" & hv007==2006  {
 	recode hv201 ///
 	22 = 21 ///
 	23 = 21 ///
@@ -2032,7 +1843,7 @@ cap label define yesno 0"No" 1"Yes"
 	91 = 41 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ug`x'5a"  {
+	if hv000=="UG5" & inrange(hv007,2009,2010) {
 	recode hv201 ///
 	22 = 32 ///
 	23 = 32 ///
@@ -2044,7 +1855,8 @@ cap label define yesno 0"No" 1"Yes"
 	46 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ug`x'61"  {
+	* same recode can be used for two surveys: UGHR61 and UGHR6A. Only survey UGHR61 has categories 22,23,33,34,35,36,44,45 and 46 and only survey UGHR6A has category 81 for hv201. Both surveys are hv000=UG6 and both are also hv007=2011
+	if hv000=="UG6" & hv007==2011  {
 	recode hv201 ///
 	22 = 21 ///
 	23 = 21 ///
@@ -2055,21 +1867,17 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	45 = 43 ///
 	46 = 43 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="ug`x'6a"  {
-	recode hv201 ///
 	81 = 41 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ug`x'72"  {
+	if hv000=="UG6" & inrange(hv007,2014,2015) {
 	recode hv201 ///
 	22 = 21 ///
 	44 = 41 ///
 	63 = 62 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ug`x'7b"  {
+	if  hv000=="UG7" & hv007==2016 {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -2077,7 +1885,7 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ug`x'7i"  {
+	if hv000=="UG7" & inrange(hv007,2018,2019) {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -2085,7 +1893,7 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="uz`x'31"  {
+	if hv000=="UZ3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -2098,7 +1906,8 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="vn`x'31"  {
+	* same recode for two surveys VNHR31 and VNHR41. Both are hv000=VNT. Only survey VNHR31 has category 61 for hv201
+	if hv000=="VNT" {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -2112,20 +1921,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="vn`x'41"  {
-	recode hv201 ///
-	12 = 13 ///
-	21 = 30 ///
-	22 = 30 ///
-	31 = 40 ///
-	32 = 43 ///
-	33 = 43 ///
-	34 = 43 ///
-	41 = 51 ///
-	51 = 61 ///
-	, gen (ph_wtr_source)
-	}
-	if filename=="vn`x'52"  {
+	if hv000=="VN5"  {
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -2136,7 +1932,7 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ye`x'21"  {
+	if hv000=="YE2"  {
 	recode hv201 ///
 	13 = 11 ///
 	14 = 12 ///
@@ -2148,7 +1944,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="ye`x'61"  {
+	if hv000=="YE6"  {
 	recode hv201 ///
 	14 = 72 ///
 	15 = 72 ///
@@ -2159,7 +1955,7 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 62 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="za`x'31"  {
+	if hv000=="ZA3"  {
 	recode hv201 ///
 	31 = 43 ///
 	41 = 51 ///
@@ -2167,13 +1963,13 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="za`x'71"  {
+	if hv000=="ZA7" & hv007==2016 {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zm`x'21"  {
+	if hv000=="ZM2"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -2185,7 +1981,7 @@ cap label define yesno 0"No" 1"Yes"
 	71 = 96 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zm`x'31"  {
+	if hv000=="ZM3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 30 ///
@@ -2197,7 +1993,7 @@ cap label define yesno 0"No" 1"Yes"
 	33 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zm`x'43"  {
+	if hv000=="ZM4"  {
 	recode hv201 ///
 	22 = 32 ///
 	23 = 32 ///
@@ -2208,13 +2004,13 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zm`x'71"  {
+	if hv000=="ZM7" & inrange(hv007,2018,2019)  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zw`x'31"  {
+	if hv000=="ZW3"  {
 	recode hv201 ///
 	12 = 13 ///
 	21 = 31 ///
@@ -2225,7 +2021,7 @@ cap label define yesno 0"No" 1"Yes"
 	33 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zw`x'42"  {
+	if hv000=="ZW4"  {
 	recode hv201 ///
 	21 = 31 ///
 	22 = 32 ///
@@ -2236,19 +2032,18 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 51 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zw`x'52"  {
+	if hv000=="ZW5"  {
 	recode hv201 ///
 	71 = 62 ///
 	81 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if filename=="zw`x'72"  {
+	if hv000=="ZW7" & hv007==2015   {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	} //bracket closes country specific section
 	
 	
 	// for all other countries
@@ -2270,8 +2065,7 @@ cap label define yesno 0"No" 1"Yes"
 	Bracket on 2276 hides code for Cambodia specific section
 	--------------------------------------------------------------------------*/
 	
-foreach x in hr pr {
-	if filename=="kh`x'42"  {
+	if hv000=="KH4" {
 	recode sh22b ///
 	11 = 12 ///
 	12 = 13 ///
@@ -2283,8 +2077,7 @@ foreach x in hr pr {
 	41 = 40 ///
 	42 = 43 ///
 	, gen (ph_wtr_source_wet)
-	}
-	if filename=="kh`x'42"  {
+
 	recode hv201 ///
 	11 = 12 ///
 	12 = 13 ///
@@ -2298,39 +2091,29 @@ foreach x in hr pr {
 	, gen (ph_wtr_source_dry)
 	}
 
-	if filename=="kh`x'51"  {
+	if hv000=="KH5" & inrange(hv007,2005,2006) {
 	gen ph_wtr_source_wet = hv201w
-	}
-	
-	if filename=="kh`x'51"  {
 	gen ph_wtr_source_dry = hv201d
 	}
-	
-	if filename=="kh`x'61"  {
-	gen ph_wtr_source_wet = sh104b
-	}
-	
-	if filename=="kh`x'61"  {
-	gen ph_wtr_source_dry = sh102
-	}
-	
-	if filename=="kh`x'73"  {
-	gen ph_wtr_source_wet = sh104b
-	}
-	
-	if filename=="kh`x'73"  {
-	gen ph_wtr_source_dry = sh102
-	}
 
+	if hv000=="KH5" & inrange(hv007,2010,2011)  {
+	gen ph_wtr_source_wet = sh104b
+	gen ph_wtr_source_dry = sh102	
+	}
+	
+	if hv000=="KH6"  {
+	gen ph_wtr_source_wet = sh104b	
+	gen ph_wtr_source_dry = sh102
+	}
+	
 	//check if interview took place in dry season or wet season
-	if filename=="kh`x'42" | filename=="kh`x'51" |filename=="kh`x'61" | filename=="kh`x'73" {
+	if hv000=="KH4" | hv000=="KH5" | hv000=="KH6"  {
 	recode hv006 (11/12 2/4=1 "dry season") (5/10=2 "rainy season"), gen(interview_season)
 	replace ph_wtr_source = ph_wtr_source_dry if interview_season==1 //dry season interviews
 	replace ph_wtr_source = ph_wtr_source_wet if interview_season==2 //rainy season interviews
 	}
-} //end of bracket that closes Cambodia specific section
-	*/
 
+************************************************************************************************
 
 	// create water source labels
 	recode ph_wtr_source . = 99
