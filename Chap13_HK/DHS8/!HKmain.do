@@ -1,30 +1,27 @@
 /*******************************************************************************************************************************
-Program: 				HKmain.do
+Program: 				HKmain.do - DHS8 update
 Purpose: 				Main file for the HIV-AIDS Related Knowledge, Attitudes, and Behaviors . 
 						The main file will call other do files that will produce the HK indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
-Date last modified:		October 28, 2019 by Shireen Assaf
+Date last modified:		July 5, 2023 by Shireen Assaf
 *******************************************************************************************************************************/
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-*global user 39585	//change employee id number to personalize path
 global user 33697
-cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap13_HK"
+cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap13_HK/DHS8"
 
 global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * IR Files
-global irdata "MWIR7AFL"
-* MMIR71FL GHIR72FL UGIR7BFL 
+global irdata "KHIR81FL"
 
 * MR Files
-global mrdata "MWMR7AFL"
-* MMMR71FL GHMR72FL UGMR7BFL
+global mrdata "KHMR81FL"
 ****************************
 
 * IR file variables
