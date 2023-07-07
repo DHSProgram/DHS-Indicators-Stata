@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			HK_BHV_YNG.do
+Program: 			HK_BHV_YNG.do - No changes in DHS8
 Purpose: 			Code for sexual behaviors among young people
 Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
