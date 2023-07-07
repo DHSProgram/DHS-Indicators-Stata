@@ -383,7 +383,7 @@ replace fp_info_all = 1 if ((v3a02==1 | v3a03==1) & v3a04==1 & (v3a05==1 | v3a06
 label var fp_info_all "Informed of all three (method information index) among female sterilization, pill, IUD, injectables, and implant users"
 
 //Informed that they could switch if needed - NEW Indicator in DHS8
-gen fp_info_switch = 0 if inlist(v312,1,2,3,6,11) & (v008-v317<60)
-replace fp_info_switch = 1 if v3a14==1 & inlist(v312,1,2,3,6,11) & (v008-v317<60)
+gen fp_info_switch = 0 if inlist(v312,1,2,3,11) & (v008-v317<60)
+replace fp_info_switch = 1 if v3a14==1 & inlist(v312,1,2,3,11) & (v008-v317<60)
 label var fp_info_switch "Informed that they could switch if needed among female sterilization, pill, IUD, injectables, and implant users"
 
