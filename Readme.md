@@ -51,7 +51,7 @@ Please check the IndicatorList excel file for the updated list of indicators and
 
 Currently DHS8 updates to Chapters 3, 4, 7, 9, 10, 11, and 13 are available. 
 
-There are no changes in DHS8 for chapters 18, 19, and 20. 
+There are no changes in DHS8 for the chapters that cover adult and maternal mortality (AM), female genital cutting (FG), and Fistula (FS). 
 
 **********************************************************************************************************************************************************
 
