@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			HK_TEST_COVG.do
+Program: 			HK_TEST_COVG.do - No changes in DHS8
 Purpose: 			Code for coverage of HIV testing
 Data inputs: 		PR file merged with AR file
 Data outputs:		coded variables
