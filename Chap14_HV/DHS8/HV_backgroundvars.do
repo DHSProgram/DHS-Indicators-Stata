@@ -1,8 +1,8 @@
 /*****************************************************************************************************
-Program: 			HV_backgroundvars.do
+Program: 			HV_backgroundvars.do - DHS8 update
 Purpose: 			compute the background variables needed for the HV_tables 
 Author:				Shireen Assaf
-Date last modified: Nov 7 2019 by Shireen Assaf 
+Date last modified: July 10, 2023 by Shireen Assaf 
 
 *****************************************************************************************************/
 
@@ -36,19 +36,6 @@ replace poly_t=0 if v502!=1
 replace poly_t=2 if poly_w==2 & poly_m==2
 label values poly_t poly 
 label var poly_m "Type of union"
-
-*Times slept away from home in the past 12 months
-recode v167 (0=0 "None") (1/2=1 " 1-2") (3/4=2 " 3-4") (5/90=3 " 5+") (98/99=.) , gen(timeaway)
-label var timeaway "Times slept away from home in past 12 months"
-
-* Time away in the past 12 months for more than 1 month
-gen timeaway12m =.
-replace timeaway12m=1 if v167>0 & v168==1
-replace timeaway12m=2 if v167>0 & v168==0
-replace timeaway12m=3 if v167==0
-label define timeaway12m 1"Away for more than 1 month at a time" 2"Away only for less than 1 month at a time" 3"Not away"
-label values timeaway12m timeaway12m
-label var timeaway12m "Time away in the past 12 months"
 
 *currently pregnant
 recode v213 (0 =0 "No") (1 8=1 "Yes") (9=.) , gen(preg)
@@ -119,14 +106,6 @@ replace condomuse=. if v531==0
 label define condomuse 0"No sex in past 12 months" 1"Did not use condom" 2"Used condom"
 label values condomuse condomuse
 label var condomuse "Condom use at last sexual intercourse in the past 12 months"
-
-*Paid for sex in the past 12 months
-gen paidsex= v793
-replace paidsex=2 if v793a==0  
-replace paidsex=. if v793==. | v531==0
-label define paidsex 0"No" 1"Yes-Used condom" 2"Yes-Did not use condom"
-label values paidsex paidsex
-label var paidsex "Paid for sexual intercourse in the past 12 months"
 
 *STI in the past 12 months
 gen sti12m= v763a==1 | v763b==1 | v763c==1 

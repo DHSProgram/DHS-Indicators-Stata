@@ -1,18 +1,17 @@
 /*******************************************************************************************************************************
-Program: 				HVmain.do
+Program: 				HVmain.do - DHS8 update
 Purpose: 				Main file for HIV Prevalence
 						The main file will call other do files that will produce the HV indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
-Date last modified:		February 14, 2020 by Trevor Croft
+Date last modified:		July 7, 2023 by Shireen Assaf
 *******************************************************************************************************************************/
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-*global user 39585	//change employee id number to personalize path
 global user 33697
-cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap14_HV"
+cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap14_HV/DHS8"
 
 global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
@@ -20,23 +19,18 @@ global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * IR Files
 global irdata "GNIR71FL"
-*GHIR72FL MWIR7AFL
 
 *MR files
 global mrdata "GNMR71FL"
-*GHMR72FL MWMR7AFL
 
 *CR files
 global crdata "GNCR71FL"
-*GHMR72FL MWCR7AFL
 
 *PR files
 global prdata "GNPR71FL"
-*GHPR72FL MWPR7AFL
 
 *AR files - files with HIV test results
 global ardata "GNAR71FL"
-*GHAR72FL MWAR7AFL
 ****************************
 
 * PR file variables

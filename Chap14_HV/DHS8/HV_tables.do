@@ -1,8 +1,8 @@
 /*****************************************************************************************************
-Program: 			HV_tables.do
+Program: 			HV_tables.do  - DHS8 update
 Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
-Date last modified: November 7 2019 by Shireen Assaf 
+Date last modified: July 10, 2023 by Shireen Assaf 
 
 *This do file will produce the following tables in excel:
 1. 	Tables_coverage:	Contains the tables for HIV testing coverage for women, men, and total. THESE TABLES ARE UNWEIGHTED
@@ -12,10 +12,13 @@ Date last modified: November 7 2019 by Shireen Assaf
 5.	Tables_circum:		Contains the tables for HIV prevalence by male circumcision
 6.	Tables_prev_cpl:	Contains the tables for HIV prevalence for couples
 
-Notes: 	Line 28 selects for the age group of interest for the coverage indicators. 
-		The default is age 15-49. For all other tables (except couples) the default was set as 15-49 in line 114. 
-		Not all surveys have testing that distinguish between HIV-1 and HIV-2. These tables are commented out in line 135 Uncomment if you need them. 
+Notes: 	Line 32 selects for the age group of interest for the coverage indicators. 
+		The default is age 15-49. For all other tables (except couples) the default was set as 15-49 in line 116. 
 		
+		Not all surveys have testing that distinguish between HIV-1 and HIV-2. These tables are commented out in line 141. Uncomment if you need them. 
+		
+		HIV positive is represented by either hv_hiv_pos hv_hiv1or2_pos depending on whether the survey has testing to distinguish between HIV-1 and HIV-2
+		For the tabulations of HIV status by background variables, hv_hiv1_pos was used but this can be replaced by hv_hiv1or2_pos. 
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -108,7 +111,7 @@ tabout hv025 hv024 hv_hiv_test_tot using Tables_coverage.xls , c(row) f(1) appen
 * indicators from MR file
 if file=="MR" {
 
-* These tables actually use the IRMRARmerge.dta file and not the MR file
+* These tables actually use the IRMRARmerge.dta file and not the MR file. For this file men's variables (mv###) were renamed to (v###) and a sex variable was created to identify men/women	
 
 * limiting to women and men age 15-49
 drop if v012<15 | v012>49
@@ -203,12 +206,6 @@ tab v501 hv_hiv_pos if sex==2 [iw=wt], row nofreq
 *type of union - polygamy
 tab poly_w hv_hiv_pos if sex==2 [iw=wt], row nofreq 
 
-*times slept away from home 
-tab timeaway hv_hiv_pos if sex==2 [iw=wt], row nofreq 
-
-*time away for more than 1 month
-tab timeaway12m hv_hiv_pos if sex==2 [iw=wt], row nofreq 
-
 *currently pregnant
 tab preg hv_hiv_pos if sex==2 [iw=wt], row nofreq 
 
@@ -237,7 +234,7 @@ tab sti12m hv_hiv_pos if sex==2 [iw=wt], row nofreq
 tab test_prior hv_hiv_pos if sex==2 [iw=wt], row nofreq 
 
 *output to excel
-tabout v131 v130 empl v025 v024 v106 v190 v501 poly_w timeaway timeaway12m preg ancplace agesex numprtnr multisex prtnrcohab condomuse sti12m test_prior hv_hiv_pos if sex==2 using Tables_prev_wm.xls [iw=wt] , c(row) clab("Women_15_49") f(1) append 
+tabout v131 v130 empl v025 v024 v106 v190 v501 poly_w preg ancplace agesex numprtnr multisex prtnrcohab condomuse sti12m test_prior hv_hiv_pos if sex==2 using Tables_prev_wm.xls [iw=wt] , c(row) clab("Women_15_49") f(1) append 
 
 **************************************************************************************************
 *** Tables for HIV positive among men 15-49 by background variables
@@ -269,12 +266,6 @@ tab v501 hv_hiv_pos if sex==1 [iw=wt], row nofreq
 *type of union - polygamy
 tab poly_m hv_hiv_pos if sex==1 [iw=wt], row nofreq 
 
-*times slept away from home 
-tab timeaway hv_hiv_pos if sex==1 [iw=wt], row nofreq 
-
-*time away for more than 1 month
-tab timeaway12m hv_hiv_pos if sex==1 [iw=wt], row nofreq 
-
 *Age at first sexual intercourse
 tab agesex hv_hiv_pos if sex==1 [iw=wt], row nofreq 
 
@@ -290,9 +281,6 @@ tab prtnrcohab hv_hiv_pos if sex==1 [iw=wt], row nofreq
 *Condom use at last sexual intercourse in past 12 months
 tab condomuse hv_hiv_pos if sex==1 [iw=wt], row nofreq 
 
-*Paid for sex in the past 12 months
-tab paidsex hv_hiv_pos if sex==1 [iw=wt], row nofreq 
-
 *STI in the past 12 months
 tab sti12m hv_hiv_pos if sex==1 [iw=wt], row nofreq 
 
@@ -300,7 +288,7 @@ tab sti12m hv_hiv_pos if sex==1 [iw=wt], row nofreq
 tab test_prior hv_hiv_pos if sex==1 [iw=wt], row nofreq 
 
 *output to excel
-tabout v131 v130 empl v025 v024 v106 v190 v501 poly_m timeaway timeaway12m agesex numprtnr multisex prtnrcohab condomuse paidsex sti12m test_prior hv_hiv_pos if sex==1 using Tables_prev_mn.xls [iw=wt] , c(row) clab("Men_15_49") f(1) append 
+tabout v131 v130 empl v025 v024 v106 v190 v501 poly_m agesex numprtnr multisex prtnrcohab condomuse sti12m test_prior hv_hiv_pos if sex==1 using Tables_prev_mn.xls [iw=wt] , c(row) clab("Men_15_49") f(1) append 
 
 **************************************************************************************************
 *** Tables for HIV positive among men and women (15-49) for Total by background variables
@@ -332,12 +320,6 @@ tab v501 hv_hiv_pos [iw=wt], row nofreq
 *type of union - polygamy
 tab poly_t hv_hiv_pos [iw=wt], row nofreq 
 
-*times slept away from home 
-tab timeaway hv_hiv_pos [iw=wt], row nofreq 
-
-*time away for more than 1 month
-tab timeaway12m hv_hiv_pos [iw=wt], row nofreq 
-
 *Age at first sexual intercourse
 tab agesex hv_hiv_pos  [iw=wt], row nofreq 
 
@@ -360,7 +342,7 @@ tab sti12m hv_hiv_pos [iw=wt], row nofreq
 tab test_prior hv_hiv_pos [iw=wt], row nofreq 
 
 *output to excel
-tabout v131 v130 empl v025 v024 v106 v190 v501 poly_t timeaway timeaway12m agesex numprtnr multisex prtnrcohab condomuse sti12m test_prior hv_hiv_pos using Tables_prev_tot.xls [iw=wt] , c(row) clab("Total_15_49") f(1) append 
+tabout v131 v130 empl v025 v024 v106 v190 v501 poly_t agesex numprtnr multisex prtnrcohab condomuse sti12m test_prior hv_hiv_pos using Tables_prev_tot.xls [iw=wt] , c(row) clab("Total_15_49") f(1) append 
 
 **************************************************************************************************
 
@@ -470,162 +452,192 @@ tabout age_yng v501 v025 v024 v106 v190 multisex prtnrcohab condomuse hv_hiv_pos
 **************************************************************************************************
 
 * among HIV positive women
-tab1 hv_pos_ever_test hv_pos_12m_test hv_pos_more12m_test hv_pos_ever_noresult hv_pos_nottested if sex==2 [iw=wt]
+tab1 hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==2 & inrange(hiv03,1,3) [iw=wt]
+
+*output to excel - women
+tabout hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==2 & inrange(hiv03,1,3) ///
+using Tables_prior_tests.xls [iw=wt], oneway clab("Women_15_49_hivpos") cells(cell) f(1) replace
 
 * among HIV negative women
-tab1 hv_neg_ever_test hv_neg_12m_test hv_neg_more12m_test hv_neg_ever_noresult hv_neg_nottested if sex==2 [iw=wt]
-	
+tab1 hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==2 & inlist(hiv03,0,7,9) [iw=wt]
+
 *output to excel - women
-tabout hv_pos_ever_test hv_pos_12m_test hv_pos_more12m_test hv_pos_ever_noresult hv_pos_nottested ///
-hv_neg_ever_test hv_neg_12m_test hv_neg_more12m_test hv_neg_ever_noresult hv_neg_nottested if sex==2 ///
-using Tables_prior_tests.xls [iw=wt], oneway clab("Women_15_49")cells(cell) f(1) replace
+tabout hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==2 & inlist(hiv03,0,7,9)  ///
+using Tables_prior_tests.xls [iw=wt], oneway clab("Women_15_49_hivneg") cells(cell) f(1) append
 
 **********************
 * among HIV positive men
-tab1 hv_pos_ever_test hv_pos_12m_test hv_pos_more12m_test hv_pos_ever_noresult hv_pos_nottested if sex==1 [iw=wt]
+tab1 hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==1 & inrange(hiv03,1,3) [iw=wt]
+
+*output to excel - men
+tabout hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==1 & inrange(hiv03,1,3) ///
+using Tables_prior_tests.xls [iw=wt], oneway clab("Men_15_49_hivpos") cells(cell) f(1) append
 
 * among HIV negative men
-tab1 hv_neg_ever_test hv_neg_12m_test hv_neg_more12m_test hv_neg_ever_noresult hv_neg_nottested if sex==1 [iw=wt]
-	
+tab1 hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==1 & inlist(hiv03,0,7,9) [iw=wt]
+
 *output to excel - men
-tabout hv_pos_ever_test hv_pos_12m_test hv_pos_more12m_test hv_pos_ever_noresult hv_pos_nottested ///
-hv_neg_ever_test hv_neg_12m_test hv_neg_more12m_test hv_neg_ever_noresult hv_neg_nottested if sex==1 ///
-using Tables_prior_tests.xls [iw=wt], oneway clab("Men_15_49")cells(cell) f(1) append
+tabout hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if sex==1 & inlist(hiv03,0,7,9)  ///
+using Tables_prior_tests.xls [iw=wt], oneway clab("Men_15_49_hivneg") cells(cell) f(1) append
 
 **********************
-* among HIV positive total
-tab1 hv_pos_ever_test hv_pos_12m_test hv_pos_more12m_test hv_pos_ever_noresult hv_pos_nottested [iw=wt]
+* among HIV positive - total
+tab1 hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if inrange(hiv03,1,3) [iw=wt]
 
-* among HIV negative total
-tab1 hv_neg_ever_test hv_neg_12m_test hv_neg_more12m_test hv_neg_ever_noresult hv_neg_nottested [iw=wt]
-	
 *output to excel - total
-tabout hv_pos_ever_test hv_pos_12m_test hv_pos_more12m_test hv_pos_ever_noresult hv_pos_nottested ///
-hv_neg_ever_test hv_neg_12m_test hv_neg_more12m_test hv_neg_ever_noresult hv_neg_nottested  ///
-using Tables_prior_tests.xls [iw=wt], oneway clab("Total_15_49")cells(cell) f(1) append
+tabout hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if inrange(hiv03,1,3) ///
+using Tables_prior_tests.xls [iw=wt], oneway clab("Tot_15_49_hivpos") cells(cell) f(1) append
+
+* among HIV negative - total
+tab1 hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if inlist(hiv03,0,7,9) [iw=wt]
+
+*output to excel - total
+tabout hv_rcnt_test_pos hv_rcnt_test_pos_art hv_rcnt_test_pos_noart hv_rcnt_test_neg hv_test_indeter hv_test_decline hv_ever_test_noresult hv_no_prev_test if inlist(hiv03,0,7,9)  ///
+using Tables_prior_tests.xls [iw=wt], oneway clab("Tot_15_49_hivneg") cells(cell) f(1) append
 
 **************************************************************************************************
 * HIV prevalence by male circumcision
 **************************************************************************************************
-* Circumcised by health professional
-cap summ hv_hiv_circum_skilled 
-if r(N)!=0 {
+* Men traditionally or medically circumcised who were HIV positive
 
 * age
-tab v013 hv_hiv_circum_skilled if sex==1 [iw=wt], row nofreq 
+tab v013 hv_tradormed_circum if sex==1 [iw=wt], row nofreq 
 
 * ethnicity
-tab v131 hv_hiv_circum_skilled if sex==1  [iw=wt], row nofreq 
+tab v131 hv_tradormed_circum if sex==1  [iw=wt], row nofreq 
 
 *religion
-tab v130 hv_hiv_circum_skilled if sex==1 [iw=wt], row nofreq 
+tab v130 hv_tradormed_circum if sex==1 [iw=wt], row nofreq 
 
 *residence
-tab v025 hv_hiv_circum_skilled if sex==1 [iw=wt], row nofreq 
+tab v025 hv_tradormed_circum if sex==1 [iw=wt], row nofreq 
 
 *region
-tab v024 hv_hiv_circum_skilled if sex==1 [iw=wt], row nofreq 
+tab v024 hv_tradormed_circum if sex==1 [iw=wt], row nofreq 
 
 *education
-tab v106 hv_hiv_circum_skilled if sex==1 [iw=wt], row nofreq 
+tab v106 hv_tradormed_circum if sex==1 [iw=wt], row nofreq 
 
 *wealth 
-tab v190 hv_hiv_circum_skilled if sex==1  [iw=wt], row nofreq 
+tab v190 hv_tradormed_circum if sex==1  [iw=wt], row nofreq 
 
 *output to excel
-tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_skilled if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("Circumcised_skilled") f(1) replace 
-}
+tabout v013 v131 v130 v025 v024 v106 v190 hv_tradormed_circum if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("trad_or_med_circum") f(1) replace 
+
 
 ***********
-* Circumcised by traditional/other
-cap summ hv_hiv_circum_trad 
-if r(N)!=0 {
+* Men traditionally circumcised who were HIV positive
 
 * age
-tab v013 hv_hiv_circum_trad if sex==1 [iw=wt], row nofreq 
+tab v013 hv_trad_circum if sex==1 [iw=wt], row nofreq 
 
 * ethnicity
-tab v131 hv_hiv_circum_trad if sex==1  [iw=wt], row nofreq 
+tab v131 hv_trad_circum if sex==1  [iw=wt], row nofreq 
 
 *religion
-tab v130 hv_hiv_circum_trad if sex==1 [iw=wt], row nofreq 
+tab v130 hv_trad_circum if sex==1 [iw=wt], row nofreq 
 
 *residence
-tab v025 hv_hiv_circum_trad if sex==1 [iw=wt], row nofreq 
+tab v025 hv_trad_circum if sex==1 [iw=wt], row nofreq 
 
 *region
-tab v024 hv_hiv_circum_trad if sex==1 [iw=wt], row nofreq 
+tab v024 hv_trad_circum if sex==1 [iw=wt], row nofreq 
 
 *education
-tab v106 hv_hiv_circum_trad if sex==1 [iw=wt], row nofreq 
+tab v106 hv_trad_circum if sex==1 [iw=wt], row nofreq 
 
 *wealth 
-tab v190 hv_hiv_circum_trad if sex==1  [iw=wt], row nofreq 
+tab v190 hv_trad_circum if sex==1  [iw=wt], row nofreq 
 
 *output to excel
-tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_trad if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("Circumcised_traditional") f(1) append 
-}
+tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_trad if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("trad_circum") f(1) append 
+
 
 ***********
-* All circumcised
-cap summ hv_hiv_circum_pos 
-if r(N)!=0 {
+* Men medically circumcised who were HIV positive
 
 * age
-tab v013 hv_hiv_circum_pos if sex==1 [iw=wt], row nofreq 
+tab v013 hv_med_circum if sex==1 [iw=wt], row nofreq 
 
 * ethnicity
-tab v131 hv_hiv_circum_pos if sex==1  [iw=wt], row nofreq 
+tab v131 hv_med_circum if sex==1  [iw=wt], row nofreq 
 
 *religion
-tab v130 hv_hiv_circum_pos if sex==1 [iw=wt], row nofreq 
+tab v130 hv_med_circum if sex==1 [iw=wt], row nofreq 
 
 *residence
-tab v025 hv_hiv_circum_pos if sex==1 [iw=wt], row nofreq 
+tab v025 hv_med_circum if sex==1 [iw=wt], row nofreq 
 
 *region
-tab v024 hv_hiv_circum_pos if sex==1 [iw=wt], row nofreq 
+tab v024 hv_med_circum if sex==1 [iw=wt], row nofreq 
 
 *education
-tab v106 hv_hiv_circum_pos if sex==1 [iw=wt], row nofreq 
+tab v106 hv_med_circum if sex==1 [iw=wt], row nofreq 
 
 *wealth 
-tab v190 hv_hiv_circum_pos if sex==1  [iw=wt], row nofreq 
+tab v190 hv_med_circum if sex==1  [iw=wt], row nofreq 
 
 *output to excel
-tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_pos if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("All_circumcised") f(1) append 
-}
+tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_circum_pos if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("med_circum") f(1) append 
+
 
 ***********		
-* Uncircumcised
-cap summ hv_hiv_uncircum_pos
-if r(N)!=0 {
+* Men traditionally and medically circumcised who were HIV positive
 
 * age
-tab v013 hv_hiv_uncircum_pos if sex==1 [iw=wt], row nofreq 
+tab v013 hv_tradandmed_circum if sex==1 [iw=wt], row nofreq 
 
 * ethnicity
-tab v131 hv_hiv_uncircum_pos if sex==1  [iw=wt], row nofreq 
+tab v131 hv_tradandmed_circum if sex==1  [iw=wt], row nofreq 
 
 *religion
-tab v130 hv_hiv_uncircum_pos if sex==1 [iw=wt], row nofreq 
+tab v130 hv_tradandmed_circum if sex==1 [iw=wt], row nofreq 
 
 *residence
-tab v025 hv_hiv_uncircum_pos if sex==1 [iw=wt], row nofreq 
+tab v025 hv_tradandmed_circum if sex==1 [iw=wt], row nofreq 
 
 *region
-tab v024 hv_hiv_uncircum_pos if sex==1 [iw=wt], row nofreq 
+tab v024 hv_tradandmed_circum if sex==1 [iw=wt], row nofreq 
 
 *education
-tab v106 hv_hiv_uncircum_pos if sex==1 [iw=wt], row nofreq 
+tab v106 hv_tradandmed_circum if sex==1 [iw=wt], row nofreq 
 
 *wealth 
-tab v190 hv_hiv_uncircum_pos if sex==1  [iw=wt], row nofreq 
+tab v190 hv_tradandmed_circum if sex==1  [iw=wt], row nofreq 
 
 *output to excel
-tabout v013 v131 v130 v025 v024 v106 v190 hv_hiv_uncircum_pos if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("Uncircumcised") f(1) append 
-}
+tabout v013 v131 v130 v025 v024 v106 v190 hv_tradandmed_circum if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("trad_and_med_circum") f(1) append 
+
 ***********		
+		
+* All uncircumcised or don't know circumcision status men who were HIV positive
+
+* age
+tab v013 hv_uncircum if sex==1 [iw=wt], row nofreq 
+
+* ethnicity
+tab v131 hv_uncircum if sex==1  [iw=wt], row nofreq 
+
+*religion
+tab v130 hv_uncircum if sex==1 [iw=wt], row nofreq 
+
+*residence
+tab v025 hv_uncircum if sex==1 [iw=wt], row nofreq 
+
+*region
+tab v024 hv_uncircum if sex==1 [iw=wt], row nofreq 
+
+*education
+tab v106 hv_uncircum if sex==1 [iw=wt], row nofreq 
+
+*wealth 
+tab v190 hv_uncircum if sex==1  [iw=wt], row nofreq 
+
+*output to excel
+tabout v013 v131 v130 v025 v024 v106 v190 hv_uncircum if sex==1 using Tables_circum.xls [iw=wt] , c(row) clab("uncircum") f(1) append 
+
+***********	
+
 }
 
 
