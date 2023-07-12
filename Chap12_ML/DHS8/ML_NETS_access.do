@@ -1,10 +1,10 @@
 /*****************************************************************************************************
-Program: 			ML_NETS_access.do
+Program: 			ML_NETS_access.do - DHS8 update
 Purpose: 			POPULATION ACCESS TO ITNS and POPULATION/CHILD/PREGNANT WOMEN USE OF ITNS AMONG HH WITH ITNs
 Data inputs: 		HR and PR dataset
 Data outputs:		coded variables and the tables Tables_ITN_access.xls and Tables_HH_ITN_USE.xls for the tabulations for the indicators
 Author:				Cameron Taylor and modified by Shireen Assaf for the code share project
-Date last modified: May 20 2019 by Shireen Assaf
+Date last modified: July 11, 2023 by Shireen Assaf
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -51,38 +51,6 @@ lab var ml_potuse "Potential ITN users in household"
 *Table for access
 ********************************************************************************
 gen wt=hv005/1000000
-gen numdefacto=hv013
-replace numdefacto=8 if hv013>8
-
-*Tabulation of number of ITNs by number of persons who stayed in the household the night before the survey
-*The last table shown is for 8+ number of person in the household
-bysort numdefacto: tab ml_numitnhh if hv103==1  [iw=wt]
-
-* output to excel
-tabout ml_numitnhh if hv103==1 & numdefacto==1 using Tables_ITN_access.xls [iw=wt] , oneway clab(1_defacto) c(cell) f(1) replace 
-tabout ml_numitnhh if hv103==1 & numdefacto==2 using Tables_ITN_access.xls [iw=wt] , oneway clab(2_defacto) c(cell) f(1) append 
-tabout ml_numitnhh if hv103==1 & numdefacto==3 using Tables_ITN_access.xls [iw=wt] , oneway clab(3_defacto) c(cell) f(1) append 
-tabout ml_numitnhh if hv103==1 & numdefacto==4 using Tables_ITN_access.xls [iw=wt] , oneway clab(4_defacto) c(cell) f(1) append 
-tabout ml_numitnhh if hv103==1 & numdefacto==5 using Tables_ITN_access.xls [iw=wt] , oneway clab(5_defacto) c(cell) f(1) append 
-tabout ml_numitnhh if hv103==1 & numdefacto==6 using Tables_ITN_access.xls [iw=wt] , oneway clab(6_defacto) c(cell) f(1) append 
-tabout ml_numitnhh if hv103==1 & numdefacto==7 using Tables_ITN_access.xls [iw=wt] , oneway clab(7_defacto) c(cell) f(1) append 
-tabout ml_numitnhh if hv103==1 & numdefacto==8 using Tables_ITN_access.xls [iw=wt] , oneway clab(8+_defacto) c(cell) f(1) append 
-
-*Percent of population with access to an ITN by number of persons who stayed in the household the night before the survey
-*The last table shown is for 8+ number of person in the household
-*The percentage would be the mean shown in output times 100
-bysort numdefacto: sum ml_pop_access if hv103==1 [iw=wt]
-
-* output to excel
-*The percentage would be the mean shown in output times 100
-tabout numdefacto if hv103==1 & numdefacto==1 using Tables_ITN_access.xls [fw=hv005], clab(1_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
-tabout numdefacto if hv103==1 & numdefacto==2 using Tables_ITN_access.xls [fw=hv005], clab(2_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
-tabout numdefacto if hv103==1 & numdefacto==3 using Tables_ITN_access.xls [fw=hv005], clab(3_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
-tabout numdefacto if hv103==1 & numdefacto==4 using Tables_ITN_access.xls [fw=hv005], clab(4_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
-tabout numdefacto if hv103==1 & numdefacto==5 using Tables_ITN_access.xls [fw=hv005], clab(5_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
-tabout numdefacto if hv103==1 & numdefacto==6 using Tables_ITN_access.xls [fw=hv005], clab(6_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
-tabout numdefacto if hv103==1 & numdefacto==7 using Tables_ITN_access.xls [fw=hv005], clab(7_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
-tabout numdefacto if hv103==1 & numdefacto==8 using Tables_ITN_access.xls [fw=hv005], clab(8+_defacto) oneway sum cells(mean ml_pop_access) f(3) append 
 
 *Percent of population with access to an ITN by background variables
 *The percentage would be the mean shown in output times 100

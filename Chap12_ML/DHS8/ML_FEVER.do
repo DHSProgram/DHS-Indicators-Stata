@@ -1,12 +1,14 @@
 /*****************************************************************************************************
-Program: 			ML_FEVER.do
+Program: 			ML_FEVER.do - DHS8 update
 Purpose: 			Code indicators on fever, fever care-seeking, and antimalarial drugs
 Data inputs: 		KR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf and Cameron Taylor
-Date last modified: May 20 2019 by Shireen Assaf
+Date last modified: July 11, 2023 by Cameron Taylor and Shireen Assaf
 Notes:				There are similarities between the fever code in this do file and the ARI/Fever code for Chapter 10. 
 					Several indicators (on care and specific antimalarial drugs) are country specific. Please see notes in the code.
+					
+					1 new indicator in DHS8, see below
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -15,6 +17,7 @@ ml_fever			"Fever symptoms in the 2 weeks before the survey"
 ml_fev_care			"Advice or treatment sought for fever symptoms"
 ml_fev_care_day		"Advice or treatment sought for fever symptoms on the same or next day"
 ml_stick			"Child received heel or finger stick"
+ml_told_malaria		"Diagnosed with malaria by a healthcare provider" - NEW Indicator in DHS8
 
 ml_fev_govh			"Fever treatment sought from government hospital among children with fever"
 ml_fev_govh_trt		"Fever treatment sought from government hospital among children with fever that sought treatment"
@@ -71,6 +74,12 @@ gen ml_stick=0 if ml_fever==1
 replace ml_stick=1 if h47==1 & ml_fever==1
 replace ml_stick =. if b5==0
 lab var ml_stick "Child received heel or finger stick"
+
+//Diagnosed with malaria by a healthcare provider - NEW Indicator in DHS8
+gen ml_told_malaria=0 if ml_fever==1
+replace ml_told_malaria=1 if h71==1
+replace ml_told_malaria =. if b5==0
+lab var ml_told_malaria "Diagnosed with malaria by a healthcare provider"
 
 *** Fever treatment by source *** 
 * Two population bases: 1. among children with fever symptoms, 2. among children with fever symptoms that sought treatment

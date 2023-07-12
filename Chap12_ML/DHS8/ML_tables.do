@@ -1,8 +1,8 @@
 /*****************************************************************************************************
-Program: 			ML_tables.do
+Program: 			ML_tables.do - DHS8 update
 Purpose: 			produce tables for indicators
 Author:				Cameron Taylor
-Date last modified: Feb 19 2019 by Cameron Taylor
+Date last modified: July 11, 2023 by Shireen Assaf
 
 *This do file will produce the following tables in excel:
 1. 	Tables_HH_ITN:		Contains the tables for houeshold possession of ITNs 
@@ -14,6 +14,8 @@ Date last modified: Feb 19 2019 by Cameron Taylor
 7. 	Tables_Antimal:		Contains tables for antimalarial drugs
 	
 Notes: 	The indicators are outputed for women age 15-49 in line 349. This can be commented out if the indicators are required for all women.	
+
+Notes: For the tabulations from the NR file for IPTp indicators, there are three denominators for tabulating the indicators 1. live births, 2. stillbirths, and 3. live births and stillbirths. The default selection is for recent live births. Selection of other denominators can be made in line 354-363
 *****************************************************************************************************/
 * the total will show on the last row of each table.
 * comment out the tables or indicator section you do not want.
@@ -143,7 +145,7 @@ tab hv024 ml_slept_net if hv103==1 [iw=wt], row nofreq
 tab hv270 ml_slept_net if hv103==1 [iw=wt], row nofreq 
 
 * output to excel
-tabout age hv104 hv025 hv024 hv270 ml_slept_net if hv103==1 using Tables_HH_ITN_USE.xls [iw=wt] , c(row) f(1) replace 
+tabout age hv104 hv025 hv024 hv270 ml_slept_net if hv103==1 using Tables_HH_ITN_USE.xls [iw=wt] , clab(population_net) c(row) f(1) replace 
 ****************************************************
 //De facto household population who slept the night before the survey under an ITN
 
@@ -163,7 +165,7 @@ tab hv024 ml_slept_itn if hv103==1 [iw=wt], row nofreq
 tab hv270 ml_slept_itn if hv103==1 [iw=wt], row nofreq 
 
 * output to excel
-tabout age hv104 hv025 hv024 hv270 ml_slept_itn if hv103==1 using Tables_HH_ITN_USE.xls [iw=wt] , c(row) f(1) append 
+tabout age hv104 hv025 hv024 hv270 ml_slept_itn if hv103==1 using Tables_HH_ITN_USE.xls [iw=wt] , clab(population_itn) c(row) f(1) append 
 
 ****************************************************
 //Children under age 5 who slept the night before the survey under a mosquito net (treated or untreated)
@@ -180,7 +182,7 @@ tab hv024 ml_slept_net if hv103==1 & hml16<5 [iw=wt], row nofreq
 tab hv270 ml_slept_net if hv103==1 & hml16<5 [iw=wt], row nofreq 
 
 * output to excel
-tabout hv104 hv025 hv024 hv270 ml_slept_net if hv103==1 & hml16<5 using Tables_HH_ITN_USE.xls [iw=wt] , c(row) f(1) append 
+tabout hv104 hv025 hv024 hv270 ml_slept_net if hv103==1 & hml16<5 using Tables_HH_ITN_USE.xls [iw=wt] , clab(children_net) c(row) f(1) append 
 
 
 ****************************************************
@@ -198,7 +200,7 @@ tab hv024 ml_slept_itn if hv103==1 & hml16<5 [iw=wt], row nofreq
 tab hv270 ml_slept_itn if hv103==1 & hml16<5 [iw=wt], row nofreq 
 
 * output to excel
-tabout hv104 hv025 hv024 hv270 ml_slept_itn if hv103==1 & hml16<5 using Tables_HH_ITN_USE.xls [iw=wt] , c(row) f(1) append 
+tabout hv104 hv025 hv024 hv270 ml_slept_itn if hv103==1 & hml16<5 using Tables_HH_ITN_USE.xls [iw=wt] , clab(children_itn) c(row) f(1) append 
 
 ****************************************************
 //Pregnant women age 15-49 who slept the night before the survey under a mosquito net (treated or untreated)
@@ -213,7 +215,7 @@ tab hv024 ml_slept_net if hv103==1 & hv104==2 & hml18==1 & hml16 >=15 & hml16<=4
 tab hv270 ml_slept_net if hv103==1 & hv104==2 & hml18==1 & hml16 >=15 & hml16<=49 [iw=wt], row nofreq 
 
 * output to excel
-tabout hv025 hv024 hv270 ml_slept_net if hv103==1 & hv104==2 & hml18==1 & hml16>=15 & hml16<=49 using Tables_HH_ITN_USE.xls [iw=wt] , c(row) f(1) append 
+tabout hv025 hv024 hv270 ml_slept_net if hv103==1 & hv104==2 & hml18==1 & hml16>=15 & hml16<=49 using Tables_HH_ITN_USE.xls [iw=wt] , clab(pregwomen_net) c(row) f(1) append 
 
 
 ****************************************************
@@ -229,179 +231,192 @@ tab hv024 ml_slept_itn if hv103==1 & hv104==2 & hml18==1 & hml16 >=15 & hml16<=4
 tab hv270 ml_slept_itn if hv103==1 & hv104==2 & hml18==1 & hml16 >=15 & hml16<=49 [iw=wt], row nofreq 
 
 * output to excel
-tabout hv025 hv024 hv270 ml_slept_itn if hv103==1 & hv104==2 & hml18==1 & hml16>=15 & hml16<=49 using Tables_HH_ITN_USE.xls [iw=wt] , c(row) f(1) append 
+tabout hv025 hv024 hv270 ml_slept_itn if hv103==1 & hv104==2 & hml18==1 & hml16>=15 & hml16<=49 using Tables_HH_ITN_USE.xls [iw=wt] , clab(pregwomen_itn) c(row) f(1) append 
 
 **************************************************************************************************
-* Indicators for anemia and malaria testing and prevalence: 
+* Indicators for anemia and malaria testing and prevalence: used "cap" in case testing was not available in survey
 * Note: Testing indicators are not weighted
 **************************************************************************************************
 //Tested for Anemia
 
 * sex of child
-tab hc27 ml_test_anemia, row nofreq 
+cap tab hc27 ml_test_anemia, row nofreq 
 
 *residence
-tab hv025 ml_test_anemia, row nofreq 
+cap tab hv025 ml_test_anemia, row nofreq 
 
 *region
-tab hv024 ml_test_anemia, row nofreq 
+cap tab hv024 ml_test_anemia, row nofreq 
 
 *wealth
-tab hv270 ml_test_anemia, row nofreq 
+cap tab hv270 ml_test_anemia, row nofreq 
 
 * output to excel
-tabout hc27 hv025 hv024 hv270 ml_test_anemia using Tables_MAL_ANEMIA.xls , c(row) f(1) replace 
+cap tabout hc27 hv025 hv024 hv270 ml_test_anemia using Tables_MAL_ANEMIA.xls , c(row) f(1) replace 
 
 ****************************************************
 //Children with hemoglobin lower than 8.0 g/dl
 *sex of child
-tab hc27 ml_anemia [iw=wt], row nofreq 
+cap tab hc27 ml_anemia [iw=wt], row nofreq 
 
 *residence
-tab hv025 ml_anemia [iw=wt], row nofreq 
+cap hv025 ml_anemia [iw=wt], row nofreq 
 
 *region
-tab hv024 ml_anemia [iw=wt], row nofreq 
+cap tab hv024 ml_anemia [iw=wt], row nofreq 
 
 *wealth
-tab hv270 ml_anemia  [iw=wt], row nofreq 
+cap tab hv270 ml_anemia  [iw=wt], row nofreq 
 
 * output to excel
-tabout hc27 hv025 hv024 hv270 ml_anemia  using Tables_MAL_ANEMIA.xls [iw=wt] , c(row) f(1) append 
+cap tabout hc27 hv025 hv024 hv270 ml_anemia  using Tables_MAL_ANEMIA.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
 //Testing of Parasitemia (via microscopy) in children 6-59 months
 
 *sex of child 
-tab hc27 ml_test_micmal, row nofreq 
+cap tab hc27 ml_test_micmal, row nofreq 
 
 *residence
-tab hv025 ml_test_micmal, row nofreq 
+cap tab hv025 ml_test_micmal, row nofreq 
 
 *region
-tab hv024 ml_test_micmal, row nofreq 
+cap tab hv024 ml_test_micmal, row nofreq 
 
 *wealth
-tab hv270 ml_test_micmal, row nofreq 
+cap tab hv270 ml_test_micmal, row nofreq 
 
 * output to excel
-tabout hc27 hv025 hv024 hv270 ml_test_micmal using Tables_MALARIA.xls, c(row) f(1) replace 
+cap tabout hc27 hv025 hv024 hv270 ml_test_micmal using Tables_MALARIA.xls, c(row) f(1) replace 
 
 ****************************************************
 //Parasitemia (via microscopy) in children 6-59 months
 
 *sex of child
-tab hc27 ml_micmalpos [iw=wt], row nofreq 
+cap tab hc27 ml_micmalpos [iw=wt], row nofreq 
 
 *residence
-tab hv025 ml_micmalpos [iw=wt], row nofreq 
+cap tab hv025 ml_micmalpos [iw=wt], row nofreq 
 
 *region
-tab hv024 ml_micmalpos [iw=wt], row nofreq 
+cap tab hv024 ml_micmalpos [iw=wt], row nofreq 
 
 *wealth
-tab hv270 ml_micmalpos [iw=wt], row nofreq 
+cap tab hv270 ml_micmalpos [iw=wt], row nofreq 
 
 * output to excel
-tabout hc27 hv025 hv024 hv270 ml_micmalpos using Tables_MALARIA.xls [iw=wt] , c(row) f(1) append 
+cap tabout hc27 hv025 hv024 hv270 ml_micmalpos using Tables_MALARIA.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
 //Testing of Parasitemia (vis RDT) in children 6-59 months
 
 * sex of child
-tab hc27 ml_test_rdtmal , row nofreq 
+cap tab hc27 ml_test_rdtmal , row nofreq 
 
 *residence
-tab hv025 ml_test_rdtmal, row nofreq 
+cap tab hv025 ml_test_rdtmal, row nofreq 
 
 *region
-tab hv024 ml_test_rdtmal, row nofreq 
+cap tab hv024 ml_test_rdtmal, row nofreq 
 
 *wealth
-tab hv270 ml_test_rdtmal, row nofreq 
+cap tab hv270 ml_test_rdtmal, row nofreq 
 
 * output to excel
-tabout hc27 hv025 hv024 hv270 ml_test_rdtmal using Tables_MALARIA.xls, c(row) f(1) append 
+cap tabout hc27 hv025 hv024 hv270 ml_test_rdtmal using Tables_MALARIA.xls, c(row) f(1) append 
 ****************************************************
 //Parasitemia (vis RDT) in children 6-59 months
 
 * sex of child
-tab hc27 ml_rdtmalpos [iw=wt], row nofreq 
+cap tab hc27 ml_rdtmalpos [iw=wt], row nofreq 
 
 *residence
-tab hv025 ml_rdtmalpos [iw=wt], row nofreq 
+cap tab hv025 ml_rdtmalpos [iw=wt], row nofreq 
 
 *region
-tab hv024 ml_rdtmalpos [iw=wt], row nofreq 
+cap tab hv024 ml_rdtmalpos [iw=wt], row nofreq 
 
 *wealth
-tab hv270 ml_rdtmalpos [iw=wt], row nofreq 
+cap tab hv270 ml_rdtmalpos [iw=wt], row nofreq 
 
 * output to excel
-tabout hc27 hv025 hv024 hv270 ml_rdtmalpos  using Tables_MALARIA.xls [iw=wt] , c(row) f(1) append 
+cap tabout hc27 hv025 hv024 hv270 ml_rdtmalpos  using Tables_MALARIA.xls [iw=wt] , c(row) f(1) append 
 ****************************************************
 }
 
 
 * indicators from IR file
-if file=="IR" {
+if file=="NR" {
 * limiting to women age 15-49
 drop if v012<15 | v012>49
 
+
+* three denominators
+* recent livebirth 
+gen select = m80==1
+
+*recent stillbirths
+*gen select = m80==3
+
+* recent livebirths + stillbirths
+* keeps if birth is last live birth or last still birth (see notes in main file). 
+*gen select = (_n == 1 | caseid != caseid[_n-1])  
+
+
 gen wt=v005/1000000
 ****************************************************
-//Women age 15-49 with a live birth in the 2 years preceding the survey who, during the pregnancy that resulted in the last live birth, received one or more doses of SP/Fansidar
+//Women age 15-49 with a live birth in the 2 years preceding the survey who, during the pregnancy received one or more doses of SP/Fansidar
 
 *residence
-tab v025 ml_one_iptp [iw=wt], row nofreq 
+tab v025 ml_one_iptp if select==1 [iw=wt], row nofreq 
 
 *region
-tab v024 ml_one_iptp [iw=wt], row nofreq 
+tab v024 ml_one_iptp if select==1 [iw=wt], row nofreq 
 
 *education
-tab v106 ml_one_iptp [iw=wt], row nofreq 
+tab v106 ml_one_iptp if select==1 [iw=wt], row nofreq 
 
 *wealth
-tab v190 ml_one_iptp [iw=wt], row nofreq 
+tab v190 ml_one_iptp if select==1 [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v024 v106 v190 ml_one_iptp using Tables_IPTP.xls [iw=wt] , c(row) f(1) replace 
+tabout v025 v024 v106 v190 ml_one_iptp if select==1 using Tables_IPTP.xls [iw=wt] , c(row) f(1) replace 
 
 ****************************************************
-//Women age 15-49 with a live birth in the 2 years preceding the survey who, during the pregnancy that resulted in the last live birth, received two or more doses of SP/Fansidar
+//Women age 15-49 with a live birth in the 2 years preceding the survey who, during the pregnancy received two or more doses of SP/Fansidar
 
 *residence
-tab v025 ml_two_iptp [iw=wt], row nofreq 
+tab v025 ml_two_iptp if select==1 [iw=wt], row nofreq 
 
 *region
-tab v024 ml_two_iptp [iw=wt], row nofreq 
+tab v024 ml_two_iptp if select==1 [iw=wt], row nofreq 
 
 *education
-tab v106 ml_two_iptp [iw=wt], row nofreq 
+tab v106 ml_two_iptp if select==1 [iw=wt], row nofreq 
 
 *wealth
-tab v190 ml_two_iptp [iw=wt], row nofreq 
+tab v190 ml_two_iptp if select==1 [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v024 v106 v190 ml_two_iptp using Tables_IPTP.xls [iw=wt] , c(row) f(1) append 
+tabout v025 v024 v106 v190 ml_two_iptp if select==1 using Tables_IPTP.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************
-//Women age 15-49 with a live birth in the 2 years preceding the survey who, during the pregnancy that resulted in the last live birth, received three or more doses of SP/Fansidar
+//Women age 15-49 with a live birth in the 2 years preceding the survey who, during the pregnancy  received three or more doses of SP/Fansidar
 
 *residence
-tab v025 ml_three_iptp [iw=wt], row nofreq 
+tab v025 ml_three_iptp if select==1 [iw=wt], row nofreq 
 
 *region
-tab v024 ml_three_iptp [iw=wt], row nofreq 
+tab v024 ml_three_iptp if select==1 [iw=wt], row nofreq 
 
 *education
-tab v106 ml_three_iptp [iw=wt], row nofreq 
+tab v106 ml_three_iptp if select==1 [iw=wt], row nofreq 
 
 *wealth
-tab v190 ml_three_iptp [iw=wt], row nofreq 
+tab v190 ml_three_iptp if select==1 [iw=wt], row nofreq 
 
 * output to excel
-tabout v025 v024 v106 v190 ml_three_iptp using Tables_IPTP.xls [iw=wt] , c(row) f(1) append 
+tabout v025 v024 v106 v190 ml_three_iptp if select==1 using Tables_IPTP.xls [iw=wt] , c(row) f(1) append 
 
 }
 
@@ -529,6 +544,29 @@ tab v190 ml_stick [iw=wt], row nofreq
 
 * output to excel
 tabout agecat b4 v025 v024 v106 v190 ml_stick using Tables_FEVER.xls [iw=wt] , c(row) f(1) append 
+****************************************************
+//Children under age 5 years with fever in the 2 weeks preceding the survey diagnosed with malaria by a healthcare provider"
+
+*child's age
+tab agecat ml_told_malaria [iw=wt], row nofreq 
+
+*child's sex
+tab b4 ml_told_malaria [iw=wt], row nofreq 
+
+*residence
+tab v025 ml_told_malaria [iw=wt], row nofreq 
+
+*region
+tab v024 ml_told_malaria [iw=wt], row nofreq 
+
+*mother's education
+tab v106 ml_told_malaria [iw=wt], row nofreq 
+
+*wealth
+tab v190 ml_told_malaria [iw=wt], row nofreq 
+
+* output to excel
+tabout agecat b4 v025 v024 v106 v190 ml_told_malaria using Tables_FEVER.xls [iw=wt] , c(row) f(1) append 
 ****************************************************
 *** Source of advice or treatment for fever symptoms ***
 * only the following sources are computed, to get other sources that are country specific, please see the note on these indicators in the ML_FEVER.do file
