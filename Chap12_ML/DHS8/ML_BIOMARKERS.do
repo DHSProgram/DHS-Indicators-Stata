@@ -1,10 +1,10 @@
 /*****************************************************************************************************
-Program: 			ML_BIOMARKERS.do
+Program: 			ML_BIOMARKERS.do - No changes in DHS8
 Purpose: 			Code anemia and malaria testing prevalence in children under 5
 Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Cameron Taylor and Shireen Assaf
-Date last modified: May 20 2019 by Shiren Assaf
+Date last modified: May 20 2019 by Shireen Assaf
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------

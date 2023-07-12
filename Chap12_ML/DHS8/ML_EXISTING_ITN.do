@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			ML_EXISTING_ITN.do
+Program: 			ML_EXISTING_ITN.do - No changes in DHS8
 Purpose: 			Code indicators for source of nets
 Data inputs: 		HR dataset
 Data outputs:		coded variables and the tables for the indicator produced which will be saved in the Tables_HH_ITN.xls excel file
@@ -27,6 +27,7 @@ replace ml_ownnet=1 if hml10_==1
 lab var ml_ownnet "Net is an ITN"
 
 * Tables for these indicators
+cap gen wt=hv005/1000000
 
 //ITN was used by anyone the night before the survey
 

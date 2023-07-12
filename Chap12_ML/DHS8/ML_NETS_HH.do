@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			ML_NETS_HH.do
+Program: 			ML_NETS_HH.do - No changes in DHS8
 Purpose: 			Code indicators for household ITN ownership
 Data inputs: 		HR dataset
 Data outputs:		coded variables

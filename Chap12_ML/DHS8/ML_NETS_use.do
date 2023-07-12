@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			ML_NETS_use.do
+Program: 			ML_NETS_use.do - No changes in DHS8
 Purpose: 			POPULATION/CHILD/PREGNANT WOMEN USE OF NETS
 Data inputs: 		PR dataset
 Data outputs:		coded variables
