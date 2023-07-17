@@ -7,9 +7,9 @@ Author:				Shireen Assaf
 Date last modified: July 6, 2023 by Shireen Assaf
 Note:				The indicators below can be computed for men and women. No age selection is made here. 
 
-					Several indicators have also been discontiued in DHS8. Please check the excel indicator list for these indicators. 
+Several indicators have also been discontiued in DHS8. Please check the excel indicator list for these indicators. 
 					
-					2 new indicators in DHS8, see below	
+2 new indicators in DHS8, see below	
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -60,7 +60,6 @@ label var hk_test_12m "Tested for HIV in the past 12 months and received results
 recode v864 (6/max= 6 "6+"), gen(hk_test_life)
 replace hk_test_life=0 if v781==.| v781==0
 label var hk_test_life "Number of times tested for HIV in lifetime"
-
 
 //Heard of self-test kits
 gen hk_hiv_selftest_heard= inrange(v856,1,3)
