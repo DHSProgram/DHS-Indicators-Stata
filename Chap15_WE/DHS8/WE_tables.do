@@ -1,8 +1,8 @@
 /*****************************************************************************************************
-Program: 			WE_tables.do
+Program: 			WE_tables.do - DHS8 update
 Purpose: 			produce tables for indicators
 Author:				Shireen Assaf
-Date last modified: October 17 2019 by Shireen Assaf 
+Date last modified: August 10, 2023 by Shireen Assaf 
 
 *This do file will produce the following tables in excel:
 1. 	Tables_emply_wm:	Contains the tables for employment and earning indicators for women
@@ -245,6 +245,26 @@ tab v190 we_bank [iw=wt], row nofreq
 tabout v013 v025 v106 v024 v190 we_bank using Tables_assets_wm.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
+//Deposited or withdrew money from their own bank account 
+*age
+tab v013 we_bank_use [iw=wt], row nofreq 
+
+*residence
+tab v025 we_bank_use [iw=wt], row nofreq 
+
+*region
+tab v024 we_bank_use [iw=wt], row nofreq 
+
+*education
+tab v106 we_bank_use [iw=wt], row nofreq 
+
+*wealth
+tab v190 we_bank_use [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 we_bank_use using Tables_assets_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
 //Have a mobile phone
 *age
 tab v013 we_mobile [iw=wt], row nofreq 
@@ -263,6 +283,26 @@ tab v190 we_mobile [iw=wt], row nofreq
 
 * output to excel
 tabout v013 v025 v106 v024 v190 we_mobile using Tables_assets_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Have a mobile smartphone
+*age
+tab v013 we_mobile_smart [iw=wt], row nofreq 
+
+*residence
+tab v025 we_mobile_smart [iw=wt], row nofreq 
+
+*region
+tab v024 we_mobile_smart [iw=wt], row nofreq 
+
+*education
+tab v106 we_mobile_smart [iw=wt], row nofreq 
+
+*wealth
+tab v190 we_mobile_smart [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 we_mobile_smart using Tables_assets_wm.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Use mobile phone for financial transactions
@@ -284,6 +324,25 @@ tab v190 we_mobile_finance [iw=wt], row nofreq
 * output to excel
 tabout v013 v025 v106 v024 v190 we_mobile_finance using Tables_assets_wm.xls [iw=wt] , c(row) f(1) append 
 */
+****************************************************
+//Use a bank account or a mobile phone for financial transactions
+*age
+tab v013 we_bank_mobile_use [iw=wt], row nofreq 
+
+*residence
+tab v025 we_bank_mobile_use [iw=wt], row nofreq 
+
+*region
+tab v024 we_bank_mobile_use [iw=wt], row nofreq 
+
+*education
+tab v106 we_bank_mobile_use [iw=wt], row nofreq 
+
+*wealth
+tab v190 we_bank_mobile_use [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 we_bank_mobile_use using Tables_assets_wm.xls [iw=wt] , c(row) f(1) append 
 **************************************************************************************************
 * Decision making indicators
 **************************************************************************************************
@@ -709,7 +768,28 @@ ta we_num_justifydv we_num_decide [iw=wt], row
 tabout we_num_decide we_num_justifydv using Tables_empw_wm.xls [iw=wt] , c(row) f(1) append
 tabout we_num_justifydv we_num_decide using Tables_empw_wm.xls [iw=wt] , c(row) f(1) append 
 
-/* ****************************************************
+* ****************************************************
+//Decides alone or jointly with husband on sexual relations, contracpetive use, and own health care
+*age
+tab v013 we_decide_all_health [iw=wt], row nofreq 
+
+*residence
+tab v025 we_decide_all_health [iw=wt], row nofreq 
+
+*region
+tab v024 we_decide_all_health [iw=wt], row nofreq 
+
+*education
+tab v106 we_decide_all_health [iw=wt], row nofreq 
+
+*wealth
+tab v190 we_decide_all_health [iw=wt], row nofreq 
+
+* output to excel
+tabout v013 v025 v106 v024 v190 we_decide_all_health using Tables_empw_wm.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+/*
 Note:
 The women empowerment indicators we_num_decide and we_num_justifydv may also be tabulated by current contraceptive use and unment need (chapter 7), ideal number of children (chapter 6),
 and reproductive health indicators (chapter 9). Please check these chapters to create the indicators of interest that you would like to include in the tabulations. 
@@ -877,6 +957,26 @@ tab mv190 we_bank [iw=wt], row nofreq
 tabout mv013 mv025 mv106 mv024 mv190 we_bank using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
+//Deposited or withdrew money from their own bank account
+*age
+tab mv013 we_bank_use [iw=wt], row nofreq 
+
+*residence
+tab mv025 we_bank_use [iw=wt], row nofreq 
+
+*region
+tab mv024 we_bank_use [iw=wt], row nofreq 
+
+*education
+tab mv106 we_bank_use [iw=wt], row nofreq 
+
+*wealth
+tab mv190 we_bank_use [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv106 mv024 mv190 we_bank_use using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
 //Have a mobile phone
 *age
 tab mv013 we_mobile [iw=wt], row nofreq 
@@ -895,6 +995,26 @@ tab mv190 we_mobile [iw=wt], row nofreq
 
 * output to excel
 tabout mv013 mv025 mv106 mv024 mv190 we_mobile using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+****************************************************
+//Have a mobile smartphone
+*age
+tab mv013 we_mobile_smart [iw=wt], row nofreq 
+
+*residence
+tab mv025 we_mobile_smart [iw=wt], row nofreq 
+
+*region
+tab mv024 we_mobile_smart [iw=wt], row nofreq 
+
+*education
+tab mv106 we_mobile_smart [iw=wt], row nofreq 
+
+*wealth
+tab mv190 we_mobile_smart [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv106 mv024 mv190 we_mobile_smart using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
 */
 ****************************************************
 //Use mobile phone for financial transactions
@@ -916,6 +1036,27 @@ tab mv190 we_mobile_finance [iw=wt], row nofreq
 * output to excel
 tabout mv013 mv025 mv106 mv024 mv190 we_mobile_finance using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
 */
+****************************************************
+//Use a bank account or a mobile phone for financial transactions
+*age
+tab mv013 we_bank_mobile_use [iw=wt], row nofreq 
+
+*residence
+tab mv025 we_bank_mobile_use [iw=wt], row nofreq 
+
+*region
+tab mv024 we_bank_mobile_use [iw=wt], row nofreq 
+
+*education
+tab mv106 we_bank_mobile_use [iw=wt], row nofreq 
+
+*wealth
+tab mv190 we_bank_mobile_use [iw=wt], row nofreq 
+
+* output to excel
+tabout mv013 mv025 mv106 mv024 mv190 we_bank_mobile_use using Tables_assets_mn.xls [iw=wt] , c(row) f(1) append 
+*/
+
 **************************************************************************************************
 * Decision making indicators
 **************************************************************************************************

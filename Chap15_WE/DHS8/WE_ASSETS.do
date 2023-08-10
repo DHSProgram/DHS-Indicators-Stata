@@ -1,11 +1,12 @@
 /*****************************************************************************************************
-Program: 			WE_ASSETS.do
+Program: 			WE_ASSETS.do - DHS8 update
 Purpose: 			Code to compute employment, earnings, and asset ownership in men and women
 Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: Oct 17, 2019 by Shireen Assaf 
+Date last modified: August 10, 2023 by Shireen Assaf 
 Note:				The indicators below can be computed for men and women. 
+					3 new indicators in DHS8 see below. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -16,13 +17,18 @@ we_earn_wm_decide	"Who decides on wife's cash earnings for employment in the las
 we_earn_wm_compare	"Comparison of cash earnings with husband's cash earnings"
 we_earn_mn_decide	"Who decides on husband's cash earnings for employment in the last 12 months among men currently in a union"
 we_earn_hs_decide	"Who decides on husband's cash earnings for employment in the last 12 months among women currently in a union"
+
 we_own_house		"Ownership of housing"
 we_own_land			"Ownership of land"
 we_house_deed		"Title or deed possession for owned house"
 we_land_deed		"Title or deed possession for owned land"
+
 we_bank				"Use an account in a bank or other financial institution"
+we_bank_use			"Deposited or withdrew money from their own bank account in the last 12 months" - NEW Indicator in DHS8
 we_mobile			"Own a mobile phone"
-we_mobile_finance	"Use mobile phone for financial transactions"
+we_mobile_smart		"Own a mobile smartphone" - NEW Indicator in DHS8
+we_mobile_finance	"Use mobile phone for financial transactions in the last 12 months"
+we_bank_mobile_use	"Use a bank account or a mobile phone for financial transactions in the last 12 months" - NEW Indicator in DHS8
 ----------------------------------------------------------------------------*/
 
 * indicators from IR file
@@ -72,11 +78,11 @@ label values we_own_land V745B
 label var we_own_land "Ownership of land"
 
 //Ownership of house deed
-recode v745c (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(v745a,1,2,3), gen(we_house_deed)
+recode v745c (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inrange(v745a,1,4), gen(we_house_deed)
 label var we_house_deed "Title or deed possession for owned house"
 
 //Ownership of land deed
-recode v745d (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(v745b,1,2,3), gen(we_land_deed)
+recode v745d (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inrange(v745b,1,4), gen(we_land_deed)
 label var we_land_deed "Title or deed possession for owned land"
 
 //Own a bank account
@@ -85,19 +91,30 @@ replace we_bank=0 if v170==8 | v170==9
 label values we_bank yesno
 label var we_bank "Use an account in a bank or other financial institution"
 
+//Deposited or withdrew money from their own bank account - NEW Indicator in DHS8
+gen we_bank_use=v170==1 & v177==1
+label values we_bank_use yesno
+label var we_bank_use "Deposited or withdrew money from their own bank account in the last 12 months" 
+
 //Own a mobile phone
-gen we_mobile=v169a
-replace we_mobile=0 if v169a==8 | v169a==9
+gen we_mobile=v169a==1
 label values we_mobile yesno 
 label var we_mobile "Own a mobile phone"
 
-//Use mobile for finances
-gen we_mobile_finance=v169b if v169a==1 
-replace we_mobile_finance=0 if v169b==8 | v169b==9
-replace we_mobile_finance=. if v169a==8 | v169a==9
-label values we_mobile_finance yesno 
-label var we_mobile_finance "Use mobile phone for financial transactions"
+//Own a smartphone - NEW Indicator in DHS8
+gen we_mobile_smart=v169c==1
+label values we_mobile_smart yesno 
+label var we_mobile_smart "Own a mobile smartphone" 
 
+//Use mobile for finances
+gen we_mobile_finance=v169b==1
+label values we_mobile_finance yesno 
+label var we_mobile_finance "Use mobile phone for financial transactions in the last 12 months"
+
+//Use bank or mobile for financial transactions in the last 12 months - NEW Indicator in DHS8
+gen we_bank_mobile_use=v170==1 | v169b==1
+label values we_bank_mobile_use yesno 
+label var we_bank_mobile_use "Use a bank account or a mobile phone for financial transactions in the last 12 months" 
 }
 
 
@@ -118,7 +135,7 @@ label values we_empl_earn MV741
 label var we_empl_earn "Type of earnings among those employed in the past 12 months and currently in a union"
 
 //Who decides on how husband's cash earnings are used
-gen we_earn_mn_decide=mv739 if inlist(mv731,1,2,3) & inlist(mv741,1,2) & mv502==1
+gen we_earn_mn_decide=mv739 if inlist(mv731,1,2) & inlist(mv741,1,2) & mv502==1
 replace we_earn_mn_decide=9 if mv739==8
 cap label define mv739 9"Don't know/Missing", modify
 label values we_earn_mn_decide MV739
@@ -137,29 +154,40 @@ label values we_own_land MV745B
 label var we_own_land "Ownership of land"
 
 //Ownership of house deed
-recode mv745c (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(mv745a,1,2,3), gen(we_house_deed)
+recode mv745c (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inrange(mv745a,1,4), gen(we_house_deed)
 label var we_house_deed "Title or deed possession for owned house"
 
 //Ownership of land deed
-recode mv745d (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inlist(mv745b,1,2,3), gen(we_land_deed)
+recode mv745d (1=1 "Respondent's name on title/deed") (2=2 "Respondent's name is not on title/deed") (0=0 "Does not have title/deed") (3 8 9=9 "Don't know/missing") if inrange(mv745b,1,4), gen(we_land_deed)
 label var we_land_deed "Title or deed possession for owned land"
 
 //Own a bank account
-gen we_bank=mv170
-replace we_bank=0 if mv170==8 | mv170==9
+gen we_bank=mv170==1
 label values we_bank yesno
 label var we_bank "Use an account in a bank or other financial institution"
 
+//Deposited or withdrew money from their own bank account - NEW Indicator in DHS8
+gen we_bank_use=mv170==1 & mv177==1
+label values we_bank_use yesno
+label var we_bank_use "Deposited or withdrew money from their own bank account in the last 12 months" 
+
 //Own a mobile phone
-gen we_mobile=mv169a
-replace we_mobile=0 if mv169a==8 | mv169a==9
+gen we_mobile=mv169a==1
 label values we_mobile yesno 
 label var we_mobile "Own a mobile phone"
 
+//Own a smartphone - NEW Indicator in DHS8
+gen we_mobile_smart=mv169c==1
+label values we_mobile_smart yesno 
+label var we_mobile_smart "Own a mobile smartphone" 
+
 //Use mobile for finances
-gen we_mobile_finance=mv169b if mv169a==1 
-replace we_mobile_finance=0 if mv169b==8 | mv169b==9
-replace we_mobile_finance=. if mv169a==8 | mv169a==9
+gen we_mobile_finance=mv169b==1
 label values we_mobile_finance yesno 
-label var we_mobile_finance "Use mobile phone for financial transactions"
+label var we_mobile_finance "Use mobile phone for financial transactions in the last 12 months"
+
+//Use bank or mobile for financial transactions in the last 12 months - NEW Indicator in DHS8
+gen we_bank_mobile_use=mv170==1 | mv169b==1
+label values we_bank_mobile_use yesno 
+label var we_bank_mobile_use "Use a bank account or a mobile phone for financial transactions in the last 12 months" 
 }

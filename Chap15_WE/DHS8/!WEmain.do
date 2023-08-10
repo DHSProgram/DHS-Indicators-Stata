@@ -1,10 +1,10 @@
 /*******************************************************************************************************************************
-Program: 				WEmain.do
+Program: 				WEmain.do - DHS8 update
 Purpose: 				Main file for the Women's Empowerment Chapter. 
 						The main file will call other do files that will produce the WE indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
-Date last modified:		October 17 2019 by Shireen Assaf
+Date last modified:		August 10, 2023 by Shireen Assaf
 *******************************************************************************************************************************/
 set more off
 
@@ -12,19 +12,17 @@ set more off
 
 *global user 39585	//change employee id number to personalize path
 global user 33697
-cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap15_WE"
+cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap15_WE/DHS8"
 
 global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * IR Files
-global irdata "ETIR70FL"
-* MMIR71FL TJIR70FL GHIR72FL UGIR7BFL KEIR71FL
+global irdata "KHIR81FL"
 
 * MR Files
-global mrdata "ETMR70FL"
-* MMMR71FL GHMR72FL UGMR7BFL
+global mrdata "KHMR81FL"
 ****************************
 
 * IR file variables

@@ -1,12 +1,13 @@
 /*****************************************************************************************************
-Program: 			WE_EMPW.do
+Program: 			WE_EMPW.do - DHS8 update
 Purpose: 			Code to compute decision making and justification of violence among in men and women
 Data inputs: 		IR or MR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf
-Date last modified: Oct 17, 2019 by Shireen Assaf 
+Date last modified: August 10, 2023 by Shireen Assaf 
 Note:				The indicators below can be computed for men and women. 
 					The indicators we_decide_all and we_decide_none have different variable labels for men compared to women. 
+					One new indicators in DHS8 see below.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -21,7 +22,8 @@ we_decide_all				"Decides on all three: health, purchases, and visits  either al
 							"Decides on both health and purchases either alone or jointly with partner" (for men)
 we_decide_none				"Does not decide on any of the three decisions either alone or jointly with partner" (for women)
 							"Does not decide on health or purchases either alone or jointly with partner" (for men)
-	
+we_decide_all_health		"Decides alone or jointly with husband on sexual relations, contracpetive use, and own health care" - NEW Indicator in DHS8
+
 we_dvjustify_burn			"Agree that husband is justified in hitting or beating his wife if she burns food"
 we_dvjustify_argue			"Agree that husband is justified in hitting or beating his wife if she argues with him"
 we_dvjustify_goout			"Agree that husband is justified in hitting or beating his wife if she goes out without telling him"
@@ -85,6 +87,13 @@ gen we_decide_none= 0 if v502==1
 replace we_decide_none=1 if (v743a!=1 & v743a!=2) & (v743b!=1 & v743b!=2) & (v743d!=1 & v743d!=2)& v502==1
 label values we_decide_none yesno
 label var we_decide_none "Does not decide on any of the three decisions either alone or jointly with partner"
+
+//Decides on sexual relations, contracpetive use, and own health care - NEW Indicator in DHS8
+gen we_decide_all_health= 0 if v502==1
+replace we_decide_all_health=1 if inrange(v743a,1,2) & v850a==1 & inlist(v632,1,3) & v502==1
+label values we_decide_all_health yesno
+label var we_decide_all_health "Decides alone or jointly with husband on sexual relations, contracpetive use, and own health care" 
+
 
 *** Justification of violence ***
 
