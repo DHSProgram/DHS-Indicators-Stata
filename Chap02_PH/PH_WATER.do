@@ -354,11 +354,8 @@ cap label define yesno 0"No" 1"Yes"
 	33 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	* missing information for hv007 in CG surveys that are both hv000 CG5 so included obserations to select for correct survey
-	if hv000=="CG5"  {
-		qui sum hv007
-		if r(N)<6000 {	
-			recode hv201 ///
+	if hv000=="CG5" & hv007==2005 {
+	recode hv201 ///
 	13 = 14 ///
 	21 = 32 ///
 	22 = 32 ///
@@ -366,7 +363,7 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	}
+	
 	* same recode for two surveys: CIHR35 and CIHR3A both are hv000=CI3. Only survey CIHR35 has categories 51 and 61 for hv201
 	if hv000=="CI3"  {
 	recode hv201 ///
@@ -451,7 +448,8 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="CO4" & hv007>=2004  {
+* same recode for two surveys COHR53, COHR61, COHR72
+	if hv000=="CO4" & hv007>=2004 |  inrange(hv000, "CO5", "CO7")  {
 	recode hv201 ///
 	12 = 11 ///
 	22 = 32 ///
@@ -553,6 +551,7 @@ cap label define yesno 0"No" 1"Yes"
 	41 = 43 ///
 	, gen (ph_wtr_source)
 	}
+* same recode for ETHR71 and ETHR81
 	if hv000=="ET7" {
 	recode hv201 ///
 	13 = 14 ///
@@ -656,6 +655,7 @@ cap label define yesno 0"No" 1"Yes"
 	45 = 43 ///
 	, gen (ph_wtr_source)
 	}
+* same recode for GNHR71 and GNHR81. Both are hv000==GN7
 	if hv000=="GN7"  {
 	recode hv201 ///
 	13 = 14 ///
@@ -674,7 +674,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="GU3" & hv007>95   {
+	if hv000=="GU3" & hv007>98   {
 	recode hv201 ///
 	11 = 13 ///
 	12 = 13 ///
@@ -864,7 +864,7 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 72 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="ID7" & hv007==2017  {
+	if hv000=="ID7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -917,7 +917,7 @@ cap label define yesno 0"No" 1"Yes"
 	44 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="KE6" & hv007==2015  {
+	if hv000=="KE6" {
 	recode hv201 ///
 	14 = 13 ///
 	, gen (ph_wtr_source)
@@ -1195,7 +1195,7 @@ cap label define yesno 0"No" 1"Yes"
 	, gen (ph_wtr_source)
 	}
 	*same recode for two surveys: MWHR7A (2015) and MWHR7I (2017). Both are hv000=MW7
-	if hv000=="MW7" & hv007<=2017  {
+	if hv000=="MW7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1231,7 +1231,7 @@ cap label define yesno 0"No" 1"Yes"
 	33 = 21 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="MZ7" & hv007==2018  {
+	if hv000=="MZ7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1292,7 +1292,7 @@ cap label define yesno 0"No" 1"Yes"
 	72 = 73 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="NG7" & hv007==2018  {
+	if hv000=="NG7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1449,7 +1449,7 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="PG7" & inrange(hv007,2016,2018) {
+	if hv000=="PG7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1664,7 +1664,7 @@ cap label define yesno 0"No" 1"Yes"
 	14 = 13 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="TL7" & hv007==2016 {
+	if hv000=="TL7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -1963,7 +1963,7 @@ cap label define yesno 0"No" 1"Yes"
 	61 = 71 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="ZA7" & hv007==2016 {
+	if hv000=="ZA7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -2004,7 +2004,7 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="ZM7" & inrange(hv007,2018,2019)  {
+	if hv000=="ZM7"  {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///
@@ -2038,7 +2038,7 @@ cap label define yesno 0"No" 1"Yes"
 	81 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="ZW7" & hv007==2015   {
+	if hv000=="ZW7" {
 	recode hv201 ///
 	13 = 14 ///
 	14 = 13 ///

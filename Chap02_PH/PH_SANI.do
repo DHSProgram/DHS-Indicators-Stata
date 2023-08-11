@@ -4,7 +4,7 @@ Purpose: 			creates variable for binary improved sanitation according to JSTOR s
 Data inputs: 		hr or pr file
 Data outputs:		none
 Author of do file:	03/15/2018	Courtney Allen
-Date last modified: 06/30/2023	Courtney Allen -  update countries for codeshare project
+Date last modified: 07/12/2023	Courtney Allen -  update countries for codeshare project
 Note:				These indicators can also be computed using the HR or PR file.
 					If you want to produce estimates for households, use the HR file.
 					If you want to produce estimates for the de jure population, 
@@ -192,22 +192,18 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	* missing information for hv007 in CG surveys that are both hv000 CG5 so included obserations to select for correct survey
-	if hv000=="CG5"  {
-		qui sum hv007
-		if r(N)<6000 {
+	if hv000=="CG5" & hv007==2005 {
 	recode hv205 ///
 	11 = 15 ///
 	21 = 23 ///
 	22 = 21 ///
 	, gen (ph_sani_type)
 	} 
-	else {
+	if hv000=="CG5" & hv007==2009 {
 	recode hv205 ///
 	11 = 15 ///
 	22 = 23 ///
 	, gen (ph_sani_type)
-	}
 	}
 	if hv000=="CI3" & hv007==94  {
 	recode hv205 ///
@@ -975,7 +971,6 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	*check if TZHR63 (which is hv000=TZ5 as well) should be included here. 
 	if hv000=="TZ5" & inrange(hv007,2007,2008) {
 	recode hv205 ///
 	24 = 23 ///
@@ -996,8 +991,8 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 21 ///
 	, gen (ph_sani_type)
 	}
-	* same recode for three surveys: UGHR52, UGHR5A, and UGHR61. Only survey UGHR61 has category 44 for variable hv205
-	if hv000=="UG5" | (hv000=="UG6" & hv007==2011) {
+	* same recode for two surveys: UGHR52 and UGHR5A.
+	if hv000=="UG5"  {
 	recode hv205 ///
 	11 = 15 ///
 	22 = 23 ///
@@ -1006,7 +1001,20 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	25 = 22 ///
 	, gen (ph_sani_type)
 	}
-	* check if surveys UGHR6A and UGHR7I should be included here. 
+	* There are multiple surveys with country code UG6 in the year 2011 (UGHR6A and UGHR61), so need to specify maximum month of interview. UGHR61 had interviews up until hv006 (month) = 12. UGHR6A has no survey specific coding necessary.
+	if hv000=="UG6" & hv007==2011 {
+		qui summ hv006
+		if r(max)==12 {
+	recode hv205 ///
+	11 = 15 ///
+	22 = 23 ///
+	23 = 22 ///
+	24 = 23 ///
+	25 = 22 ///
+	41 = 51 ///
+	, gen (ph_sani_type)
+	} 
+	}
 	if (hv000=="UG6" & inrange(hv007,2014,2015)) {
 	recode hv205 ///
 	24 = 22 ///
