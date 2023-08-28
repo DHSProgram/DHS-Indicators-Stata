@@ -1,5 +1,5 @@
 d/*****************************************************************************************************
-Program: 			FF_PREF.do
+Program: 			FF_PREF.do - No changes in DHS8
 Purpose: 			Code to compute fertility preferences in men and women
 Data inputs: 		IR or MR dataset
 Data outputs:		coded variables

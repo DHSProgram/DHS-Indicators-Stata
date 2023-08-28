@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			FF_WANT_TFR.do
+Program: 			FF_WANT_TFR.do - No changes in DHS8
 Purpose: 			Code to compute wanted fertility rates
 Data inputs: 		IR dataset
 Data outputs:		coded variables
@@ -764,7 +764,7 @@ scalar run_number=0
 
 ***********************
 * Specify the path to the log file and the output files as a scalar; 
-scalar soutpath="C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap06_FF"
+scalar soutpath="C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap06_FF/DHS8"
 local loutpath=soutpath
 cd "`loutpath'"
 ***********************

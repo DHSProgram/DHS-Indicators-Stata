@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			FF_tables.do
+Program: 			FF_tables.do - No changes in DHS8
 Purpose: 			produce tables for indicators of fertility preferences chapter
 Author:				Shireen Assaf
 Date last modified: March 10 2019 by Shireen Assaf 
