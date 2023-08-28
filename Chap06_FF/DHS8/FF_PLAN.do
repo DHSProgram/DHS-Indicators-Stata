@@ -1,14 +1,11 @@
 /*****************************************************************************************************
-Program: 			FF_Want.do
+Program: 			FF_Want.do - DHS8 update
 Purpose: 			Code to compute fertility planning status in women
 Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Thomas Pullum and modified by Shireen Assaf for the code share project
-Date last modified: May 13, 2019 by Shireen Assaf 
-Note:				To construct the fertility planning status indicator, we need to include births in the
-					five years before the survey as well as current pregnancy. This requires appending the
-					data of births and pregnancies. 
-					After appending these data, the indicator is generated in line 130	
+Date last modified: Aug 28, 2023 by Thomas Pullum 
+Note:				The indicator is generated in line 129 and tabulated to match the table in the final report in line 140	using the calculate_table program and will produce the Tables_Fert_plan.xls file. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -27,33 +24,27 @@ use "$datapath//$irdata.dta", clear
 
 local srvy=substr("$irdata", 1, 4)
 
-* check whether b19 is in the file 
-scalar suseb19=0
-capture confirm numeric variable b19_01, exact 
-if _rc>0 {
-gen b19_01=.
-}
+rename *_0* *_*
 
-quietly summarize b19_01
-if r(mean)>0 & r(mean)<. {
-scalar suseb19=1
-}
+* Construct a new variable for each pregnancy, called pbord
+* pidxb is the index to the b variables. Use it to find bord for pregnancies 1 to 6
+* Say that the most recent pregnancy, pregnancy #1, was not a live birth, and the previous pregnancy
+*   was the most recent live birth. Then pidxb_1=. and pidxb_2=1. 
+* We want to construct variables pbord_1=. and pbord_2=bord_1
+* Thus pbord_p for pregnancy p will be bord for pregnancy p if the pregnancy outcome is a live
+*   birth or this is a current pregnancy. Otherwise, pbord_p is . (NA)
 
-if suseb19==0 {
-  local li=2
-  while `li'<=6 {
-  gen b19_0`li'=.
-  local li=`li'+1
+summarize pord_1
+local lmax=r(max)
+
+quietly forvalues lo=1/6 {
+gen pbord_`lo'=.
+  forvalues lp=1/`lmax' {
+  replace pbord_`lo'=bord_`lp' if pidxb_`lo'==`lp'  
   }
 }
 
-keep caseid v005 v008 v011 v012 bord_01-bord_06 b0_01-b0_06 b3_01-b3_06 b19_01-b19_06 m10_1-m10_6 v201 v213 v214 v225
-
-* v213      V213       currently pregnant
-* v225      V225       current pregnancy wanted
-
-gen womanid=_n
-rename *_0* *_*
+keep caseid v005 v008 v011 v012 pbord_1-pbord_6 pord_1-pord_6 p0_1-p0_6 p3_1-p3_6 p19_1-p19_6 p32_1-p32_6 m10_* v201 v213 v214 v225
 
 save `srvy'temp.dta, replace
 
@@ -67,28 +58,20 @@ local srvy=substr("$irdata", 1, 4)
 use `srvy'temp.dta, clear
 
 * construct a file of births in the past five years
-reshape long bord_ b0_ b3_ b19_ m10_, i(womanid) j(bidx)
+reshape long pbord_ pord_ p0_ p3_ p19_ p32_ m10_, i(caseid) j(bidx)
 
-drop if bord==.
+drop if pord==.
+
 rename *_ *
 
+* Restrict to the past 3 years
+keep if p19<36
+
 * adjustment to birth order for multiple births; see Guide to DHS Statistics
-replace bord=bord-b0+1 if b0>1
+replace pbord=pbord-p0+1 if p0>1
 
-gen interval=v008-b3
-
-if suseb19==1 {
-replace interval=b19
-}
-
-keep if interval<60
-drop interval
-
-gen age_at_birth=-2 + int((b3-v011)/60)
-replace age_at_birth=1 if age_at_birth<1
-label define age_at_birth 1 "<20" 2 "20-24" 3 "25-29" 4 "30-34" 5 "35-39" 6 "40-44" 7 "45-49"
-label values age_at_birth age_at_birth
-tab age_at_birth,m
+* Construct intervals for the woman's age at birth (or other outcome)
+gen age_at_birth=-2 + int((p3-v011)/60)
 
 save `srvy'temp_births.dta, replace
 
@@ -104,32 +87,49 @@ local srvy=substr("$irdata", 1, 4)
 use `srvy'temp.dta, clear
 keep caseid v005 v008 v011 v012 v201 v213 v214 v225
 keep if v213==1
-rename v225 m10
-gen bidx=0
 
-* if the woman is currently pregnant, set the birth order of the pregnancy
-gen bord=v201+1
+* Construct m10, bidx, birth order, and set p32 to 0
+gen m10=v225
+gen bidx=0
+gen pbord=v201+1
+gen p32=0
+
+* tab v214,m
 
 gen preg_duration=v214
 replace preg_duration=9 if v214>9 
 
 gen cmc_preg_delivery=v008+(9-preg_duration)
 gen age_at_birth=-2 + int((cmc_preg_delivery-v011)/60)
-label define age_at_birth 1 "<20" 2 "20-24" 3 "25-29" 4 "30-34" 5 "35-39" 6 "40-44" 7 "45-49"
-label values age_at_birth age_at_birth
 
 * It can happen that a woman age 49 is pregnant and will give birth at age 50. Push any such cases into 45-49
 replace age_at_birth=7 if age_at_birth>7
 
-save `srvy'temp_pregs.dta, replace
+save         `srvy'temp_pregs.dta, replace
 append using `srvy'temp_births.dta
 
-gen birth_order=bord
-replace birth_order=4 if bord>4
+* The youngest age interval should include births before 15
+replace age_at_birth=1 if age_at_birth<1
 
-//Define our variable of interest after appending the births and pregnancies
+label define ab 1 "<20" 2 "20-24" 3 "25-29" 4 "30-34" 5 "35-39" 6 "40-44" 7 "45-49"
+label values age_at_birth ab
+label variable age_at_birth "Mother's age at birth"
+
+* Define a new label for p32 that includes a possible current pregnancy
+label define p32r 0 "Current pregnancy" 1 "Live birth" 2 "Stillbirth" 3 "Miscarriage" 4 "Abortion"
+label values p32 p32r
+label variable p32 "Pregnancy outcome type"
+
+gen birth_order=pbord
+replace birth_order=4 if pbord>4
+label define bo 4 "4+"
+label values birth_order bo
+label variable birth_order "Birth order"
+
 clonevar ff_plan_status=m10
-label var ff_plan_status "Fertility planning status at birth of child"
+label define ff_plan_status 1 "Wanted then" 2 "Wanted later" 3 "Wanted no more"
+label values ff_plan_status ff_plan_status
+label variable ff_plan_status "Fertility planning status at birth of child"
 
 save `srvy'temp_births_plus_pregs.dta, replace
 
@@ -142,14 +142,19 @@ local srvy=substr("$irdata", 1, 4)
 
 use `srvy'temp_births_plus_pregs.dta, clear
 
-gen wt=v005/1000000
+gen wt= v005/1000000
 
-tab birth_order ff_plan_status [iweight=wt], row
-tab age_at_birth ff_plan_status [iweight=wt], row
+* Top panel, limited to live births and current pregnancies
+tab birth_order  ff_plan_status if p32<=1 [iw=wt], row
+tab age_at_birth ff_plan_status if p32<=1 [iw=wt], row
 
-*output to excel
-tabout birth_order age_at_birth ff_plan_status using Tables_FFplan.xls [iw=wt] , c(row) f(1) replace 
+* Panel for "ALL PREGNANCY OUTCOMES"
+tab p32 ff_plan_status [iw=wt], row
 
+* Export to excel
+tabout birth_order age_at_birth ff_plan_status if p32<=1 using Table_FFplan.xls [iw=wt], c(row) f(1) replace 
+
+tabout p32 ff_plan_status using Table_FFplan.xls [iw=wt] , c(row) f(1) append 
 
 end
 
@@ -158,6 +163,8 @@ end
 ************************************************************
 ************************************************************
 * EXECUTION BEGINS HERE
+
+* open dataset
 
 reduce_IR_file
 reshape_births
@@ -169,3 +176,4 @@ local srvy=substr("$irdata", 1, 4)
 erase `srvy'temp.dta
 erase `srvy'temp_births.dta
 erase `srvy'temp_pregs.dta
+erase `srvy'temp_births_plus_pregs.dta
