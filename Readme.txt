@@ -135,6 +135,7 @@ There are no changes in DHS8 for the chapters that cover adult and maternal mort
 +-------+----------------------------------------------+-------------+
 **********************************************************************************************************************************************************
 
-For questions please email: codeshare@DHSProgram.com
+For questions, please visit the GitHub Code Share Library Topic on the DHS Program User Forum [here](https://userforum.dhsprogram.com/index.php?t=thread&frm_id=96&).
+
 
 
