@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			PH_GINI.do
+Program: 			PH_GINI.do - no changes in DHS8
 Purpose: 			Code to compute the Gini coefficient
 Data inputs: 		PR dataset
 Data outputs:		coded variables

@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			PH_HNDWSH.do
+Program: 			PH_HNDWSH.do - No changes in DHS8
 Purpose: 			Code to compute handwashing indicators
 Data inputs: 		PR dataset
 Data outputs:		coded variables

@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			PH_SCHOL.do
+Program: 			PH_SCHOL.do - No changes in DHS8
 Purpose: 			Code to compute school attendance indicators
 Data inputs: 		BR and PR dataset
 Data outputs:		coded variables
