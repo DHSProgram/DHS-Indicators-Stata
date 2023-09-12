@@ -268,3 +268,4 @@ tab hv270 ph_chld_orph  [iw=wt] , row
 
 *output to excel 
 tabout agec hv104 hv025 hv024 hv270 ph_chld_orph using Tables_livarg_orph.xls [iw=wt] , c(row) f(1) append 
+

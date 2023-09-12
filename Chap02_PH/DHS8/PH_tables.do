@@ -108,14 +108,20 @@ tab ph_rooms_sleep hv025 [iw=wt] , col
 *place for cooking
 tab ph_cook_place hv025 [iw=wt] , col
 
+*cooking tech
+tab ph_cook_tech hv025 [iw=wt] , col
+
 *cooking fuel
 tab ph_cook_fuel hv025 [iw=wt] , col
 
-*solid fuel for cooking
-tab ph_cook_solid hv025 [iw=wt] , col
-
-*clean fuel for cooking
+*clean or solid fuel for cooking
 tab ph_cook_clean hv025 [iw=wt] , col
+
+*heating tech
+tab ph_heat_tech hv025 [iw=wt] , col
+
+*heating fuel
+tab ph_heat_fuel hv025 [iw=wt] , col
 
 *frequency of smoking in the home
 tab ph_smoke hv025 [iw=wt] , col

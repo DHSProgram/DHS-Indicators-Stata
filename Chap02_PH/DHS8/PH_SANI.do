@@ -205,6 +205,7 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	22 = 23 ///
 	, gen (ph_sani_type)
 	}
+	}
 	if hv000=="CI3" & hv007==94  {
 	recode hv205 ///
 	11 = 15 ///
@@ -1014,7 +1015,6 @@ STANDARD CATEGORIES FOR WATER SOURCE BY IMPROVED/UNIMPROVED
 	41 = 51 ///
 	, gen (ph_sani_type)
 	} 
-	}
 	if (hv000=="UG6" & inrange(hv007,2014,2015)) {
 	recode hv205 ///
 	24 = 22 ///

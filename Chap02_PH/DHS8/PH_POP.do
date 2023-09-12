@@ -1,11 +1,11 @@
 /*****************************************************************************************************
-Program: 			PH_POP.do
+Program: 			PH_POP.do - DHS8 update
 Purpose: 			Code to compute population characteristics, birth registration, education levels, household composition, orphanhood, and living arrangments
 Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Shireen Assaf for population indicators and Tom Pullum for living arrangements and orphanhood indicators
-Date last modified: April 23, 2020 by Shireen Assaf 
-Note:				In line 244 the code will collapse the data and therefore some indicators produced will be lost. However, they are saved in the file PR_temp_children.dta and this data file will be used to produce the tables for these indicators in the PH_table code. This code will produce the Tables_hh_comps for household composition. 
+Date last modified: September 11, 2023 by Shireen Assaf 
+Note:				In line 244 the code will collapse the data and therefore some indicators produced will be lost. However, they are saved in the file PR_temp_children.dta and this data file will be used to produce the tables for these indicators in the PH_table code. This code will produce the Tables_hh_comps for household composition 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -23,6 +23,7 @@ ph_birthreg			"Child under 5 with registered birth"
 ph_highest_edu		"Highest level of schooling attended or completed among those age 6 or over"
 ph_median_eduyrs_wm "Median years of education among those age 6 or over - Females"
 ph_median_eduyrs_mn "Median years of education among those age 6 or over - Males"
+ph_org_learn		"Participation in organized learning"
 
 ph_wealth_quint		"Wealth quintile - dejure population"
 
@@ -35,8 +36,7 @@ ph_num_members		"Number of usual household members"
 	
 ph_orph_double		"Double orphans under age 18"
 ph_orph_single		"Single orphans under age 18"
-ph_foster			"Foster children under age 18"
-ph_orph_foster		"Orphans and/or foster children under age 18"
+ph_orph_chld_noprnt	"Orphans and/or children under age 18 not living with biological parent" - NEW indicator in DHS8
 ----------------------------------------------------------------------------*/
 
 cap label define yesno 0"No" 1"Yes"
@@ -146,6 +146,24 @@ qui summarize eduyr [fweight=hv005], detail
 	label var ph_median_eduyrs_mn "Median years of education among those age 6 or over - Males"
 
 	drop eduyr
+
+	
+*** Participation in organized learning ***
+
+// Primary school age
+gen prim_school_age = 5
+
+// Organized learning
+gen ph_org_learn = 0 if hv105==(prim_school_age-1)
+replace ph_org_learn=1 if hv121==2 & hv122==0
+replace ph_org_learn=2 if hv121==2 & hv122>0 & hv122<8
+replace ph_org_learn=3 if hv121==0
+label define ph_org_learn 1 "Attending early childhood education program" 2 "Attending primary school" 3 "Neither attending ECE or primary" , modify
+label values ph_org_learn ph_org_learn
+label var ph_org_learn "Participating in organized learning"
+
+
+
 
 *** Living arrangements ***
 
@@ -288,9 +306,9 @@ replace ph_orph_single=1 if ph_chld_orph==1 & ph_orph_double==0
 gen     ph_foster=0
 replace ph_foster=1 if cores_type==4 
 
-//Foster child and/or orphan
-gen     ph_orph_foster=0
-replace ph_orph_foster=1 if ph_foster==1 | ph_orph_single==1 | ph_orph_double==1
+//Orphan and/or child not living with biological parent
+gen     ph_orph_chld_noprnt=0
+replace ph_orph_chld_noprnt=1 if ph_chld_liv_noprnt==1 | ph_orph_single==1 | ph_orph_double==1
 
 sort hv001 hv002 hvidx
 save PR_temp_children.dta, replace
@@ -352,6 +370,9 @@ label var hv025 "type of place of residence"
 //Sex of household head
 rename hv104 ph_hhhead_sex
 label var ph_hhhead_sex "Sex of household head"
+
+
+
 
 ****************************************************
 

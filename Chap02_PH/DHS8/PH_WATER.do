@@ -1,5 +1,5 @@
 /*********************************************************************
-Program: 			PH_WATER.do
+Program: 			PH_WATER.do - DHS8 update
 Purpose: 			creates variable for binary improved water source according to JSTOR standard 
 Data inputs: 		hr or pr file
 Data outputs:		none
@@ -354,7 +354,8 @@ cap label define yesno 0"No" 1"Yes"
 	33 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	if hv000=="CG5" & hv007==2005 {
+	* missing information for hv007 in CG surveys that are both hv000 CG5 so included obserations to select for correct survey
+if hv000=="CG5" & hv007==2005 {
 	recode hv201 ///
 	13 = 14 ///
 	21 = 32 ///
@@ -363,7 +364,6 @@ cap label define yesno 0"No" 1"Yes"
 	42 = 43 ///
 	, gen (ph_wtr_source)
 	}
-	
 	* same recode for two surveys: CIHR35 and CIHR3A both are hv000=CI3. Only survey CIHR35 has categories 51 and 61 for hv201
 	if hv000=="CI3"  {
 	recode hv201 ///
@@ -449,7 +449,7 @@ cap label define yesno 0"No" 1"Yes"
 	, gen (ph_wtr_source)
 	}
 * same recode for two surveys COHR53, COHR61, COHR72
-	if hv000=="CO4" & hv007>=2004 |  inrange(hv000, "CO5", "CO7")  {
+	if hv000=="CO4" & hv007>=2004 |  (hv000 inrange("CO5", "CO7"))  {
 	recode hv201 ///
 	12 = 11 ///
 	22 = 32 ///

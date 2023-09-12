@@ -1,34 +1,33 @@
-/*******************************************************************************************************************************
-Program: 				PHmain.do
+/*******************************************************************************
+Program: 				PHmain.do - DHS8 update
 Purpose: 				Main file for the Population and Housing Chapter. 
 						The main file will call other do files that will produce the PH indicators and produce tables.
 Data outputs:			Coded variables and table output on screen and in excel tables.  
 Author: 				Shireen Assaf
-Date last modified:		September 9, 2020 by Courtney Allen
-*******************************************************************************************************************************/
+Date last modified:		August 9, 2023 by Courtney Allen
+*******************************************************************************/
 set more off
 
 *** User information for internal DHS use. Please disregard and adjust paths to your own. *** 
 
-global user 33697	//change employee id number to personalize path
+global user 39585	//change employee id number to personalize path
 
-cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap02_PH"
+* change working directory
+cd "C:/Users/$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap02_PH/DHS8"
 
+* set path where datafiles are stored
 global datapath "C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * select your survey
 
 * HR Files
-global hrdata "ZWHR72FL"
-* GHHR72FL  MMHR71FL UGHR7BFL ZMHR71FL  NGHR7AFL
+global hrdata "NPHR81FL"
 
 * PR Files
-global prdata "ZWPR72FL"
-* GHPR72FL  MMPR71FL UGPR7BFL ZMPR71FL  NGPR7AFL
+global prdata "NPPR81FL"
 
 * BR Files
-global brdata "ZWBR72FL"
-* GHBR72FL  MMBR71FL UGBR7BFL ZMBR71FL  NGBR7AFL
+global brdata "NPBR81FL"
 
 ****************************
 
@@ -52,8 +51,8 @@ do PH_HOUS.do
 do PH_tables.do
 * Purpose: 	Produce tables for indicators computed from the above do files. 
 */
-*******************************************************************************************************************************
-*******************************************************************************************************************************
+********************************************************************************
+********************************************************************************
 
 * PR file variables (use for indicators where the population is the unit of measurement)
 
@@ -88,6 +87,6 @@ do PH_GINI.do
 * Note: 	This code will collapse the data and produce the table Table_gini.xls
 
 */
-*******************************************************************************************************************************
-*******************************************************************************************************************************
+********************************************************************************
+********************************************************************************
 
