@@ -328,7 +328,7 @@ label var nt_wm2_obese "Obese BMI  - women age 15-19"
 	label var nt_wm_teacoff "Woman had tea, coffee, or herbal drink in day/night before survey"
 	
 	//Had sweetened drinks - NEW Indicator in DHS8
-	gen nt_wm_swt_drink= v471cs==1 | v471d==1 | v471e==1 | v471b==1
+	gen nt_wm_swt_drink= v471cs==1 | v471d==1 | v471e==1 | v471b==1 | v472v==1
 	label values nt_wm_swt_drink yesno 
 	label var nt_wm_swt_drink "Woman had sweet beverage in day/night before survey" 
 
