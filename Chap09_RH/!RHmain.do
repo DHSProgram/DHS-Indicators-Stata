@@ -4,8 +4,9 @@ Purpose: 				Main file for the Reporductive Health Chapter.
 						The main file will call other do files that will produce the RH indicators and produce tables.
 Data outputs:			coded variables and table output on screen and in excel tables.
 Author: 				Shireen Assaf 
-Date last modified:		Jan 9th by Shireen Assaf
-Notes:					
+Date last modified:		September 19, 2023 by Shireen Assaf to age the age and period variables to the do files and remove the RH_age_period.do we previously had. 
+
+Notes:					Please read the notes in each do file for country-specific changes that may be needed.
 *******************************************************************************************************************************/
 set more off
 
@@ -21,11 +22,9 @@ global datapath "C:/Users//`user'//ICF/Analysis - Shared Resources/Data/DHSdata"
 
 * IR Files
 global irdata "AFIR70FL"
-* MMIR71FL TJIR70FL UGIR60FL MWIR7HFL GHIR72FL 
 
 * BR Files
 global brdata "AFBR70FL"
-* MMBR71FL TJBR70FL UGBR60FL MWBR7HFL GHBR72FL 
 ****************************
 
 * IR file variables
@@ -34,9 +33,6 @@ global brdata "AFBR70FL"
 use "$datapath//$irdata.dta", clear
 
 gen file=substr("$irdata", 3, 2)
-
-do "RH_age_period.do" 
-*Purpose:	Compute the age variable and set the period for the analysis. Period currently set at 5 years.
 
 *
 do RH_ANC.do
@@ -65,9 +61,6 @@ do RH_tables.do
 use "$datapath//$brdata.dta", clear
 
 gen file=substr("$brdata", 3, 2)
-
-do "RH_age_period.do" 
-*Purpose:	Compute the age variable and set the period for the analysis. Period currently set at 5 years.
 
 *
 do RH_DEL.do

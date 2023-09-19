@@ -4,7 +4,9 @@ Purpose: 			Code Delivery Care indicators
 Data inputs: 		BR dataset
 Data outputs:		coded variables
 Author:				Courtney Allen 
-Date last modified: July 9 2018 by Shireen Assaf to adding missing categories and fix an error in the rh_del_cestime indicator 				
+Date last modified: July 9 2018 by Shireen Assaf to adding missing categories and fix an error in the rh_del_cestime indicator 	
+					September 19, 2023 by Shireen Assaf to add period and child age variables. 
+Notes:				Choose reference period to select last 2 years or last 5 years.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------//
@@ -18,6 +20,37 @@ rh_del_cestime		"Timing of decision to have Cesarean"
 rh_del_stay			"Duration of stay following recent birth"
 /----------------------------------------------------------------------------*/
 
+ * Choose reference period, last 2 years or last 5 years
+	*gen period = 24
+	gen period = 60
+
+*	Child's age in months	
+	gen age = v008 - b3
+	
+	* to check if survey has b19, which should be used instead to compute age. 
+	scalar b19_included=1
+		capture confirm numeric variable b19, exact 
+		if _rc>0 {
+		* b19 is not present
+		scalar b19_included=0
+		}
+		if _rc==0 {
+		* b19 is present; check for values
+		summarize b19
+		  if r(sd)==0 | r(sd)==. {
+		  scalar b19_included=0
+		  }
+		}
+
+	if b19_included==1 {
+	drop age
+	gen age=b19
+	}
+	
+cap label define yesno 0"no" 1"yes"
+	
+*** Delivery indicators ***	
+	
 //Place of delivery
 	recode m15 (20/39 = 1 "Health facility") (10/19 = 2 "Home") (40/98 = 3 "Other") (99=9 "Missing"), gen(rh_del_place)
 	replace rh_del_place = . if age>=period

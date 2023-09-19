@@ -4,7 +4,8 @@ Purpose: 			Code PNC indicators for women and newborns
 Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Lindsay Mallick and Shireen Assaf
-Date last modified: March 12 2019 by Shireen Assaf 
+Date last modified: September 19, 2023 by Shireen Assaf
+Notes:				The PNC indicator is always reported for the last 2 years before the survey
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------//
@@ -17,7 +18,34 @@ rh_pnc_nb_timing	"Timing after delivery for newborn's PNC check"
 rh_pnc_nb_2days 	"PNC check within two days for newborn"
 rh_pnc_nb_pv 		"Provider for newborn's PNC check"	
 /----------------------------------------------------------------------------*/
-		
+
+*	Child's age in months	
+	gen age = v008 - b3_01
+	
+	* to check if survey has b19, which should be used instead to compute age. 
+	scalar b19_included=1
+		capture confirm numeric variable b19_01, exact 
+		if _rc>0 {
+		* b19 is not present
+		scalar b19_included=0
+		}
+		if _rc==0 {
+		* b19 is present; check for values
+		summarize b19_01
+		  if r(sd)==0 | r(sd)==. {
+		  scalar b19_included=0
+		  }
+		}
+
+	if b19_included==1 {
+	drop age
+	gen age=b19_01
+	}
+	
+cap label define yesno 0"no" 1"yes"
+
+*** PNC indicators ***
+
 ** For surveys 2005 or after, postnatal care was asked for both institutional and non-institutional births. 
 ** surveys before 2005 only ask PNC for non-institutional births but assumed women received PNC if they delivered at health facilities	 
 ** This is checked using variable m51_1 which was used in older surveys
