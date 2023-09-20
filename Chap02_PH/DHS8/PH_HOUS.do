@@ -8,6 +8,8 @@ Date last modified: September 11, 2023 by Courtney Allen
 Note:				These indicators can also be computed using the PR file but you would need to select for dejure household members
 					using hv102==1. Please see the Guide to DHS Statistics.  
 					There may be some other country specific household possessions available in the dataset that may not be coded here. 
+					
+					9 new indicators in DHS8 see below.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -90,7 +92,7 @@ label define ph_cook_place_lab 	1 "In house, separate room/kitchen" 	///
 label values ph_cook_place ph_cook_place_lab
 label var ph_cook_place "Place for cooking"
 
-//Type of cooking technology
+//Type of cooking technology - NEW indicator in DHS8	
 gen ph_cook_tech = hv222
 replace ph_cook_tech = 6 if hv222==6 & hv223==1
 replace ph_cook_tech = 7 if hv222==6 & hv223!=1
@@ -142,7 +144,7 @@ label var ph_cook_clean "Clean or solid fuels and technologies"
 
 *** Heating and lighting ***
 
-//Heating technology
+//Heating technology - NEW indicator in DHS8	
 gen ph_heat_tech = hv259
 replace ph_heat_tech = 2 if hv259==2 & hv260==1
 replace ph_heat_tech = 3 if hv259==2 & inlist(hv260, 0, 8)
@@ -168,14 +170,14 @@ label define ph_heat_lab 1 "Central heating" ///
 label values ph_heat_tech ph_heat_lab
 label var ph_heat_tech "Heating technology"
 
-//Heating fuel
+//Heating fuel - NEW indicator in DHS8	
 gen ph_heat_fuel = hv261
 replace ph_heat_fuel = 1 if inrange(hv261, 1, 6) | hv259==1
 label define HV261 1 "Clean fuels and technologies", modify
 label values ph_heat_fuel HV261
 label var ph_heat_fuel "Heating fuel"
 
-//Type of Lighting Technology
+//Type of Lighting Technology - NEW indicator in DHS8	
 gen ph_light = hv262
 replace ph_light = 1 if inrange(hv262, 1,5)
 label define HV262 1 "Clean fuels and technologies", modify
@@ -183,35 +185,34 @@ label values ph_light HV262
 label var ph_light "Lighting fuel and technology"
 
 
-
 *** Primary reliance on clean fuels and technologies ***
 
-//Primary reliance on clean fuels and technologies for cooking
+//Primary reliance on clean fuels and technologies for cooking - NEW indicator in DHS8	
 gen ph_rely_clean_cook = 0 if hv222!=95
 replace ph_rely_clean_cook = 1 if inrange(hv222, 1, 5) | (hv222==6 & hv223==1)
 label values ph_rely_clean_cook yesno
 label var ph_rely_clean_cook "Reliance on clean fuels and tech for cooking"
 
-//Primary reliance on solid fuels for cooking
+//Primary reliance on solid fuels for cooking - NEW indicator in DHS8	
 gen ph_rely_solid_cook = 0 if hv222!=95
 replace ph_rely_solid_cook = 1 if inrange(hv223, 4, 12)
 label values ph_rely_solid_cook yesno
 label var ph_rely_solid_cook "Reliance on solid fuels and tech for cooking"
 
 
-//Primary reliance on clean fuels and technologies for heating
+//Primary reliance on clean fuels and technologies for heating - NEW indicator in DHS8	
 gen ph_rely_clean_heat = 0 if hv259!=95
 replace ph_rely_clean_heat = 1 if inrange(hv261, 1, 6) | hv259==1
 label values ph_rely_clean_heat yesno
 label var ph_rely_clean_heat "Reliance on clean fuels and tech for heating"
 
-//Primary reliance on clean fuels and technologies for lighting
+//Primary reliance on clean fuels and technologies for lighting - NEW indicator in DHS8	
 gen ph_rely_clean_light = 0 if  hv262!=95
 replace ph_rely_clean_light = 1 if inrange(hv262, 1,5)
 label values ph_rely_clean_light yesno
 label var ph_rely_clean_light "Reliance on clean fuels and tech for lighting"
 
-//Primary reliance on clean fuels and technologies for lighting
+//Primary reliance on clean fuels and technologies for lighting - NEW indicator in DHS8	
 gen ph_rely_clean_all = 0 
 replace ph_rely_clean_all = 1 if (ph_rely_cook_clean==1 | hv222==95) & (ph_rely_heat_clean==1 | hv259==95) & (ph_rely_light_clean==1 | hv262==95)
 label values ph_rely_clean_all yesno

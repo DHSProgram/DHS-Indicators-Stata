@@ -6,6 +6,8 @@ Data outputs:		coded variables
 Author:				Shireen Assaf for population indicators and Tom Pullum for living arrangements and orphanhood indicators
 Date last modified: September 11, 2023 by Shireen Assaf 
 Note:				In line 244 the code will collapse the data and therefore some indicators produced will be lost. However, they are saved in the file PR_temp_children.dta and this data file will be used to produce the tables for these indicators in the PH_table code. This code will produce the Tables_hh_comps for household composition 
+
+					1 new indicator in DHS8 see below
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -150,14 +152,12 @@ qui summarize eduyr [fweight=hv005], detail
 	
 *** Participation in organized learning ***
 
-// Primary school age
-gen prim_school_age = 5
 
 // Organized learning
-gen ph_org_learn = 0 if hv105==(prim_school_age-1)
-replace ph_org_learn=1 if hv121==2 & hv122==0
-replace ph_org_learn=2 if hv121==2 & hv122>0 & hv122<8
-replace ph_org_learn=3 if hv121==0
+gen ph_org_learn = 0 if school_age==($age_prim_min - 1) 
+replace ph_org_learn=1 if hv121==2 & hv122==0 & school_age==($age_prim_min - 1)  & hv103==1
+replace ph_org_learn=2 if hv121==2 & hv122>0 & hv122<8 & school_age==($age_prim_min - 1)  & hv103==1
+replace ph_org_learn=3 if hv121==0 & school_age==($age_prim_min - 1)  & hv103==1
 label define ph_org_learn 1 "Attending early childhood education program" 2 "Attending primary school" 3 "Neither attending ECE or primary" , modify
 label values ph_org_learn ph_org_learn
 label var ph_org_learn "Participating in organized learning"
@@ -306,7 +306,7 @@ replace ph_orph_single=1 if ph_chld_orph==1 & ph_orph_double==0
 gen     ph_foster=0
 replace ph_foster=1 if cores_type==4 
 
-//Orphan and/or child not living with biological parent
+//Orphan and/or child not living with biological parent  - NEW indicator in DHS8
 gen     ph_orph_chld_noprnt=0
 replace ph_orph_chld_noprnt=1 if ph_chld_liv_noprnt==1 | ph_orph_single==1 | ph_orph_double==1
 

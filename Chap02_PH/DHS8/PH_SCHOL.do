@@ -60,18 +60,6 @@ drop if _merge==2
 * restrict to de facto household members age 5-24, and drop all others
 keep if hv103==1 & inrange(hv105,5,24)
 
-* now we calculate the child's age at the start of the school year
-* but first we have to specify the month and year of the start of the school year referred to in the survey
-* example, for Zimbabwe 2015 survey this was January 2015
-global school_start_yr = 2015
-global school_start_mo = 1
-* also need the age ranges for primary and secondary
-* example, for Zimbabwe 2015, the age range is 6-12 for primary school and 13-18 for secondary school
-global age_prim_min = 6
-global age_prim_max = 12
-global age_sec_min = 13
-global age_sec_max = 18
-
 * produce century month code of start of school year for each state and phase
 gen cmcSch = ($school_start_yr - 1900)*12 + $school_start_mo
 replace cmcSch = cmcSch+12 if hv008 >= cmcSch+12
@@ -192,6 +180,8 @@ program define nar_gar
   tabout `backvar' using Tables_schol.xls, sum cells(mean ph_sch_`rate'_`sch'_`backvar'_gpi) f(2) ptotal(none) append
   
 end
+
+
 
 * create total background characteristic
 gen total = 0

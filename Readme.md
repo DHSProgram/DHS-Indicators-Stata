@@ -49,9 +49,11 @@ The DHS Program is making updates and adding new indicators in DHS Phase 8.
 
 Please check the IndicatorList excel file for the updated list of indicators and their labels. Each chapter of the Code Share Library will contain a subfolder for DHS8 updates when they are available. Updates will begin with the Stata code which will be completed in September 2023 and updates to R and SPSS code will be completed in September 2024. 
 
-Currently DHS8 updates to Chapters 3, 4, 6, 7, 9, 10, 11, 12, 13, 14, and 15 are available. 
+Currently DHS8 updates to Chapters 2, 3, 4, 6, 7, 9, 10, 11, 12, 13, 14, and 15 are available. 
 
-There are no changes in DHS8 for the chapters that cover adult and maternal mortality (AM), female genital cutting (FG), and Fistula (FS). 
+NOTE: WASH indicators are found in Chapter 16 in the updated DHS Guide to Statistics, but found in Chapter 2 in this repository.
+
+There are no changes in DHS8 for the chapters that cover adult and maternal mortality (AM), female genital cutting (FG), and Fistula (FS).
 
 **********************************************************************************************************************************************************
 
