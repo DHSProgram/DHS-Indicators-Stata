@@ -41,7 +41,7 @@ label var nt_ch_micro_ironsup "Children age 6-59 mos given iron containing suppl
 recode h33m (98=.), gen(h33m2)
 recode h33d (98=15), gen(h33d2)
 recode h33y (9998=.), gen(h33y2)
-gen nt_ch_micro_vas= h34==1 | (int((mdy(v006,v016,v007) - mdy(h33m2,h33d2,h33y2) )/30.4375) < 7)
+gen nt_ch_micro_vas= h34==1 | (int((mdy(v006,v016,v007) - mdy(h33m2,h33d2,h33y2) )/30.4375) < 6)
 replace nt_ch_micro_vas=. if !inrange(age,6,59) | b5==0
 label values nt_ch_micro_vas yesno 
 label var nt_ch_micro_vas "Children age 6-59 mos given Vit. A supplements"
