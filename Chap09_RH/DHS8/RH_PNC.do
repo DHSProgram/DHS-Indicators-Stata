@@ -4,7 +4,7 @@ Purpose: 			Code PNC indicators for women and newborns
 Data inputs: 		IR dataset
 Data outputs:		coded variables
 Author:				Lindsay Mallick and Shireen Assaf, DHS8 updates by Shireen Assaf
-Date last modified: Dec 8, 2022 by Shireen Assaf 	
+Date last modified: March 4, 2024 by Trevor Croft
 Notes:				Fourteen new indicators for DH8, see below. 
 		
 In DHS8 we use the NR file for computing these indicators. Previously the IR file was used. In addition the variable p19 is used instead of b19.
@@ -60,7 +60,7 @@ rh_pnc_bothnotchecked	"Neither mother nor newborn received a PNC check" - NEW In
 	*Add in women who delivered at home with a check
 	replace pnc_wm_time = m67 if  (pnc_wm_time == 999 & inrange(m68, 11,29) & p19<24) 
 	*Account for provider of PNC- country specific- see table footnotes
-	replace pnc_wm_time = 0 if m67 < 1000 & m68 >30 & m68 < 100 & p19<24 
+	replace pnc_wm_time = 0 if (pnc_wm_time == 999 & m67 < 1000 & m68 >30 & m68 < 100 & p19<24)
 	*Add in women who had no check 
 	replace pnc_wm_time = 0 if momcheck == 0 & p19<24 
 	
@@ -127,7 +127,7 @@ label var rh_pnc_wm_allchecks "All three checks were made duirng PNC check"
 		*Add in women who delivered at home with a check
 		replace pnc_nb_timing_all = m71 if (pnc_nb_timing_all==999 & inrange(m72,11,29) & p19<24)
 		*Account for provider of PNC- country specific- see table footnotes
-		replace pnc_nb_timing_all = 0 if (m71 < 1000 & m72 >30 & m72 < 100 & p19<24)
+		replace pnc_nb_timing_all = 0 if (pnc_nb_timing_all==999 & m71 < 1000 & m72 >30 & m72 < 100 & p19<24)
 		*Add in women who had no check 
 		replace pnc_nb_timing_all = 0 if (nbcheck!=1) & p19<24 
 		
