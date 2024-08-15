@@ -1,10 +1,10 @@
 /*****************************************************************************************************
-Program: 			ML_BIOMARKERS.do - No changes in DHS8
+Program: 			ML_BIOMARKERS.do
 Purpose: 			Code anemia and malaria testing prevalence in children under 5
 Data inputs: 		PR dataset
 Data outputs:		coded variables
 Author:				Cameron Taylor and Shireen Assaf
-Date last modified: May 20 2019 by Shireen Assaf
+Date last modified: May 20 2019 by Shiren Assaf
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ label var ml_test_rdtmal "Tested for Parasitemia (via RDT) in children 6-59 mont
 
 //Anemia in children 6-59 months
 gen ml_anemia=0 if hv103==1 & hc1>=6 & hc1<=59 & hc55==0 & hv042==1
-replace ml_anemia=1 if hc56<80
+replace ml_anemia=1 if hc56<80 & hv103==1 & hc1>=6 & hc1<=59 & hc55==0 & hv042==1
 lab var ml_anemia "Anemia in children 6-59 months"
 
 //Parasitemia (via microscopy) in children 6-59 months
