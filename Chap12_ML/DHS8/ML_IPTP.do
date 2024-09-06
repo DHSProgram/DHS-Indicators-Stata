@@ -1,10 +1,10 @@
 /*****************************************************************************************************
 Program: 			ML_IPTP.do - DHS8 update
 Purpose: 			Code malaria IPTP indicators
-Data inputs: 		IR dataset
+Data inputs: 		NR dataset
 Data outputs:		coded variables
 Author:				Cameron Taylor and Shireen Assaf
-Date last modified: July 11, 2023 by Shireen Assaf
+Date last modified: August 07, 2023 by Courtney Allen
 					In DHS8 these indicators are computed using the NR file instead of the IR file. 
 					Also the indicators are tabulated for three subpopulations using m80. See the tables code for the NR section
 *****************************************************************************************************/

@@ -4,7 +4,7 @@ Purpose: 			Code indicators for source of nets and reasons why not using nets
 Data inputs: 		HR dataset
 Data outputs:		coded variables and the table Tables_Net_Source.xls and Tables_NoNet_Reason for the tabulations for the indicators
 Author:				Cameron Taylor and modified by Shireen Assaf for the code share project
-Date last modified: July 7 2023 by Cameron Taylor and July 11 by Shireen Assaf for DHS8 updates
+Date last modified: August 14, 2023 by Courtney Allen - source of net categories fixed
 
 					2 indicators in DHS8
 					Also in DHS8, the indicators are tabulation for three seperate denominators: 1. ITNs, 2. Non-ITN, and 3. All mosquito nets.
@@ -51,19 +51,23 @@ lab var ml_net_dist "Received a net from mass distribution, ANC, immunization, o
 *Note hml23_ can have several country specific categories. Pleace check and adjust the code accordingly. 
 *In the code below, several country specific categories were grouped in category 9. 
 gen ml_net_source=.
-replace ml_net_source=5 if hml23_==10 | hml23_==11 | hml23_==12 | hml23_==13
-replace ml_net_source=6 if hml23_>=20 & hml23_<30
-replace ml_net_source=7 if hml23_==31
-replace ml_net_source=8 if hml23_==32
-replace ml_net_source=9 if hml23_ >32 & hml23_ <96
-replace ml_net_source=10 if hml23_==96
-replace ml_net_source=11 if hml23_>97
 replace ml_net_source=1 if hml22_==1
 replace ml_net_source=2 if hml22_==2
 replace ml_net_source=3 if hml22_==3
-replace ml_net_source=4 if hml22_==4
-label define source 1 "mass distribution campaign" 2"ANC visit" 3"immunisation visit" 4"at birth" ///
-					5"gov. facility" 6"private facility" 7"pharmacy" 8"shop/market" 9"other country specific" 10"other" 11"don'tknow/missing"
+replace ml_net_source=4 if hml23_==10 | hml23_==11 | hml23_==12 | hml23_==13
+replace ml_net_source=5 if hml23_>=20 & hml23_<30
+replace ml_net_source=6 if hml23_==31
+replace ml_net_source=7 if hml23_==32
+replace ml_net_source=8 if hml23_==33
+replace ml_net_source=9 if hml23_==34
+replace ml_net_source=10 if hml23_==35
+replace ml_net_source=11 if hml23_ >35 & hml23_ <96
+replace ml_net_source=12 if hml23_==96
+replace ml_net_source=13 if hml23_>97
+label define source 1"mass distribution campaign" 2"ANC visit" 3"immunisation visit" ///
+					4"gov. facility" 5"private facility" 6"pharmacy" 7"shop/market"  ///
+					8"community health worker (CHW)" 9"religious institution" 10"school" ///
+					11"other country specific" 12"other" 13"don'tknow/missing"
 label values ml_net_source source
 label var ml_net_source "Source of mosquito net"
 
