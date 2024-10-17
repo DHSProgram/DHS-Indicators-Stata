@@ -1,97 +1,127 @@
 /*****************************************************************************************************
-Program: 			FE_CBR.do
+Program: 			FE_CBR.do - DHS8 update
 Purpose: 			Code to calculate Crude Birth Rate
-Data inputs: 		PR dataset
-Data outputs:		coded variables
-Author:				Courtney Allen for the code share project
-Date last modified: October 23, 2019 by Courtney Allen
-Note:				Creates a scalar. This do file must be run after the TFR.do 
-					because the scalars that store the ASFRs are needed. 
+Data inputs: 			PR dataset and the age-specific fertility rates in Table 5.1
+Data outputs:			coded variables, output on screen, Excel table
+Author:				Tom Pullum
+Date last modified: January 31, 2024, by Tom Pullum
+Note:				This do file is run AFTER FE_FERT.do 
 *****************************************************************************************************/
 
-/*----------------------------------------------------------------------------
+/*
 Variables created in this file:
 CBR 		"Crude Birth Rate"
 CBR_urban	"Crude Birth Rate - Urban"
 CBR_rural	"Crude Birth Rate - Rural"
 
-----------------------------------------------------------------------------*/
+The CBR is calculated with the asfrs for the past 3 years and the current population totals
 
-//create weight
+This program constructs a row with "age"=300 to be added to table 5.1.
+The rest of table 5.1 was constructed in FE_FERT.do
+FE_FERT.do must be run BEFORE THIS PROGRAM because the age-specific fertility rates 
+  in that table are used here.
+
+Potential fertility in age group 10-14 is included in the CBR but using the
+  unadjusted asfr for 10-14, not the Lexis-adjusted asfr. Modifications would be
+  needed to use the Lexis-adjusted asfr and the effect would be negligible.
+  The Lexis-adjusted asfr would be preferable.
+
+*/
+****************************************************************************
+
+program define make_CBR
+
+use "$datapath//$prdata.dta", clear
+
+* Reduce to the de facto population
+keep if hv103==1
 gen wt = hv005/1000000
 
-//cut age group into 5 yr groups
-egen agegroup = cut(hv105), at(0,15,20,25,30,35,40,45,50,999)
+* Calculate the population totals
+total wt, over(hv025)
+matrix B=e(b)
+scalar stotalpop_urban=B[1,1]
+scalar stotalpop_rural=B[1,2]
 
-//de facto population counts
-	//count of entire de facto population by residence type
-	summ hv103 [iw=wt] if hv103==1 
-	scalar hh_pop = r(sum_w)
+* Reduce to women
+keep if hv104==2
 
-	//count of entire de facto population - urban
-	summ hv103 [iw=wt] if hv103==1 & hv025==1
-	scalar hh_pop_res1= r(sum_w)
+* Construct age in 5-year intervals such that 10-14 is age=0 and 50+ is age=8
+gen age=-2+int(hv105/5)
+replace age=8 if hv105>=50
+keep wt age hv025
+collapse (sum) wt, by(age hv025)
+rename wt women
+save CBRtemp.dta, replace
 
-	//count of entire de facto population - rural
-	summ hv103 [iw=wt] if hv103==1 & hv025==2
-	scalar hh_pop_res2= r(sum_w)
+* Save urban and rural versions of CBRtemp.dta
+use CBRtemp.dta, clear
+keep if hv025==1
+keep age women
+sort age
+save CBRurban.dta, replace
 
-scalar CBR = 0
-scalar CBR_urban = 0
-scalar CBR_rural = 0
+use CBRtemp.dta, clear
+keep if hv025==2
+keep age women
+sort age
+save CBRrural.dta, replace
 
-//counts for each age group
-tokenize 1 2 3 4 5 6 7
-forvalues i = 15(5)45 { 
-	//count of de facto women by age group
-	summ hv104 [iw=wt] if hv103==1 & hv104==2  & agegroup==`i'
-	scalar women_pop_`i' = r(sum_w)
+* Prepare urban and rural versions of the rest of table 5.1
 
-	//divide women by population
-	scalar CBR_pop_`i' = women_pop_`i'/hh_pop
+* Calculate the number of births using the asfrs for the past 3 years in table_5pt1_current_fertility.dta
+foreach lur in urban rural {
+use "$resultspath/table_5pt1_current_fertility.dta", clear
+keep age rate_`lur'
+sort age
+merge age using CBR`lur'.dta
+keep if age>=0 & age<=7
+drop _merge
+gen births=women*rate_`lur'
+total births
+matrix B=e(b)
+scalar stotalbirths_`lur'=B[1,1]
+scalar sCBR_`lur'=stotalbirths_`lur'/stotalpop_`lur' 
+}
+scalar sCBR_total=(stotalbirths_urban+stotalbirths_rural)/(stotalpop_urban+stotalpop_rural)
 
-	//multiply by ASFRs for each age band
-	scalar CBR_pop_`i'_temp = CBR_pop_`i'*cbr_r`1'*1000
-	
-	
-//counts for each age group by residence type
-forvalues j = 1/2 {
-	//count of de facto women by residence type and age group
-	summ hv104 [iw=wt] if hv103==1 & hv104==2 & agegroup==`i' & hv025==`j'
-	scalar women_pop_`i'_res`j' = r(sum_w)
-	
-	//divide women by population
-	scalar CBR_pop_`i'_res`j' = women_pop_`i'_res`j' /hh_pop_res`j'
-	
-	//multiply by ASFRs for each age band (r1-r7 are scalars for ASFRs created in the TFR.do file)
-	scalar CBR_pop_`i'_temp_res`j' = (CBR_pop_`i'_res`j'*r`1'_`j'*1000)	
-	}
+end
 
-	//sum to create CBR for urban and rural
-	scalar CBR_urban = CBR_urban + CBR_pop_`i'_temp_res1
-	scalar CBR_rural = CBR_rural + CBR_pop_`i'_temp_res2
+****************************************************************************
 
-	//sum to CBR 
-	scalar CBR = CBR + CBR_pop_`i'_temp
-mac shift
+program define make_table_5pt1_CBR
+
+* Add a line for the CBR to table 5.1
+clear
+set obs 1
+gen age=300
+foreach lurt in urban rural total {
+gen rate_`lurt'=sCBR_`lurt'
 }
 
-//create variables
-gen CBR_urban = CBR_urban
-gen CBR_rural = CBR_rural
-gen CBR = CBR
-	
-//make output file, can use local `lcid' and `lpv' for excel names if wanted
-keep CBR*
-collapse CBR CBR_urban CBR_rural
-scalar sfn="$irdata"
-scalar scid=substr(sfn,1,2)
-scalar spv =substr(sfn,5,2)
-local lcid=scid
-local lpv=spv
+label define age 300 "CBR"
+label values age age
 
-export excel "Tables_FE_CBR.xlsx", firstrow(var) replace
+list, table clean
+save "$resultspath/table_5pt1_CBR.dta", replace
+export excel using "$resultspath/FE_tables.xlsx", sheet("Table 5.1_CBR") sheetreplace firstrow(var)
 
+end
+
+********************************************************************************
+********************************************************************************
+********************************************************************************
+********************************************************************************
+********************************************************************************
+* Execution begins here
+
+make_CBR
+make_table_5pt1_CBR
+
+erase CBRrural.dta
+erase CBRurban.dta
+erase CBRtemp.dta
+program drop _all
 
 
 
